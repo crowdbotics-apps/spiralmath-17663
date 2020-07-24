@@ -175,6 +175,8 @@ SOCIALACCOUNT_ADAPTER = "users.adapters.SocialAccountAdapter"
 ACCOUNT_ALLOW_REGISTRATION = env.bool("ACCOUNT_ALLOW_REGISTRATION", True)
 SOCIALACCOUNT_ALLOW_REGISTRATION = env.bool("SOCIALACCOUNT_ALLOW_REGISTRATION", True)
 
+DEFAULT_FROM_EMAIL = 'DoNotReply@spiralmath.com'
+
 REST_AUTH_SERIALIZERS = {
     # Replace password reset serializer to fix 500 error
     "PASSWORD_RESET_SERIALIZER": "home.api.v1.serializers.PasswordSerializer",
@@ -193,7 +195,7 @@ EMAIL_HOST_PASSWORD = env.str("SENDGRID_PASSWORD", "")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-
+FRONTEND_URL = 'spiralmath-17663.botics.co'
 
 if DEBUG:
     # output email to console instead of sending
