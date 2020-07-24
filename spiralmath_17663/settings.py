@@ -175,7 +175,7 @@ SOCIALACCOUNT_ADAPTER = "users.adapters.SocialAccountAdapter"
 ACCOUNT_ALLOW_REGISTRATION = env.bool("ACCOUNT_ALLOW_REGISTRATION", True)
 SOCIALACCOUNT_ALLOW_REGISTRATION = env.bool("SOCIALACCOUNT_ALLOW_REGISTRATION", True)
 
-DEFAULT_FROM_EMAIL = 'DoNotReply@spiralmath.com'
+DEFAULT_FROM_EMAIL = 'natalia.baranova@crowdbotics.com'
 
 REST_AUTH_SERIALIZERS = {
     # Replace password reset serializer to fix 500 error
