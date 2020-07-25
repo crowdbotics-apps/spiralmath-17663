@@ -62,9 +62,3 @@ class UserUpdate(UserSerializerBase):
         fields = UserSerializerBase.Meta.fields + ['first_name', 'last_name', 'password']
         extra_kwargs = {'password': {'write_only': True}}
 
-    # TODO for Natali
-    def update(self, instance, validated_data):
-        return {
-            'detail': 'Not implemented yet.',
-        }
-

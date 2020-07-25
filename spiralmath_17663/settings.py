@@ -175,16 +175,22 @@ SOCIALACCOUNT_ADAPTER = "users.adapters.SocialAccountAdapter"
 ACCOUNT_ALLOW_REGISTRATION = env.bool("ACCOUNT_ALLOW_REGISTRATION", True)
 SOCIALACCOUNT_ALLOW_REGISTRATION = env.bool("SOCIALACCOUNT_ALLOW_REGISTRATION", True)
 
-DEFAULT_FROM_EMAIL = 'natalia.baranova@crowdbotics.com'
 
-REST_AUTH_SERIALIZERS = {
-    # Replace password reset serializer to fix 500 error
-    "PASSWORD_RESET_SERIALIZER": "home.api.v1.serializers.PasswordSerializer",
+# REST_AUTH_SERIALIZERS = {
+#     # Replace password reset serializer to fix 500 error
+#     "PASSWORD_RESET_SERIALIZER": "home.api.v1.serializers.PasswordSerializer",
+# }
+# REST_AUTH_REGISTER_SERIALIZERS = {
+#     # Use custom serializer that has no username and matches web signup
+#     "REGISTER_SERIALIZER": "home.api.v1.serializers.SignupSerializer",
+# }
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100,
 }
-REST_AUTH_REGISTER_SERIALIZERS = {
-    # Use custom serializer that has no username and matches web signup
-    "REGISTER_SERIALIZER": "home.api.v1.serializers.SignupSerializer",
-}
+
 
 # Custom user model
 AUTH_USER_MODEL = "users.User"
@@ -196,6 +202,8 @@ EMAIL_HOST_USER = env.str("SENDGRID_USERNAME", "")
 EMAIL_HOST_PASSWORD = env.str("SENDGRID_PASSWORD", "")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+DEFAULT_FROM_EMAIL = 'DoNotReply@spiralmath-17663.botics.co'
 
 FRONTEND_URL = 'spiralmath-17663.botics.co'
 
