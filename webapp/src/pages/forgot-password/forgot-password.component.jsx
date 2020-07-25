@@ -19,27 +19,38 @@ const ForgotPassword = ({ show, toggleShow }) => {
       <Row>
         <Col className="mt-3">
           <LogoAboveBox />
-          <h1 className="text-center">Reset Your Password</h1>
+          <div class="form-container w-50">
+            <h1 className="text-center form-heading mb-3">
+              Reset Your Password
+            </h1>
 
-          <p className="text-center">
-            Please enter your email and we will send you an instruction email.
-          </p>
+            <p className="text-center instruction-text">
+              Please enter your email and we will send you an instruction email.
+            </p>
 
-          <Form>
-            <Form.Group controlId="formEmail">
-              <Form.Control type="email" placeholder="Email" />
-            </Form.Group>
+            <p className="text-center instruction-text second-msg">
+              We have sent you the instruction to your email to reset your password. If you do not receive an email, check your spam folder or make sure your email from SpiralMath are approved.              
+            </p>
 
-            <Button variant="primary" type="submit">
-              Send Password Reset
-            </Button>
-          </Form>
-          <p className="mt-2">
-            Have issues ?
-            <span className="text-orange pointerType" onClick={handleContactUs}>
-              Contact us
-            </span>
-          </p>
+            <Form className="text-center">
+              <Form.Group controlId="formEmail" className="relative">
+                <Form.Control type="email" className="input-style input-text"  />
+                <span class="floating-label">Email</span>
+              </Form.Group>
+
+              <Button variant="primary" type="submit"  className="custom-btn reset-pwd">
+                Send Password Reset
+              </Button>
+            </Form>
+          </div>
+          <div className="have-issue-text">
+            <p className="mt-2">
+              Have issues ?
+              <span className="text-orange pointerType" onClick={handleContactUs}>
+                Contact us
+              </span>
+            </p>
+          </div>
         </Col>
       </Row>
 

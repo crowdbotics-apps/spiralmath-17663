@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
 .App {
   text-align: center;
 }
@@ -11,6 +13,13 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+
+
+body {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
 }
 
 .App-header {
@@ -35,4 +44,276 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+
+/*logo design css*/
+.logo {
+  padding-top: 64px;
+  padding-bottom: 30px;
+}
+
+
+/*login page css start here*/
+
+.form-container {
+  background: #FFFFFF;
+  border: 1px solid #E5E5E5;
+  border-radius: 12px;
+  margin: 0 auto;
+  font-family: Open Sans;
+}
+
+h1.form-heading {  
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 26px;
+  text-align: center;
+  color: #333333;
+  padding: 25px 0;
+  font-family: Open Sans;
+  margin-bottom: 0 !important;
+}
+
+.form-container form input.input-style {
+  background: linear-gradient(0deg, #FFFFFF, #FFFFFF);
+  border: 1px solid #E5E5E5;
+  border-radius: 24px;
+  height: 48px;
+  margin-bottom: 38px;
+  padding-left: 13px;
+  font-size: 16px;
+  line-height: 22px;
+  color: #333333;
+  mix-blend-mode: normal;
+  font-family: Open Sans;
+}
+
+
+input:focus ~ .floating-label {
+  top: -16px;
+  bottom: 10px;
+  font-family: Open Sans;
+  left: 25px;
+  font-size: 14px;
+  opacity: 1;
+  background: #fff;
+  height: fit-content;
+  padding: 5px;
+}
+
+/*input:not(:focus):valid ~ .floating-label {
+  top: -16px;
+  bottom: 10px;
+  left: 25px;
+  font-size: 14px;
+  opacity: 1;
+  background: #fff;
+  height: fit-content;
+  padding: 5px;
+}
+*/
+/*.input-text {
+  font-size: 14px;
+  width: 200px;
+  height: 35px;
+}*/
+
+.floating-label {
+  position: absolute;
+  pointer-events: none;
+  left: 20px;
+  top: 10px;
+  transition: 0.2s ease all;
+  font-size: 16px;
+  line-height: 22px;
+  color: #333333;
+  mix-blend-mode: normal;
+  opacity: 0.6;
+  font-family: Open Sans;
+}
+
+
+
+.form-container form {
+  padding: 0 48px;
+}
+
+button.custom-btn {
+  border: 1px solid #E5E2E2;
+  font-family: Open Sans;
+  border-radius: 23px;
+  width: 100%;
+  background-color: inherit;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 22px;
+  color: #B9B9B9;
+  margin-bottom: 38px;
+  height: 48px;
+}
+
+
+.login-text {
+  font-size: 14px;
+  line-height: 19px;
+  text-align: center;
+  color: #8D8D8D;
+  margin-bottom: 35px;
+  font-family: Open Sans;
+}
+
+.text-orange {
+  color: #f1a139;
+  font-family: Open Sans;
+}
+
+.relative {
+  position: relative;
+  font-family: Open Sans;
+}
+
+.have-issue-text p {
+  font-size: 14px;
+  line-height: 19px;
+  text-align: center;
+  color: #8D8D8D;
+  padding-top: 35px;
+  font-family: Open Sans;
+}
+
+.fluid.footer {
+  width: 100%;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  color: #B9B9B9;
+  left: 0;
+  font-family: Open Sans;
+}
+
+.eye-icon {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-family: Open Sans;
+}
+
+.error-msg {
+  margin: 20px auto;
+  font-family: Open Sans;
+}
+
+.error-msg p {
+  font-size: 16px;
+  line-height: 22px;
+  text-align: center;
+  color: #FF3D3D;
+  margin-bottom: 0;
+  font-family: Open Sans;
+}
+
+/*signup page css start here*/
+.signup-checkbox {
+  display: flex;
+  position: relative;
+  padding-left: 25px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  text-align: left;
+  margin-bottom: 38px;
+  font-family: Open Sans;
+}
+
+/* Hide the browser's default checkbox */
+.signup-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 16px;
+  width: 16px;
+  left: 20px;
+  top: -5px;
+  z-index: 9;
+  font-family: Open Sans;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 16px;
+  width: 16px;
+  border: 1px solid #B9B9B9;
+  border-radius: 2px;
+  font-family: Open Sans;
+}
+
+.signup-checkbox label {
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: -0.1px;
+  color: #8D8D8D;
+  font-family: Open Sans;
+}
+
+.signup-checkbox span.tou {
+  font-size: 13px;
+  font-family: Open Sans;
+}
+
+
+/* When the checkbox is checked, add a blue background */
+.signup-checkbox input:checked ~ .checkmark {
+  background-color: #f1a139;
+  border-radius: 2px;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.signup-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.signup-checkbox .checkmark:after {
+  left: 5px;
+  top: 0;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.instruction-text {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 22px;
+  text-align: center;
+  color: #8D8D8D;
+  margin-bottom: 38px;
+}
+
+.reset-pwd {
+  margin-bottom: 70px !important;
+}
+
+.second-msg {
+  padding: 0 48px;
 }
