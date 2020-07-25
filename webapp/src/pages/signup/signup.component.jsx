@@ -152,11 +152,11 @@ const SignUp = ({ show, toggleShow }) => {
       <Row>
         <Col className="mt-3">
           <LogoAboveBox />
-          <div class="w-75 error-msg">
+          <div className="w-75 error-msg">
             <p className="text-center">The Password does not match!</p>
           </div>
 
-          <div class="form-container w-50">
+          <div className="form-container w-50">
             <h1 className="text-center mb-3 form-heading">
               Create Your Account
             </h1>
@@ -167,7 +167,7 @@ const SignUp = ({ show, toggleShow }) => {
                   type="password"
                   className="input-style input-text"
                 />
-                <span class="floating-label">Create Password</span>
+                <span className="floating-label">Create Password</span>
                 <span className="eye-icon">
                   <svg
                     width="21"
@@ -191,7 +191,7 @@ const SignUp = ({ show, toggleShow }) => {
                   type="password"
                   className="input-style input-text"
                 />
-                <span class="floating-label">Confirm Password</span>
+                <span className="floating-label">Confirm Password</span>
                 <span className="eye-icon">
                   <svg
                     width="21"
@@ -211,12 +211,12 @@ const SignUp = ({ show, toggleShow }) => {
               </Form.Group>
 
               <Form.Group className="ml-4" controlId="formBasicCheckbox">
-                <div class="signup-checkbox">
+                <div className="signup-checkbox">
                   <Form.Check.Input type="checkbox" />
                   <Form.Check.Label>
                     I have read and accepts the &nbsp;
                   </Form.Check.Label>
-                  <span class="checkmark"></span>
+                  <span className="checkmark"></span>
                   <span
                     className="text-orange tou pointerType"
                     onClick={handleTermsOfUse}

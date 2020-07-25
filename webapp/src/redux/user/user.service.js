@@ -7,7 +7,7 @@ const login = (email, password) => {
     body: JSON.stringify({ email, password }),
   };
 
-  return fetch(`${process.env.REACT_APP_API_URL}/users/login`, requestOptions)
+  return fetch(`${process.env.REACT_APP_API_URL}/auth/login/`, requestOptions)
     .then(handleResponse)
     .then((user) => {
       // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -18,20 +18,30 @@ const login = (email, password) => {
 };
 
 const logout = () => {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+  };
   // remove user from local storage to log user out
   localStorage.removeItem("user");
+  return fetch(`${process.env.REACT_APP_API_URL}/auth/logout/`, requestOptions)
+    .then(handleResponse)
+    .catch((error) => {
+      // store user details and jwt token in local storage to keep user logged in between page refreshes
+      return error;
+    });
 };
 
-function getAll() {
+const getAllUsers = () => {
   const requestOptions = {
     method: "GET",
     headers: authHeader(),
   };
 
-  return fetch(`${process.env.REACT_APP_API_URL}/users`, requestOptions).then(
+  return fetch(`${process.env.REACT_APP_API_URL}/user`, requestOptions).then(
     handleResponse
   );
-}
+};
 
 function getById(id) {
   const requestOptions = {
@@ -106,4 +116,5 @@ export const userService = {
   login,
   logout,
   register,
+  getAllUsers,
 };

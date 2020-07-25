@@ -31,7 +31,6 @@ const login = (email, password) => {
     userService.login(email, password).then(
       (user) => {
         dispatch(success(user));
-        history.push("/");
       },
       (error) => {
         dispatch(failure(error.toString()));
@@ -42,8 +41,12 @@ const login = (email, password) => {
 };
 
 const logout = () => {
-  userService.logout();
-  return { type: userTypes.LOGOUT };
+  return (dispatch) => {
+    userService
+      .logout()
+      .catch((error) => dispatch(alertActions.error(error.toString())));
+    dispatch({ type: userTypes.LOGOUT });
+  };
 };
 
 const register = (user) => {
@@ -74,6 +77,27 @@ const register = (user) => {
   };
 };
 
+const getAllUsers = () => {
+  return (dispatch) => {
+    dispatch(request());
+
+    userService.getAllUsers().then(
+      (users) => dispatch(success(users)),
+      (error) => dispatch(failure(error.toString()))
+    );
+  };
+
+  function request() {
+    return { type: userTypes.GETALL_REQUEST };
+  }
+  function success(users) {
+    return { type: userTypes.GETALL_SUCCESS, users };
+  }
+  function failure(error) {
+    return { type: userTypes.GETALL_FAILURE, error };
+  }
+};
+
 export const alertActions = {
   success,
   error,
@@ -84,4 +108,5 @@ export const userActions = {
   login,
   logout,
   register,
+  getAllUsers,
 };

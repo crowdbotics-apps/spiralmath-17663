@@ -1,8 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+
+import { userActions } from "../../redux/user/user.actions";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const loggedIn = useSelector(
+    (state) => state.authentication && state.authentication.loggedIn
+  );
+
+  const handleLogout = () => {
+    dispatch(userActions.logout());
+  };
+
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand href="#home">SpiralMath</Navbar.Brand>
@@ -23,12 +35,21 @@ const Header = () => {
             </NavDropdown.Item>
           </NavDropdown>
         </Nav>
-        <Link to="/signup">
-          <Button>Signup</Button>
-        </Link>
-        <Link to="/login">
-          <Button className="ml-2">Login</Button>
-        </Link>
+        {loggedIn ? (
+          <Button className="ml-2" onClick={handleLogout}>
+            Logout
+          </Button>
+        ) : (
+          <React.Fragment>
+            {" "}
+            <Link to="/signup">
+              <Button>Signup</Button>
+            </Link>
+            <Link to="/login">
+              <Button>Login</Button>
+            </Link>
+          </React.Fragment>
+        )}
       </Navbar.Collapse>
     </Navbar>
   );
