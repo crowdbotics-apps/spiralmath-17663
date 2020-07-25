@@ -1,30 +1,30 @@
 import { alertTypes, userTypes } from "./user.types";
+import { userService } from "./user.service";
+import { history } from "../../helpers/history";
 
-export const alertTypes = {
-  success,
-  error,
-  clear,
-};
-
-success = (message) => {
+const success = (message) => {
   return { type: alertTypes.SUCCESS, message };
 };
 
-error = (message) => {
+const error = (message) => {
   return { type: alertTypes.ERROR, message };
 };
 
-clear = () => {
+const clear = () => {
   return { type: alertTypes.CLEAR };
 };
 
-export const userActions = {
-  login,
-  logout,
-  register,
-};
+const login = (email, password) => {
+  const request = (user) => {
+    return { type: userTypes.LOGIN_REQUEST, user };
+  };
+  const success = (user) => {
+    return { type: userTypes.LOGIN_SUCCESS, user };
+  };
+  const failure = (error) => {
+    return { type: userTypes.LOGIN_FAILURE, error };
+  };
 
-login = (email, password) => {
   return (dispatch) => {
     dispatch(request({ email }));
 
@@ -39,28 +39,28 @@ login = (email, password) => {
       }
     );
   };
-
-  request = (user) => {
-    return { type: userTypes.LOGIN_REQUEST, user };
-  };
-  success = (user) => {
-    return { type: userTypes.LOGIN_SUCCESS, user };
-  };
-  failure = (error) => {
-    return { type: userTypes.LOGIN_FAILURE, error };
-  };
 };
 
-logout = () => {
+const logout = () => {
   userService.logout();
   return { type: userTypes.LOGOUT };
 };
 
-signup = (user) => {
+const register = (user) => {
+  const request = (user) => {
+    return { type: userTypes.REGISTER_REQUEST, user };
+  };
+  const success = (user) => {
+    return { type: userTypes.REGISTER_SUCCESS, user };
+  };
+  const failure = (error) => {
+    return { type: userTypes.REGISTER_FAILURE, error };
+  };
+
   return (dispatch) => {
     dispatch(request(user));
 
-    userService.signup(user).then(
+    userService.register(user).then(
       (user) => {
         dispatch(success());
         history.push("/login");
@@ -72,14 +72,16 @@ signup = (user) => {
       }
     );
   };
+};
 
-  request = (user) => {
-    return { type: userTypes.REGISTER_REQUEST, user };
-  };
-  success = (user) => {
-    return { type: userTypes.REGISTER_SUCCESS, user };
-  };
-  failure = (error) => {
-    return { type: userTypes.REGISTER_FAILURE, error };
-  };
+export const alertActions = {
+  success,
+  error,
+  clear,
+};
+
+export const userActions = {
+  login,
+  logout,
+  register,
 };

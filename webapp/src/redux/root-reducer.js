@@ -2,7 +2,12 @@ import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import userReducer from "./user/user.reducer";
+import {
+  alert,
+  authentication,
+  registration,
+  users,
+} from "./user/user.reducer";
 import modalReducer from "./modals/modals.reducer";
 
 const persistConfig = {
@@ -12,7 +17,10 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  user: userReducer,
+  alert,
+  authentication,
+  registration,
+  users,
   modal: modalReducer,
 });
 
