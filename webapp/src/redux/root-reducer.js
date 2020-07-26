@@ -6,6 +6,7 @@ import {
   alert,
   authentication,
   registration,
+  confirmation,
   users,
 } from "./user/user.reducer";
 import modalReducer from "./modals/modals.reducer";
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   alert,
   authentication,
   registration,
+  confirmation,
   users,
   modal: modalReducer,
 });

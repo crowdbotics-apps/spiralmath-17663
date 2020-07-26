@@ -38,7 +38,7 @@ const getAllUsers = () => {
   //   // headers: authHeader(),
   // };
 
-  return fetch(`${process.env.REACT_APP_API_URL}/user`).then(handleResponse);
+  return fetch(`${process.env.REACT_APP_API_URL}/user/`).then(handleResponse);
 };
 
 function getById(id) {
@@ -60,7 +60,18 @@ const register = (user) => {
     body: JSON.stringify(user),
   };
 
-  return fetch(`${process.env.REACT_APP_API_URL}/user`, requestOptions).then(
+  return fetch(`${process.env.REACT_APP_API_URL}/user/`, requestOptions).then(
+    handleResponse
+  );
+};
+const confirmUser = (user) => {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(user),
+  };
+
+  return fetch(`${process.env.REACT_APP_API_URL}/user/`, requestOptions).then(
     handleResponse
   );
 };
@@ -114,4 +125,5 @@ export const userService = {
   logout,
   register,
   getAllUsers,
+  confirmUser,
 };

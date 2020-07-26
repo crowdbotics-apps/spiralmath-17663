@@ -77,6 +77,33 @@ const register = (user) => {
   };
 };
 
+const confirmUser = (user) => {
+  const request = (user) => {
+    return { type: userTypes.CONFIRMATION_REQUEST, user };
+  };
+  const success = (user) => {
+    return { type: userTypes.CONFIRMATION_SUCCESS, user };
+  };
+  const failure = (error) => {
+    return { type: userTypes.CONFIRMATION_FAILURE, error };
+  };
+
+  return (dispatch) => {
+    dispatch(request(user));
+
+    userService.confirmUser(user).then(
+      (user) => {
+        dispatch(success());
+        dispatch(alertActions.success("Registration successful"));
+      },
+      (error) => {
+        dispatch(failure(error.toString()));
+        dispatch(alertActions.error(error.toString()));
+      }
+    );
+  };
+};
+
 const getAllUsers = () => {
   return (dispatch) => {
     dispatch(request());
@@ -109,4 +136,5 @@ export const userActions = {
   logout,
   register,
   getAllUsers,
+  confirmUser,
 };

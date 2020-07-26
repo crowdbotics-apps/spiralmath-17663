@@ -101,7 +101,7 @@ const Login = ({ show, toggleShow }) => {
                 />
                 <span className="floating-label">Email</span>
                 {submitted && errors.email && (
-                  <div className="invalid-feedback">{errors.email}</div>
+                  <div className="text-danger">{errors.email}</div>
                 )}
               </Form.Group>
 
@@ -131,7 +131,7 @@ const Login = ({ show, toggleShow }) => {
                   </svg>
                 </span>
                 {submitted && errors.password && (
-                  <div className="invalid-feedback">{errors.password}</div>
+                  <div className="text-danger">{errors.password}</div>
                 )}
               </Form.Group>
 

@@ -57,6 +57,19 @@ export const registration = (state = {}, action) => {
   }
 };
 
+export const confirmation = (state = {}, action) => {
+  switch (action.type) {
+    case userTypes.CONFIRMATION_REQUEST:
+      return { confirming: true };
+    case userTypes.CONFIRMATION_SUCCESS:
+      return {};
+    case userTypes.CONFIRMATION_FAILURE:
+      return {};
+    default:
+      return state;
+  }
+};
+
 let initialUsersState = {
   count: 3,
   next: null,
