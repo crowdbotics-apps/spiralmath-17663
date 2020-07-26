@@ -5,9 +5,9 @@ import { ReactComponent as Logo } from "../../assets/img/logo.svg";
 const LogoAboveBox = () => {
   return (
     <h4 className="text-center">
-    	<div class="logo">
-      		<Logo />    		
-    	</div>
+      <div className="logo">
+        <Logo />
+      </div>
     </h4>
   );
 };
