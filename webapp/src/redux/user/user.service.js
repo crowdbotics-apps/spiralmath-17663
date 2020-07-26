@@ -33,14 +33,12 @@ const logout = () => {
 };
 
 const getAllUsers = () => {
-  const requestOptions = {
-    method: "GET",
-    headers: authHeader(),
-  };
+  // const requestOptions = {
+  //   method: "GET",
+  //   // headers: authHeader(),
+  // };
 
-  return fetch(`${process.env.REACT_APP_API_URL}/user`, requestOptions).then(
-    handleResponse
-  );
+  return fetch(`${process.env.REACT_APP_API_URL}/user`).then(handleResponse);
 };
 
 function getById(id) {
@@ -62,10 +60,9 @@ const register = (user) => {
     body: JSON.stringify(user),
   };
 
-  return fetch(
-    `${process.env.REACT_APP_API_URL}/users/signup`,
-    requestOptions
-  ).then(handleResponse);
+  return fetch(`${process.env.REACT_APP_API_URL}/user`, requestOptions).then(
+    handleResponse
+  );
 };
 
 function update(user) {

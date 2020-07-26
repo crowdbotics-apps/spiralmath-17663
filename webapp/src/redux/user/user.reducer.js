@@ -57,7 +57,45 @@ export const registration = (state = {}, action) => {
   }
 };
 
-export const users = (state = {}, action) => {
+let initialUsersState = {
+  count: 3,
+  next: null,
+  previous: null,
+  results: [
+    {
+      id: 15,
+      email: "testing-editor@example.com",
+      first_name: "testing-editor",
+      last_name: "testing-editor",
+      user_type: null,
+      role: "Editor",
+      status: 10,
+      username: "testing-editor@example.com",
+    },
+    {
+      id: 1,
+      email: "david.robson@spiralmath.net",
+      first_name: "david",
+      last_name: "robson",
+      user_type: null,
+      role: "Admin",
+      status: 10,
+      username: "david.robson@spiralmath.net",
+    },
+    {
+      id: 10,
+      email: "idigitalbrick@gmail.com",
+      first_name: "test-admin",
+      last_name: "test-admin",
+      user_type: null,
+      role: "Admin",
+      status: 10,
+      username: "idigitalbrick@gmail.com",
+    },
+  ],
+};
+
+export const users = (state = initialUsersState, action) => {
   switch (action.type) {
     case userTypes.GETALL_REQUEST:
       return {

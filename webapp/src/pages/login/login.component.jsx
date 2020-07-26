@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { useDispatch, useSelector } from "react-redux";
 
-import validate from "../../helpers/validateLogin";
+import validate from "../../helpers/validation/validateLogin";
 import { useHistory } from "react-router-dom";
 import { userActions } from "../../redux/user/user.actions";
 import { alertActions } from "../../redux/user/user.actions";
@@ -41,6 +41,12 @@ const Login = ({ show, toggleShow }) => {
     }
   }, [loggedIn]);
 
+  useEffect(() => {
+    if (Object.keys(errors).length === 0 && submitted) {
+      submit();
+    }
+  }, [errors]);
+
   function handleChange(e) {
     const { name, value } = e.target;
     setInputs((inputs) => ({ ...inputs, [name]: value }));
@@ -50,11 +56,14 @@ const Login = ({ show, toggleShow }) => {
     e.preventDefault();
     setErrors(validate(inputs));
     setSubmitted(true);
+  }
+
+  const submit = () => {
     if (email && password) {
       dispatch(userActions.login(email, password));
     }
     setInputs({ email: "", password: "" });
-  }
+  };
 
   const handlePasswordVisibility = () => {
     if (passwordType === "password") setPasswordType("text");
