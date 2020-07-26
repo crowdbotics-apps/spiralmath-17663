@@ -8,26 +8,30 @@ import { toggleShow } from "../../redux/modals/modals.actions";
 
 const ContactUs = ({ show, toggleShow }) => {
   return (
-    <Modal show={show} onHide={toggleShow}>
-      <Modal.Header closeButton>
-        <Modal.Title>Contact Us</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form>
-          <Form.Group controlId="formEmail">
-            <Form.Control type="email" placeholder="email" />
-          </Form.Group>
+    <Modal show={show} onHide={toggleShow} className="contactus-popup">
+      <div>
+        <Modal.Header closeButton>
+          <Modal.Title>Contact Us</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="formEmail" className="relative">
+              <Form.Control type="email" className="input-style input-text" />
+              <span class="floating-label">Email</span>
+            </Form.Group>
 
-          <Form.Group controlId="formMessage">
-            <Form.Control type="textarea" placeholder="message" />
-          </Form.Group>
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="primary" onClick={toggleShow}>
-          Submit
-        </Button>
-      </Modal.Footer>
+            <Form.Group controlId="formMessage" className="relative">
+              <Form.Control type="textarea" className="input-style input-text" />
+              <span class="floating-label">Message</span>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={toggleShow} className="text-center custom-btn">
+            Submit
+          </Button>
+        </Modal.Footer>
+      </div>
     </Modal>
   );
 };
