@@ -92,15 +92,17 @@ h1.form-heading {
 
 
 input:focus ~ .floating-label {
-  top: -16px;
+  top: -13px;
   bottom: 10px;
   font-family: Open Sans;
   left: 25px;
-  font-size: 14px;
   opacity: 1;
   background: #fff;
   height: fit-content;
   padding: 5px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #8D8D8D;
 }
 
 /*input:not(:focus):valid ~ .floating-label {
@@ -367,15 +369,17 @@ form input.input-style {
 
 
 input:focus ~ .floating-label, input:focus-within ~ .floating-label, input:active ~ .floating-label {
-  top: -16px;
+  top: -13px;
   bottom: 10px;
   font-family: Open Sans;
   left: 25px;
-  font-size: 14px;
   opacity: 1;
   background: #fff;
   height: fit-content;
   padding: 5px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #8D8D8D;
 }
 
 /*input:not(:focus):valid ~ .floating-label {
@@ -495,4 +499,3 @@ input:focus {
     top: 0 !important
   }
 }
-
