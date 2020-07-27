@@ -1,11 +1,14 @@
-from rest_framework import exceptions, mixins, permissions, viewsets
+from rest_framework import exceptions, mixins, viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.generics import get_object_or_404
 from rest_framework.decorators import action
-from rest_framework.exceptions import ValidationError, PermissionDenied
+from rest_framework.exceptions import ValidationError, PermissionDenied, NotFound
+from rest_framework.response import Response
+from rest_framework import status
 from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError as DjangoValidationError
 from home.api.v1.serializer.auth import SignupSerializer
+from home.api.v1.serializer.user import ResetPasswordSerializer, InvitationSerializer, UserEditorUpdate
 from home.api.v1.view.auth import internal_login
 
 from home.api.v1.serializer.user import (
@@ -66,7 +69,6 @@ class UserViewSet(
             create                  UserCreate
         """
         if self.request.user.is_anonymous and AllowAny in self.permission_classes:
-            print("d1")
             kwargs['context'] = self.get_serializer_context()
             return self.serializer_class(*args, **kwargs)
         invoker_role = self.request.user.role
@@ -86,12 +88,12 @@ class UserViewSet(
                 serializer_class = UserList
             elif self.action == 'retrieve':
                 if updating_role in {User.ROLE.ADMIN, User.ROLE.EDITOR}:
-                    serializer_class = UserUpdate
+                    serializer_class = UserSerializerBase
                 else:
                     serializer_class = None
             elif self.action in {'update', 'partial_update'}:
                 if updating_role in {User.ROLE.ADMIN, User.ROLE.EDITOR}:
-                    serializer_class = None  # Admin edit form is the same for both roles  # TODO for Natali
+                    serializer_class = UserUpdate  # TODO for Natali
                 else:
                     serializer_class = None
             elif self.action == 'create':
@@ -101,9 +103,9 @@ class UserViewSet(
                     serializer_class = None
         elif invoker_role == User.ROLE.EDITOR:
             if self.action == 'retrieve':
-                serializer_class = None  # TODO for Natali
+                serializer_class = UserSerializerBase  # TODO for Natali
             elif self.action in {'update', 'partial_update'}:
-                serializer_class = None  # TODO for Natali
+                serializer_class = UserEditorUpdate  # TODO for Natali
             elif self.action in {'list', 'create'}:
                 serializer_class = None  # TODO for Natali it's correct
         else:
@@ -135,3 +137,45 @@ class UserViewSet(
         user.save()
         # authenticate new user and respond default /auth content
         return internal_login(request, user.username, new_password)
+
+    @action(
+        detail=False,
+        methods=['post'],
+        url_path='reset-password',
+        permission_classes=[AllowAny],
+        serializer_class=ResetPasswordSerializer,
+    )
+    def reset_password(self, request):
+        """Password reset functional."""
+        user = User.objects.filter(status=User.STATUS.ACTIVE, email=request.data['email']).first()
+        if user:
+            user.send_confirmation_email()
+        return Response(
+            data={
+                'detail': 'Password reset instructions have been sent to you if you have an account.',
+            },
+        )
+
+    @action(detail=False, methods=['post'], url_path='send-invitation', serializer_class=InvitationSerializer)
+    def send_invitation(self, request):
+        """Re-send invitation to user."""
+        if self.request.user.role == User.ROLE.ADMIN:
+            to_user = User.objects.filter(id=request.data['id']).first()
+            if to_user:
+                if to_user.status == User.STATUS.ACTIVE:
+                    return Response(
+                        data={
+                            'detail': 'This user is already activated.',
+                        },
+                        status=status.HTTP_403_FORBIDDEN,
+                    )
+                if to_user.send_invitation_email():
+                    to_user.status = User.STATUS.INVITATION
+                    to_user.save()
+                    return Response(
+                        data={
+                            'detail': 'Invitation instructions have been sent to the user.',
+                        },
+                    )
+            raise NotFound
+        raise PermissionDenied
