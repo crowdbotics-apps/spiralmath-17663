@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError as DjangoValidationError
+from django.utils import timezone
 from home.api.v1.serializer.auth import SignupSerializer
 from home.api.v1.serializer.user import ResetPasswordSerializer, InvitationSerializer, UserEditorUpdate
 from home.api.v1.view.auth import internal_login
@@ -132,7 +133,9 @@ class UserViewSet(
         token = token.strip()
         user = get_object_or_404(self.queryset, emailConfirmationToken=token)
         user.emailConfirmationToken = None
-        user.status = User.STATUS.ACTIVE
+        if serializer.data['signUp']:
+            user.accepted_terms_date = timezone.now().date()
+            user.status = User.STATUS.ACTIVE
         user.set_password(new_password)
         user.save()
         # authenticate new user and respond default /auth content
