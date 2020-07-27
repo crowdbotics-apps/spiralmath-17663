@@ -1,14 +1,9 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError, PermissionDenied
 from typing import List
 
 User = get_user_model()
-
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['id', 'email', 'user_type', 'first_name', 'last_name', 'status', 'role', 'accepted_terms_date']
 
 
 class UserSerializerBase(serializers.ModelSerializer):
@@ -24,6 +19,7 @@ class UserSerializerBase(serializers.ModelSerializer):
             'user_type',
             'accepted_terms_date',
             'role',
+            'status',
         ]
         read_only_fields: List[str] = ['created', 'modified']
 
@@ -36,7 +32,7 @@ class UserList(UserSerializerBase):
     """List any users Serializer."""
 
     class Meta(UserSerializerBase.Meta):
-        fields = UserSerializerBase.Meta.fields + ['status', 'username']
+        fields = UserSerializerBase.Meta.fields + ['status']
 
 
 class UserCreate(UserSerializerBase):
@@ -60,14 +56,23 @@ class UserUpdate(UserSerializerBase):
     """Update a user Serializer."""
 
     class Meta(UserSerializerBase.Meta):
-        fields = ['role', 'user_type']
+        fields = ['first_name', 'last_name', 'role', 'user_type', 'status']
+
+    def update(self, instance, validated_data):
+        """Admin update user."""
+        if validated_data['status'] == User.STATUS.INVITATION:
+            raise ValidationError(detail={'status': ['This status is not available.']})
 
 
 class UserEditorUpdate(UserSerializerBase):
     """Update a user with Role Editor Serializer."""
 
     class Meta(UserSerializerBase.Meta):
-        fields = ['first_name', 'last_name']
+        read_only_fields = UserSerializerBase.Meta.fields
+
+    def update(self, instance, validated_data):
+        """Editor is not allowed edit self."""
+        raise PermissionDenied
 
 
 class ResetPasswordSerializer(serializers.Serializer):
@@ -81,3 +86,9 @@ class InvitationSerializer(serializers.Serializer):
 
     id = serializers.IntegerField(required=True)
 
+
+class ContactUsSerializer(serializers.Serializer):
+    """For user contact-us."""
+
+    email = serializers.EmailField()
+    message = serializers.CharField(required=True)
