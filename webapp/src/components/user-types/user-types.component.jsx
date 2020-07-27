@@ -176,7 +176,7 @@ const UserTypes = () => {
                       />
                     </svg>
                   </span>
-                  <b>Create User</b>
+                  <b>Create User Type</b>
                 </th>
               </tr>
             </thead>

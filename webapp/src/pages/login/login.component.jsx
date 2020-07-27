@@ -4,9 +4,10 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import validate from "../../helpers/validation/validateLogin";
-import { useHistory } from "react-router-dom";
+
 import { userActions } from "../../redux/user/user.actions";
 import { alertActions } from "../../redux/user/user.actions";
 import { selectShow } from "../../redux/modals/modal.select";

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Row, Col, Table, Form, Button } from "react-bootstrap";
 
+import Pagination from "../Pagination/pagination.component";
 import { userActions } from "../../redux/user/user.actions";
 import { validateCreateUser } from "../../helpers/validation/validateCreateUser";
 import "./users-tab.styles.css";
@@ -66,6 +67,16 @@ const UsersTab = () => {
         buttons,
       })
     );
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage] = useState(1);
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers =
+    usersListArrayPreview &&
+    usersListArrayPreview.slice(indexOfFirstUser, indexOfLastUser);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const [errors, setErrors] = useState({});
 
@@ -255,8 +266,8 @@ const UsersTab = () => {
                 </tr>
               </thead>
               <tbody>
-                {usersListArrayPreview ? (
-                  usersListArrayPreview.map(
+                {currentUsers ? (
+                  currentUsers.map(
                     ({ id, name, email, role, status, buttons }) => {
                       return (
                         <tr key={id}>
@@ -289,6 +300,11 @@ const UsersTab = () => {
                 )}
               </tbody>
             </Table>
+            <Pagination
+              usersPerPage={usersPerPage}
+              totalUsers={usersListArrayPreview.length}
+              paginate={paginate}
+            />
           </div>
         </Col>
       </Row>
