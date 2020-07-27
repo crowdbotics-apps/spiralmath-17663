@@ -20,7 +20,8 @@ export const alert = (state = {}, action) => {
   }
 };
 
-let user = JSON.parse(localStorage.getItem("user"));
+const localStorageUser = localStorage.getItem("user");
+let user = localStorageUser !== 'undefined' ? JSON.parse(localStorageUser) : null;
 const initialState = user ? { loggedIn: true, user } : {};
 
 export const authentication = (state = initialState, action) => {
