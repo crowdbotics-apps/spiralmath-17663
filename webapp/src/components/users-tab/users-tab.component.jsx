@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Row, Col, Table, Form, Button } from "react-bootstrap";
 
-import Pagination from "../Pagination/pagination.component";
+import Pagination from "../pagination/pagination.component";
 import { userActions } from "../../redux/user/user.actions";
 import { validateCreateUser } from "../../helpers/validation/validateCreateUser";
 import "./users-tab.styles.css";

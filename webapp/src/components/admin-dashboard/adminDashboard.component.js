@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 
-import DashboardBox from "../dashboardBox/dashboardBox.component";
+import DashboardBox from "../dashboard-box/dashboardBox.component";
 
 const AdminDashboard = () => {
   const questions = [

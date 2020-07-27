@@ -5,7 +5,7 @@ import { Tabs, Tab, Navbar, Nav } from "react-bootstrap";
 import "./dashboard.styles.css";
 import { ReactComponent as Logo } from "../../assets/img/logo.svg";
 
-import AdminDashboard from "../../components/adminDashboard/adminDashboard.component";
+import AdminDashboard from "../../components/admin-dashboard/adminDashboard.component";
 import UsersTab from "../../components/users-tab/users-tab.component";
 import UserTypes from "../../components/user-types/user-types.component";
 import Settings from "../../components/settings/settings.component";
