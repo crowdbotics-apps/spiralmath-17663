@@ -70,6 +70,32 @@ export const confirmation = (state = {}, action) => {
   }
 };
 
+export const reset = (state = {}, action) => {
+  switch (action.type) {
+    case userTypes.RESET_REQUEST:
+      return { reseting: true };
+    case userTypes.RESET_SUCCESS:
+      return {};
+    case userTypes.RESET_FAILURE:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const contactUs = (state = {}, action) => {
+  switch (action.type) {
+    case userTypes.CONTACT_REQUEST:
+      return { contacting: true };
+    case userTypes.CONTACT_SUCCESS:
+      return {};
+    case userTypes.CONTACT_FAILURE:
+      return {};
+    default:
+      return state;
+  }
+};
+
 let initialUsersState = {
   count: 3,
   next: null,

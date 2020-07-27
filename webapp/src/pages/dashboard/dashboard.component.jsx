@@ -166,7 +166,7 @@ const Dashboard = () => {
     firstName: "",
     lastName: "",
     email: "",
-    role: "Author",
+    role: "",
   });
   const [submitted, setSubmitted] = useState(false);
   const registering = useSelector((state) => state.registration.registering);
@@ -179,17 +179,8 @@ const Dashboard = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    setErrors(validateCreateUser(userForm));
+    console.log(userForm.role);
     setSubmitted(true);
-  }
-
-  useEffect(() => {
-    if (Object.keys(errors).length === 0 && submitted) {
-      submit();
-    }
-  }, [errors]);
-
-  const submit = () => {
     if (
       userForm.firstName &&
       userForm.lastName &&
@@ -197,9 +188,8 @@ const Dashboard = () => {
       userForm.role
     ) {
       dispatch(userActions.register(userForm));
-      setUserForm({ firstName: "", lastName: "", email: "", role: "Author" });
     }
-  };
+  }
 
   const [closeForm, setCloseForm] = useState(true);
 

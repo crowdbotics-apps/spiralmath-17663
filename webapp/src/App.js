@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
+import PrivateRoute from "./components/private-route/private-route.component";
 import SignUp from "./pages/signup/signup.component";
 import Login from "./pages/login/login.component";
 import ForgotPassword from "./pages/forgot-password/forgot-password.component";
@@ -16,7 +17,7 @@ function App() {
     <Container>
       <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/dashboard" exact component={Dashboard} />
+        <PrivateRoute path="/dashboard" exact component={Dashboard} />
         <Route path="/signup" exact component={SignUp} />
         <Route path="/login" exact component={Login} />
         <Route path="/forgot-password" exact component={ForgotPassword} />

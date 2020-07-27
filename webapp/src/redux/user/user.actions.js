@@ -78,8 +78,8 @@ const register = (user) => {
 };
 
 const confirmUser = (user) => {
-  const request = (user) => {
-    return { type: userTypes.CONFIRMATION_REQUEST, user };
+  const request = () => {
+    return { type: userTypes.CONFIRMATION_REQUEST };
   };
   const success = (user) => {
     return { type: userTypes.CONFIRMATION_SUCCESS, user };
@@ -89,12 +89,65 @@ const confirmUser = (user) => {
   };
 
   return (dispatch) => {
-    dispatch(request(user));
+    dispatch(request());
 
     userService.confirmUser(user).then(
       (user) => {
         dispatch(success());
         dispatch(alertActions.success("Registration successful"));
+      },
+      (error) => {
+        dispatch(failure(error.toString()));
+        dispatch(alertActions.error(error.toString()));
+      }
+    );
+  };
+};
+
+const resetPassword = (email) => {
+  const request = () => {
+    return { type: userTypes.RESET_REQUEST };
+  };
+  const success = () => {
+    return { type: userTypes.RESET_SUCCESS };
+  };
+  const failure = (error) => {
+    return { type: userTypes.RESET_FAILURE, error };
+  };
+
+  return (dispatch) => {
+    dispatch(request());
+
+    userService.resetPassword(email).then(
+      (email) => {
+        dispatch(success());
+        dispatch(alertActions.success("Reset password successful"));
+      },
+      (error) => {
+        dispatch(failure(error.toString()));
+        dispatch(alertActions.error(error.toString()));
+      }
+    );
+  };
+};
+
+export const contactUs = (email, message) => {
+  const request = () => {
+    return { type: userTypes.CONTACT_REQUEST };
+  };
+  const success = (data) => {
+    return { type: userTypes.CONTACT_SUCCESS, data };
+  };
+  const failure = (error) => {
+    return { type: userTypes.CONTACT_FAILURE, error };
+  };
+
+  return (dispatch) => {
+    dispatch(request());
+
+    userService.contactUs(email, message).then(
+      (data) => {
+        dispatch(success(data));
       },
       (error) => {
         dispatch(failure(error.toString()));
@@ -137,4 +190,6 @@ export const userActions = {
   register,
   getAllUsers,
   confirmUser,
+  resetPassword,
+  contactUs,
 };

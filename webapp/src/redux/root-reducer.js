@@ -8,6 +8,8 @@ import {
   registration,
   confirmation,
   users,
+  reset,
+  contactUs,
 } from "./user/user.reducer";
 import modalReducer from "./modals/modals.reducer";
 
@@ -22,7 +24,9 @@ const rootReducer = combineReducers({
   authentication,
   registration,
   confirmation,
+  reset,
   users,
+  contactUs,
   modal: modalReducer,
 });
 

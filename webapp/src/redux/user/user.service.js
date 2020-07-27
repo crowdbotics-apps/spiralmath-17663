@@ -76,6 +76,30 @@ const confirmUser = (user) => {
   );
 };
 
+const resetPassword = (email) => {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  };
+
+  return fetch(`${process.env.REACT_APP_API_URL}/user/`, requestOptions).then(
+    handleResponse
+  );
+};
+
+export const contactUs = (data) => {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  };
+
+  return fetch(`${process.env.REACT_APP_API_URL}/user/`, requestOptions).then(
+    handleResponse
+  );
+};
+
 function update(user) {
   const requestOptions = {
     method: "PUT",
@@ -126,4 +150,6 @@ export const userService = {
   register,
   getAllUsers,
   confirmUser,
+  resetPassword,
+  contactUs,
 };

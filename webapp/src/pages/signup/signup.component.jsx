@@ -36,6 +36,7 @@ const SignUp = ({ show, toggleShow }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser((user) => ({ ...user, [name]: value }));
+    setErrors({ ...errors, [name]: "" });
   };
 
   const handleSubmit = (e) => {
@@ -167,7 +168,7 @@ const SignUp = ({ show, toggleShow }) => {
               Create Your Account
             </h1>
 
-            <Form className="text-center" onSubmit={handleSubmit}>
+            <Form className="text-center" onSubmit={handleSubmit} noValidate>
               <Form.Group controlId="formPassword" className="relative">
                 <Form.Control
                   type="password"

@@ -50,6 +50,7 @@ const Login = ({ show, toggleShow }) => {
   function handleChange(e) {
     const { name, value } = e.target;
     setInputs((inputs) => ({ ...inputs, [name]: value }));
+    setErrors({ ...errors, [name]: "" });
   }
 
   function handleSubmit(e) {
@@ -90,7 +91,7 @@ const Login = ({ show, toggleShow }) => {
           <div className="form-container w-50">
             <h1 className="text-center form-heading">Welcome Back</h1>
 
-            <Form className="text-center" onSubmit={handleSubmit}>
+            <Form className="text-center" onSubmit={handleSubmit} noValidate>
               <Form.Group controlId="formEmail" className="relative">
                 <Form.Control
                   type="email"
