@@ -11,7 +11,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 
 from home.api.v1.serializer.auth import LoginSerializer, SignupSerializer
-from home.api.v1.serializer.user import UserSerializer
+from home.api.v1.serializer.user import UserSerializerBase
 
 User = get_user_model()
 
@@ -26,7 +26,7 @@ def _auth(user: User):
     ):
         raise NotAuthenticated
 
-    user_object = UserSerializer(user).data
+    user_object = UserSerializerBase(user).data
 
     response = {
         'userObj': user_object,

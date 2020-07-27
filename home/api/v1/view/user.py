@@ -1,3 +1,4 @@
+from django.core.validators import validate_email
 from rest_framework import exceptions, mixins, viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.generics import get_object_or_404
@@ -5,11 +6,15 @@ from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError, PermissionDenied, NotFound
 from rest_framework.response import Response
 from rest_framework import status
+
 from django.contrib.auth import password_validation
+from django.core.mail import send_mail
 from django.core.exceptions import ValidationError as DjangoValidationError
 from django.utils import timezone
+
+from home.models import Settings, NON_REGISTERED_EMAIL_PATH, REGISTERED_EMAIL_PATH
 from home.api.v1.serializer.auth import SignupSerializer
-from home.api.v1.serializer.user import ResetPasswordSerializer, InvitationSerializer, UserEditorUpdate
+from home.api.v1.serializer.user import ResetPasswordSerializer, InvitationSerializer, UserEditorUpdate, ContactUsSerializer
 from home.api.v1.view.auth import internal_login
 
 from home.api.v1.serializer.user import (
@@ -32,6 +37,23 @@ def validate_password(new_password: str, password_field='newPassword'):
         password_validation.validate_password(password=new_password)
     except DjangoValidationError as django_error:
         raise ValidationError({password_field: list(django_error)})
+
+
+def validate_contact_us(request, email_field='email', message_field='message'):
+    """Validate email field on contact us form."""
+    errors = {}
+    if not request.data[message_field]:
+        errors.update({message_field: 'required'})
+    if request.user.is_anonymous and not request.data[email_field]:
+        errors.update({email_field: 'required'})
+    if request.data[email_field]:
+        try:
+            validate_email(request.data[email_field])
+        except DjangoValidationError as django_error:
+            errors.update({email_field: list(django_error)})
+
+    if errors:
+        raise ValidationError(detail=errors)
 
 
 class UserViewSet(
@@ -94,7 +116,7 @@ class UserViewSet(
                     serializer_class = None
             elif self.action in {'update', 'partial_update'}:
                 if updating_role in {User.ROLE.ADMIN, User.ROLE.EDITOR}:
-                    serializer_class = UserUpdate  # TODO for Natali
+                    serializer_class = UserUpdate
                 else:
                     serializer_class = None
             elif self.action == 'create':
@@ -106,9 +128,9 @@ class UserViewSet(
             if self.action == 'retrieve':
                 serializer_class = UserSerializerBase  # TODO for Natali
             elif self.action in {'update', 'partial_update'}:
-                serializer_class = UserEditorUpdate  # TODO for Natali
+                serializer_class = UserEditorUpdate  # Read-only serializer
             elif self.action in {'list', 'create'}:
-                serializer_class = None  # TODO for Natali it's correct
+                serializer_class = None  # Editor cannot see other users
         else:
             serializer_class = None
         if serializer_class is None:
@@ -162,6 +184,8 @@ class UserViewSet(
     @action(detail=False, methods=['post'], url_path='send-invitation', serializer_class=InvitationSerializer)
     def send_invitation(self, request):
         """Re-send invitation to user."""
+        serializer = InvitationSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         if self.request.user.role == User.ROLE.ADMIN:
             to_user = User.objects.filter(id=request.data['id']).first()
             if to_user:
@@ -182,3 +206,33 @@ class UserViewSet(
                     )
             raise NotFound
         raise PermissionDenied
+
+    @action(
+        detail=False,
+        methods=['post'],
+        url_path='contact-us',
+        serializer_class=ContactUsSerializer,
+        permission_classes=[AllowAny]
+    )
+    def contact_us(self, request):
+        """Send message from user to Admin."""
+        validate_contact_us(self.request)
+        if not self.request.user.is_anonymous:
+            send_to = Settings.objects.filter(path=REGISTERED_EMAIL_PATH).first()
+            send_from = self.request.user.email
+        else:
+            send_to = Settings.objects.filter(path=NON_REGISTERED_EMAIL_PATH).first()
+            send_from = request.data['email']
+
+        if send_mail(
+            'Contact us from SpiralMath',
+            request.data['message'],
+            send_from,
+            [send_to.value],
+            fail_silently=False,
+        ):
+            return Response(
+                data={
+                    'detail': 'Message have been sent.',
+                },
+            )
