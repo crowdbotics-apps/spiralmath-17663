@@ -8,7 +8,11 @@ const login = (email, password) => {
   };
 
   return fetch(`${process.env.REACT_APP_API_URL}/auth/login/`, requestOptions)
-    .then(handleResponse)
+    .then((res) => {
+      console.log(res);
+      console.log(document.cookies);
+      handleResponse(res);
+    })
     .then((user) => {
       // store user details and jwt token in local storage to keep user logged in between page refreshes
       localStorage.setItem("user", JSON.stringify(user));
@@ -24,21 +28,39 @@ const logout = () => {
   };
   // remove user from local storage to log user out
   localStorage.removeItem("user");
-  return fetch(`${process.env.REACT_APP_API_URL}/auth/logout/`, requestOptions)
-    .then(handleResponse)
-    .catch((error) => {
-      // store user details and jwt token in local storage to keep user logged in between page refreshes
-      return error;
-    });
+  return fetch(
+    `${process.env.REACT_APP_API_URL}/auth/logout/`,
+    requestOptions
+  ).then(handleResponse);
 };
 
 const getAllUsers = () => {
-  // const requestOptions = {
-  //   method: "GET",
-  //   // headers: authHeader(),
-  // };
+  const requestOptions = {
+    method: "GET",
+    headers: authHeader(),
+  };
 
-  return fetch(`${process.env.REACT_APP_API_URL}/user/`).then(handleResponse);
+  return fetch(`${process.env.REACT_APP_API_URL}/user/`, requestOptions).then(
+    handleResponse
+  );
+};
+
+const createUserType = ({ userType, createQuestions, reviewQuestions }) => {
+  const userTypeToSend = {
+    name: userType,
+    create_questions: createQuestions,
+    review_questions: reviewQuestions,
+  };
+  const requestOptions = {
+    method: "POST",
+    headers: authHeader(),
+    body: JSON.stringify(userTypeToSend),
+  };
+
+  return fetch(
+    `${process.env.REACT_APP_API_URL}/user-type/`,
+    requestOptions
+  ).then(handleResponse);
 };
 
 function getById(id) {
@@ -152,4 +174,5 @@ export const userService = {
   confirmUser,
   resetPassword,
   contactUs,
+  createUserType,
 };

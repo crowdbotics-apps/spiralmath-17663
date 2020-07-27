@@ -1,8 +1,5 @@
-export default function validateLogin(values) {
+export const validateCreateUser = (values) => {
   let errors = {};
-  if (!values.userType) {
-    errors.userType = "User type is required";
-  }
   if (!values.email) {
     errors.email = "Email is required";
   } else if (!/\S+@\S+\.\S+/.test(values.email)) {
@@ -19,4 +16,12 @@ export default function validateLogin(values) {
   }
 
   return errors;
-}
+};
+
+export const validateCreateUserTypes = (values) => {
+  let errors = {};
+  if (!values.userType) {
+    errors.userType = "User type is required";
+  }
+  return errors;
+};

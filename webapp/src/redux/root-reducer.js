@@ -10,6 +10,7 @@ import {
   users,
   reset,
   contactUs,
+  userTypesReducer,
 } from "./user/user.reducer";
 import modalReducer from "./modals/modals.reducer";
 
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   reset,
   users,
   contactUs,
+  userTypes: userTypesReducer,
   modal: modalReducer,
 });
 

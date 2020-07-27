@@ -51,9 +51,18 @@ const ContactUs = ({ show, toggleShow }) => {
           <Modal.Title>Contact Us</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form noValidate onSubmit={handleSubmit}>
             <Form.Group controlId="formEmail" className="relative">
-              <Form.Control type="email" className="input-style input-text" />
+              <Form.Control
+                type="email"
+                className="input-style input-text"
+                name="email"
+                value={email}
+                onChange={handleChange}
+              />
+              {submitted && errors.email && (
+                <p className="text-danger">Email is required</p>
+              )}
               <span class="floating-label">Email</span>
             </Form.Group>
 
@@ -61,7 +70,13 @@ const ContactUs = ({ show, toggleShow }) => {
               <Form.Control
                 type="textarea"
                 className="input-style input-text"
+                name="message"
+                value={message}
+                onChange={handleChange}
               />
+              {submitted && errors.message && (
+                <p className="text-danger">This field is required</p>
+              )}
               <span class="floating-label">Message</span>
             </Form.Group>
           </Form>
@@ -69,9 +84,12 @@ const ContactUs = ({ show, toggleShow }) => {
         <Modal.Footer>
           <Button
             variant="primary"
-            onClick={toggleShow}
+            onClick={handleSubmit}
             className="text-center custom-btn"
           >
+            {contacting && (
+              <span className="spinner-border spinner-border-sm mr-1"></span>
+            )}
             Submit
           </Button>
         </Modal.Footer>

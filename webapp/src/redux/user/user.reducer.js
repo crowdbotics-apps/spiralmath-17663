@@ -69,6 +69,18 @@ export const confirmation = (state = {}, action) => {
       return state;
   }
 };
+export const userTypesReducer = (state = {}, action) => {
+  switch (action.type) {
+    case userTypes.CREATE_USER_TYPE:
+      return { userTypeCreating: true };
+    case userTypes.CREATE_USER_TYPE_SUCCESS:
+      return {};
+    case userTypes.CREATE_USER_TYPE_FAILURE:
+      return {};
+    default:
+      return state;
+  }
+};
 
 export const reset = (state = {}, action) => {
   switch (action.type) {

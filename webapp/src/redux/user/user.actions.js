@@ -26,7 +26,7 @@ const login = (email, password) => {
   };
 
   return (dispatch) => {
-    dispatch(request({ email }));
+    dispatch(request());
 
     userService.login(email, password).then(
       (user) => {
@@ -157,6 +157,32 @@ export const contactUs = (email, message) => {
   };
 };
 
+const createUserType = (user) => {
+  const request = () => {
+    return { type: userTypes.CREATE_USER_TYPE };
+  };
+  const success = () => {
+    return { type: userTypes.CREATE_USER_TYPE_SUCCESS };
+  };
+  const failure = (error) => {
+    return { type: userTypes.CREATE_USER_TYPE_FAILURE, error };
+  };
+
+  return (dispatch) => {
+    dispatch(request());
+
+    userService.createUserType(user).then(
+      (user) => {
+        dispatch(success());
+      },
+      (error) => {
+        dispatch(failure(error.toString()));
+        dispatch(alertActions.error(error.toString()));
+      }
+    );
+  };
+};
+
 const getAllUsers = () => {
   return (dispatch) => {
     dispatch(request());
@@ -192,4 +218,5 @@ export const userActions = {
   confirmUser,
   resetPassword,
   contactUs,
+  createUserType,
 };
