@@ -6,10 +6,10 @@ export const validateCreateUser = (values) => {
     errors.email = "Email address is invalid";
   }
   if (!values.firstName) {
-    errors.firstName = "firstName is required";
+    errors.firstName = "Firstname is required";
   }
   if (!values.lastName) {
-    errors.lastName = "lastName is required";
+    errors.lastName = "Lastname is required";
   }
   if (!values.role) {
     errors.role = "Role is required";

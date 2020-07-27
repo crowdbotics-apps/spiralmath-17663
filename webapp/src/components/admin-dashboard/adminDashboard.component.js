@@ -5,10 +5,10 @@ import DashboardBox from "../dashboard-box/dashboardBox.component";
 
 const AdminDashboard = () => {
   const questions = [
-    { action: "created", number: 1839 },
-    { action: "approved", number: 1755 },
-    { action: "pending", number: 125 },
-    { action: "rejected", number: 36 },
+    { action: "Created", number: 1839 },
+    { action: "Approved", number: 1755 },
+    { action: "Pending", number: 125 },
+    { action: "Rejected", number: 36 },
   ];
 
   const users = [
