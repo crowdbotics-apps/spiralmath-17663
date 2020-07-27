@@ -59,6 +59,24 @@ class UserUpdate(UserSerializerBase):
     """Update a user Serializer."""
 
     class Meta(UserSerializerBase.Meta):
-        fields = UserSerializerBase.Meta.fields + ['first_name', 'last_name', 'password']
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ['role', 'user_type']
+
+
+class UserEditorUpdate(UserSerializerBase):
+    """Update a user with Role Editor Serializer."""
+
+    class Meta(UserSerializerBase.Meta):
+        fields = ['first_name', 'last_name']
+
+
+class ResetPasswordSerializer(serializers.Serializer):
+    """For user reset-password."""
+
+    email = serializers.EmailField(required=True)
+
+
+class InvitationSerializer(serializers.Serializer):
+    """For user send-invitation."""
+
+    id = serializers.IntegerField(required=True)
 

@@ -48,7 +48,7 @@ class AuthViewSet(ViewSet):
     serializer_class = LoginSerializer
     permission_classes = [AllowAny]
 
-    @action(detail=False, methods=['GET'])
+    @action(detail=False, methods=['get'])
     def auth(self, request):
         """First API call for frontend."""
         try:
@@ -57,12 +57,11 @@ class AuthViewSet(ViewSet):
             return Response(
                 data={
                     'detail': exception.detail,
-                    'status_code': status.HTTP_403_FORBIDDEN,
                 },
                 status=status.HTTP_403_FORBIDDEN,
             )
 
-    @action(detail=False, methods=['POST'], serializer_class=LoginSerializer)
+    @action(detail=False, methods=['post'], serializer_class=LoginSerializer)
     def login(self, request):
         """Login and auth response."""
         serializer = LoginSerializer(data=request.data)
@@ -73,7 +72,7 @@ class AuthViewSet(ViewSet):
             password=request.data.get('password', ''),
         )
 
-    @action(detail=False, methods=['POST'])
+    @action(detail=False, methods=['post'])
     def logout(self, request):
         """Logout user."""
         logout(request)

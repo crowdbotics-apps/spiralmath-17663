@@ -46,7 +46,7 @@ class User(AbstractUser):
         return reverse("users:detail", kwargs={"username": self.username})
 
     def send_invitation_email(self):
-        """Send email with password reset link."""
+        """Send invitation email with password reset link."""
         self.emailConfirmationToken = secrets.token_hex(int(EMAIL_TOKEN_LEN / 2))
         self.save()
         link = f'{settings.FRONTEND_URL}/#/sign-up/?token={self.emailConfirmationToken}'
@@ -56,6 +56,19 @@ class User(AbstractUser):
             f'Before you can get started, we need to know a little more about you. '
             f'Please set up your account by clicking on the link below. \n\n{link}\n\n'
             f'Thank you,  SpiralMath',
+            settings.DEFAULT_FROM_EMAIL,
+            [self.email],
+            fail_silently=False,
+        )
+
+    def send_confirmation_email(self):
+        """Send forgot password email with password reset link."""
+        self.emailConfirmationToken = secrets.token_hex(int(EMAIL_TOKEN_LEN / 2))
+        self.save()
+        link = f'{settings.FRONTEND_URL}/#/confirm-email/?token={self.emailConfirmationToken}'
+        send_mail(
+            'SpiralMath authentication',
+            f'Reset your Password:\n\n{link} ',
             settings.DEFAULT_FROM_EMAIL,
             [self.email],
             fail_silently=False,
