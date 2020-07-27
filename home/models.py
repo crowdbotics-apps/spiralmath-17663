@@ -30,3 +30,15 @@ class HomePage(models.Model):
     @property
     def field(self):
         return 'body'
+
+
+class Settings(models.Model):
+    """Settings."""
+    path = models.CharField(max_length=200, blank=True)
+    value = models.TextField(blank=True)
+    is_deletable = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.pk)

@@ -43,7 +43,7 @@ def internal_login(request, email: str, password: str):
 
 
 class AuthViewSet(ViewSet):
-    """Based on rest_framework.authtoken.views.ObtainAuthToken"""
+    """Session Backend."""
 
     serializer_class = LoginSerializer
     permission_classes = [AllowAny]
