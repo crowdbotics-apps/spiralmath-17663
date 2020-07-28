@@ -62,7 +62,7 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.google',
     'django_extensions',
     'drf_yasg',
-
+    'corsheaders',
 ]
 INSTALLED_APPS += LOCAL_APPS + THIRD_PARTY_APPS
 
@@ -74,6 +74,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'django.middleware.locale.LocaleMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'spiralmath_17663.urls'
@@ -197,6 +200,18 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'user-enroll@spiralmath.net'
 
 FRONTEND_URL = 'spiralmath-17663.botics.co'
+
+# Security
+# https://docs.djangoproject.com/en/1.11/topics/security/
+
+SESSION_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+
+SESSION_COOKIE_SAMESITE = None
+SESSION_COOKIE_AGE = 3600 * 24 * 60  # cookies age 60 days.
 
 if DEBUG:
     # output email to console instead of sending
