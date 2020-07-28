@@ -55,29 +55,33 @@ const ContactUs = ({ show, toggleShow }) => {
             <Form.Group controlId="formEmail" className="relative">
               <Form.Control
                 type="email"
-                className="input-style input-text"
+                className={`input-style input-text ${
+                  email.length && "label-up"
+                }`}
                 name="email"
                 value={email}
                 onChange={handleChange}
               />
+              <span class="floating-label">Email</span>
               {submitted && errors.email && (
                 <p className="text-danger">Email is required</p>
               )}
-              <span class="floating-label">Email</span>
             </Form.Group>
 
             <Form.Group controlId="formMessage" className="relative">
               <Form.Control
                 type="textarea"
-                className="input-style input-text"
+                className={`input-style input-text ${
+                  message.length && "label-up"
+                }`}
                 name="message"
                 value={message}
                 onChange={handleChange}
               />
+              <span class="floating-label">Message</span>
               {submitted && errors.message && (
                 <p className="text-danger">This field is required</p>
               )}
-              <span class="floating-label">Message</span>
             </Form.Group>
           </Form>
         </Modal.Body>
