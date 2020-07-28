@@ -95,8 +95,8 @@ body .nav-border {
   height: 26px;
   width: 26px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  padding-left: 7px;
+  padding-top: 7px;
   margin-right: 10px;
 }
 

@@ -87,7 +87,7 @@ const UserTypes = () => {
                 className="border-top-0 border-left-0 border-right-0 rounded-0"
               />
               {submitted && errors.userType && (
-                <p className="text-danger">User Type is required</p>
+                <p className="text-danger form-text-danger">User Type is required</p>
               )}
             </Form.Group>
 
@@ -145,7 +145,7 @@ const UserTypes = () => {
     return (
       <Row>
         <Col className="mt-3">
-          <Table striped bordered hover>
+          <Table striped bordered hover className="border-0">
             <thead>
               <tr>
                 <th scope="col" className="border-0 font-style thead">
@@ -157,7 +157,7 @@ const UserTypes = () => {
 
                 <th
                   scope="col"
-                  className="d-flex align-items-center border-0 font-style create-user pointerType"
+                  className="d-flex align-items-center justify-content-end border-0 font-style create-user pointerType"
                   onClick={handleCloseForm}
                 >
                   <span className="create-user-icon">
@@ -185,9 +185,9 @@ const UserTypes = () => {
                 ? userTypeArray.map(({ userType, description, buttons }) => {
                     return (
                       <tr key={userType}>
-                        <td>{userType}</td>
-                        <td>{description}</td>
-                        <td>{buttons(userType)}</td>
+                        <td className="border-right-0">{userType}</td>
+                        <td className="border-left-0 border-right-0">{description}</td>
+                        <td className="border-left-0">{buttons(userType)}</td>
                       </tr>
                     );
                   })
@@ -209,21 +209,22 @@ const UserTypes = () => {
     return (
       <Modal
         show={show.showModal}
+        className="delete-modal"
         size="sm"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className="justify-content-center">
           <Modal.Title id="contained-modal-title-vcenter">
             Are You Sure
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h6 className="text-muted">User Type: {userType} will be removed</h6>
+          <h6 className="text-muted user-type-content">User Type: {userType} will be removed</h6>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={handleClose}>Close</Button>
-          <Button variant="primary">Save Changes</Button>
+          <Button onClick={handleClose} className="popup-close-btn">Close</Button>
+          <Button variant="primary" className="popup-save-btn">Save Changes</Button>
         </Modal.Footer>
       </Modal>
     );
@@ -231,8 +232,8 @@ const UserTypes = () => {
 
   const buttons = (userType) => (
     <React.Fragment>
-      <div className="d-flex align-equal">
-        <div onClick={() => handleShow(userType)}>
+      <div className="d-flex justify-content-end">
+        <div className="ml-2 cursor-pointer" onClick={() => handleShow(userType)}>
           <svg
             width="13"
             height="17"
@@ -251,7 +252,7 @@ const UserTypes = () => {
           </svg>
         </div>
 
-        <div>
+        <div className="cursor-pointer ml-4">
           <svg
             width="20"
             height="20"

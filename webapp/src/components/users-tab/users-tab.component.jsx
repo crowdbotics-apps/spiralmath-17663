@@ -9,8 +9,8 @@ import "./users-tab.styles.css";
 
 const buttons = () => (
   <React.Fragment>
-    <div className="d-flex align-equal">
-      <div>
+    <div className="d-flex justify-content-end">
+      <div className="cursor-pointer ml-2">
         <svg
           width="13"
           height="17"
@@ -29,7 +29,7 @@ const buttons = () => (
         </svg>
       </div>
 
-      <div>
+      <div className="cursor-pointer ml-4">
         <svg
           width="20"
           height="20"
@@ -146,7 +146,7 @@ const UsersTab = () => {
                 className="border-top-0 border-left-0 border-right-0 rounded-0"
               />
               {submitted && errors.firstName && (
-                <p className="text-danger">firstName is required</p>
+                <p className="text-danger form-text-danger">First name is required</p>
               )}
             </Form.Group>
 
@@ -161,7 +161,7 @@ const UsersTab = () => {
                 className="border-top-0 border-left-0 border-right-0 rounded-0"
               />
               {submitted && errors.lastName && (
-                <p className="text-danger">lastName is required</p>
+                <p className="text-danger form-text-danger">Last name is required</p>
               )}
             </Form.Group>
 
@@ -176,7 +176,7 @@ const UsersTab = () => {
                 className="border-top-0 border-left-0 border-right-0 rounded-0"
               />
               {submitted && errors.email && (
-                <p className="text-danger">Email is required</p>
+                <p className="text-danger form-text-danger">Email is required</p>
               )}
             </Form.Group>
 
@@ -238,11 +238,16 @@ const UsersTab = () => {
                     scope="col"
                     className="border-0 font-style thead status-color"
                   >
+                  <span>
+                    <svg width="10" height="9" viewBox="0 0 10 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5625 9L5.5625 2.1375L8.7125 5.2875L9.5 4.5L5 0L0.5 4.5L1.2875 5.2875L4.4375 2.1375L4.4375 9L5.5625 9Z" fill="#3C7EBF"/>
+                    </svg>
+                  </span>                  
                     Status
                   </th>
                   <th
                     scope="col"
-                    className="d-flex align-items-center border-0 font-style create-user pointerType"
+                    className="d-flex align-items-center justify-content-end border-0 font-style create-user pointerType"
                     onClick={handleCloseForm}
                   >
                     <span className="create-user-icon">

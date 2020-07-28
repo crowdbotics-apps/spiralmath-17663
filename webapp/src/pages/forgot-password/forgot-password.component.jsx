@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { createStructuredSelector } from "reselect";
@@ -56,14 +57,15 @@ const ForgotPassword = ({ show, toggleShow }) => {
             </h1>
 
             <p className="text-center instruction-text">
-              Please enter your email and we will send you an instruction email.
+              Please enter your email and we will send you an<br/>
+              instruction email.
             </p>
 
             <Form className="text-center" onSubmit={handleSubmit} noValidate>
               <Form.Group controlId="formEmail" className="relative">
                 <Form.Control
                   type="email"
-                  className="input-style input-text"
+                  className={`input-style input-text ${email.length && 'label-up'}`}
                   name="email"
                   value={email}
                   onChange={handleChange}
@@ -85,16 +87,18 @@ const ForgotPassword = ({ show, toggleShow }) => {
                 Send Password Reset
               </Button>
             </Form>
+
+            <p className="mt-2 text-center login-text">
+              Already have an account?
+              <Link to="">
+                <span className="text-orange pointerType"> Log in </span>
+              </Link>
+            </p>
           </div>
           <div className="have-issue-text">
             <p className="mt-2">
-              Have issues ?
-              <span
-                className="text-orange pointerType"
-                onClick={handleContactUs}
-              >
-                Contact us
-              </span>
+              Have issues?
+              <span className="text-orange pointerType" onClick={handleContactUs} > Contact us </span>
             </p>
           </div>
         </Col>

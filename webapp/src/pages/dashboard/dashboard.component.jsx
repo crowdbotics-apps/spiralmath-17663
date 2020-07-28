@@ -55,8 +55,8 @@ const Dashboard = () => {
             ></Tab>
           </Tabs>
 
-          <div className="d-flex justify-content-around pr-5">
-            <div className="pr-4">
+          <div className="d-flex justify-content-around pr-5 align-top">
+            <div className="pr-4 cursor-pointer">
               <svg
                 width="18"
                 height="14"
@@ -73,7 +73,7 @@ const Dashboard = () => {
               </svg>
             </div>
 
-            <div className="pr-2 notification-icon">
+            <div className="pr-2 notification-icon cursor-pointer">
               <svg
                 width="17"
                 height="17"

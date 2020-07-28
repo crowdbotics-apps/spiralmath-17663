@@ -44,6 +44,18 @@ body {
   padding-bottom: 30px;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.align-top {
+  margin-top: -10px;
+}
+
+.notification-icon {
+  margin-top: -2px;
+}
+
 /*login page css start here*/
 
 .form-container {
@@ -79,7 +91,7 @@ h1.form-heading {
   font-family: Open Sans;
 }
 
-input:focus ~ .floating-label {
+input:focus ~ .floating-label, .label-up {
   top: -13px;
   bottom: 10px;
   font-family: Open Sans;
@@ -352,8 +364,7 @@ form input.input-style {
 }
 
 input:focus ~ .floating-label,
-input:focus-within ~ .floating-label,
-input:active ~ .floating-label {
+.label-up ~ .floating-label {
   top: -13px;
   bottom: 10px;
   font-family: Open Sans;
@@ -457,6 +468,19 @@ input:active ~ .floating-label {
   color: #333333;
 }
 
+p.form-text-danger {
+  bottom: -35px;
+  left: 15px;
+}
+
+.text-danger {
+  position: absolute;
+  bottom: -22px;
+  left: 20px;
+  text-align: left;
+  font-size: 14px;
+}
+
 .bottom-text-2 {
   padding-top: 20px;
   padding-bottom: 20px;
@@ -479,4 +503,139 @@ input:focus {
   .term-use {
     top: 0 !important;
   }
+}
+
+.custom-btn:focus, .save-btn:focus {
+  outline: none !important;
+  box-shadow: inherit !important;
+}
+
+.custom-btn:hover, .custom-btn:focus,
+.save-btn:hover, .save-btn:focus {
+  background-color: #3C7EBF !important;
+  border-color: #3C7EBF !important;
+}
+
+.cancel-btn:focus {
+  box-shadow: inherit !important;
+}
+
+.cancel-btn:hover {
+  background-color: inherit !important;
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+
+/*Pagination css start here*/
+.page-item .pagination-link:focus, .page-item .pagination-link:hover {
+  box-shadow: inherit;
+  background-color: inherit;
+  color: #8D8D8D;
+}
+
+.page-item .pagination-link {
+  padding-right: 17px;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  color: #8D8D8D;
+}
+
+.page-item .pagination-link.active{
+  color: #333333;
+}
+
+
+/*delete popup css start here*/
+
+.delete-modal .modal-dialog {
+  max-width: 441px;
+}
+
+.delete-modal .modal-dialog .modal-header {
+  border-bottom: none;
+  padding-top: 46px;
+  padding-bottom: 17px;
+}
+
+.delete-modal .modal-dialog .modal-header .modal-title {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 26px;
+  text-align: center;
+  color: #333333;
+}
+
+.user-type-content {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 19px;
+  text-align: center;
+  letter-spacing: -0.1px;
+  color: #000000;
+  margin-bottom: 30px;
+}
+body .delete-modal .modal-dialog .modal-content {
+  border-radius: 12px;
+}
+
+body .delete-modal .modal-dialog .modal-footer {
+  border-top: 0;
+  padding: 0 30px 36px 30px;
+  justify-content: space-between;
+}
+
+body .popup-close-btn:focus {
+  box-shadow: inherit !important;
+  background-color: inherit !important;
+  border-color: inherit !important;  
+}
+
+body .popup-save-btn:focus {
+  box-shadow: inherit !important;
+  background: #3C7EBF !important;;
+  color: #FFFFFF !important;;
+}
+
+body .popup-close-btn:focus {
+  color: #000000 !important;
+  opacity: 0.6 !important;
+}
+
+body .popup-close-btn, body  .popup-close-btn:hover {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14.4px;
+  line-height: 20px;
+  text-align: center;
+  mix-blend-mode: normal;
+  color: #000000;
+  opacity: 0.6;
+  background-color: transparent;
+  border: transparent;
+  padding: 8px 45px
+}
+
+body  .popup-save-btn, body  .popup-save-btn:hover {
+  background: #3C7EBF;
+  color: #FFFFFF;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 22px;
+  text-align: center;
+  border-radius: 23px;
+  padding: 8px 61px
+}
+
+.close:focus{
+  outline: 0;
 }

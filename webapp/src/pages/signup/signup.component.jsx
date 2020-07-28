@@ -172,7 +172,7 @@ const SignUp = ({ show, toggleShow }) => {
               <Form.Group controlId="formPassword" className="relative">
                 <Form.Control
                   type="password"
-                  className="input-style input-text"
+                  className={`input-style input-text ${user.password.length && 'label-up'}`}
                   name="password"
                   value={user.password}
                   onChange={handleChange}
@@ -202,7 +202,7 @@ const SignUp = ({ show, toggleShow }) => {
               <Form.Group controlId="formConfirmPassword" className="relative">
                 <Form.Control
                   type="password"
-                  className="input-style input-text"
+                  className={`input-style input-text ${user.passwordConfirm.length && 'label-up'}`}
                   name="passwordConfirm"
                   value={user.passwordConfirm}
                   onChange={handleChange}
@@ -253,21 +253,16 @@ const SignUp = ({ show, toggleShow }) => {
             </Form>
 
             <p className="mt-2 text-center login-text">
-              Already have an account ?
+              Already have an account?
               <Link to="/login">
-                <span className="text-orange pointerType">Log in </span>
+                <span className="text-orange pointerType"> Log in </span>
               </Link>
             </p>
           </div>
           <div className="have-issue-text">
             <p className="mt-2">
-              Have issues ?
-              <span
-                className="text-orange pointerType"
-                onClick={handleContactUs}
-              >
-                Contact us
-              </span>
+              Have issues?
+              <span className="text-orange pointerType" onClick={handleContactUs}> Contact us </span>
             </p>
           </div>
         </Col>
