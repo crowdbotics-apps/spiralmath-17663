@@ -65,10 +65,10 @@ body .nav-border {
 .notification-icon:after {
   position: absolute;
   content: ' ';
-  right: -12px;
+  right: 0px;
   width: 1px;
   height: 30px;
-  top: 1;
+  top: 1px;
   background-color: rgba(151, 151, 151, .5 );
 }
 
