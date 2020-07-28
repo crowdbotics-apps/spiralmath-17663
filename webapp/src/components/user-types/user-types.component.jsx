@@ -87,7 +87,9 @@ const UserTypes = () => {
                 className="border-top-0 border-left-0 border-right-0 rounded-0"
               />
               {submitted && errors.userType && (
-                <p className="text-danger form-text-danger">User Type is required</p>
+                <p className="text-danger form-text-danger">
+                  User Type is required
+                </p>
               )}
             </Form.Group>
 
@@ -186,7 +188,9 @@ const UserTypes = () => {
                     return (
                       <tr key={userType}>
                         <td className="border-right-0">{userType}</td>
-                        <td className="border-left-0 border-right-0">{description}</td>
+                        <td className="border-left-0 border-right-0">
+                          {description}
+                        </td>
                         <td className="border-left-0">{buttons(userType)}</td>
                       </tr>
                     );
@@ -209,6 +213,7 @@ const UserTypes = () => {
     return (
       <Modal
         show={show.showModal}
+        onHide={handleClose}
         className="delete-modal"
         size="sm"
         aria-labelledby="contained-modal-title-vcenter"
@@ -220,11 +225,17 @@ const UserTypes = () => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h6 className="text-muted user-type-content">User Type: {userType} will be removed</h6>
+          <h6 className="text-muted user-type-content">
+            User Type: {userType} will be removed
+          </h6>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={handleClose} className="popup-close-btn">Close</Button>
-          <Button variant="primary" className="popup-save-btn">Save Changes</Button>
+          <Button onClick={handleClose} className="popup-close-btn">
+            Close
+          </Button>
+          <Button variant="primary" className="popup-save-btn">
+            Save Changes
+          </Button>
         </Modal.Footer>
       </Modal>
     );
@@ -233,7 +244,10 @@ const UserTypes = () => {
   const buttons = (userType) => (
     <React.Fragment>
       <div className="d-flex justify-content-end">
-        <div className="ml-2 cursor-pointer" onClick={() => handleShow(userType)}>
+        <div
+          className="ml-2 cursor-pointer"
+          onClick={() => handleShow(userType)}
+        >
           <svg
             width="13"
             height="17"
