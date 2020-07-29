@@ -24,6 +24,9 @@ const UserTypes = () => {
   const userTypeCreating = useSelector(
     (state) => state.userTypes.userTypeCreating
   );
+  const updatingUserType = useSelector(
+    (state) => state.userTypes.updatingUserType
+  );
 
   const handleChange = (e) => {
     const { name } = e.target;
@@ -94,6 +97,15 @@ const UserTypes = () => {
   const [closeForm, setCloseForm] = useState(false);
 
   const handleCloseForm = () => {
+    if (closeForm === true) {
+      setUserForm({
+        userType: "",
+        createQuestions: true,
+        reviewQuestions: false,
+        id: "",
+        edit: "",
+      });
+    }
     setCloseForm(!closeForm);
   };
 
@@ -159,7 +171,7 @@ const UserTypes = () => {
             Cancel
           </Button>
           <Button type="submit" className="save-btn">
-            {userTypeCreating && (
+            {(userTypeCreating || updatingUserType) && (
               <span className="spinner-border spinner-border-sm mr-1"></span>
             )}
             Save

@@ -38,7 +38,7 @@ const Login = ({ show, toggleShow }) => {
       dispatch(alertActions.clear());
     });
     if (loggedIn) {
-      // history.push("/dashboard");
+      history.push("/dashboard");
     }
   }, [loggedIn]);
 

@@ -10,10 +10,9 @@ const login = (email, password) => {
   };
 
   return fetch(`${process.env.REACT_APP_API_URL}/auth/login/`, requestOptions)
-    .then((res) => {
-      handleResponse(res);
-    })
+    .then(handleResponse)
     .then((user) => {
+      console.log(user);
       // store user details and jwt token in local storage to keep user logged in between page refreshes
       localStorage.setItem("user", JSON.stringify(user));
 

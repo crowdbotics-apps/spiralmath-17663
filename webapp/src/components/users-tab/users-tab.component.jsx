@@ -155,6 +155,10 @@ const UsersTab = () => {
   const [closeForm, setCloseForm] = useState(false);
 
   const handleCloseForm = () => {
+    if (closeForm === true) {
+      setUserForm({ firstName: "", lastName: "", email: "", role: "Author" });
+    }
+
     setCloseForm(!closeForm);
   };
 
