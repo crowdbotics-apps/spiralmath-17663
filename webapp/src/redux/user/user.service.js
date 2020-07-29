@@ -1,17 +1,27 @@
 import { authHeader } from "../../helpers/auth-header";
+import Cookies from "js-cookie";
+
 
 const login = (email, password) => {
+  let headers = {
+    'Accept':       'application/json',
+    'Content-Type': 'application/json',
+};
+
   const requestOptions = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: headers,
     body: JSON.stringify({ email, password }),
+    credentials: 'include',
   };
 
   return fetch(`${process.env.REACT_APP_API_URL}/auth/login/`, requestOptions)
     .then((res) => {
-      console.log(res);
-      console.log(document.cookies);
-      handleResponse(res);
+      console.log("res", res);
+
+      console.log("cc",  Cookies.get("csrftoken"));
+      localStorage.setItem("myCookie", Cookies.get("csrftoken"));
+      // handleResponse(res);
     })
     .then((user) => {
       // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -76,10 +86,28 @@ function getById(id) {
 }
 
 const register = (user) => {
+  if (user['role'] !== 'SystemAdministrator') {
+    user['role'] = 'Editor'
+  } else {
+    user['role'] = 'Admin'
+  }
+  const pass = Math.random().toString(36).substring(7);
+  const data = {
+    email: user['email'],
+    first_name: user['firstName'],
+    last_name: user['lastName'],
+    role: user['role'],
+    password: pass
+  };
   const requestOptions = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user),
+    headers: {
+      'Accept':  'application/json',
+      'Content-Type': 'application/json',
+      'X-CSRFTOKEN': Cookies.get("csrftoken"),
+    },
+    credentials: 'include',
+    body: JSON.stringify(data),
   };
 
   return fetch(`${process.env.REACT_APP_API_URL}/user/`, requestOptions).then(
