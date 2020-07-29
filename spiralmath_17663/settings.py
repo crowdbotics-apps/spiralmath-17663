@@ -217,3 +217,24 @@ SESSION_COOKIE_AGE = 3600 * 24 * 60  # cookies age 60 days.
 if DEBUG:
     # output email to console instead of sending
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+    # django-cors-headers
+    CORS_ORIGIN_WHITELIST = ('http://127.0.0.1:3000',)
+    CORS_ALLOW_METHODS = (
+        'DELETE',
+        'GET',
+        'OPTIONS',
+        'PATCH',
+        'POST',
+        'PUT',
+    )
+    CORS_ALLOW_HEADERS = (
+        'accept',
+        'accept-encoding',
+        'Access-Control-Allow-Credentials',
+        'content-type',
+        'origin',
+        'api-auth-key',
+        'X-CSRFToken',
+    )
+    CORS_ALLOW_CREDENTIALS = True
