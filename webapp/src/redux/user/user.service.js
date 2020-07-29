@@ -5,18 +5,12 @@ const login = (email, password) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-CSRFToken":
-        "IGl67OvuUJWXQCsPGDicXPMAlMG89rQZx7YViIf6APCh6pazPwnPt19z7Cx5WCgl",
-      authorization:
-        "Basic ZGF2aWQucm9ic29uQHNwaXJhbG1hdGgubmV0OkpEeWdhWlBoeGM=",
     },
     body: JSON.stringify({ email, password }),
   };
 
   return fetch(`${process.env.REACT_APP_API_URL}/auth/login/`, requestOptions)
     .then((res) => {
-      console.log(res);
-      console.log(document.cookies);
       handleResponse(res);
     })
     .then((user) => {

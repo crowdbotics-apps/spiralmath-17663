@@ -286,10 +286,10 @@ const UserTypes = () => {
   const handleEditForm = (userType) => {
     setUserForm({
       ...userForm,
-      id: userForm.id,
-      userType: userForm.userType,
-      createQuestions: userForm.createQuestions,
-      reviewQuestions: userForm.reviewQuestions,
+      id: userType.id,
+      userType: userType.userType,
+      createQuestions: userType.create_questions,
+      reviewQuestions: userType.review_questions,
       edit: true,
     });
     handleCloseForm();
