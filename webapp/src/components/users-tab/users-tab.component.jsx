@@ -267,7 +267,7 @@ const UsersTab = () => {
                     className="d-flex align-items-center justify-content-end border-0 font-style create-user pointerType"
                     onClick={handleCloseForm}
                   >
-                    <span className="create-user-icon">
+                    <span className="create-user-icon ipad-create-user-icon">
                       <svg
                         width="11"
                         height="11"

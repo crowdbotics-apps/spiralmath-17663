@@ -64,7 +64,7 @@ const ContactUs = ({ show, toggleShow }) => {
               />
               <span class="floating-label">Email</span>
               {submitted && errors.email && (
-                <p className="text-danger">Email is required</p>
+                <p className="text-danger form-text-danger">Email is required</p>
               )}
             </Form.Group>
 
@@ -80,7 +80,7 @@ const ContactUs = ({ show, toggleShow }) => {
               />
               <span class="floating-label">Message</span>
               {submitted && errors.message && (
-                <p className="text-danger">This field is required</p>
+                <p className="text-danger form-text-danger">This field is required</p>
               )}
             </Form.Group>
           </Form>

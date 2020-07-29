@@ -313,7 +313,14 @@ button.custom-btn {
 
 /*Contactus popup design start here*/
 .contactus-popup {
-  top: 25% !important;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+.contactus-popup .modal-dialog {
+  width: 550px;
+  max-width: 100%;
 }
 
 .contactus-popup .modal-header,
@@ -413,7 +420,8 @@ input:focus ~ .floating-label,
 /*terms of use css start here*/
 
 .term-use .modal-dialog {
-  max-width: 560px;
+  max-width: 100%;
+  width: 550px;
 }
 
 .term-use .modal-body {
@@ -492,18 +500,22 @@ p.form-text-danger {
 }
 
 .term-use {
-  top: 10% !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
 }
 
 input:focus {
   box-shadow: inherit !important;
 }
 
-@media screen and (max-width: 1199px) {
+/*@media screen and (max-width: 1199px) {
   .term-use {
     top: 0 !important;
   }
 }
+*/
+
 
 .custom-btn:focus, .save-btn:focus {
   outline: none !important;
@@ -741,6 +753,11 @@ body  .popup-save-btn, body  .popup-save-btn:hover {
     flex-direction: unset !important;
   }
   
+  .logout {
+    font-size: 10px;
+    padding-top: 3px;
+  }
+
   html body .navbar-style a, html body .navbar-style a.active {
     font-size: 12px !important;
   }
@@ -756,5 +773,23 @@ body  .popup-save-btn, body  .popup-save-btn:hover {
 
   .user-name {
     margin-top: -5px; 
+  }
+  body .ipad-create-user-icon {
+    width: 33px;
+    padding-left: 8px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .term-use .modal-body {
+    padding: 0 18px;
+  }
+
+  .term-use .modal-header {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+  body .mob-padding {
+    padding: 0 !important;
   }
 }

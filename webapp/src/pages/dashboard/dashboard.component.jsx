@@ -19,7 +19,7 @@ const Dashboard = () => {
 
   const navbar = () => {
     return (
-      <Navbar expand="lg" className="px-4 py-0 px-md-0 py-md-0 nav-border border-0 mb-4">
+      <Navbar expand="lg" className="px-4 py-0 px-md-0 py-md-0 nav-border border-0 mb-4 mob-padding">
         <Navbar.Brand href="#home">
           <Logo />
         </Navbar.Brand>
@@ -55,8 +55,8 @@ const Dashboard = () => {
             ></Tab>
           </Tabs>
 
-          <div className="d-flex justify-content-around pr-5 align-top pr-md-2">
-            <div className="pr-4 cursor-pointer pr-md-2 pr-lg-3">
+          <div className="d-flex justify-content-around pr-1 align-top pr-md-2">
+            <div className="pr-2 cursor-pointer pr-md-2 pr-lg-3">
               <svg
                 width="18"
                 height="14"
