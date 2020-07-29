@@ -3,7 +3,13 @@ import { authHeader } from "../../helpers/auth-header";
 const login = (email, password) => {
   const requestOptions = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken":
+        "IGl67OvuUJWXQCsPGDicXPMAlMG89rQZx7YViIf6APCh6pazPwnPt19z7Cx5WCgl",
+      authorization:
+        "Basic ZGF2aWQucm9ic29uQHNwaXJhbG1hdGgubmV0OkpEeWdhWlBoeGM=",
+    },
     body: JSON.stringify({ email, password }),
   };
 
@@ -33,47 +39,6 @@ const logout = () => {
     requestOptions
   ).then(handleResponse);
 };
-
-const getAllUsers = () => {
-  const requestOptions = {
-    method: "GET",
-    headers: authHeader(),
-  };
-
-  return fetch(`${process.env.REACT_APP_API_URL}/user/`, requestOptions).then(
-    handleResponse
-  );
-};
-
-const createUserType = ({ userType, createQuestions, reviewQuestions }) => {
-  const userTypeToSend = {
-    name: userType,
-    create_questions: createQuestions,
-    review_questions: reviewQuestions,
-  };
-  const requestOptions = {
-    method: "POST",
-    headers: authHeader(),
-    body: JSON.stringify(userTypeToSend),
-  };
-
-  return fetch(
-    `${process.env.REACT_APP_API_URL}/user-type/`,
-    requestOptions
-  ).then(handleResponse);
-};
-
-function getById(id) {
-  const requestOptions = {
-    method: "GET",
-    headers: authHeader(),
-  };
-
-  return fetch(
-    `${process.env.REACT_APP_API_URL}/users/${id}`,
-    requestOptions
-  ).then(handleResponse);
-}
 
 const register = (user) => {
   const requestOptions = {
@@ -122,31 +87,109 @@ export const contactUs = (data) => {
   );
 };
 
-function update(user) {
+const getAllUserTypes = () => {
   const requestOptions = {
-    method: "PUT",
-    headers: { ...authHeader(), "Content-Type": "application/json" },
-    body: JSON.stringify(user),
+    method: "GET",
+    headers: authHeader(),
   };
 
   return fetch(
-    `${process.env.REACT_APP_API_URL}/users/${user.id}`,
+    `${process.env.REACT_APP_API_URL}/user-type/`,
     requestOptions
   ).then(handleResponse);
-}
+};
 
-// prefixed function name with underscore because delete is a reserved word in javascript
-function _delete(id) {
+const createUserType = ({ userType, createQuestions, reviewQuestions }) => {
+  const userTypeToSend = {
+    name: userType,
+    create_questions: createQuestions,
+    review_questions: reviewQuestions,
+  };
+  const requestOptions = {
+    method: "POST",
+    headers: authHeader(),
+    body: JSON.stringify(userTypeToSend),
+  };
+
+  return fetch(
+    `${process.env.REACT_APP_API_URL}/user-type/`,
+    requestOptions
+  ).then(handleResponse);
+};
+
+const updateUserType = (userType) => {
+  const requestOptions = {
+    method: "PATCH",
+    headers: authHeader(),
+    body: JSON.stringify(userType),
+  };
+
+  return fetch(
+    `${process.env.REACT_APP_API_URL}/user-type/${userType.id}/`,
+    requestOptions
+  ).then(handleResponse);
+};
+
+const deleteUserType = (id) => {
   const requestOptions = {
     method: "DELETE",
     headers: authHeader(),
   };
 
   return fetch(
-    `${process.env.REACT_APP_API_URL}/users/${id}`,
+    `${process.env.REACT_APP_API_URL}/user-type/${id}/`,
     requestOptions
   ).then(handleResponse);
-}
+};
+
+const getAllUsers = () => {
+  const requestOptions = {
+    method: "GET",
+    headers: authHeader(),
+  };
+
+  return fetch(`${process.env.REACT_APP_API_URL}/user/`, requestOptions).then(
+    handleResponse
+  );
+};
+
+const updateUser = (user) => {
+  const requestOptions = {
+    method: "PATCH",
+    headers: { ...authHeader(), "Content-Type": "application/json" },
+    body: JSON.stringify(user),
+  };
+
+  return fetch(
+    `${process.env.REACT_APP_API_URL}/user/${user.id}/`,
+    requestOptions
+  ).then(handleResponse);
+};
+
+// prefixed function name with underscore because delete is a reserved word in javascript
+const deleteUser = (id) => {
+  const requestOptions = {
+    method: "DELETE",
+    headers: authHeader(),
+  };
+
+  return fetch(
+    `${process.env.REACT_APP_API_URL}/user/${id}/`,
+    requestOptions
+  ).then(handleResponse);
+};
+
+const getOneUser = (id) => {
+  const requestOptions = {
+    method: "GET",
+    headers: authHeader(),
+  };
+
+  return fetch(
+    `${process.env.REACT_APP_API_URL}/user/${id}/`,
+    requestOptions
+  ).then(handleResponse);
+};
 
 function handleResponse(response) {
   return response.text().then((text) => {
@@ -171,8 +214,14 @@ export const userService = {
   logout,
   register,
   getAllUsers,
+  updateUser,
+  deleteUser,
+  getOneUser,
   confirmUser,
   resetPassword,
   contactUs,
   createUserType,
+  getAllUserTypes,
+  updateUserType,
+  deleteUserType,
 };

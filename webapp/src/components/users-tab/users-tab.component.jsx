@@ -8,7 +8,7 @@ import { validateCreateUser } from "../../helpers/validation/validateCreateUser"
 import "./users-tab.styles.css";
 
 const UsersTab = () => {
-  const buttons = (id) => (
+  const buttons = (id, user) => (
     <React.Fragment>
       <div className="d-flex justify-content-end">
         <div className="ml-2 cursor-pointer" onClick={() => handleShow(id)}>
@@ -30,7 +30,10 @@ const UsersTab = () => {
           </svg>
         </div>
 
-        <div className="cursor-pointer ml-4" onClick={handleCloseForm}>
+        <div
+          className="cursor-pointer ml-4"
+          onClick={() => handleEditForm(user)}
+        >
           <svg
             width="20"
             height="20"
@@ -53,8 +56,8 @@ const UsersTab = () => {
   );
 
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.users);
-  const usersListArray = users ? users.results : [];
+  const users = useSelector((state) => state.users.users);
+  const usersListArray = users ? users : [];
   const usersListArrayPreview =
     usersListArray &&
     usersListArray.map(
@@ -65,6 +68,8 @@ const UsersTab = () => {
         role,
         status,
         buttons,
+        first_name,
+        last_name,
       })
     );
 
@@ -85,12 +90,15 @@ const UsersTab = () => {
   // }, []);
 
   const [userForm, setUserForm] = useState({
+    id: "",
     firstName: "",
     lastName: "",
     email: "",
     role: "Author",
+    edit: false,
   });
   const [submitted, setSubmitted] = useState(false);
+  const updatingUser = useSelector((state) => state.users.updatingUser);
   const registering = useSelector((state) => state.registration.registering);
 
   const handleChange = (e) => {
@@ -119,8 +127,28 @@ const UsersTab = () => {
       userForm.email &&
       userForm.role
     ) {
-      dispatch(userActions.register(userForm));
-      setUserForm({ firstName: "", lastName: "", email: "", role: "Author" });
+      if (!userForm.edit) {
+        dispatch(
+          userActions.register({
+            first_name: userForm.firstName,
+            last_name: userForm.lastName,
+            email: userForm.email,
+            role: userForm.role,
+          })
+        );
+        setUserForm({ firstName: "", lastName: "", email: "", role: "Author" });
+      } else {
+        dispatch(
+          userActions.updateUser({
+            id: userForm.id,
+            first_name: userForm.firstName,
+            last_name: userForm.lastName,
+            email: userForm.email,
+            role: userForm.role,
+          })
+        );
+        setUserForm({ firstName: "", lastName: "", email: "", role: "Author" });
+      }
     }
   };
 
@@ -207,7 +235,7 @@ const UsersTab = () => {
             Cancel
           </Button>
           <Button type="submit" className="save-btn">
-            {registering && (
+            {(registering || updatingUser) && (
               <span className="spinner-border spinner-border-sm mr-1"></span>
             )}
             Save
@@ -290,7 +318,16 @@ const UsersTab = () => {
               <tbody>
                 {currentUsers ? (
                   currentUsers.map(
-                    ({ id, name, email, role, status, buttons }) => {
+                    ({
+                      id,
+                      name,
+                      email,
+                      role,
+                      status,
+                      buttons,
+                      first_name,
+                      last_name,
+                    }) => {
                       return (
                         <tr key={id}>
                           <td className="border-right-0">{id}</td>
@@ -310,7 +347,15 @@ const UsersTab = () => {
                             </span>
                           </td>
 
-                          <td className="border-left-0">{buttons(id)}</td>
+                          <td className="border-left-0">
+                            {buttons(id, {
+                              id,
+                              first_name,
+                              last_name,
+                              email,
+                              role,
+                            })}
+                          </td>
                         </tr>
                       );
                     }
@@ -324,7 +369,7 @@ const UsersTab = () => {
             </Table>
             <Pagination
               usersPerPage={usersPerPage}
-              totalUsers={usersListArrayPreview.length}
+              totalUsers={users ? users.length : 0}
               paginate={paginate}
             />
           </div>
@@ -370,7 +415,17 @@ const UsersTab = () => {
     );
   };
 
-  const editUser = () => {};
+  const handleEditForm = (user) => {
+    setUserForm({
+      ...userForm,
+      id: user.id,
+      firstName: user.first_name,
+      lastName: user.last_name,
+      email: user.email,
+      edit: true,
+    });
+    handleCloseForm();
+  };
 
   return (
     <React.Fragment>
