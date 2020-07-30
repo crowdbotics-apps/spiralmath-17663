@@ -28,7 +28,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env.str("SECRET_KEY")
 
-ALLOWED_HOSTS = env.list("HOST", default=["*"])
+# ALLOWED_HOSTS = env.list("HOST", default=["*"])
+# TODO for Natali removed below
+ALLOWED_HOSTS = [
+    "*",
+    'localhost',
+    '127.0.0.1',
+    '[::1]',
+]
 SITE_ID = 1
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
@@ -62,7 +69,7 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.google',
     'django_extensions',
     'drf_yasg',
-
+    'corsheaders',
 ]
 INSTALLED_APPS += LOCAL_APPS + THIRD_PARTY_APPS
 
@@ -74,6 +81,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'django.middleware.locale.LocaleMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'spiralmath_17663.urls'
@@ -81,7 +91,7 @@ ROOT_URLCONF = 'spiralmath_17663.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'frontend')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -154,10 +164,10 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend'
 )
 
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'frontend', "build", "static"),  # update the STATICFILES_DIRS
+)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # allauth / users
@@ -175,24 +185,47 @@ SOCIALACCOUNT_ADAPTER = "users.adapters.SocialAccountAdapter"
 ACCOUNT_ALLOW_REGISTRATION = env.bool("ACCOUNT_ALLOW_REGISTRATION", True)
 SOCIALACCOUNT_ALLOW_REGISTRATION = env.bool("SOCIALACCOUNT_ALLOW_REGISTRATION", True)
 
-REST_AUTH_SERIALIZERS = {
-    # Replace password reset serializer to fix 500 error
-    "PASSWORD_RESET_SERIALIZER": "home.api.v1.serializers.PasswordSerializer",
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'EXCEPTION_HANDLER': 'spiralmath_17663.exception_handler.exception_handler',
+    'PAGE_SIZE': 100,
 }
-REST_AUTH_REGISTER_SERIALIZERS = {
-    # Use custom serializer that has no username and matches web signup
-    "REGISTER_SERIALIZER": "home.api.v1.serializers.SignupSerializer",
-}
+
 
 # Custom user model
 AUTH_USER_MODEL = "users.User"
 
+SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
+
 EMAIL_HOST = env.str("EMAIL_HOST", "smtp.sendgrid.net")
-EMAIL_HOST_USER = env.str("SENDGRID_USERNAME", "")
-EMAIL_HOST_PASSWORD = env.str("SENDGRID_PASSWORD", "")
+# EMAIL_HOST_USER = env.str("SENDGRID_USERNAME", "")
+# EMAIL_HOST_PASSWORD = env.str("SENDGRID_PASSWORD", "")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
+DEFAULT_FROM_EMAIL = 'user-enroll@spiralmath.net'
+
+FRONTEND_URL = 'spiralmath-17663.botics.co'
+
+# Security
+# https://docs.djangoproject.com/en/1.11/topics/security/
+
+SESSION_COOKIE_HTTPONLY = True
+# must be commented
+# CSRF_COOKIE_HTTPONLY = True
+SECURE_CONTENT_TYPE_NOSNIFF = False
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+
+# SESSION_COOKIE_SAMESITE = None
+SESSION_COOKIE_AGE = 3600 * 24 * 60  # cookies age 60 days.
+
+# TODO for Natali removed it
+# CSRF_COOKIE_SAMESITE = True
+# CSRF_COOKIE_DOMAIN = None
+CSRF_COOKIE_SAMESITE = None
+CSRF_COOKIE_SECURE = False
 
 
 if DEBUG:

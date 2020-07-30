@@ -1,5 +1,7 @@
 import { authHeader } from "../../helpers/auth-header";
 
+const apiPath = "api/v1";
+
 const login = (email, password) => {
   const requestOptions = {
     method: "POST",
@@ -7,8 +9,12 @@ const login = (email, password) => {
     body: JSON.stringify({ email, password }),
   };
 
-  return fetch("api/v1/auth/login/", requestOptions)
-    .then(handleResponse)
+  return fetch(`${apiPath}/auth/login/`, requestOptions)
+    .then((res) => {
+      console.log(res);
+      console.log(document.cookies);
+      handleResponse(res);
+    })
     .then((user) => {
       console.log(user);
       // store user details and jwt token in local storage to keep user logged in between page refreshes
