@@ -15,7 +15,7 @@ function App() {
   return (
     <Container>
       <Switch>
-        <Route path="/dashboard" exact component={Dashboard} />
+        <PrivateRoute path="/dashboard" exact component={Dashboard} />
         <Route path="/signup" exact component={SignUp} />
         <Route path="/" exact component={Login} />
         <Route path="/forgot-password" exact component={ForgotPassword} />

@@ -14,13 +14,18 @@ const UserTypes = () => {
   // }, []);
 
   const [userForm, setUserForm] = useState({
+    id: "",
     userType: "",
     createQuestions: true,
     reviewQuestions: false,
+    edit: false,
   });
   const [submitted, setSubmitted] = useState(false);
   const userTypeCreating = useSelector(
     (state) => state.userTypes.userTypeCreating
+  );
+  const updatingUserType = useSelector(
+    (state) => state.userTypes.updatingUserType
   );
 
   const handleChange = (e) => {
@@ -51,12 +56,36 @@ const UserTypes = () => {
   useEffect(() => {
     const submit = () => {
       if (userForm.userType) {
-        dispatch(userActions.createUserType(userForm));
-        setUserForm({
-          userType: "",
-          createQuestions: true,
-          reviewQuestions: false,
-        });
+        if (!userForm.edit) {
+          dispatch(
+            userActions.createUserType({
+              name: userForm.userType,
+              create_questions: userForm.createQuestions,
+              review_questions: userForm.reviewQuestions,
+            })
+          );
+          setUserForm({
+            userType: "",
+            createQuestions: true,
+            reviewQuestions: false,
+          });
+        } else {
+          dispatch(
+            userActions.updateUserType({
+              id: userForm.id,
+              name: userForm.userType,
+              create_questions: userForm.createQuestions,
+              review_questions: userForm.reviewQuestions,
+            })
+          );
+          setUserForm({
+            userType: "",
+            createQuestions: true,
+            reviewQuestions: false,
+            id: "",
+            edit: "",
+          });
+        }
       }
     };
 
@@ -68,6 +97,15 @@ const UserTypes = () => {
   const [closeForm, setCloseForm] = useState(false);
 
   const handleCloseForm = () => {
+    if (closeForm === true) {
+      setUserForm({
+        userType: "",
+        createQuestions: true,
+        reviewQuestions: false,
+        id: "",
+        edit: "",
+      });
+    }
     setCloseForm(!closeForm);
   };
 
@@ -133,7 +171,7 @@ const UserTypes = () => {
             Cancel
           </Button>
           <Button type="submit" className="save-btn">
-            {userTypeCreating && (
+            {(userTypeCreating || updatingUserType) && (
               <span className="spinner-border spinner-border-sm mr-1"></span>
             )}
             Save
@@ -184,17 +222,33 @@ const UserTypes = () => {
             </thead>
             <tbody>
               {userTypeArray
-                ? userTypeArray.map(({ userType, description, buttons }) => {
-                    return (
-                      <tr key={userType}>
-                        <td className="border-right-0">{userType}</td>
-                        <td className="border-left-0 border-right-0">
-                          {description}
-                        </td>
-                        <td className="border-left-0">{buttons(userType)}</td>
-                      </tr>
-                    );
-                  })
+                ? userTypeArray.map(
+                    ({
+                      userType,
+                      description,
+                      buttons,
+                      id,
+                      create_questions,
+                      review_questions,
+                    }) => {
+                      return (
+                        <tr key={userType}>
+                          <td className="border-right-0">{userType}</td>
+                          <td className="border-left-0 border-right-0">
+                            {description}
+                          </td>
+                          <td className="border-left-0">
+                            {buttons(userType, {
+                              userType,
+                              create_questions,
+                              review_questions,
+                              id,
+                            })}
+                          </td>
+                        </tr>
+                      );
+                    }
+                  )
                 : ""}
             </tbody>
           </Table>
@@ -241,7 +295,19 @@ const UserTypes = () => {
     );
   };
 
-  const buttons = (userType) => (
+  const handleEditForm = (userType) => {
+    setUserForm({
+      ...userForm,
+      id: userType.id,
+      userType: userType.userType,
+      createQuestions: userType.create_questions,
+      reviewQuestions: userType.review_questions,
+      edit: true,
+    });
+    handleCloseForm();
+  };
+
+  const buttons = (userType, userTypeObject) => (
     <React.Fragment>
       <div className="d-flex justify-content-end">
         <div
@@ -266,7 +332,10 @@ const UserTypes = () => {
           </svg>
         </div>
 
-        <div className="cursor-pointer ml-4">
+        <div
+          className="cursor-pointer ml-4"
+          onClick={() => handleEditForm(userTypeObject)}
+        >
           <svg
             width="20"
             height="20"
@@ -293,11 +362,17 @@ const UserTypes = () => {
       userType: "System Administrator",
       description: "Can create and review questions",
       buttons,
+      id: 1,
+      create_questions: true,
+      review_questions: true,
     },
     {
       userType: "Reviewer",
       description: "Can review questions",
       buttons,
+      id: 2,
+      create_questions: true,
+      review_questions: true,
     },
   ];
 
