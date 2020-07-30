@@ -7,7 +7,7 @@ const login = (email, password) => {
     body: JSON.stringify({ email, password }),
   };
 
-  return fetch(`${process.env.REACT_APP_API_URL}/auth/login/`, requestOptions)
+  return fetch("api/v1/auth/login/", requestOptions)
     .then(handleResponse)
     .then((user) => {
       console.log(user);
@@ -25,10 +25,7 @@ const logout = () => {
   };
   // remove user from local storage to log user out
   localStorage.removeItem("user");
-  return fetch(
-    `${process.env.REACT_APP_API_URL}/auth/logout/`,
-    requestOptions
-  ).then(handleResponse);
+  return fetch("api/v1/auth/logout/", requestOptions).then(handleResponse);
 };
 
 const register = (user) => {
@@ -38,9 +35,7 @@ const register = (user) => {
     body: JSON.stringify(user),
   };
 
-  return fetch(`${process.env.REACT_APP_API_URL}/user/`, requestOptions).then(
-    handleResponse
-  );
+  return fetch("api/v1/user/", requestOptions).then(handleResponse);
 };
 const confirmUser = (user) => {
   const requestOptions = {
@@ -49,9 +44,7 @@ const confirmUser = (user) => {
     body: JSON.stringify(user),
   };
 
-  return fetch(`${process.env.REACT_APP_API_URL}/user/`, requestOptions).then(
-    handleResponse
-  );
+  return fetch("api/v1/user/", requestOptions).then(handleResponse);
 };
 
 const resetPassword = (email) => {
@@ -61,10 +54,9 @@ const resetPassword = (email) => {
     body: JSON.stringify({ email }),
   };
 
-  return fetch(
-    `${process.env.REACT_APP_API_URL}/user/reset-password/`,
-    requestOptions
-  ).then(handleResponse);
+  return fetch("api/v1/user/reset-password/", requestOptions).then(
+    handleResponse
+  );
 };
 
 export const contactUs = (data) => {
@@ -74,9 +66,7 @@ export const contactUs = (data) => {
     body: JSON.stringify(data),
   };
 
-  return fetch(`${process.env.REACT_APP_API_URL}/user/`, requestOptions).then(
-    handleResponse
-  );
+  return fetch("api/v1/user/", requestOptions).then(handleResponse);
 };
 
 const getAllUserTypes = () => {
@@ -85,10 +75,7 @@ const getAllUserTypes = () => {
     headers: authHeader(),
   };
 
-  return fetch(
-    `${process.env.REACT_APP_API_URL}/user-type/`,
-    requestOptions
-  ).then(handleResponse);
+  return fetch("api/v1/user-type/", requestOptions).then(handleResponse);
 };
 
 const createUserType = ({ userType, createQuestions, reviewQuestions }) => {
@@ -103,10 +90,7 @@ const createUserType = ({ userType, createQuestions, reviewQuestions }) => {
     body: JSON.stringify(userTypeToSend),
   };
 
-  return fetch(
-    `${process.env.REACT_APP_API_URL}/user-type/`,
-    requestOptions
-  ).then(handleResponse);
+  return fetch("api/v1/user-type/", requestOptions).then(handleResponse);
 };
 
 const updateUserType = (userType) => {
@@ -116,10 +100,9 @@ const updateUserType = (userType) => {
     body: JSON.stringify(userType),
   };
 
-  return fetch(
-    `${process.env.REACT_APP_API_URL}/user-type/${userType.id}/`,
-    requestOptions
-  ).then(handleResponse);
+  return fetch(`api/v1/user-type/${userType.id}/`, requestOptions).then(
+    handleResponse
+  );
 };
 
 const deleteUserType = (id) => {
@@ -128,10 +111,7 @@ const deleteUserType = (id) => {
     headers: authHeader(),
   };
 
-  return fetch(
-    `${process.env.REACT_APP_API_URL}/user-type/${id}/`,
-    requestOptions
-  ).then(handleResponse);
+  return fetch(`api/v1/user-type/${id}/`, requestOptions).then(handleResponse);
 };
 
 const getAllUsers = () => {
@@ -140,9 +120,7 @@ const getAllUsers = () => {
     headers: authHeader(),
   };
 
-  return fetch(`${process.env.REACT_APP_API_URL}/user/`, requestOptions).then(
-    handleResponse
-  );
+  return fetch("api/v1/user/", requestOptions).then(handleResponse);
 };
 
 const updateUser = (user) => {
@@ -152,10 +130,7 @@ const updateUser = (user) => {
     body: JSON.stringify(user),
   };
 
-  return fetch(
-    `${process.env.REACT_APP_API_URL}/user/${user.id}/`,
-    requestOptions
-  ).then(handleResponse);
+  return fetch(`api/v1/user/${user.id}/`, requestOptions).then(handleResponse);
 };
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -165,10 +140,7 @@ const deleteUser = (id) => {
     headers: authHeader(),
   };
 
-  return fetch(
-    `${process.env.REACT_APP_API_URL}/user/${id}/`,
-    requestOptions
-  ).then(handleResponse);
+  return fetch(`api/v1/user/${id}/`, requestOptions).then(handleResponse);
 };
 
 const getOneUser = (id) => {
@@ -177,10 +149,7 @@ const getOneUser = (id) => {
     headers: authHeader(),
   };
 
-  return fetch(
-    `${process.env.REACT_APP_API_URL}/user/${id}/`,
-    requestOptions
-  ).then(handleResponse);
+  return fetch(`api/v1/user/${id}/`, requestOptions).then(handleResponse);
 };
 
 function handleResponse(response) {
