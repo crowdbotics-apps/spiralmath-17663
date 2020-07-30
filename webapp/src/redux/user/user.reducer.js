@@ -80,11 +80,25 @@ export const confirmation = (state = {}, action) => {
 export const userTypesReducer = (
   state = {
     userTypeCreating: false,
-    allUserTypes: [],
+    allUserTypes: [
+      {
+        id: 1,
+        create_questions: true,
+        review_questions: true,
+        name: "System Administrator",
+      },
+      {
+        id: 2,
+        create_questions: true,
+        review_questions: false,
+        name: "Author",
+      },
+    ],
     loadingUserTypes: false,
     error: "",
     success: "",
     updatingUserType: false,
+    deletingUserType: false,
   },
   action
 ) => {
@@ -119,6 +133,20 @@ export const userTypesReducer = (
         updatingUserType: false,
         error: action.payload,
       };
+    case userTypes.DELETE_USER_TYPE:
+      return { ...state, deletingUserType: true, error: "", success: "" };
+    case userTypes.DELETE_USER_TYPE_SUCCESS:
+      const allUserTypes = state.allUserTypes.filter(
+        (el) => el.id === action.payload
+      );
+      return {
+        ...state,
+        allUserTypes,
+        deletingUserType: false,
+        success: `UserType with id ${action.payload} is successfully deleted`,
+      };
+    case userTypes.DELETE_USER_TYPE_FAILURE:
+      return { ...state, deletingUserType: false, error: action.payloads };
     default:
       return state;
   }
@@ -182,9 +210,20 @@ let initialUsersState = {
       status: 10,
       username: "idigitalbrick@gmail.com",
     },
+    {
+      id: 16,
+      email: "rajparmar@crowdbotics.com",
+      first_name: "Raj",
+      last_name: "Parmar",
+      user_type: 1,
+      accepted_terms_date: null,
+      role: "Admin",
+      status: 20,
+    },
   ],
   loadingUsers: false,
   updatingUser: false,
+  deletingUser: false,
   errorMessage: "",
   successMessage: "",
 };
@@ -225,6 +264,23 @@ export const users = (state = initialUsersState, action) => {
       };
     case userTypes.UPDATE_USER_FAILURE:
       return { ...state, updatingUser: false, errorMessage: action.payload };
+    case userTypes.DELETE_USER_REQUEST:
+      return {
+        ...state,
+        deletingUser: true,
+        errorMessage: "",
+        successMessage: "",
+      };
+    case userTypes.DELETE_USER_SUCCESS:
+      const users = state.users.filter((el) => el.id === action.payload);
+      return {
+        ...state,
+        users,
+        deletingUser: false,
+        successMessage: `User with id ${action.payload} is successfully deleted`,
+      };
+    case userTypes.DELETE_USER_FAILURE:
+      return { ...state, deletingUser: false, errorMessage: action.payload };
     default:
       return state;
   }

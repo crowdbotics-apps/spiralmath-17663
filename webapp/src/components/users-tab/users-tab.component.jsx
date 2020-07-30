@@ -8,6 +8,8 @@ import { validateCreateUser } from "../../helpers/validation/validateCreateUser"
 import "./users-tab.styles.css";
 
 const UsersTab = () => {
+  const deletingUser = useSelector((state) => state.users.deletingUser);
+
   const buttons = (id, user) => (
     <React.Fragment>
       <div className="d-flex justify-content-end">
@@ -85,9 +87,9 @@ const UsersTab = () => {
 
   const [errors, setErrors] = useState({});
 
-  // useEffect(() => {
-  //   dispatch(userActions.getAllUsers());
-  // }, []);
+  useEffect(() => {
+    dispatch(userActions.getAllUsers());
+  }, []);
 
   const [userForm, setUserForm] = useState({
     id: "",
@@ -387,6 +389,10 @@ const UsersTab = () => {
   const handleClose = () => setShow({ ...show, showModal: false });
   const handleShow = (id) => setShow({ ...show, showModal: true, id });
 
+  const handleDeleteUser = (id) => {
+    dispatch(userActions.deleteUser(id));
+  };
+
   const handleDeleteModal = (id) => {
     return (
       <Modal
@@ -411,8 +417,15 @@ const UsersTab = () => {
           <Button onClick={handleClose} className="popup-close-btn">
             Close
           </Button>
-          <Button variant="primary" className="popup-save-btn">
-            Save Changes
+          <Button
+            variant="primary"
+            className="popup-save-btn"
+            onClick={() => handleDeleteUser(id)}
+          >
+            {deletingUser && (
+              <span className="spinner-border spinner-border-sm mr-1"></span>
+            )}
+            Delete
           </Button>
         </Modal.Footer>
       </Modal>

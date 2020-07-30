@@ -17,6 +17,7 @@ const ContactUs = ({ show, toggleShow }) => {
   const [errors, setErrors] = useState({});
   const { email, message } = inputs;
   const contacting = useSelector((state) => state.contactUs.contacting);
+  const loggedIn = useSelector((state) => state.users.loggedIn);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -52,21 +53,27 @@ const ContactUs = ({ show, toggleShow }) => {
         </Modal.Header>
         <Modal.Body>
           <Form noValidate onSubmit={handleSubmit}>
-            <Form.Group controlId="formEmail" className="relative">
-              <Form.Control
-                type="email"
-                className={`input-style input-text ${
-                  email.length && "label-up"
-                }`}
-                name="email"
-                value={email}
-                onChange={handleChange}
-              />
-              <span class="floating-label">Email</span>
-              {submitted && errors.email && (
-                <p className="text-danger form-text-danger">Email is required</p>
-              )}
-            </Form.Group>
+            {loggedIn ? (
+              <Form.Group controlId="formEmail" className="relative">
+                <Form.Control
+                  type="email"
+                  className={`input-style input-text ${
+                    email.length && "label-up"
+                  }`}
+                  name="email"
+                  value={email}
+                  onChange={handleChange}
+                />
+                <span class="floating-label">Email</span>
+                {submitted && errors.email && (
+                  <p className="text-danger form-text-danger">
+                    Email is required
+                  </p>
+                )}
+              </Form.Group>
+            ) : (
+              ""
+            )}
 
             <Form.Group controlId="formMessage" className="relative">
               <Form.Control
@@ -80,7 +87,9 @@ const ContactUs = ({ show, toggleShow }) => {
               />
               <span class="floating-label">Message</span>
               {submitted && errors.message && (
-                <p className="text-danger form-text-danger">This field is required</p>
+                <p className="text-danger form-text-danger">
+                  This field is required
+                </p>
               )}
             </Form.Group>
           </Form>

@@ -6,6 +6,10 @@ import { userActions } from "../../redux/user/user.actions";
 import { validateCreateUserTypes } from "../../helpers/validation/validateCreateUser";
 
 const UserTypes = () => {
+  const userTypesState = useSelector((state) => state.userTypes.allUserTypes);
+  const deletingUserType = useSelector(
+    (state) => state.userTypes.deletingUserType
+  );
   const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
 
@@ -260,10 +264,14 @@ const UserTypes = () => {
   const [show, setShow] = useState({ userType: "" });
 
   const handleClose = () => setShow({ ...show, showModal: false });
-  const handleShow = (userType) =>
-    setShow({ ...show, showModal: true, userType });
+  const handleShow = (userType, id) =>
+    setShow({ ...show, showModal: true, userType, id });
 
-  const handleDeleteModal = (userType) => {
+  const handleDeleteUserType = (id) => {
+    dispatch(userActions.deleteUserType(id));
+  };
+
+  const handleDeleteModal = (userType, id) => {
     return (
       <Modal
         show={show.showModal}
@@ -287,8 +295,15 @@ const UserTypes = () => {
           <Button onClick={handleClose} className="popup-close-btn">
             Close
           </Button>
-          <Button variant="primary" className="popup-save-btn">
-            Save Changes
+          <Button
+            variant="primary"
+            className="popup-save-btn"
+            onClick={() => handleDeleteUserType(id)}
+          >
+            {deletingUserType && (
+              <span className="spinner-border spinner-border-sm mr-1"></span>
+            )}
+            Delete
           </Button>
         </Modal.Footer>
       </Modal>
@@ -312,7 +327,7 @@ const UserTypes = () => {
       <div className="d-flex justify-content-end">
         <div
           className="ml-2 cursor-pointer"
-          onClick={() => handleShow(userType)}
+          onClick={() => handleShow(userType, userTypeObject.id)}
         >
           <svg
             width="13"
@@ -357,29 +372,33 @@ const UserTypes = () => {
     </React.Fragment>
   );
 
-  const userTypeArray = [
-    {
-      userType: "System Administrator",
-      description: "Can create and review questions",
-      buttons,
-      id: 1,
-      create_questions: true,
-      review_questions: true,
-    },
-    {
-      userType: "Reviewer",
-      description: "Can review questions",
-      buttons,
-      id: 2,
-      create_questions: true,
-      review_questions: true,
-    },
-  ];
+  const userTypeArray = userTypesState.map(
+    ({ id, create_questions, review_questions, name }) => {
+      const description = ((create_questions, review_questions) => {
+        if (create_questions && review_questions) {
+          return "Can create and review questions";
+        } else if (create_questions) {
+          return "Can create questions";
+        } else if (review_questions) {
+          return "Can review questions";
+        }
+      })(create_questions, review_questions);
+
+      return {
+        id,
+        create_questions,
+        review_questions,
+        description,
+        userType: name,
+        buttons,
+      };
+    }
+  );
 
   return (
     <React.Fragment>
       {closeForm ? createUserTypeForm() : ""}
-      {show ? handleDeleteModal(show.userType) : ""}
+      {show ? handleDeleteModal(show.userType, show.id) : ""}
       {userTypesTable()}
     </React.Fragment>
   );

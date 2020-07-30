@@ -119,7 +119,7 @@ const resetPassword = (email) => {
     dispatch(request());
 
     userService.resetPassword(email).then(
-      (email) => {
+      () => {
         dispatch(success());
         dispatch(alertActions.success("Reset password successful"));
       },
@@ -203,6 +203,31 @@ const updateUser = (user) => {
   };
 };
 
+const deleteUser = (id) => {
+  const request = () => {
+    return { type: userTypes.DELETE_USER_REQUEST };
+  };
+  const success = () => {
+    return { type: userTypes.DELETE_USER_SUCCESS, payload: id };
+  };
+  const failure = (error) => {
+    return { type: userTypes.DELETE_USER_FAILURE, payload: error };
+  };
+
+  return (dispatch) => {
+    dispatch(request());
+
+    userService.deleteUser(id).then(
+      () => {
+        dispatch(success(id));
+      },
+      (error) => {
+        dispatch(failure(error.toString()));
+      }
+    );
+  };
+};
+
 const getAllUserTypes = () => {
   return (dispatch) => {
     dispatch(request());
@@ -273,6 +298,31 @@ const updateUserType = (userType) => {
   };
 };
 
+const deleteUserType = (id) => {
+  const request = () => {
+    return { type: userTypes.DELETE_USER_TYPE };
+  };
+  const success = (id) => {
+    return { type: userTypes.DELETE_USER_TYPE_SUCCESS, payload: id };
+  };
+  const failure = (error) => {
+    return { type: userTypes.DELETE_USER_TYPE_FAILURE, payload: error };
+  };
+
+  return (dispatch) => {
+    dispatch(request());
+
+    userService.deleteUserType(id).then(
+      () => {
+        dispatch(success(id));
+      },
+      (error) => {
+        dispatch(failure(error.toString()));
+      }
+    );
+  };
+};
+
 export const alertActions = {
   success,
   error,
@@ -285,10 +335,12 @@ export const userActions = {
   register,
   getAllUsers,
   updateUser,
+  deleteUser,
   confirmUser,
   resetPassword,
   contactUs,
   createUserType,
   getAllUserTypes,
   updateUserType,
+  deleteUserType,
 };

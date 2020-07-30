@@ -15,6 +15,7 @@ const ForgotPassword = ({ show, toggleShow }) => {
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const alert = useSelector((state) => state.alert);
   const dispatch = useDispatch();
   const reseting = useSelector((state) => state.reset.reseting);
 
@@ -51,13 +52,23 @@ const ForgotPassword = ({ show, toggleShow }) => {
       <Row>
         <Col className="mt-3">
           <LogoAboveBox />
-          <div class="form-container w-50">
+          {alert.type === "alert-danger" ? (
+            <div className="w-75 error-msg">
+              <p className="text-center">{alert.message}</p>
+            </div>
+          ) : (
+            <div className="w-75 error-msg">
+              <p className="text-center text-success">{alert.message}</p>
+            </div>
+          )}
+          <div className="form-container w-50">
             <h1 className="text-center form-heading mb-3">
               Reset Your Password
             </h1>
 
             <p className="text-center instruction-text">
-              Please enter your email and we will send you an<br/>
+              Please enter your email and we will send you an
+              <br />
               instruction email.
             </p>
 
@@ -65,7 +76,9 @@ const ForgotPassword = ({ show, toggleShow }) => {
               <Form.Group controlId="formEmail" className="relative">
                 <Form.Control
                   type="email"
-                  className={`input-style input-text ${email.length && 'label-up'}`}
+                  className={`input-style input-text ${
+                    email.length && "label-up"
+                  }`}
                   name="email"
                   value={email}
                   onChange={handleChange}
@@ -98,7 +111,13 @@ const ForgotPassword = ({ show, toggleShow }) => {
           <div className="have-issue-text">
             <p className="mt-2">
               Have issues?
-              <span className="text-orange pointerType" onClick={handleContactUs} > Contact us </span>
+              <span
+                className="text-orange pointerType"
+                onClick={handleContactUs}
+              >
+                {" "}
+                Contact us{" "}
+              </span>
             </p>
           </div>
         </Col>

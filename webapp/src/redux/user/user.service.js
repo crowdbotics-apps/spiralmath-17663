@@ -3,9 +3,7 @@ import { authHeader } from "../../helpers/auth-header";
 const login = (email, password) => {
   const requestOptions = {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: authHeader(),
     body: JSON.stringify({ email, password }),
   };
 
@@ -23,7 +21,7 @@ const login = (email, password) => {
 const logout = () => {
   const requestOptions = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeader(),
   };
   // remove user from local storage to log user out
   localStorage.removeItem("user");
@@ -36,7 +34,7 @@ const logout = () => {
 const register = (user) => {
   const requestOptions = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeader(),
     body: JSON.stringify(user),
   };
 
@@ -47,7 +45,7 @@ const register = (user) => {
 const confirmUser = (user) => {
   const requestOptions = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeader(),
     body: JSON.stringify(user),
   };
 
@@ -59,19 +57,20 @@ const confirmUser = (user) => {
 const resetPassword = (email) => {
   const requestOptions = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeader(),
     body: JSON.stringify({ email }),
   };
 
-  return fetch(`${process.env.REACT_APP_API_URL}/user/`, requestOptions).then(
-    handleResponse
-  );
+  return fetch(
+    `${process.env.REACT_APP_API_URL}/user/reset-password/`,
+    requestOptions
+  ).then(handleResponse);
 };
 
 export const contactUs = (data) => {
   const requestOptions = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeader(),
     body: JSON.stringify(data),
   };
 
@@ -149,7 +148,7 @@ const getAllUsers = () => {
 const updateUser = (user) => {
   const requestOptions = {
     method: "PATCH",
-    headers: { ...authHeader(), "Content-Type": "application/json" },
+    headers: authHeader(),
     body: JSON.stringify(user),
   };
 
