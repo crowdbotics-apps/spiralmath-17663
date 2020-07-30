@@ -1,4 +1,7 @@
 import { authHeader } from "../../helpers/auth-header";
+import { useHistory } from "react-router-dom";
+
+const history = useHistory();
 
 const apiPath = "api/v1";
 
@@ -27,7 +30,9 @@ const logout = () => {
   };
   // remove user from local storage to log user out
   localStorage.removeItem("user");
-  return fetch("api/v1/auth/logout/", requestOptions).then(handleResponse);
+  return fetch("api/v1/auth/logout/", requestOptions)
+    .then(handleResponse)
+    .then(() => history.push("/"));
 };
 
 const register = (user) => {
