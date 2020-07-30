@@ -4,4 +4,4 @@ env/
 .env
 staticfiles/
 postgres-data/
-webapp/node_modules/
+frontend/node_modules/

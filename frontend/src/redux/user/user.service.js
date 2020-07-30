@@ -1,5 +1,7 @@
 import { authHeader } from "../../helpers/auth-header";
 
+const apiPath = 'api/v1';
+
 const login = (email, password) => {
   const requestOptions = {
     method: "POST",
@@ -7,7 +9,7 @@ const login = (email, password) => {
     body: JSON.stringify({ email, password }),
   };
 
-  return fetch(`${process.env.REACT_APP_API_URL}/auth/login/`, requestOptions)
+  return fetch(`${apiPath}/auth/login/`, requestOptions)
     .then((res) => {
       console.log(res);
       console.log(document.cookies);
@@ -29,7 +31,7 @@ const logout = () => {
   // remove user from local storage to log user out
   localStorage.removeItem("user");
   return fetch(
-    `${process.env.REACT_APP_API_URL}/auth/logout/`,
+    `/auth/logout/`,
     requestOptions
   ).then(handleResponse);
 };

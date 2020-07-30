@@ -62,6 +62,7 @@ const Login = ({ show, toggleShow }) => {
 
   const submit = () => {
     if (email && password) {
+      console.log("user submit", submit);
       dispatch(userActions.login(email, password));
     }
     setInputs({ email: "", password: "" });
