@@ -28,7 +28,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env.str("SECRET_KEY")
 
-ALLOWED_HOSTS = env.list("HOST", default=["*"])
+# ALLOWED_HOSTS = env.list("HOST", default=["*"])
+# TODO for Natali removed below
+ALLOWED_HOSTS = [
+    env('HOST'),
+    'localhost',
+    '127.0.0.1',
+    '[::1]',
+]
 SITE_ID = 1
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
@@ -211,8 +218,15 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
 
-SESSION_COOKIE_SAMESITE = None
+# SESSION_COOKIE_SAMESITE = None
 SESSION_COOKIE_AGE = 3600 * 24 * 60  # cookies age 60 days.
+
+# TODO for Natali removed it
+# CSRF_COOKIE_SAMESITE = True
+# CSRF_COOKIE_DOMAIN = None
+CSRF_COOKIE_SAMESITE = None
+CSRF_COOKIE_SECURE = False
+
 
 if DEBUG:
     # output email to console instead of sending
