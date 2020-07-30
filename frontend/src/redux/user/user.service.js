@@ -31,10 +31,23 @@ const logout = () => {
 };
 
 const register = (user) => {
+  if (user["role"] !== "SystemAdministrator") {
+    user["role"] = "Editor";
+  } else {
+    user["role"] = "Admin";
+  }
+  const pass = Math.random().toString(36).substring(7);
+  const data = {
+    email: user["email"],
+    first_name: user["first_name"],
+    last_name: user["last_name"],
+    role: user["role"],
+    password: pass,
+  };
   const requestOptions = {
     method: "POST",
     headers: authHeader(),
-    body: JSON.stringify(user),
+    body: JSON.stringify(data),
   };
 
   return fetch("api/v1/user/", requestOptions).then(handleResponse);
