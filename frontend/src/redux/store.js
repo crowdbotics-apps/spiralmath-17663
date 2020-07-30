@@ -12,7 +12,7 @@ const composeEnhancers =
       })
     : compose;
 
-const enhancer = composeEnhancers(applyMiddleware(...middleware));
+const enhancer = composeEnhancers(applyMiddleware(...middlewares));
 export const store = createStore(rootReducer, enhancer);
 
 export const persistor = persistStore(store);
