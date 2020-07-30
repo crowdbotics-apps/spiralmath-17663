@@ -16,4 +16,4 @@ def home(request):
         'homepage': HomePage.objects.first(),
         'packages': packages
     }
-    return render(request, 'home/index.html', context)
+    return render(request, "build/index.html")
