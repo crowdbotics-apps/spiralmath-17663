@@ -6,6 +6,10 @@ import { userActions } from "../../redux/user/user.actions";
 import { validateCreateUserTypes } from "../../helpers/validation/validateCreateUser";
 
 const UserTypes = () => {
+  const userTypesState = useSelector((state) => state.userTypes.allUserTypes);
+  const deletingUserType = useSelector(
+    (state) => state.userTypes.deletingUserType
+  );
   const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
 
@@ -14,13 +18,18 @@ const UserTypes = () => {
   // }, []);
 
   const [userForm, setUserForm] = useState({
+    id: "",
     userType: "",
     createQuestions: true,
     reviewQuestions: false,
+    edit: false,
   });
   const [submitted, setSubmitted] = useState(false);
   const userTypeCreating = useSelector(
     (state) => state.userTypes.userTypeCreating
+  );
+  const updatingUserType = useSelector(
+    (state) => state.userTypes.updatingUserType
   );
 
   const handleChange = (e) => {
@@ -51,12 +60,36 @@ const UserTypes = () => {
   useEffect(() => {
     const submit = () => {
       if (userForm.userType) {
-        dispatch(userActions.createUserType(userForm));
-        setUserForm({
-          userType: "",
-          createQuestions: true,
-          reviewQuestions: false,
-        });
+        if (!userForm.edit) {
+          dispatch(
+            userActions.createUserType({
+              name: userForm.userType,
+              create_questions: userForm.createQuestions,
+              review_questions: userForm.reviewQuestions,
+            })
+          );
+          setUserForm({
+            userType: "",
+            createQuestions: true,
+            reviewQuestions: false,
+          });
+        } else {
+          dispatch(
+            userActions.updateUserType({
+              id: userForm.id,
+              name: userForm.userType,
+              create_questions: userForm.createQuestions,
+              review_questions: userForm.reviewQuestions,
+            })
+          );
+          setUserForm({
+            userType: "",
+            createQuestions: true,
+            reviewQuestions: false,
+            id: "",
+            edit: "",
+          });
+        }
       }
     };
 
@@ -68,6 +101,15 @@ const UserTypes = () => {
   const [closeForm, setCloseForm] = useState(false);
 
   const handleCloseForm = () => {
+    if (closeForm === true) {
+      setUserForm({
+        userType: "",
+        createQuestions: true,
+        reviewQuestions: false,
+        id: "",
+        edit: "",
+      });
+    }
     setCloseForm(!closeForm);
   };
 
@@ -133,7 +175,7 @@ const UserTypes = () => {
             Cancel
           </Button>
           <Button type="submit" className="save-btn">
-            {userTypeCreating && (
+            {(userTypeCreating || updatingUserType) && (
               <span className="spinner-border spinner-border-sm mr-1"></span>
             )}
             Save
@@ -184,17 +226,33 @@ const UserTypes = () => {
             </thead>
             <tbody>
               {userTypeArray
-                ? userTypeArray.map(({ userType, description, buttons }) => {
-                    return (
-                      <tr key={userType}>
-                        <td className="border-right-0">{userType}</td>
-                        <td className="border-left-0 border-right-0">
-                          {description}
-                        </td>
-                        <td className="border-left-0">{buttons(userType)}</td>
-                      </tr>
-                    );
-                  })
+                ? userTypeArray.map(
+                    ({
+                      userType,
+                      description,
+                      buttons,
+                      id,
+                      create_questions,
+                      review_questions,
+                    }) => {
+                      return (
+                        <tr key={userType}>
+                          <td className="border-right-0">{userType}</td>
+                          <td className="border-left-0 border-right-0">
+                            {description}
+                          </td>
+                          <td className="border-left-0">
+                            {buttons(userType, {
+                              userType,
+                              create_questions,
+                              review_questions,
+                              id,
+                            })}
+                          </td>
+                        </tr>
+                      );
+                    }
+                  )
                 : ""}
             </tbody>
           </Table>
@@ -206,10 +264,14 @@ const UserTypes = () => {
   const [show, setShow] = useState({ userType: "" });
 
   const handleClose = () => setShow({ ...show, showModal: false });
-  const handleShow = (userType) =>
-    setShow({ ...show, showModal: true, userType });
+  const handleShow = (userType, id) =>
+    setShow({ ...show, showModal: true, userType, id });
 
-  const handleDeleteModal = (userType) => {
+  const handleDeleteUserType = (id) => {
+    dispatch(userActions.deleteUserType(id));
+  };
+
+  const handleDeleteModal = (userType, id) => {
     return (
       <Modal
         show={show.showModal}
@@ -233,20 +295,39 @@ const UserTypes = () => {
           <Button onClick={handleClose} className="popup-close-btn">
             Close
           </Button>
-          <Button variant="primary" className="popup-save-btn">
-            Save Changes
+          <Button
+            variant="primary"
+            className="popup-save-btn"
+            onClick={() => handleDeleteUserType(id)}
+          >
+            {deletingUserType && (
+              <span className="spinner-border spinner-border-sm mr-1"></span>
+            )}
+            Delete
           </Button>
         </Modal.Footer>
       </Modal>
     );
   };
 
-  const buttons = (userType) => (
+  const handleEditForm = (userType) => {
+    setUserForm({
+      ...userForm,
+      id: userType.id,
+      userType: userType.userType,
+      createQuestions: userType.create_questions,
+      reviewQuestions: userType.review_questions,
+      edit: true,
+    });
+    handleCloseForm();
+  };
+
+  const buttons = (userType, userTypeObject) => (
     <React.Fragment>
       <div className="d-flex justify-content-end">
         <div
           className="ml-2 cursor-pointer"
-          onClick={() => handleShow(userType)}
+          onClick={() => handleShow(userType, userTypeObject.id)}
         >
           <svg
             width="13"
@@ -266,7 +347,10 @@ const UserTypes = () => {
           </svg>
         </div>
 
-        <div className="cursor-pointer ml-4">
+        <div
+          className="cursor-pointer ml-4"
+          onClick={() => handleEditForm(userTypeObject)}
+        >
           <svg
             width="20"
             height="20"
@@ -288,23 +372,33 @@ const UserTypes = () => {
     </React.Fragment>
   );
 
-  const userTypeArray = [
-    {
-      userType: "System Administrator",
-      description: "Can create and review questions",
-      buttons,
-    },
-    {
-      userType: "Reviewer",
-      description: "Can review questions",
-      buttons,
-    },
-  ];
+  const userTypeArray = userTypesState.map(
+    ({ id, create_questions, review_questions, name }) => {
+      const description = ((create_questions, review_questions) => {
+        if (create_questions && review_questions) {
+          return "Can create and review questions";
+        } else if (create_questions) {
+          return "Can create questions";
+        } else if (review_questions) {
+          return "Can review questions";
+        }
+      })(create_questions, review_questions);
+
+      return {
+        id,
+        create_questions,
+        review_questions,
+        description,
+        userType: name,
+        buttons,
+      };
+    }
+  );
 
   return (
     <React.Fragment>
       {closeForm ? createUserTypeForm() : ""}
-      {show ? handleDeleteModal(show.userType) : ""}
+      {show ? handleDeleteModal(show.userType, show.id) : ""}
       {userTypesTable()}
     </React.Fragment>
   );

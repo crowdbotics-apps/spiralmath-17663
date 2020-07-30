@@ -5,10 +5,10 @@ import DashboardBox from "../dashboard-box/dashboardBox.component";
 
 const AdminDashboard = () => {
   const questions = [
-    { action: "Created", number: 1839 },
-    { action: "Approved", number: 1755 },
-    { action: "Pending", number: 125 },
-    { action: "Rejected", number: 36 },
+    { action: "created", number: 1839 },
+    { action: "approved", number: 1755 },
+    { action: "pending", number: 125 },
+    { action: "rejected", number: 36 },
   ];
 
   const users = [
@@ -22,8 +22,16 @@ const AdminDashboard = () => {
       <div className="item-list-view">
         <Row className="mt-3">
           {questions.map((el) => (
-            <Col key={el.action} md="3" className={`dashbaord-title ${el.action}`} >
-              <DashboardBox action={el.action} number={el.number} className={el.action}/>
+            <Col
+              key={el.action}
+              md="3"
+              className={`dashbaord-title ${el.action}`}
+            >
+              <DashboardBox
+                action={el.action}
+                number={el.number}
+                className={el.action}
+              />
             </Col>
           ))}
         </Row>
@@ -33,7 +41,11 @@ const AdminDashboard = () => {
       <div className="item-list-view">
         <Row className="mt-3">
           {users.map((el) => (
-            <Col key={el.action} md="3" className={`dashbaord-title ${el.action}`}>
+            <Col
+              key={el.action}
+              md="3"
+              className={`dashbaord-title ${el.action}`}
+            >
               <DashboardBox action={el.action} number={el.number} />
             </Col>
           ))}

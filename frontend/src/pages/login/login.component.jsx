@@ -97,7 +97,9 @@ const Login = ({ show, toggleShow }) => {
               <Form.Group controlId="formEmail" className="relative">
                 <Form.Control
                   type="email"
-                  className={`input-style input-text ${email.length && 'label-up'}`}
+                  className={`input-style input-text ${
+                    email.length && "label-up"
+                  }`}
                   name="email"
                   value={email}
                   onChange={handleChange}
@@ -111,7 +113,9 @@ const Login = ({ show, toggleShow }) => {
               <Form.Group controlId="formConfirmPassword" className="relative">
                 <Form.Control
                   type={passwordType}
-                  className={`input-style input-text ${password.length && 'label-up'}`}
+                  className={`input-style input-text ${
+                    password.length && "label-up"
+                  }`}
                   name="password"
                   value={password}
                   onChange={handleChange}
@@ -150,7 +154,7 @@ const Login = ({ show, toggleShow }) => {
               </Button>
             </Form>
             <p className="mt-2 text-center login-text">
-              Already have an account? 
+              Already have an account?
               <Link to="/forgot-password">
                 <span className="text-orange pointerType"> Reset </span>
               </Link>
@@ -159,7 +163,13 @@ const Login = ({ show, toggleShow }) => {
           <div className="have-issue-text">
             <p className="mt-2">
               Have issues?
-              <span className="text-orange pointerType" onClick={handleContactUs}> Contact us </span>
+              <span
+                className="text-orange pointerType"
+                onClick={handleContactUs}
+              >
+                {" "}
+                Contact us{" "}
+              </span>
             </p>
           </div>
         </Col>

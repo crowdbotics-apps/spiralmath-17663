@@ -1,11 +1,11 @@
 import { authHeader } from "../../helpers/auth-header";
 
-const apiPath = 'api/v1';
+const apiPath = "api/v1";
 
 const login = (email, password) => {
   const requestOptions = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeader(),
     body: JSON.stringify({ email, password }),
   };
 
@@ -16,6 +16,7 @@ const login = (email, password) => {
       handleResponse(res);
     })
     .then((user) => {
+      console.log(user);
       // store user details and jwt token in local storage to keep user logged in between page refreshes
       localStorage.setItem("user", JSON.stringify(user));
 
@@ -26,25 +27,61 @@ const login = (email, password) => {
 const logout = () => {
   const requestOptions = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeader(),
   };
   // remove user from local storage to log user out
   localStorage.removeItem("user");
-  return fetch(
-    `/auth/logout/`,
-    requestOptions
-  ).then(handleResponse);
+  return fetch("api/v1/auth/logout/", requestOptions).then(handleResponse);
 };
 
-const getAllUsers = () => {
+const register = (user) => {
+  const requestOptions = {
+    method: "POST",
+    headers: authHeader(),
+    body: JSON.stringify(user),
+  };
+
+  return fetch("api/v1/user/", requestOptions).then(handleResponse);
+};
+const confirmUser = (user) => {
+  const requestOptions = {
+    method: "POST",
+    headers: authHeader(),
+    body: JSON.stringify(user),
+  };
+
+  return fetch("api/v1/user/", requestOptions).then(handleResponse);
+};
+
+const resetPassword = (email) => {
+  const requestOptions = {
+    method: "POST",
+    headers: authHeader(),
+    body: JSON.stringify({ email }),
+  };
+
+  return fetch("api/v1/user/reset-password/", requestOptions).then(
+    handleResponse
+  );
+};
+
+export const contactUs = (data) => {
+  const requestOptions = {
+    method: "POST",
+    headers: authHeader(),
+    body: JSON.stringify(data),
+  };
+
+  return fetch("api/v1/user/", requestOptions).then(handleResponse);
+};
+
+const getAllUserTypes = () => {
   const requestOptions = {
     method: "GET",
     headers: authHeader(),
   };
 
-  return fetch(`${process.env.REACT_APP_API_URL}/user/`, requestOptions).then(
-    handleResponse
-  );
+  return fetch("api/v1/user-type/", requestOptions).then(handleResponse);
 };
 
 const createUserType = ({ userType, createQuestions, reviewQuestions }) => {
@@ -59,96 +96,67 @@ const createUserType = ({ userType, createQuestions, reviewQuestions }) => {
     body: JSON.stringify(userTypeToSend),
   };
 
-  return fetch(
-    `${process.env.REACT_APP_API_URL}/user-type/`,
-    requestOptions
-  ).then(handleResponse);
+  return fetch("api/v1/user-type/", requestOptions).then(handleResponse);
 };
 
-function getById(id) {
+const updateUserType = (userType) => {
   const requestOptions = {
-    method: "GET",
+    method: "PATCH",
     headers: authHeader(),
+    body: JSON.stringify(userType),
   };
 
-  return fetch(
-    `${process.env.REACT_APP_API_URL}/users/${id}`,
-    requestOptions
-  ).then(handleResponse);
-}
-
-const register = (user) => {
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user),
-  };
-
-  return fetch(`${process.env.REACT_APP_API_URL}/user/`, requestOptions).then(
-    handleResponse
-  );
-};
-const confirmUser = (user) => {
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user),
-  };
-
-  return fetch(`${process.env.REACT_APP_API_URL}/user/`, requestOptions).then(
+  return fetch(`api/v1/user-type/${userType.id}/`, requestOptions).then(
     handleResponse
   );
 };
 
-const resetPassword = (email) => {
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email }),
-  };
-
-  return fetch(`${process.env.REACT_APP_API_URL}/user/`, requestOptions).then(
-    handleResponse
-  );
-};
-
-export const contactUs = (data) => {
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  };
-
-  return fetch(`${process.env.REACT_APP_API_URL}/user/`, requestOptions).then(
-    handleResponse
-  );
-};
-
-function update(user) {
-  const requestOptions = {
-    method: "PUT",
-    headers: { ...authHeader(), "Content-Type": "application/json" },
-    body: JSON.stringify(user),
-  };
-
-  return fetch(
-    `${process.env.REACT_APP_API_URL}/users/${user.id}`,
-    requestOptions
-  ).then(handleResponse);
-}
-
-// prefixed function name with underscore because delete is a reserved word in javascript
-function _delete(id) {
+const deleteUserType = (id) => {
   const requestOptions = {
     method: "DELETE",
     headers: authHeader(),
   };
 
-  return fetch(
-    `${process.env.REACT_APP_API_URL}/users/${id}`,
-    requestOptions
-  ).then(handleResponse);
-}
+  return fetch(`api/v1/user-type/${id}/`, requestOptions).then(handleResponse);
+};
+
+const getAllUsers = () => {
+  const requestOptions = {
+    method: "GET",
+    headers: authHeader(),
+  };
+
+  return fetch("api/v1/user/", requestOptions).then(handleResponse);
+};
+
+const updateUser = (user) => {
+  const requestOptions = {
+    method: "PATCH",
+    headers: authHeader(),
+    body: JSON.stringify(user),
+  };
+
+  return fetch(`api/v1/user/${user.id}/`, requestOptions).then(handleResponse);
+};
+
+// prefixed function name with underscore because delete is a reserved word in javascript
+const deleteUser = (id) => {
+  const requestOptions = {
+    method: "DELETE",
+    headers: authHeader(),
+  };
+
+  return fetch(`api/v1/user/${id}/`, requestOptions).then(handleResponse);
+};
+
+const getOneUser = (id) => {
+  const requestOptions = {
+    method: "GET",
+    headers: authHeader(),
+  };
+
+  return fetch(`api/v1/user/${id}/`, requestOptions).then(handleResponse);
+};
 
 function handleResponse(response) {
   return response.text().then((text) => {
@@ -173,8 +181,14 @@ export const userService = {
   logout,
   register,
   getAllUsers,
+  updateUser,
+  deleteUser,
+  getOneUser,
   confirmUser,
   resetPassword,
   contactUs,
   createUserType,
+  getAllUserTypes,
+  updateUserType,
+  deleteUserType,
 };

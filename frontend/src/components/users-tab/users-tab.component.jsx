@@ -8,7 +8,9 @@ import { validateCreateUser } from "../../helpers/validation/validateCreateUser"
 import "./users-tab.styles.css";
 
 const UsersTab = () => {
-  const buttons = (id) => (
+  const deletingUser = useSelector((state) => state.users.deletingUser);
+
+  const buttons = (id, user) => (
     <React.Fragment>
       <div className="d-flex justify-content-end">
         <div className="ml-2 cursor-pointer" onClick={() => handleShow(id)}>
@@ -30,7 +32,10 @@ const UsersTab = () => {
           </svg>
         </div>
 
-        <div className="cursor-pointer ml-4" onClick={handleCloseForm}>
+        <div
+          className="cursor-pointer ml-4"
+          onClick={() => handleEditForm(user)}
+        >
           <svg
             width="20"
             height="20"
@@ -53,8 +58,8 @@ const UsersTab = () => {
   );
 
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.users);
-  const usersListArray = users ? users.results : [];
+  const users = useSelector((state) => state.users.users);
+  const usersListArray = users ? users : [];
   const usersListArrayPreview =
     usersListArray &&
     usersListArray.map(
@@ -65,6 +70,8 @@ const UsersTab = () => {
         role,
         status,
         buttons,
+        first_name,
+        last_name,
       })
     );
 
@@ -80,17 +87,20 @@ const UsersTab = () => {
 
   const [errors, setErrors] = useState({});
 
-  // useEffect(() => {
-  //   dispatch(userActions.getAllUsers());
-  // }, []);
+  useEffect(() => {
+    dispatch(userActions.getAllUsers());
+  }, []);
 
   const [userForm, setUserForm] = useState({
+    id: "",
     firstName: "",
     lastName: "",
     email: "",
     role: "Author",
+    edit: false,
   });
   const [submitted, setSubmitted] = useState(false);
+  const updatingUser = useSelector((state) => state.users.updatingUser);
   const registering = useSelector((state) => state.registration.registering);
 
   const handleChange = (e) => {
@@ -119,14 +129,38 @@ const UsersTab = () => {
       userForm.email &&
       userForm.role
     ) {
-      dispatch(userActions.register(userForm));
-      setUserForm({ firstName: "", lastName: "", email: "", role: "Author" });
+      if (!userForm.edit) {
+        dispatch(
+          userActions.register({
+            first_name: userForm.firstName,
+            last_name: userForm.lastName,
+            email: userForm.email,
+            role: userForm.role,
+          })
+        );
+        setUserForm({ firstName: "", lastName: "", email: "", role: "Author" });
+      } else {
+        dispatch(
+          userActions.updateUser({
+            id: userForm.id,
+            first_name: userForm.firstName,
+            last_name: userForm.lastName,
+            email: userForm.email,
+            role: userForm.role,
+          })
+        );
+        setUserForm({ firstName: "", lastName: "", email: "", role: "Author" });
+      }
     }
   };
 
   const [closeForm, setCloseForm] = useState(false);
 
   const handleCloseForm = () => {
+    if (closeForm === true) {
+      setUserForm({ firstName: "", lastName: "", email: "", role: "Author" });
+    }
+
     setCloseForm(!closeForm);
   };
 
@@ -207,7 +241,7 @@ const UsersTab = () => {
             Cancel
           </Button>
           <Button type="submit" className="save-btn">
-            {registering && (
+            {(registering || updatingUser) && (
               <span className="spinner-border spinner-border-sm mr-1"></span>
             )}
             Save
@@ -267,7 +301,7 @@ const UsersTab = () => {
                     className="d-flex align-items-center justify-content-end border-0 font-style create-user pointerType"
                     onClick={handleCloseForm}
                   >
-                    <span className="create-user-icon">
+                    <span className="create-user-icon ipad-create-user-icon">
                       <svg
                         width="11"
                         height="11"
@@ -290,7 +324,16 @@ const UsersTab = () => {
               <tbody>
                 {currentUsers ? (
                   currentUsers.map(
-                    ({ id, name, email, role, status, buttons }) => {
+                    ({
+                      id,
+                      name,
+                      email,
+                      role,
+                      status,
+                      buttons,
+                      first_name,
+                      last_name,
+                    }) => {
                       return (
                         <tr key={id}>
                           <td className="border-right-0">{id}</td>
@@ -310,7 +353,15 @@ const UsersTab = () => {
                             </span>
                           </td>
 
-                          <td className="border-left-0">{buttons(id)}</td>
+                          <td className="border-left-0">
+                            {buttons(id, {
+                              id,
+                              first_name,
+                              last_name,
+                              email,
+                              role,
+                            })}
+                          </td>
                         </tr>
                       );
                     }
@@ -324,7 +375,7 @@ const UsersTab = () => {
             </Table>
             <Pagination
               usersPerPage={usersPerPage}
-              totalUsers={usersListArrayPreview.length}
+              totalUsers={users ? users.length : 0}
               paginate={paginate}
             />
           </div>
@@ -337,6 +388,10 @@ const UsersTab = () => {
 
   const handleClose = () => setShow({ ...show, showModal: false });
   const handleShow = (id) => setShow({ ...show, showModal: true, id });
+
+  const handleDeleteUser = (id) => {
+    dispatch(userActions.deleteUser(id));
+  };
 
   const handleDeleteModal = (id) => {
     return (
@@ -362,15 +417,32 @@ const UsersTab = () => {
           <Button onClick={handleClose} className="popup-close-btn">
             Close
           </Button>
-          <Button variant="primary" className="popup-save-btn">
-            Save Changes
+          <Button
+            variant="primary"
+            className="popup-save-btn"
+            onClick={() => handleDeleteUser(id)}
+          >
+            {deletingUser && (
+              <span className="spinner-border spinner-border-sm mr-1"></span>
+            )}
+            Delete
           </Button>
         </Modal.Footer>
       </Modal>
     );
   };
 
-  const editUser = () => {};
+  const handleEditForm = (user) => {
+    setUserForm({
+      ...userForm,
+      id: user.id,
+      firstName: user.first_name,
+      lastName: user.last_name,
+      email: user.email,
+      edit: true,
+    });
+    handleCloseForm();
+  };
 
   return (
     <React.Fragment>

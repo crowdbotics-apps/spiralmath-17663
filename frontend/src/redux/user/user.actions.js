@@ -119,7 +119,7 @@ const resetPassword = (email) => {
     dispatch(request());
 
     userService.resetPassword(email).then(
-      (email) => {
+      () => {
         dispatch(success());
         dispatch(alertActions.success("Reset password successful"));
       },
@@ -157,33 +157,17 @@ export const contactUs = (email, message) => {
   };
 };
 
-const createUserType = (user) => {
-  const request = () => {
-    return { type: userTypes.CREATE_USER_TYPE };
-  };
-  const success = () => {
-    return { type: userTypes.CREATE_USER_TYPE_SUCCESS };
-  };
-  const failure = (error) => {
-    return { type: userTypes.CREATE_USER_TYPE_FAILURE, error };
-  };
-
-  return (dispatch) => {
-    dispatch(request());
-
-    userService.createUserType(user).then(
-      (user) => {
-        dispatch(success());
-      },
-      (error) => {
-        dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
-      }
-    );
-  };
-};
-
 const getAllUsers = () => {
+  function request() {
+    return { type: userTypes.GETALL_USERS_REQUEST };
+  }
+  function success(users) {
+    return { type: userTypes.GETALL_USERS_SUCCESS, users };
+  }
+  function failure(error) {
+    return { type: userTypes.GETALL_USERS_FAILURE, payload: error };
+  }
+
   return (dispatch) => {
     dispatch(request());
 
@@ -192,16 +176,151 @@ const getAllUsers = () => {
       (error) => dispatch(failure(error.toString()))
     );
   };
+};
+
+const updateUser = (user) => {
+  const request = () => {
+    return { type: userTypes.UPDATE_USER_REQUEST };
+  };
+  const success = () => {
+    return { type: userTypes.UPDATE_USER_SUCCESS };
+  };
+  const failure = (error) => {
+    return { type: userTypes.UPDATE_USER_FAILURE, payload: error };
+  };
+
+  return (dispatch) => {
+    dispatch(request());
+
+    userService.updateUser(user).then(
+      (user) => {
+        dispatch(success());
+      },
+      (error) => {
+        dispatch(failure(error.toString()));
+      }
+    );
+  };
+};
+
+const deleteUser = (id) => {
+  const request = () => {
+    return { type: userTypes.DELETE_USER_REQUEST };
+  };
+  const success = () => {
+    return { type: userTypes.DELETE_USER_SUCCESS, payload: id };
+  };
+  const failure = (error) => {
+    return { type: userTypes.DELETE_USER_FAILURE, payload: error };
+  };
+
+  return (dispatch) => {
+    dispatch(request());
+
+    userService.deleteUser(id).then(
+      () => {
+        dispatch(success(id));
+      },
+      (error) => {
+        dispatch(failure(error.toString()));
+      }
+    );
+  };
+};
+
+const getAllUserTypes = () => {
+  return (dispatch) => {
+    dispatch(request());
+    userService.getAllUserTypes().then(
+      (userTypes) => dispatch(success(userTypes)),
+      (error) => dispatch(failure(error.toString()))
+    );
+  };
 
   function request() {
-    return { type: userTypes.GETALL_REQUEST };
+    return { type: userTypes.GETALL_USER_TYPE_REQUEST };
   }
-  function success(users) {
-    return { type: userTypes.GETALL_SUCCESS, users };
+  function success(userTypes) {
+    return { type: userTypes.GETALL_USER_TYPE, payload: userTypes.results };
   }
   function failure(error) {
-    return { type: userTypes.GETALL_FAILURE, error };
+    return { type: userTypes.GETALL_USER_TYPE_FAILURE, payload: error };
   }
+};
+
+const createUserType = (user) => {
+  const request = () => {
+    return { type: userTypes.CREATE_USER_TYPE };
+  };
+  const success = () => {
+    return { type: userTypes.CREATE_USER_TYPE_SUCCESS };
+  };
+  const failure = (error) => {
+    return { type: userTypes.CREATE_USER_TYPE_FAILURE, payload: error };
+  };
+
+  return (dispatch) => {
+    dispatch(request());
+
+    userService.createUserType(user).then(
+      (userType) => {
+        dispatch(success());
+      },
+      (error) => {
+        dispatch(failure(error.toString()));
+      }
+    );
+  };
+};
+
+const updateUserType = (userType) => {
+  const request = () => {
+    return { type: userTypes.UPDATE_USER_TYPE };
+  };
+  const success = () => {
+    return { type: userTypes.UPDATE_USER_TYPE_SUCCESS };
+  };
+  const failure = (error) => {
+    return { type: userTypes.UPDATE_USER_TYPE_FAILURE, payload: error };
+  };
+
+  return (dispatch) => {
+    dispatch(request());
+
+    userService.updateUserType(userType).then(
+      (userType) => {
+        dispatch(success());
+      },
+      (error) => {
+        dispatch(failure(error.toString()));
+      }
+    );
+  };
+};
+
+const deleteUserType = (id) => {
+  const request = () => {
+    return { type: userTypes.DELETE_USER_TYPE };
+  };
+  const success = (id) => {
+    return { type: userTypes.DELETE_USER_TYPE_SUCCESS, payload: id };
+  };
+  const failure = (error) => {
+    return { type: userTypes.DELETE_USER_TYPE_FAILURE, payload: error };
+  };
+
+  return (dispatch) => {
+    dispatch(request());
+
+    userService.deleteUserType(id).then(
+      () => {
+        dispatch(success(id));
+      },
+      (error) => {
+        dispatch(failure(error.toString()));
+      }
+    );
+  };
 };
 
 export const alertActions = {
@@ -215,8 +334,13 @@ export const userActions = {
   logout,
   register,
   getAllUsers,
+  updateUser,
+  deleteUser,
   confirmUser,
   resetPassword,
   contactUs,
   createUserType,
+  getAllUserTypes,
+  updateUserType,
+  deleteUserType,
 };
