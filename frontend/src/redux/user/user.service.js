@@ -1,7 +1,4 @@
 import { authHeader } from "../../helpers/auth-header";
-import { useHistory } from "react-router-dom";
-
-const history = useHistory();
 
 const apiPath = "api/v1";
 
@@ -23,7 +20,7 @@ const login = (email, password) => {
     });
 };
 
-const logout = () => {
+const logout = (history) => {
   const requestOptions = {
     method: "POST",
     headers: authHeader(),
