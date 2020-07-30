@@ -40,10 +40,10 @@ const login = (email, password) => {
   };
 };
 
-const logout = () => {
+const logout = (history) => {
   return (dispatch) => {
     userService
-      .logout()
+      .logout(history)
       .catch((error) => dispatch(alertActions.error(error.toString())));
     dispatch({ type: userTypes.LOGOUT });
   };

@@ -28,12 +28,15 @@ const Dashboard = () => {
   const handleLogout = () => {
     localStorage.removeItem("user");
     Cookie.remove("csrftoken");
-    dispatch(userActions.logout());
+    dispatch(userActions.logout(history));
   };
 
   const navbar = () => {
     return (
-      <Navbar expand="lg" className="px-4 py-0 px-md-0 py-md-0 nav-border border-0 mb-4 mob-padding">
+      <Navbar
+        expand="lg"
+        className="px-4 py-0 px-md-0 py-md-0 nav-border border-0 mb-4 mob-padding"
+      >
         <Navbar.Brand href="#home">
           <Logo />
         </Navbar.Brand>
