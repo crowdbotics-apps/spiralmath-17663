@@ -17,7 +17,8 @@ const ContactUs = ({ show, toggleShow }) => {
   const [errors, setErrors] = useState({});
   const { email, message } = inputs;
   const contacting = useSelector((state) => state.contactUs.contacting);
-  const loggedIn = useSelector((state) => state.users.loggedIn);
+  const loggedIn = useSelector((state) => state.authentication.loggedIn);
+  const user = useSelector((state) => state.authentication.user.userObj);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -39,6 +40,9 @@ const ContactUs = ({ show, toggleShow }) => {
   }
 
   const submit = () => {
+    if (loggedIn) {
+      email = user.email;
+    }
     if (email && message) {
       dispatch(userActions.contactUs(email, message));
     }
@@ -53,7 +57,7 @@ const ContactUs = ({ show, toggleShow }) => {
         </Modal.Header>
         <Modal.Body>
           <Form noValidate onSubmit={handleSubmit}>
-            {loggedIn ? (
+            {!loggedIn ? (
               <Form.Group controlId="formEmail" className="relative">
                 <Form.Control
                   type="email"
