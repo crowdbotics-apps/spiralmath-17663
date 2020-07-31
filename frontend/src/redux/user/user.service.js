@@ -101,22 +101,17 @@ const getAllUserTypes = () => {
   return fetch("api/v1/user-type/", requestOptions).then(handleResponse);
 };
 
-const createUserType = ({ userType, createQuestions, reviewQuestions }) => {
-  const userTypeToSend = {
-    name: userType,
-    create_questions: createQuestions,
-    review_questions: reviewQuestions,
-  };
+const createUserType = (userTypeObject) => {
   const requestOptions = {
     method: "POST",
     headers: authHeader(),
-    body: JSON.stringify(userTypeToSend),
+    body: JSON.stringify(userTypeObject),
   };
 
   return fetch("api/v1/user-type/", requestOptions).then(handleResponse);
 };
 
-const updateUserType = (userType) => {
+const updateUserType = (userTypeObject) => {
   const requestOptions = {
     method: "PATCH",
     headers: authHeader(),
@@ -147,6 +142,11 @@ const getAllUsers = () => {
 };
 
 const updateUser = (user) => {
+  if (user["role"] !== "SystemAdministrator") {
+    user["role"] = "Editor";
+  } else {
+    user["role"] = "Admin";
+  }
   const requestOptions = {
     method: "PATCH",
     headers: authHeader(),
