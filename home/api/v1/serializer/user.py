@@ -63,10 +63,11 @@ class UserUpdate(UserSerializerBase):
     class Meta(UserSerializerBase.Meta):
         fields = ['first_name', 'last_name', 'role', 'user_type', 'status']
 
-    def update(self, instance, validated_data):
+    def validate(self, data):
         """Admin update user."""
-        if validated_data['status'] == User.STATUS.INVITATION:
+        if 'status' in data and data['status'] == User.STATUS.INVITATION:
             raise ValidationError(detail={'status': ['This status is not available.']})
+        return data
 
 
 class UserEditorUpdate(UserSerializerBase):
