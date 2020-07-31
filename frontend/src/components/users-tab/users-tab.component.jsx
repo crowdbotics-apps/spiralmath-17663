@@ -395,6 +395,10 @@ const UsersTab = () => {
     dispatch(userActions.deleteUser(id));
   };
 
+  if (!deletingUser) {
+    handleClose();
+  }
+
   const handleDeleteModal = (id) => {
     return (
       <Modal
