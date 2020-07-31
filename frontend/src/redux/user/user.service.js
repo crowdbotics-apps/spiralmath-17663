@@ -1,7 +1,5 @@
 import { authHeader } from "../../helpers/auth-header";
 
-const apiPath = "api/v1";
-
 const login = (email, password) => {
   const requestOptions = {
     method: "POST",
@@ -9,7 +7,7 @@ const login = (email, password) => {
     body: JSON.stringify({ email, password }),
   };
 
-  return fetch(`${apiPath}/auth/login/`, requestOptions)
+  return fetch("api/v1/auth/login/", requestOptions)
     .then(handleResponse)
     .then((user) => {
       console.log(user);
@@ -20,36 +18,21 @@ const login = (email, password) => {
     });
 };
 
-const logout = (history) => {
+const logout = () => {
   const requestOptions = {
     method: "POST",
     headers: authHeader(),
   };
   // remove user from local storage to log user out
   localStorage.removeItem("user");
-  return fetch("api/v1/auth/logout/", requestOptions)
-    .then(handleResponse)
-    .then(() => history.push("/"));
+  return fetch("api/v1/auth/logout/", requestOptions).then(handleResponse);
 };
 
 const register = (user) => {
-  if (user["role"] !== "SystemAdministrator") {
-    user["role"] = "Editor";
-  } else {
-    user["role"] = "Admin";
-  }
-  const pass = Math.random().toString(36).substring(7);
-  const data = {
-    email: user["email"],
-    first_name: user["first_name"],
-    last_name: user["last_name"],
-    role: user["role"],
-    password: pass,
-  };
   const requestOptions = {
     method: "POST",
     headers: authHeader(),
-    body: JSON.stringify(data),
+    body: JSON.stringify(user),
   };
 
   return fetch("api/v1/user/", requestOptions).then(handleResponse);
