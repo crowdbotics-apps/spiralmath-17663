@@ -232,7 +232,7 @@ const getAllUserTypes = () => {
   return (dispatch) => {
     dispatch(request());
     userService.getAllUserTypes().then(
-      (userTypes) => dispatch(success(userTypes)),
+      (comingUserTypes) => dispatch(success(comingUserTypes)),
       (error) => dispatch(failure(error.toString()))
     );
   };
@@ -240,10 +240,10 @@ const getAllUserTypes = () => {
   function request() {
     return { type: userTypes.GETALL_USER_TYPES };
   }
-  function success(userTypes) {
+  function success(comingUserTypes) {
     return {
       type: userTypes.GETALL_USER_TYPES_SUCCESS,
-      payload: userTypes.results,
+      payload: comingUserTypes.results,
     };
   }
   function failure(error) {
@@ -266,7 +266,7 @@ const createUserType = (user) => {
     dispatch(request());
 
     userService.createUserType(user).then(
-      (userType) => {
+      () => {
         dispatch(success());
       },
       (error) => {
@@ -276,7 +276,7 @@ const createUserType = (user) => {
   };
 };
 
-const updateUserType = (userType) => {
+const updateUserType = (userTypeObject) => {
   const request = () => {
     return { type: userTypes.UPDATE_USER_TYPE };
   };
@@ -290,8 +290,8 @@ const updateUserType = (userType) => {
   return (dispatch) => {
     dispatch(request());
 
-    userService.updateUserType(userType).then(
-      (userType) => {
+    userService.updateUserType(userTypeObject).then(
+      () => {
         dispatch(success());
       },
       (error) => {

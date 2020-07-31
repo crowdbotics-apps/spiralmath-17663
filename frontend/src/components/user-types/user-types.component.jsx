@@ -10,14 +10,21 @@ const UserTypes = () => {
   const deletingUserType = useSelector(
     (state) => state.userTypes.deletingUserType
   );
+  const userTypeCreating = useSelector(
+    (state) => state.userTypes.userTypeCreating
+  );
+  const updatingUserType = useSelector(
+    (state) => state.userTypes.updatingUserType
+  );
+
   const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    if (!updatingUserType) {
+    if (!updatingUserType && !userTypeCreating) {
       dispatch(userActions.getAllUserTypes());
     }
-  }, [updatingUserType]);
+  }, [updatingUserType, userTypeCreating]);
 
   const [userForm, setUserForm] = useState({
     id: "",
@@ -27,12 +34,6 @@ const UserTypes = () => {
     edit: false,
   });
   const [submitted, setSubmitted] = useState(false);
-  const userTypeCreating = useSelector(
-    (state) => state.userTypes.userTypeCreating
-  );
-  const updatingUserType = useSelector(
-    (state) => state.userTypes.updatingUserType
-  );
 
   const handleChange = (e) => {
     const { name } = e.target;

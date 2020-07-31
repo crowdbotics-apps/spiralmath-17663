@@ -90,10 +90,10 @@ const UsersTab = () => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    if (!updatingUser) {
+    if (!updatingUser && !registering) {
       dispatch(userActions.getAllUsers());
     }
-  }, [updatingUser]);
+  }, [updatingUser, registering]);
 
   const [userForm, setUserForm] = useState({
     id: "",
