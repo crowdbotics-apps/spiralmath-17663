@@ -1,6 +1,5 @@
 import { authHeader } from "../../helpers/auth-header";
-
-const apiPath = "api/v1";
+import Cookies from "js-cookie";
 
 const login = (email, password) => {
   const requestOptions = {
@@ -9,7 +8,7 @@ const login = (email, password) => {
     body: JSON.stringify({ email, password }),
   };
 
-  return fetch(`${apiPath}/auth/login/`, requestOptions)
+  return fetch("api/v1/auth/login/", requestOptions)
     .then(handleResponse)
     .then((user) => {
       console.log(user);
@@ -26,10 +25,14 @@ const logout = (history) => {
     headers: authHeader(),
   };
   // remove user from local storage to log user out
-  localStorage.removeItem("user");
+
   return fetch("api/v1/auth/logout/", requestOptions)
     .then(handleResponse)
-    .then(() => history.push("/"));
+    .then(() => {
+      history.push("/");
+      localStorage.removeItem("user");
+      Cookies.remove("csrftoken");
+    });
 };
 
 const register = (user) => {
@@ -46,6 +49,7 @@ const register = (user) => {
     role: user["role"],
     password: pass,
   };
+
   const requestOptions = {
     method: "POST",
     headers: authHeader(),

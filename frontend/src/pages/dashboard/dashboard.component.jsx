@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Tabs, Tab, Navbar, Nav } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import Cookie from "js-cookie";
 
 import "./dashboard.styles.css";
 import { ReactComponent as Logo } from "../../assets/img/logo.svg";
@@ -26,11 +25,8 @@ const Dashboard = () => {
   }, [loggedIn]);
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    Cookie.remove("csrftoken");
     dispatch(userActions.logout(history));
   };
-
   const navbar = () => {
     return (
       <Navbar

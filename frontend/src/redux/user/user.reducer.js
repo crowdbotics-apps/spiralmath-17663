@@ -21,25 +21,32 @@ export const alert = (state = {}, action) => {
 };
 
 const localStorageUser = localStorage.getItem("user");
-let user = localStorageUser !== 'undefined' ? JSON.parse(localStorageUser) : null;
-const initialState = user ? { loggedIn: true, user } : {};
+let user =
+  localStorageUser !== "undefined" ? JSON.parse(localStorageUser) : null;
+const initialState = user
+  ? { loggedIn: true, user, loggingIn: false, error: "" }
+  : { loggedIn: false, loggingIn: false, user: {}, error: "" };
 
 export const authentication = (state = initialState, action) => {
   switch (action.type) {
     case userTypes.LOGIN_REQUEST:
       return {
+        ...state,
+        error: "",
         loggingIn: true,
-        user: action.user,
       };
     case userTypes.LOGIN_SUCCESS:
       return {
+        ...state,
         loggedIn: true,
+        loggingIn: false,
+        error: "",
         user: action.user,
       };
     case userTypes.LOGIN_FAILURE:
-      return {};
+      return { ...state, error: action.payload, loggingIn: false };
     case userTypes.LOGOUT:
-      return {};
+      return { ...state, loggedIn: false };
     default:
       return state;
   }
@@ -70,14 +77,76 @@ export const confirmation = (state = {}, action) => {
       return state;
   }
 };
-export const userTypesReducer = (state = {}, action) => {
+export const userTypesReducer = (
+  state = {
+    userTypeCreating: false,
+    allUserTypes: [
+      {
+        id: 1,
+        create_questions: true,
+        review_questions: true,
+        name: "System Administrator",
+      },
+      {
+        id: 2,
+        create_questions: true,
+        review_questions: false,
+        name: "Author",
+      },
+    ],
+    loadingUserTypes: false,
+    error: "",
+    success: "",
+    updatingUserType: false,
+    deletingUserType: false,
+  },
+  action
+) => {
   switch (action.type) {
     case userTypes.CREATE_USER_TYPE:
-      return { userTypeCreating: true };
+      return { ...state, userTypeCreating: true, error: "" };
     case userTypes.CREATE_USER_TYPE_SUCCESS:
-      return {};
+      return { ...state, userTypeCreating: false, error: "" };
     case userTypes.CREATE_USER_TYPE_FAILURE:
-      return {};
+      return { ...state, userTypeCreating: false, error: action.payload };
+    case userTypes.GETALL_USER_TYPES_REQUEST:
+      return { ...state, loadingUserTypes: true, error: "" };
+    case userTypes.GETALL_USER_TYPES:
+      return {
+        ...state,
+        allUserTypes: action.payload,
+        loadingUserTypes: false,
+      };
+    case userTypes.GETALL_USER_TYPES_FAILURE:
+      return { ...state, loadingUserTypes: false, error: action.payload };
+    case userTypes.UPDATE_USER_TYPE:
+      return { ...state, updatingUserType: true, error: "", success: "" };
+    case userTypes.UPDATE_USER_TYPE_SUCCESS:
+      return {
+        ...state,
+        updatingUserType: false,
+        success: "User type successfully updated",
+      };
+    case userTypes.UPDATE_USER_TYPE_FAILURE:
+      return {
+        ...state,
+        updatingUserType: false,
+        error: action.payload,
+      };
+    case userTypes.DELETE_USER_TYPE:
+      return { ...state, deletingUserType: true, error: "", success: "" };
+    case userTypes.DELETE_USER_TYPE_SUCCESS:
+      const allUserTypes = state.allUserTypes.filter(
+        (el) => el.id === action.payload
+      );
+      return {
+        ...state,
+        allUserTypes,
+        deletingUserType: false,
+        success: `UserType with id ${action.payload} is successfully deleted`,
+      };
+    case userTypes.DELETE_USER_TYPE_FAILURE:
+      return { ...state, deletingUserType: false, error: action.payloads };
     default:
       return state;
   }
@@ -110,10 +179,7 @@ export const contactUs = (state = {}, action) => {
 };
 
 let initialUsersState = {
-  count: 3,
-  next: null,
-  previous: null,
-  results: [
+  users: [
     {
       id: 15,
       email: "testing-editor@example.com",
@@ -144,51 +210,77 @@ let initialUsersState = {
       status: 10,
       username: "idigitalbrick@gmail.com",
     },
+    {
+      id: 16,
+      email: "rajparmar@crowdbotics.com",
+      first_name: "Raj",
+      last_name: "Parmar",
+      user_type: 1,
+      accepted_terms_date: null,
+      role: "Admin",
+      status: 20,
+    },
   ],
+  loadingUsers: false,
+  updatingUser: false,
+  deletingUser: false,
+  errorMessage: "",
+  successMessage: "",
 };
 
 export const users = (state = initialUsersState, action) => {
   switch (action.type) {
-    case userTypes.GETALL_REQUEST:
-      return {
-        loading: true,
-      };
-    case userTypes.GETALL_SUCCESS:
-      return {
-        items: action.users,
-      };
-    case userTypes.GETALL_FAILURE:
-      return {
-        error: action.error,
-      };
-    case userTypes.DELETE_REQUEST:
-      // add 'deleting:true' property to user being deleted
+    case userTypes.GETALL_USERS_REQUEST:
       return {
         ...state,
-        items: state.items.map((user) =>
-          user.id === action.id ? { ...user, deleting: true } : user
-        ),
+        loadingUsers: true,
+        errorMessage: "",
       };
-    case userTypes.DELETE_SUCCESS:
-      // remove deleted user from state
-      return {
-        items: state.items.filter((user) => user.id !== action.id),
-      };
-    case userTypes.DELETE_FAILURE:
-      // remove 'deleting:true' property and add 'deleteError:[error]' property to user
+    case userTypes.GETALL_USERS_SUCCESS:
       return {
         ...state,
-        items: state.items.map((user) => {
-          if (user.id === action.id) {
-            // make copy of user without 'deleting:true' property
-            const { deleting, ...userCopy } = user;
-            // return copy of user with 'deleteError:[error]' property
-            return { ...userCopy, deleteError: action.error };
-          }
-
-          return user;
-        }),
+        loadingUsers: false,
+        users: action.payload,
+        errorMessage: "",
       };
+    case userTypes.GETALL_USERS_FAILURE:
+      return {
+        ...state,
+        loadingUsers: false,
+        errorMessage: action.payload,
+      };
+    case userTypes.UPDATE_USER_REQUEST:
+      return {
+        ...state,
+        updatingUser: true,
+        errorMessage: "",
+        successMessage: "",
+      };
+    case userTypes.UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        updatingUser: false,
+        successMessage: "User updated successfully",
+      };
+    case userTypes.UPDATE_USER_FAILURE:
+      return { ...state, updatingUser: false, errorMessage: action.payload };
+    case userTypes.DELETE_USER_REQUEST:
+      return {
+        ...state,
+        deletingUser: true,
+        errorMessage: "",
+        successMessage: "",
+      };
+    case userTypes.DELETE_USER_SUCCESS:
+      const users = state.users.filter((el) => el.id === action.payload);
+      return {
+        ...state,
+        users,
+        deletingUser: false,
+        successMessage: `User with id ${action.payload} is successfully deleted`,
+      };
+    case userTypes.DELETE_USER_FAILURE:
+      return { ...state, deletingUser: false, errorMessage: action.payload };
     default:
       return state;
   }
