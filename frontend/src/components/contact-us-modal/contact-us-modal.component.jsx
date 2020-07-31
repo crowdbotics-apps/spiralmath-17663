@@ -3,6 +3,7 @@ import { connect, useSelector, useDispatch } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { Form, Button, Modal } from "react-bootstrap";
 
+import { alertActions } from "../../redux/user/user.actions";
 import { userActions } from "../../redux/user/user.actions";
 import validate from "../../helpers/validation/validateContactUsPage";
 import { selectShow } from "../../redux/modals/modal.select";
@@ -20,6 +21,7 @@ const ContactUs = ({ show, toggleShow }) => {
   const loggedIn = useSelector((state) => state.authentication.loggedIn);
   const user = useSelector((state) => state.authentication.user.userObj);
   const dispatch = useDispatch();
+  const alert = useSelector((state) => state.alert);
 
   useEffect(() => {
     if (Object.keys(errors).length === 0 && submitted) {
@@ -49,6 +51,10 @@ const ContactUs = ({ show, toggleShow }) => {
     setInputs({ email: "", message: "" });
   };
 
+  const handleAlertClear = () => {
+    dispatch(alertActions.clear());
+  };
+
   return (
     <Modal show={show} onHide={toggleShow} className="contactus-popup">
       <div>
@@ -56,6 +62,15 @@ const ContactUs = ({ show, toggleShow }) => {
           <Modal.Title>Contact Us</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {alert.type === "alert-success" && show ? (
+            <div className="w-75 error-msg" onMouseEnter={handleAlertClear}>
+              <p className="text-center text-success">{alert.message}</p>
+            </div>
+          ) : (
+            <div className="w-75 error-msg" onMouseEnter={handleAlertClear}>
+              <p className="text-center ">{alert.message}</p>
+            </div>
+          )}
           <Form noValidate onSubmit={handleSubmit}>
             {!loggedIn ? (
               <Form.Group controlId="formEmail" className="relative">
@@ -68,7 +83,7 @@ const ContactUs = ({ show, toggleShow }) => {
                   value={email}
                   onChange={handleChange}
                 />
-                <span class="floating-label">Email</span>
+                <span className="floating-label">Email</span>
                 {submitted && errors.email && (
                   <p className="text-danger form-text-danger">
                     Email is required
@@ -89,7 +104,7 @@ const ContactUs = ({ show, toggleShow }) => {
                 value={message}
                 onChange={handleChange}
               />
-              <span class="floating-label">Message</span>
+              <span className="floating-label">Message</span>
               {submitted && errors.message && (
                 <p className="text-danger form-text-danger">
                   This field is required

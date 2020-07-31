@@ -148,6 +148,7 @@ export const contactUs = (email, message) => {
     userService.contactUs({ email, message }).then(
       () => {
         dispatch(success());
+        dispatch(alertActions.success("Your message sent successfully"));
       },
       (error) => {
         dispatch(failure(error.toString()));

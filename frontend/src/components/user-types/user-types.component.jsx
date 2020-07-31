@@ -274,6 +274,10 @@ const UserTypes = () => {
     dispatch(userActions.deleteUserType(id));
   };
 
+  if (!deletingUserType) {
+    handleClose();
+  }
+
   const handleDeleteModal = (userType, id) => {
     return (
       <Modal
