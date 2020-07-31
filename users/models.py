@@ -33,7 +33,7 @@ class User(AbstractUser):
         )
     first_name = models.CharField(_("First Name"), max_length=50)
     last_name = models.CharField(_("Last Name"),  max_length=50)
-    email = models.CharField(_("Email"),  max_length=50)
+    email = models.CharField(_("Email"),  max_length=50, unique=True)
     accepted_terms_date = models.DateTimeField(_("Accepted Terms date"), null=True, blank=True)
     status = models.PositiveSmallIntegerField(_("Status"), choices=STATUS.choices, default=STATUS.INACTIVE)
     user_type = models.ForeignKey('UserType', null=True, blank=True, on_delete=models.SET_NULL)

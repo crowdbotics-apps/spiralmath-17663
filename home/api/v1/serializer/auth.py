@@ -7,7 +7,7 @@ class LoginSerializer(serializers.Serializer):
     """Using in auth.login."""
 
     password = serializers.CharField(max_length=100)
-    email = serializers.CharField()
+    email = serializers.EmailField()
 
 
 class SignupSerializer(serializers.Serializer):

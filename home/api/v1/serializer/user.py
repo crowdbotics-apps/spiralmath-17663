@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError, PermissionDenied
+from rest_framework.validators import UniqueValidator
 from typing import List
 
 User = get_user_model()
@@ -37,6 +38,10 @@ class UserList(UserSerializerBase):
 
 class UserCreate(UserSerializerBase):
     """Create a user Serializer."""
+
+    email = serializers.EmailField(
+        validators=[UniqueValidator(queryset=User.objects.all())]
+    )
 
     class Meta(UserSerializerBase.Meta):
         fields = UserSerializerBase.Meta.fields + ['password']
