@@ -115,10 +115,10 @@ const updateUserType = (userTypeObject) => {
   const requestOptions = {
     method: "PATCH",
     headers: authHeader(),
-    body: JSON.stringify(userType),
+    body: JSON.stringify(userTypeObject),
   };
 
-  return fetch(`api/v1/user-type/${userType.id}/`, requestOptions).then(
+  return fetch(`api/v1/user-type/${userTypeObject.id}/`, requestOptions).then(
     handleResponse
   );
 };
