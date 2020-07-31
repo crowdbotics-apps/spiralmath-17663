@@ -238,13 +238,16 @@ const getAllUserTypes = () => {
   };
 
   function request() {
-    return { type: userTypes.GETALL_USER_TYPE_REQUEST };
+    return { type: userTypes.GETALL_USER_TYPES };
   }
   function success(userTypes) {
-    return { type: userTypes.GETALL_USER_TYPE, payload: userTypes.results };
+    return {
+      type: userTypes.GETALL_USER_TYPES_SUCCESS,
+      payload: userTypes.results,
+    };
   }
   function failure(error) {
-    return { type: userTypes.GETALL_USER_TYPE_FAILURE, payload: error };
+    return { type: userTypes.GETALL_USER_TYPES_FAILURE, payload: error };
   }
 };
 

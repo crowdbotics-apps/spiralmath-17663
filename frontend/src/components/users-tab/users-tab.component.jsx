@@ -78,7 +78,7 @@ const UsersTab = () => {
     );
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [usersPerPage] = useState(1);
+  const [usersPerPage] = useState(10);
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers =
