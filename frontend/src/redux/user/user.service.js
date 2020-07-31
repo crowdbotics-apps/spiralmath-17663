@@ -1,4 +1,5 @@
 import { authHeader } from "../../helpers/auth-header";
+import Cookies from "js-cookie";
 
 const login = (email, password) => {
   const requestOptions = {
@@ -24,15 +25,35 @@ const logout = () => {
     headers: authHeader(),
   };
   // remove user from local storage to log user out
-  localStorage.removeItem("user");
-  return fetch("api/v1/auth/logout/", requestOptions).then(handleResponse);
+
+  return fetch("api/v1/auth/logout/", requestOptions)
+    .then(handleResponse)
+    .then(() => {
+      history.push("/");
+      localStorage.removeItem("user");
+      Cookies.remove("csrftoken");
+    });
 };
 
 const register = (user) => {
+  if (user["role"] !== "SystemAdministrator") {
+    user["role"] = "Editor";
+  } else {
+    user["role"] = "Admin";
+  }
+  const pass = Math.random().toString(36).substring(7);
+  const data = {
+    email: user["email"],
+    first_name: user["first_name"],
+    last_name: user["last_name"],
+    role: user["role"],
+    password: pass,
+  };
+
   const requestOptions = {
     method: "POST",
     headers: authHeader(),
-    body: JSON.stringify(user),
+    body: JSON.stringify(data),
   };
 
   return fetch("api/v1/user/", requestOptions).then(handleResponse);
