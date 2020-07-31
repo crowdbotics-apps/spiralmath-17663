@@ -19,7 +19,7 @@ const login = (email, password) => {
     });
 };
 
-const logout = () => {
+const logout = (history) => {
   const requestOptions = {
     method: "POST",
     headers: authHeader(),
