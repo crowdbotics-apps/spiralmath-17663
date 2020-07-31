@@ -393,11 +393,10 @@ const UsersTab = () => {
 
   const handleDeleteUser = (id) => {
     dispatch(userActions.deleteUser(id));
+    if (!deletingUser) {
+      handleClose();
+    }
   };
-
-  if (!deletingUser) {
-    handleClose();
-  }
 
   const handleDeleteModal = (id) => {
     return (
