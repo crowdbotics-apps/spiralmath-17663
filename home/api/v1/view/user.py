@@ -61,6 +61,7 @@ class UserViewSet(
     mixins.RetrieveModelMixin,
     mixins.UpdateModelMixin,
     mixins.ListModelMixin,
+    mixins.DestroyModelMixin,
     viewsets.GenericViewSet,
 ):
     """Updates and retrieves user accounts."""
@@ -129,7 +130,7 @@ class UserViewSet(
                 serializer_class = UserSerializerBase  # TODO for Natali
             elif self.action in {'update', 'partial_update'}:
                 serializer_class = UserEditorUpdate  # Read-only serializer
-            elif self.action in {'list', 'create'}:
+            elif self.action in {'list', 'create', 'delete'}:
                 serializer_class = None  # Editor cannot see other users
         else:
             serializer_class = None
