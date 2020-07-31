@@ -96,9 +96,9 @@ export const userTypesReducer = (
       return { ...state, userTypeCreating: false, error: "" };
     case userTypes.CREATE_USER_TYPE_FAILURE:
       return { ...state, userTypeCreating: false, error: action.payload };
-    case userTypes.GETALL_USER_TYPES_REQUEST:
-      return { ...state, loadingUserTypes: true, error: "" };
     case userTypes.GETALL_USER_TYPES:
+      return { ...state, loadingUserTypes: true, error: "" };
+    case userTypes.GETALL_USER_TYPES_SUCCESS:
       return {
         ...state,
         allUserTypes: action.payload,
