@@ -206,7 +206,7 @@ EMAIL_USE_TLS = True
 
 DEFAULT_FROM_EMAIL = 'user-enroll@spiralmath.net'
 
-FRONTEND_URL = 'spiralmath-17663.botics.co'
+FRONTEND_URL = 'https://spiralmath-17663.botics.co'
 
 # Security
 # https://docs.djangoproject.com/en/1.11/topics/security/
