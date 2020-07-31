@@ -4,6 +4,7 @@ import { Form, Button, Row, Col, Modal } from "react-bootstrap";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 import validateSignup from "../../helpers/validation/validationSignUp";
 import { history } from "../../helpers/history";
@@ -17,10 +18,13 @@ import "./signup.styles.css";
 
 const SignUp = ({ show, toggleShow }) => {
   const alert = useSelector((state) => state.alert);
+  const location = useLocation();
   const [user, setUser] = useState({
     password: "",
     passwordConfirm: "",
+    token: new URLSearchParams(location.search).get("token"),
   });
+  console.log(user.token);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
   const confirming = useSelector((state) => state.confirmation.confirming);
@@ -54,7 +58,7 @@ const SignUp = ({ show, toggleShow }) => {
   }, [errors]);
 
   const submit = () => {
-    if (user.password && user.passwordConfirm) {
+    if (user.password && user.passwordConfirm && user.token) {
       dispatch(userActions.confirmUser(user));
     }
   };
@@ -73,76 +77,83 @@ const SignUp = ({ show, toggleShow }) => {
 
   const termsAndConditions = () => {
     return (
-      <Modal scrollable={true} show={displayTerms} onHide={closeDisplayTerms} className="term-use">
+      <Modal
+        scrollable={true}
+        show={displayTerms}
+        onHide={closeDisplayTerms}
+        className="term-use"
+      >
         <Modal.Header closeButton>
-          <Modal.Title>
-            Termas and conditions
-        </Modal.Title>
-
-
+          <Modal.Title>Termas and conditions</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div class="second-heading-para">
             <p>
-              Welcome to SpiralMath question database. Thank you for agreeing to help with the creating, entering, and reviewing questions and answers.
+              Welcome to SpiralMath question database. Thank you for agreeing to
+              help with the creating, entering, and reviewing questions and
+              answers.
             </p>
-            <p>
-              Please consider carefully the terms listed below:
-            </p>
+            <p>Please consider carefully the terms listed below:</p>
           </div>
-          
+
           <div className="body-content">
             <ul>
               <li>
-                • The questions and answers (Q&amp;A) you enter into the database must be from a known source. 
-              </li>
-              
-              <li>
-                • You must know who created them, and you will be asked to enter the creator’s name along with the question content.
-              </li>
-              
-              <li>
-                • You acknowledge that the Q&amp;A was not copied from a copyrighted textbook, workbook, worksheet or other source. Also the Q&amp;A was not given to you by another person in a manner that leaves you uncertain about its source or Copyright status.                
+                • The questions and answers (Q&amp;A) you enter into the
+                database must be from a known source.
               </li>
 
               <li>
-                • You acknowledge that the creator of the Q&amp;A has given you permission to enter the content into the SpiralMath database under these terms.
+                • You must know who created them, and you will be asked to enter
+                the creator’s name along with the question content.
               </li>
 
               <li>
-                • The creator of the Q&amp;A will retain ownership of the Copyright.
+                • You acknowledge that the Q&amp;A was not copied from a
+                copyrighted textbook, workbook, worksheet or other source. Also
+                the Q&amp;A was not given to you by another person in a manner
+                that leaves you uncertain about its source or Copyright status.
               </li>
 
               <li>
-                • The creator hereby assigns to SpiralMath a license to use the Q&A, without time limit, in this database and any other SpiralMath products and services.  
+                • You acknowledge that the creator of the Q&amp;A has given you
+                permission to enter the content into the SpiralMath database
+                under these terms.
+              </li>
+
+              <li>
+                • The creator of the Q&amp;A will retain ownership of the
+                Copyright.
+              </li>
+
+              <li>
+                • The creator hereby assigns to SpiralMath a license to use the
+                Q&A, without time limit, in this database and any other
+                SpiralMath products and services.
               </li>
             </ul>
           </div>
 
           <div className="bottom-text">
             <p>
-              If you have questions about any of these terms, please send us an email at the contact address below.
+              If you have questions about any of these terms, please send us an
+              email at the contact address below.
             </p>
 
             <p>
               If you agree to these terms please click on “Agree and continue.”
             </p>
 
-            <p>
-              If you do not agree with these terms, please click on “Quit.”
-            </p>
+            <p>If you do not agree with these terms, please click on “Quit.”</p>
 
-            <p>
-              Thank you for participating.
-            </p>
+            <p>Thank you for participating.</p>
           </div>
 
           <div className="bottom-text-2">
+            <p>Contact david.robson@spiralmath.net</p>
             <p>
-              Contact david.robson@spiralmath.net
-            </p>
-            <p>
-              SpiralMath.net is a service of Formative Assessment and Analytics, LLC
+              SpiralMath.net is a service of Formative Assessment and Analytics,
+              LLC
             </p>
           </div>
         </Modal.Body>
@@ -172,7 +183,9 @@ const SignUp = ({ show, toggleShow }) => {
               <Form.Group controlId="formPassword" className="relative">
                 <Form.Control
                   type="password"
-                  className={`input-style input-text ${user.password.length && 'label-up'}`}
+                  className={`input-style input-text ${
+                    user.password.length && "label-up"
+                  }`}
                   name="password"
                   value={user.password}
                   onChange={handleChange}
@@ -202,7 +215,9 @@ const SignUp = ({ show, toggleShow }) => {
               <Form.Group controlId="formConfirmPassword" className="relative">
                 <Form.Control
                   type="password"
-                  className={`input-style input-text ${user.passwordConfirm.length && 'label-up'}`}
+                  className={`input-style input-text ${
+                    user.passwordConfirm.length && "label-up"
+                  }`}
                   name="passwordConfirm"
                   value={user.passwordConfirm}
                   onChange={handleChange}
@@ -262,7 +277,13 @@ const SignUp = ({ show, toggleShow }) => {
           <div className="have-issue-text">
             <p className="mt-2">
               Have issues?
-              <span className="text-orange pointerType" onClick={handleContactUs}> Contact us </span>
+              <span
+                className="text-orange pointerType"
+                onClick={handleContactUs}
+              >
+                {" "}
+                Contact us{" "}
+              </span>
             </p>
           </div>
         </Col>

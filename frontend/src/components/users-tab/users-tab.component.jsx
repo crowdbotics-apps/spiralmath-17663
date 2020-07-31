@@ -9,6 +9,8 @@ import "./users-tab.styles.css";
 
 const UsersTab = () => {
   const deletingUser = useSelector((state) => state.users.deletingUser);
+  const updatingUser = useSelector((state) => state.users.updatingUser);
+  const registering = useSelector((state) => state.registration.registering);
 
   const buttons = (id, user) => (
     <React.Fragment>
@@ -88,8 +90,10 @@ const UsersTab = () => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    dispatch(userActions.getAllUsers());
-  }, []);
+    if (!updatingUser) {
+      dispatch(userActions.getAllUsers());
+    }
+  }, [updatingUser]);
 
   const [userForm, setUserForm] = useState({
     id: "",
@@ -100,8 +104,6 @@ const UsersTab = () => {
     edit: false,
   });
   const [submitted, setSubmitted] = useState(false);
-  const updatingUser = useSelector((state) => state.users.updatingUser);
-  const registering = useSelector((state) => state.registration.registering);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -13,9 +13,11 @@ const UserTypes = () => {
   const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
 
-  // useEffect(() => {
-  //   dispatch(userActions.getAllUsers());
-  // }, []);
+  useEffect(() => {
+    if (!updatingUserType) {
+      dispatch(userActions.getAllUserTypes());
+    }
+  }, [updatingUserType]);
 
   const [userForm, setUserForm] = useState({
     id: "",

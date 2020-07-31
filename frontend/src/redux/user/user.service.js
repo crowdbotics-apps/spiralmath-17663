@@ -65,7 +65,9 @@ const confirmUser = (user) => {
     body: JSON.stringify(user),
   };
 
-  return fetch("api/v1/user/", requestOptions).then(handleResponse);
+  return fetch("api/v1/user/confirm-token/", requestOptions).then(
+    handleResponse
+  );
 };
 
 const resetPassword = (email) => {
@@ -87,7 +89,7 @@ export const contactUs = (data) => {
     body: JSON.stringify(data),
   };
 
-  return fetch("api/v1/user/", requestOptions).then(handleResponse);
+  return fetch("api/v1/user/contact-us", requestOptions).then(handleResponse);
 };
 
 const getAllUserTypes = () => {

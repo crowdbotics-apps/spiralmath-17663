@@ -145,9 +145,9 @@ export const contactUs = (email, message) => {
   return (dispatch) => {
     dispatch(request());
 
-    userService.contactUs(email, message).then(
-      (data) => {
-        dispatch(success(data));
+    userService.contactUs({ email, message }).then(
+      () => {
+        dispatch(success());
       },
       (error) => {
         dispatch(failure(error.toString()));
@@ -162,7 +162,7 @@ const getAllUsers = () => {
     return { type: userTypes.GETALL_USERS_REQUEST };
   }
   function success(users) {
-    return { type: userTypes.GETALL_USERS_SUCCESS, users };
+    return { type: userTypes.GETALL_USERS_SUCCESS, users: users.results || [] };
   }
   function failure(error) {
     return { type: userTypes.GETALL_USERS_FAILURE, payload: error };

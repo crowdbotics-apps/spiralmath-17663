@@ -80,20 +80,7 @@ export const confirmation = (state = {}, action) => {
 export const userTypesReducer = (
   state = {
     userTypeCreating: false,
-    allUserTypes: [
-      {
-        id: 1,
-        create_questions: true,
-        review_questions: true,
-        name: "System Administrator",
-      },
-      {
-        id: 2,
-        create_questions: true,
-        review_questions: false,
-        name: "Author",
-      },
-    ],
+    allUserTypes: [],
     loadingUserTypes: false,
     error: "",
     success: "",
@@ -179,48 +166,7 @@ export const contactUs = (state = {}, action) => {
 };
 
 let initialUsersState = {
-  users: [
-    {
-      id: 15,
-      email: "testing-editor@example.com",
-      first_name: "testing-editor",
-      last_name: "testing-editor",
-      user_type: null,
-      role: "Editor",
-      status: 10,
-      username: "testing-editor@example.com",
-    },
-    {
-      id: 1,
-      email: "david.robson@spiralmath.net",
-      first_name: "david",
-      last_name: "robson",
-      user_type: null,
-      role: "Admin",
-      status: 10,
-      username: "david.robson@spiralmath.net",
-    },
-    {
-      id: 10,
-      email: "idigitalbrick@gmail.com",
-      first_name: "test-admin",
-      last_name: "test-admin",
-      user_type: null,
-      role: "Admin",
-      status: 10,
-      username: "idigitalbrick@gmail.com",
-    },
-    {
-      id: 16,
-      email: "rajparmar@crowdbotics.com",
-      first_name: "Raj",
-      last_name: "Parmar",
-      user_type: 1,
-      accepted_terms_date: null,
-      role: "Admin",
-      status: 20,
-    },
-  ],
+  users: [],
   loadingUsers: false,
   updatingUser: false,
   deletingUser: false,
@@ -240,7 +186,7 @@ export const users = (state = initialUsersState, action) => {
       return {
         ...state,
         loadingUsers: false,
-        users: action.payload,
+        users: action.users,
         errorMessage: "",
       };
     case userTypes.GETALL_USERS_FAILURE:
