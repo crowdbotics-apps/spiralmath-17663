@@ -124,7 +124,7 @@ export const userTypesReducer = (
       return { ...state, deletingUserType: true, error: "", success: "" };
     case userTypes.DELETE_USER_TYPE_SUCCESS:
       const allUserTypes = state.allUserTypes.filter(
-        (el) => el.id === action.payload
+        (el) => el.id !== action.payload
       );
       return {
         ...state,
@@ -218,7 +218,7 @@ export const users = (state = initialUsersState, action) => {
         successMessage: "",
       };
     case userTypes.DELETE_USER_SUCCESS:
-      const users = state.users.filter((el) => el.id === action.payload);
+      const users = state.users.filter((el) => el.id !== action.payload);
       return {
         ...state,
         users,
