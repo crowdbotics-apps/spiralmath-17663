@@ -70,7 +70,9 @@ const register = (user) => {
         dispatch(alertActions.success("Registration successful"));
       },
       (error) => {
-        dispatch(failure(error.toString()));
+        const key = Object.keys(error)[0];
+        error = { key, message: error[key][0] };
+        dispatch(failure(error));
         dispatch(alertActions.error(error.toString()));
       }
     );

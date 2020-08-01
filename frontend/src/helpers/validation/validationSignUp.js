@@ -20,5 +20,10 @@ export default function validateSignup(values) {
     errors.passwordConfirm = "Password should be same";
   }
 
+  if (!values.termsAndConditions) {
+    errors.termsAndConditions =
+      "You should agreed to terms and conditions to proceed";
+  }
+
   return errors;
 }

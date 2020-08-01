@@ -7,6 +7,7 @@ import { validateCreateUserTypes } from "../../helpers/validation/validateCreate
 
 const UserTypes = () => {
   const userTypesState = useSelector((state) => state.userTypes.allUserTypes);
+  let successMessage = useSelector((state) => state.userTypes.success);
   const deletingUserType = useSelector(
     (state) => state.userTypes.deletingUserType
   );
@@ -188,9 +189,21 @@ const UserTypes = () => {
     );
   };
 
+  const handleClearMessage = () => {
+    successMessage = "";
+  };
+
   const userTypesTable = () => {
     return (
       <Row>
+        {successMessage && (
+          <p
+            className="form-text-danger text-success"
+            onMouseEnter={handleClearMessage}
+          >
+            {successMessage}
+          </p>
+        )}
         <Col className="mt-3">
           <Table striped bordered hover className="border-0">
             <thead>

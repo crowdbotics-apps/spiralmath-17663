@@ -22,9 +22,9 @@ const SignUp = ({ show, toggleShow }) => {
   const [user, setUser] = useState({
     password: "",
     passwordConfirm: "",
+    termsAndConditions: false,
     token: new URLSearchParams(location.search).get("token"),
   });
-  console.log(user.token);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
   const confirming = useSelector((state) => state.confirmation.confirming);
@@ -38,8 +38,17 @@ const SignUp = ({ show, toggleShow }) => {
   }, []);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser((user) => ({ ...user, [name]: value }));
+    const { name } = e.target;
+    if (name === "password" || name === "passwordConfirm") {
+      const { value } = e.target;
+      setUser((user) => ({
+        ...user,
+        [name]: value,
+      }));
+    } else {
+      const { checked } = e.target;
+      setUser({ ...user, [name]: checked });
+    }
     setErrors({ ...errors, [name]: "" });
   };
 
@@ -246,7 +255,13 @@ const SignUp = ({ show, toggleShow }) => {
 
               <Form.Group className="ml-4" controlId="formBasicCheckbox">
                 <div className="signup-checkbox">
-                  <Form.Check.Input type="checkbox" />
+                  <Form.Check.Input
+                    type="checkbox"
+                    name="termsAndConditions"
+                    checked={user.termsAndConditions}
+                    value={user.termsAndConditions}
+                    onChange={handleChange}
+                  />
                   <Form.Check.Label>
                     I have read and accepts the &nbsp;
                   </Form.Check.Label>
@@ -257,8 +272,14 @@ const SignUp = ({ show, toggleShow }) => {
                   >
                     Terms of Use
                   </span>
+                  {submitted && errors.termsAndConditions && (
+                    <div className="text-danger">
+                      {errors.termsAndConditions}
+                    </div>
+                  )}
                 </div>
               </Form.Group>
+
               <Button variant="primary" type="submit" className="custom-btn">
                 {confirming && (
                   <span className="spinner-border spinner-border-sm mr-1"></span>

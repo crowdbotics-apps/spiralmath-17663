@@ -11,6 +11,9 @@ const UsersTab = () => {
   const deletingUser = useSelector((state) => state.users.deletingUser);
   const updatingUser = useSelector((state) => state.users.updatingUser);
   const registering = useSelector((state) => state.registration.registering);
+  const errorKey = useSelector((state) => state.registration.key);
+  let errorMessage = useSelector((state) => state.registration.error);
+  let successMessage = useSelector((state) => state.registration.success);
 
   const buttons = (id, user) => (
     <React.Fragment>
@@ -110,6 +113,7 @@ const UsersTab = () => {
 
     setUserForm((userForm) => ({ ...userForm, [name]: value }));
     setErrors({ ...errors, [name]: "" });
+    errorMessage = "";
   };
 
   function handleSubmit(e) {
@@ -216,9 +220,10 @@ const UsersTab = () => {
                 className="border-top-0 border-left-0 border-right-0 rounded-0"
               />
               {submitted && errors.email && (
-                <p className="text-danger form-text-danger">
-                  Email is required
-                </p>
+                <p className="text-danger form-text-danger">{errors.email}</p>
+              )}
+              {errorKey === "email" && (
+                <p className="text-danger form-text-danger">{errorMessage}</p>
               )}
             </Form.Group>
 
@@ -253,9 +258,21 @@ const UsersTab = () => {
     );
   };
 
+  const handleClearMessage = () => {
+    successMessage = "";
+  };
+
   const userTable = () => {
     return (
       <Row>
+        {successMessage && (
+          <p
+            className="form-text-danger text-success"
+            onMouseEnter={handleClearMessage}
+          >
+            {successMessage}
+          </p>
+        )}
         <Col className="mt-3">
           <div>
             <Table
