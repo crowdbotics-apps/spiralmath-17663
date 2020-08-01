@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
 
 import validate from "../../helpers/validation/validateLogin";
 
@@ -91,7 +92,13 @@ const Login = ({ show, toggleShow }) => {
           )}
 
           <div className="form-container w-50">
-            <h1 className="text-center form-heading">Welcome Back</h1>
+            <h1 className="text-center form-heading">
+              <FormattedMessage
+                id="loginHeader"
+                defaultMessage="Welcome Back"
+                description="header of login page"
+              />
+            </h1>
 
             <Form className="text-center" onSubmit={handleSubmit} noValidate>
               <Form.Group controlId="formEmail" className="relative">
