@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { createStructuredSelector } from "reselect";
+import { FormattedMessage } from "react-intl";
 
 import { userActions } from "../../redux/user/user.actions";
 import validate from "../../helpers/validation/validationResetPassword";
@@ -63,13 +64,22 @@ const ForgotPassword = ({ show, toggleShow }) => {
           )}
           <div className="form-container w-50">
             <h1 className="text-center form-heading mb-3">
-              Reset Your Password
+              <FormattedMessage
+                defaultMessage="Reset Your Password"
+                id="pageForgotHeader"
+              />
             </h1>
 
             <p className="text-center instruction-text">
-              Please enter your email and we will send you an
+              <FormattedMessage
+                defaultMessage="Please enter your email and we will send you an"
+                id="pageForgotInstructions1"
+              />
               <br />
-              instruction email.
+              <FormattedMessage
+                defaultMessage="instruction email."
+                id="pageForgotInstructions2"
+              />
             </p>
 
             <Form className="text-center" onSubmit={handleSubmit} noValidate>
@@ -83,7 +93,12 @@ const ForgotPassword = ({ show, toggleShow }) => {
                   value={email}
                   onChange={handleChange}
                 />
-                <span className="floating-label">Email</span>
+                <span className="floating-label">
+                  <FormattedMessage
+                    defaultMessage="Email"
+                    id="pageForgotEmailLabel"
+                  />
+                </span>
                 {submitted && errors.email && (
                   <div className="text-danger">{errors.email}</div>
                 )}
@@ -97,26 +112,42 @@ const ForgotPassword = ({ show, toggleShow }) => {
                 {reseting && (
                   <span className="spinner-border spinner-border-sm mr-1"></span>
                 )}
-                Send Password Reset
+                <FormattedMessage
+                  deafaultMessage="Send Password Reset"
+                  id="pageForgotResetButton"
+                />
               </Button>
             </Form>
 
             <p className="mt-2 text-center login-text">
-              Already have an account?
+              <FormattedMessage
+                defaultMessage="Already have an account?"
+                id="pageForgotAlreadyHaveAnAccount"
+              />
               <Link to="">
-                <span className="text-orange pointerType"> Log in </span>
+                <span className="text-orange pointerType">
+                  <FormattedMessage
+                    defaultMessage="Log in"
+                    id="pageForgotLoginLink"
+                  />
+                </span>
               </Link>
             </p>
           </div>
           <div className="have-issue-text">
             <p className="mt-2">
-              Have issues?
+              <FormattedMessage
+                defaultMessage="Have issues?"
+                id="pageForgotHaveIssue"
+              />
               <span
                 className="text-orange pointerType"
                 onClick={handleContactUs}
               >
-                {" "}
-                Contact us{" "}
+                <FormattedMessage
+                  defaultMessage="Contact us"
+                  id="pageForgotContactUs"
+                />
               </span>
             </p>
           </div>
