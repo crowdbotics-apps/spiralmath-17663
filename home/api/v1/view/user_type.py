@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 
 from rest_framework.exceptions import PermissionDenied
 from home.api.v1.serializer.user_type import UserTypeSerializer
-from users.models import UserType
+from users.models import UserType, SYSTEM_ADMINISTRATOR_TYPE, AUTHOR_TYPE, REVIEWER_TYPE
 
 User = get_user_model()
 
@@ -30,3 +30,9 @@ class UserTypeViewSet(
         else:
             raise PermissionDenied
         return queryset
+
+    def destroy(self, request, *args, **kwargs):
+        userType = self.get_object()
+        if userType and userType.name in {SYSTEM_ADMINISTRATOR_TYPE, AUTHOR_TYPE, REVIEWER_TYPE}:
+            raise PermissionDenied
+        return super(UserTypeViewSet, self).destroy(request, *args, **kwargs)
