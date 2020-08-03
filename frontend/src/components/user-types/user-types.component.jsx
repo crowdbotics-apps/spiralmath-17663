@@ -121,88 +121,98 @@ const UserTypes = () => {
 
   const createUserTypeForm = () => {
     return (
-      <Form noValidate onSubmit={handleSubmit}>
-        <div className="px-4 py-4 border form-border">
-          <Form.Row>
-            <Form.Group as={Col} md="3" controlId="validationCustom01">
-              <Form.Control
-                required
-                type="text"
-                placeholder={intl.formatMessage({
-                  defaultMessage: "User Type",
-                  id: "componentUserTypesUserTypeLabel",
-                })}
-                name="userType"
-                value={userForm.userType}
-                onChange={handleChange}
-                className="border-top-0 border-left-0 border-right-0 rounded-0"
+      <React.Fragment>
+        {successMessage && (
+          <p
+            className="form-text-danger text-success"
+            onMouseEnter={handleClearMessage}
+          >
+            {successMessage}
+          </p>
+        )}
+        <Form noValidate onSubmit={handleSubmit}>
+          <div className="px-4 py-4 border form-border">
+            <Form.Row>
+              <Form.Group as={Col} md="3" controlId="validationCustom01">
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder={intl.formatMessage({
+                    defaultMessage: "User Type",
+                    id: "componentUserTypesUserTypeLabel",
+                  })}
+                  name="userType"
+                  value={userForm.userType}
+                  onChange={handleChange}
+                  className="border-top-0 border-left-0 border-right-0 rounded-0"
+                />
+                {submitted && errors.userType && (
+                  <p className="text-danger form-text-danger">
+                    {errors.userType}
+                  </p>
+                )}
+              </Form.Group>
+
+              <Form.Group
+                as={Col}
+                md="4"
+                className=" mt-2 text-right"
+                controlId="create-questions"
+              >
+                <Form.Check
+                  type="switch"
+                  id="create-questions"
+                  label={intl.formatMessage({
+                    defaultMessage: "Can Create Questions",
+                    id: "componentUserTypesCreateQuestionsLabel",
+                  })}
+                  name="createQuestions"
+                  checked={userForm.createQuestions}
+                  value={userForm.createQuestions}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+
+              <Form.Group
+                as={Col}
+                md="4"
+                className=" mt-2 text-right"
+                controlId="review-questions"
+              >
+                <Form.Check
+                  type="switch"
+                  id="review-questions"
+                  label={intl.formatMessage({
+                    defaultMessage: "Can Review Questions",
+                    id: "componentUserTypesReviewQuestionsLabel",
+                  })}
+                  name="reviewQuestions"
+                  checked={userForm.reviewQuestions}
+                  value={userForm.reviewQuestions}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+            </Form.Row>
+          </div>
+          <div className="my-4 d-flex justify-content-end bottom-btn-grp">
+            <Button onClick={handleCloseForm} className="mr-4 cancel-btn">
+              <FormattedMessage
+                id="componentUserTypesCancelButton"
+                defaultMessage="Cancel"
               />
-              {submitted && errors.userType && (
-                <p className="text-danger form-text-danger">
-                  {errors.userType}
-                </p>
+            </Button>
+            <Button type="submit" className="save-btn">
+              {(userTypeCreating || updatingUserType) && (
+                <span className="spinner-border spinner-border-sm mr-1"></span>
               )}
-            </Form.Group>
-
-            <Form.Group
-              as={Col}
-              md="4"
-              className=" mt-2 text-right"
-              controlId="create-questions"
-            >
-              <Form.Check
-                type="switch"
-                id="create-questions"
-                label={intl.formatMessage({
-                  defaultMessage: "Can Create Questions",
-                  id: "componentUserTypesCreateQuestionsLabel",
-                })}
-                name="createQuestions"
-                checked={userForm.createQuestions}
-                value={userForm.createQuestions}
-                onChange={handleChange}
+              <FormattedMessage
+                defaultMessage="Save"
+                id="componentUserTypesSaveButton"
               />
-            </Form.Group>
-
-            <Form.Group
-              as={Col}
-              md="4"
-              className=" mt-2 text-right"
-              controlId="review-questions"
-            >
-              <Form.Check
-                type="switch"
-                id="review-questions"
-                label={intl.formatMessage({
-                  defaultMessage: "Can Review Questions",
-                  id: "componentUserTypesReviewQuestionsLabel",
-                })}
-                name="reviewQuestions"
-                checked={userForm.reviewQuestions}
-                value={userForm.reviewQuestions}
-                onChange={handleChange}
-              />
-            </Form.Group>
-          </Form.Row>
-        </div>
-        <div className="my-4 d-flex justify-content-end bottom-btn-grp">
-          <Button onClick={handleCloseForm} className="mr-4 cancel-btn">
-            <FormattedMessage
-              id="componentUserTypesCancelButton"
-              defaultMessage="Cancel"
-            />
-          </Button>
-          <Button type="submit" className="save-btn">
-            {(userTypeCreating || updatingUserType) && (
-              <span className="spinner-border spinner-border-sm mr-1"></span>
-            )}
-            <FormattedMessage
-              defaultMessage="Save"
-              id="componentUserTypesSaveButton"
-            />
-          </Button>
-        </div>
-      </Form>
+            </Button>
+          </div>
+        </Form>
+      </React.Fragment>
     );
   };
 
@@ -213,14 +223,6 @@ const UserTypes = () => {
   const userTypesTable = () => {
     return (
       <Row>
-        {successMessage && (
-          <p
-            className="form-text-danger text-success"
-            onMouseEnter={handleClearMessage}
-          >
-            {successMessage}
-          </p>
-        )}
         <Col className="mt-3">
           <Table striped bordered hover className="border-0">
             <thead>
