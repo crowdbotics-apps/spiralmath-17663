@@ -15,9 +15,4 @@ class Migration(migrations.Migration):
             name='is_deletable',
             field=models.BooleanField(default=True),
         ),
-        migrations.AlterField(
-            model_name='usertype',
-            name='name',
-            field=models.CharField(blank=False, max_length=200, unique=True),
-        ),
     ]

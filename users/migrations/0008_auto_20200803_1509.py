@@ -8,6 +8,12 @@ def create_preserved_user_types(apps, schema_editor):
     # Create 'System Administrator', 'Author', 'Reviewer'
     UserType = apps.get_model('users', 'UserType')
 
+    # clear User Types
+    user_types_data = UserType.objects.all()
+    for user_type_item in user_types_data:
+        if user_type_item.name not in {SYSTEM_ADMINISTRATOR_TYPE, AUTHOR_TYPE, REVIEWER_TYPE}:
+            user_type_item.delete()
+
     system_administrator = UserType.objects.filter(name=SYSTEM_ADMINISTRATOR_TYPE).first()
     if system_administrator is None:
         system_administrator = UserType()
