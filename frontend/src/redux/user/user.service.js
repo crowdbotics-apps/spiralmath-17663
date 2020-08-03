@@ -175,6 +175,18 @@ const getOneUser = (id) => {
   return fetch(`api/v1/user/${id}/`, requestOptions).then(handleResponse);
 };
 
+const settings = () => {
+  const requestOptions = {
+    method: "GET",
+    headers: authHeader(),
+  };
+
+  return fetch(
+    `https://spiralmath-17663.botics.co/api/v1/settings/`,
+    requestOptions
+  ).then(handleResponse);
+};
+
 function handleResponse(response) {
   return response.text().then((text) => {
     const data = text && JSON.parse(text);
@@ -208,4 +220,5 @@ export const userService = {
   getAllUserTypes,
   updateUserType,
   deleteUserType,
+  settings,
 };

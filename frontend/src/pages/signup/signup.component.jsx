@@ -85,6 +85,10 @@ const SignUp = ({ show, toggleShow }) => {
 
   const closeDisplayTerms = () => setDisplayTerms(false);
 
+  useEffect(() => {
+    dispatch(userActions.getSettings());
+  }, []);
+
   const termsAndConditions = () => {
     return (
       <Modal

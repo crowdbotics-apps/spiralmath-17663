@@ -246,3 +246,12 @@ export const users = (state = initialUsersState, action) => {
       return state;
   }
 };
+
+export const settings = (state = {}, action) => {
+  switch (action.type) {
+    case userTypes.GET_SETTINGS:
+      return { settings: action.settings };
+    default:
+      return {};
+  }
+};

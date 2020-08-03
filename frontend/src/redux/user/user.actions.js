@@ -329,6 +329,14 @@ const deleteUserType = (id) => {
   };
 };
 
+export const getSettings = () => {
+  return (dispatch) => {
+    userService.settings().then((settings) => {
+      dispatch({ type: "GET_SETTINGS", settings });
+    });
+  };
+};
+
 export const alertActions = {
   success,
   error,
@@ -349,4 +357,5 @@ export const userActions = {
   getAllUserTypes,
   updateUserType,
   deleteUserType,
+  getSettings,
 };
