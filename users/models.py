@@ -84,7 +84,7 @@ class UserType(models.Model):
     # create, read, update, delete self questions All Authors can see all questions created by everyone.
     # approve / reject any author questions / cannot modify a question
 
-    name = models.CharField(max_length=200, blank=True)
+    name = models.CharField(max_length=200, blank=True, unique=True)
     create_questions = models.BooleanField(default=False)
     review_questions = models.BooleanField(default=False)
     is_deletable = models.BooleanField(default=True)
