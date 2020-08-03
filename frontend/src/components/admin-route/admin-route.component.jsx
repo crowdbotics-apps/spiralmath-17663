@@ -6,7 +6,7 @@ const AdminRoute = ({ component: Component, ...rest }) => (
     {...rest}
     render={(props) =>
       localStorage.getItem("user") &&
-      localStorage.getItem("user").userObj.role === "Admin" ? (
+      JSON.parse(localStorage.getItem("user")).userObj.role === "Admin" ? (
         <Component {...props} />
       ) : (
         <Redirect to={{ pathname: "/", state: { from: props.location } }} />
