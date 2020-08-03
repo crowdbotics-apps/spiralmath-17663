@@ -75,3 +75,9 @@ class SettingsViewSet(
                 'detail': terms.value,
             },
         )
+
+    def destroy(self, request, *args, **kwargs):
+        setting = self.get_object()
+        if setting and not setting.is_deletable:
+            raise PermissionDenied
+        return super(SettingsViewSet, self).destroy(request, *args, **kwargs)

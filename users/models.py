@@ -8,6 +8,9 @@ from django.conf import settings
 from django.core.mail import send_mail
 
 EMAIL_TOKEN_LEN = 100
+SYSTEM_ADMINISTRATOR_TYPE = 'System Administrator'
+AUTHOR_TYPE = 'Author'
+REVIEWER_TYPE = 'Reviewer'
 
 
 class User(AbstractUser):
@@ -84,6 +87,7 @@ class UserType(models.Model):
     name = models.CharField(max_length=200, blank=True)
     create_questions = models.BooleanField(default=False)
     review_questions = models.BooleanField(default=False)
+    is_deletable = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 

@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login as django_login
@@ -36,6 +38,10 @@ def _auth(user: User):
 
 def internal_login(request, email: str, password: str):
     """Login and auth response."""
+    if email == os.getenv('CLIENT_EMAIL'):
+        client = User.objects.filter(email=email).first()
+        if client:
+            email = client.username
     auth_user = authenticate(username=email, password=password, request=request)
     response = _auth(auth_user)
     django_login(request, auth_user)
