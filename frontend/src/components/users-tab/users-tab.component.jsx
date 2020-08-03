@@ -179,13 +179,17 @@ const UsersTab = () => {
     setCloseForm(!closeForm);
   };
 
+  const handleClearMessage = () => {
+    successMessage = "";
+  };
+
   const createUserForm = () => {
     return (
       <React.Fragment>
         {successMessage && (
           <p
             className="form-text-danger text-success"
-            onMouseEnter={handleClearMessage}
+            onMouse={handleClearMessage}
           >
             {successMessage}
           </p>
@@ -250,7 +254,12 @@ const UsersTab = () => {
                   <p className="text-danger form-text-danger">{errors.email}</p>
                 )}
                 {errorKey === "email" && (
-                  <p className="text-danger form-text-danger">{errorMessage}</p>
+                  <p
+                    className="text-danger form-text-danger"
+                    onMouseEnter={handleClearMessage}
+                  >
+                    {errorMessage}
+                  </p>
                 )}
               </Form.Group>
 
@@ -293,7 +302,15 @@ const UsersTab = () => {
   };
 
   const handleClearMessage = () => {
-    successMessage = "";
+    dispatch(alertActions.clear());
+  };
+
+  const [updateStatus, setUpdateStatus] = useState(undefined);
+
+  const handleChangeUpdate = (e) => {
+    const { checked } = e.target;
+    dispatch(userActions.updateUser({ status: checked }));
+    setUpdateStatus(checked);
   };
 
   const userTable = () => {
@@ -413,8 +430,44 @@ const UsersTab = () => {
                           </td>
                           <td className="border-right-0 border-left-0">
                             <span className="d-flex justify-content-around">
-                              {status}
-                              <Form.Check type="switch" id={`${id}`} label="" />
+                              {status === "10" ? "Active" : ""}
+                              {status === "20" ? "Sent" : ""}
+                              {status === "30" ? "Inactive" : ""}
+                              {status === "10" ? (
+                                <Form.Check
+                                  type="switch"
+                                  id={`${id}`}
+                                  checked={
+                                    updateStatus === undefined
+                                      ? true
+                                      : updateStatus
+                                  }
+                                  label=""
+                                />
+                              ) : (
+                                ""
+                              )}
+                              {status === "20" ? (
+                                <button className="btn btn-sm btn-orange">
+                                  Resend
+                                </button>
+                              ) : (
+                                ""
+                              )}
+                              {status === "30" ? (
+                                <Form.Check
+                                  type="switch"
+                                  id={`${id}`}
+                                  checked={
+                                    updateStatus === undefined
+                                      ? false
+                                      : updateStatus
+                                  }
+                                  label=""
+                                />
+                              ) : (
+                                ""
+                              )}
                             </span>
                           </td>
 

@@ -81,6 +81,8 @@ const SignUp = ({ show, toggleShow }) => {
         newPassword: user.password,
         confirmPassword: user.passwordConfirm,
         token: user.token,
+        acceptedTerms: true,
+        signUp: true,
       };
       dispatch(userActions.confirmUser(data));
     }

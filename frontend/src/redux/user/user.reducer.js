@@ -70,6 +70,13 @@ export const registration = (state = {}, action) => {
         error: action.error.message,
         key: action.error.key,
       };
+    case alertTypes.CLEAR:
+      return {
+        ...state,
+        success: "",
+        error: "",
+        key: "",
+      };
     default:
       return state;
   }
