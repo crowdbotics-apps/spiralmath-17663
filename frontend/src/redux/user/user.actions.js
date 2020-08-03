@@ -72,6 +72,7 @@ const register = (user) => {
       (error) => {
         const key = Object.keys(error)[0];
         error = { key, message: error[key][0] };
+        console.log(error);
         dispatch(failure(error));
         dispatch(alertActions.error(error.toString()));
       }
