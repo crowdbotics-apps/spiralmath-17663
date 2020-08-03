@@ -49,7 +49,7 @@ class User(AbstractUser):
         """Send invitation email with password reset link."""
         self.emailConfirmationToken = secrets.token_hex(int(EMAIL_TOKEN_LEN / 2))
         self.save()
-        link = f'{settings.FRONTEND_URL}/register?token={self.emailConfirmationToken}'
+        link = f'{settings.FRONTEND_URL}/#/register?token={self.emailConfirmationToken}'
         return send_mail(
             'Invitation from SpiralMath',
             f'Welcome to SpiralMath, We are delighted that you will be working with SpiralMath to edit questions. '
