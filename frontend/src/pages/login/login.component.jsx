@@ -121,13 +121,7 @@ const Login = ({ show, toggleShow }) => {
                   />
                 </span>
                 {submitted && errors.email && (
-                  <div className="text-danger">
-                    <FormattedMessage
-                      id="pageLoginEmailError"
-                      defaultMessage="{error}"
-                      values={{ error: errors.email }}
-                    />
-                  </div>
+                  <div className="text-danger">{errors.email}</div>
                 )}
               </Form.Group>
 
@@ -164,13 +158,7 @@ const Login = ({ show, toggleShow }) => {
                   </svg>
                 </span>
                 {submitted && errors.password && (
-                  <div className="text-danger">
-                    <FormattedMessage
-                      defaultMessage="{error}"
-                      id="pageLoginPasswordError"
-                      values={{ error: errors.password }}
-                    />
-                  </div>
+                  <div className="text-danger">{errors.password}</div>
                 )}
               </Form.Group>
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { Form, Button, Modal } from "react-bootstrap";
+import { FormattedMessage } from "react-intl";
 
 import { alertActions } from "../../redux/user/user.actions";
 import { userActions } from "../../redux/user/user.actions";
@@ -59,7 +60,12 @@ const ContactUs = ({ show, toggleShow }) => {
     <Modal show={show} onHide={toggleShow} className="contactus-popup">
       <div>
         <Modal.Header closeButton>
-          <Modal.Title>Contact Us</Modal.Title>
+          <Modal.Title>
+            <FormattedMessage
+              defaultMessage="Contact Us"
+              id="componentContactHeader"
+            />
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {alert.type === "alert-success" && show ? (
@@ -83,11 +89,14 @@ const ContactUs = ({ show, toggleShow }) => {
                   value={email}
                   onChange={handleChange}
                 />
-                <span className="floating-label">Email</span>
+                <span className="floating-label">
+                  <FormattedMessage
+                    defaultMessage="Email"
+                    id="componentContactEmailLabel"
+                  />
+                </span>
                 {submitted && errors.email && (
-                  <p className="text-danger form-text-danger">
-                    Email is required
-                  </p>
+                  <p className="text-danger form-text-danger">{errors.email}</p>
                 )}
               </Form.Group>
             ) : (
@@ -104,7 +113,12 @@ const ContactUs = ({ show, toggleShow }) => {
                 value={message}
                 onChange={handleChange}
               />
-              <span className="floating-label">Message</span>
+              <span className="floating-label">
+                <FormattedMessage
+                  defaultMessage="Message"
+                  id="componentContactMessageLabel"
+                />
+              </span>
               {submitted && errors.message && (
                 <p className="text-danger form-text-danger">
                   This field is required
@@ -122,7 +136,10 @@ const ContactUs = ({ show, toggleShow }) => {
             {contacting && (
               <span className="spinner-border spinner-border-sm mr-1"></span>
             )}
-            Submit
+            <FormattedMessage
+              defaultMessage="Submit"
+              id="componentContactSubmitButton"
+            />
           </Button>
         </Modal.Footer>
       </div>

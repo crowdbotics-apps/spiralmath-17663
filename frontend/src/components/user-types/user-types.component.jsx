@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Row, Col, Table, Form, Button, Modal } from "react-bootstrap";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { userActions } from "../../redux/user/user.actions";
 import { validateCreateUserTypes } from "../../helpers/validation/validateCreateUser";
@@ -19,6 +20,7 @@ const UserTypes = () => {
   );
 
   const dispatch = useDispatch();
+  const intl = useIntl();
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -126,7 +128,10 @@ const UserTypes = () => {
               <Form.Control
                 required
                 type="text"
-                placeholder="First name"
+                placeholder={intl.formatMessage({
+                  defaultMessage: "User Type",
+                  id: "componentUserTypesUserTypeLabel",
+                })}
                 name="userType"
                 value={userForm.userType}
                 onChange={handleChange}
@@ -134,7 +139,7 @@ const UserTypes = () => {
               />
               {submitted && errors.userType && (
                 <p className="text-danger form-text-danger">
-                  User Type is required
+                  {errors.userType}
                 </p>
               )}
             </Form.Group>
@@ -148,7 +153,10 @@ const UserTypes = () => {
               <Form.Check
                 type="switch"
                 id="create-questions"
-                label="Can Create Questions"
+                label={intl.formatMessage({
+                  defaultMessage: "Can Create Questions",
+                  id: "componentUserTypesCreateQuestionsLabel",
+                })}
                 name="createQuestions"
                 checked={userForm.createQuestions}
                 value={userForm.createQuestions}
@@ -165,7 +173,10 @@ const UserTypes = () => {
               <Form.Check
                 type="switch"
                 id="review-questions"
-                label="Can Review Questions"
+                label={intl.formatMessage({
+                  defaultMessage: "Can Review Questions",
+                  id: "componentUserTypesReviewQuestionsLabel",
+                })}
                 name="reviewQuestions"
                 checked={userForm.reviewQuestions}
                 value={userForm.reviewQuestions}
@@ -176,13 +187,19 @@ const UserTypes = () => {
         </div>
         <div className="my-4 d-flex justify-content-end bottom-btn-grp">
           <Button onClick={handleCloseForm} className="mr-4 cancel-btn">
-            Cancel
+            <FormattedMessage
+              id="componentUserTypesCancelButton"
+              defaultMessage="Cancel"
+            />
           </Button>
           <Button type="submit" className="save-btn">
             {(userTypeCreating || updatingUserType) && (
               <span className="spinner-border spinner-border-sm mr-1"></span>
             )}
-            Save
+            <FormattedMessage
+              defaultMessage="Save"
+              id="componentUserTypesSaveButton"
+            />
           </Button>
         </div>
       </Form>
@@ -209,10 +226,16 @@ const UserTypes = () => {
             <thead>
               <tr>
                 <th scope="col" className="border-0 font-style thead">
-                  User Types
+                  <FormattedMessage
+                    defaultMessage="User Types"
+                    id="componentUserTypesTableHeadUserTypes"
+                  />
                 </th>
                 <th scope="col" className="border-0 font-style thead">
-                  Description
+                  <FormattedMessage
+                    defaultMessage="Description"
+                    id="componentUserTypesTableHeadDescription"
+                  />
                 </th>
 
                 <th
@@ -236,7 +259,12 @@ const UserTypes = () => {
                       />
                     </svg>
                   </span>
-                  <b>Create User Type</b>
+                  <b>
+                    <FormattedMessage
+                      defaultMessage="Create User Type"
+                      id="componentUserTypesTableHeadCreateUserType"
+                    />
+                  </b>
                 </th>
               </tr>
             </thead>
@@ -303,17 +331,31 @@ const UserTypes = () => {
       >
         <Modal.Header closeButton className="justify-content-center">
           <Modal.Title id="contained-modal-title-vcenter">
-            Are You Sure
+            <FormattedMessage
+              defaultMessage="Are You Sure"
+              id="componentUserTypesDeleteModalHeader"
+            />
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <h6 className="text-muted user-type-content">
-            User Type: {userType} will be removed
+            <FormattedMessage
+              defaultMessage="User Type"
+              id="componentUserTypesDeleteModalWarningHead"
+            />
+            : {userType}
+            <FormattedMessage
+              defaultMessage="will be removed"
+              id="componentUserTypesDeleteModalWarningFoot"
+            />
           </h6>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={handleClose} className="popup-close-btn">
-            Close
+            <FormattedMessage
+              defaultMessage="Close"
+              id="componentUserTypesDeleteModalCloseButton"
+            />
           </Button>
           <Button
             variant="primary"
@@ -323,7 +365,10 @@ const UserTypes = () => {
             {deletingUserType && (
               <span className="spinner-border spinner-border-sm mr-1"></span>
             )}
-            Delete
+            <FormattedMessage
+              defaultMessage="Delete"
+              id="componentUserTypesDeleteModalDeleteButton"
+            />
           </Button>
         </Modal.Footer>
       </Modal>
@@ -396,11 +441,20 @@ const UserTypes = () => {
     ({ id, create_questions, review_questions, name }) => {
       const description = ((create_questions, review_questions) => {
         if (create_questions && review_questions) {
-          return "Can create and review questions";
+          return intl.formatMessage({
+            defaultMessage: "Can create and review questions",
+            id: "componentUserTypesDescription1",
+          });
         } else if (create_questions) {
-          return "Can create questions";
+          return intl.formatMessage({
+            defaultMessage: "Can create questions",
+            id: "componentUserTypesDescription2",
+          });
         } else if (review_questions) {
-          return "Can review questions";
+          return intl.formatMessage({
+            defaultMessage: "Can review questions",
+            id: "componentUserTypesDescription3",
+          });
         }
       })(create_questions, review_questions);
 

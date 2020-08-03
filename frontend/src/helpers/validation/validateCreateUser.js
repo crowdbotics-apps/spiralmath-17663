@@ -1,18 +1,35 @@
+import { intl } from "../intl";
+
 export const validateCreateUser = (values) => {
   let errors = {};
   if (!values.email) {
-    errors.email = "Email is required";
+    errors.email = intl.formatMessage({
+      id: "componentUsersTabEmailRequiredValidation",
+      defaultMessage: "Email is required",
+    });
   } else if (!/\S+@\S+\.\S+/.test(values.email)) {
-    errors.email = "Email address is invalid";
+    errors.email = intl.formatMessage({
+      id: "componentUsersTabEmailInvalidValidation",
+      defaultMessage: "Email is invalid",
+    });
   }
   if (!values.firstName) {
-    errors.firstName = "Firstname is required";
+    errors.firstName = intl.formatMessage({
+      id: "componentUsersTabFirstNameRequiredValidation",
+      defaultMessage: "Firstname is required",
+    });
   }
   if (!values.lastName) {
-    errors.lastName = "Lastname is required";
+    errors.lastName = intl.formatMessage({
+      id: "componentUsersTabLastNameRequiredValidation",
+      defaultMessage: "Lastname is required",
+    });
   }
   if (!values.role) {
-    errors.role = "Role is required";
+    errors.role = intl.formatMessage({
+      id: "componentUsersTabRoleRequiredValidation",
+      defaultMessage: "Role is required",
+    });
   }
 
   return errors;
@@ -21,7 +38,10 @@ export const validateCreateUser = (values) => {
 export const validateCreateUserTypes = (values) => {
   let errors = {};
   if (!values.userType) {
-    errors.userType = "User type is required";
+    errors.userType = intl.formatMessage({
+      id: "componentUserTypesUserTypeRequiredValidation",
+      defaultMessage: "User Type is required",
+    });
   }
   return errors;
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Row, Col, Table, Form, Button, Modal } from "react-bootstrap";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import Pagination from "../pagination/pagination.component";
 import { userActions } from "../../redux/user/user.actions";
@@ -14,6 +15,8 @@ const UsersTab = () => {
   const errorKey = useSelector((state) => state.registration.key);
   let errorMessage = useSelector((state) => state.registration.error);
   let successMessage = useSelector((state) => state.registration.success);
+
+  const intl = useIntl();
 
   const buttons = (id, user) => (
     <React.Fragment>
@@ -179,7 +182,10 @@ const UsersTab = () => {
               <Form.Control
                 required
                 type="text"
-                placeholder="First name"
+                placeholder={intl.formatMessage({
+                  id: "componentUsersTabFirstNameLabel",
+                  defaultMessage: "First Name",
+                })}
                 name="firstName"
                 value={userForm.firstName}
                 onChange={handleChange}
@@ -187,7 +193,7 @@ const UsersTab = () => {
               />
               {submitted && errors.firstName && (
                 <p className="text-danger form-text-danger">
-                  First name is required
+                  {errors.firstName}
                 </p>
               )}
             </Form.Group>
@@ -196,7 +202,10 @@ const UsersTab = () => {
               <Form.Control
                 required
                 type="text"
-                placeholder="Last name"
+                placeholder={intl.formatMessage({
+                  id: "componentUsersTabLastNameLabel",
+                  defaultMessage: "Last Name",
+                })}
                 name="lastName"
                 value={userForm.lastName}
                 onChange={handleChange}
@@ -204,7 +213,7 @@ const UsersTab = () => {
               />
               {submitted && errors.lastName && (
                 <p className="text-danger form-text-danger">
-                  Last name is required
+                  {errors.lastName}
                 </p>
               )}
             </Form.Group>
@@ -212,7 +221,10 @@ const UsersTab = () => {
             <Form.Group as={Col} md="3" controlId="validationEmail">
               <Form.Control
                 type="email"
-                placeholder="Email"
+                placeholder={intl.formatMessage({
+                  id: "componentUsersTabEmailLabel",
+                  defaultMessage: "Email",
+                })}
                 required
                 name="email"
                 value={userForm.email}
@@ -245,13 +257,19 @@ const UsersTab = () => {
         </div>
         <div className="my-4 d-flex justify-content-end bottom-btn-grp">
           <Button onClick={handleCloseForm} className="mr-4 cancel-btn">
-            Cancel
+            <FormattedMessage
+              defaultMessage="Cancel"
+              id="componentUsersTabCancelButton"
+            />
           </Button>
           <Button type="submit" className="save-btn">
             {(registering || updatingUser) && (
               <span className="spinner-border spinner-border-sm mr-1"></span>
             )}
-            Save
+            <FormattedMessage
+              defaultMessage="Save"
+              id="componentUsersTabSaveButton"
+            />
           </Button>
         </div>
       </Form>
@@ -282,16 +300,28 @@ const UsersTab = () => {
               <thead>
                 <tr>
                   <th scope="col" className="border-0 font-style thead">
-                    User Id
+                    <FormattedMessage
+                      defaultMessage="User Id"
+                      id="componentUsersTabTableHeadUserId"
+                    />
                   </th>
                   <th scope="col" className="border-0 font-style thead">
-                    User
+                    <FormattedMessage
+                      defaultMessage="User"
+                      id="componentUsersTabTableHeadUser"
+                    />
                   </th>
                   <th scope="col" className="border-0 font-style thead">
-                    Email
+                    <FormattedMessage
+                      defaultMessage="Email"
+                      id="componentUsersTabTableHeadEmail"
+                    />
                   </th>
                   <th scope="col" className="border-0 font-style thead">
-                    Role
+                    <FormattedMessage
+                      defaultMessage="Role"
+                      id="componentUsersTabTableHeadRole"
+                    />
                   </th>
                   <th
                     scope="col"
@@ -313,7 +343,10 @@ const UsersTab = () => {
                         />
                       </svg>
                     </span>
-                    Status
+                    <FormattedMessage
+                      defaultMessage="Status"
+                      id="componentUsersTabTableHeadStatus"
+                    />
                   </th>
                   <th
                     scope="col"
@@ -336,7 +369,12 @@ const UsersTab = () => {
                         />
                       </svg>
                     </span>
-                    <b>Create User</b>
+                    <b>
+                      <FormattedMessage
+                        defaultMessage="Create User"
+                        id="componentUsersTabTableHeadCreateuser"
+                      />
+                    </b>
                   </th>
                 </tr>
               </thead>
@@ -387,7 +425,12 @@ const UsersTab = () => {
                   )
                 ) : (
                   <tr>
-                    <td>No User</td>
+                    <td>
+                      <FormattedMessage
+                        id="componentUsersTabTableNoUser"
+                        defaultMessaeg="No User"
+                      />
+                    </td>
                   </tr>
                 )}
               </tbody>
@@ -427,17 +470,31 @@ const UsersTab = () => {
       >
         <Modal.Header closeButton className="justify-content-center">
           <Modal.Title id="contained-modal-title-vcenter">
-            Are You Sure
+            <FormattedMessage
+              defaultMessage="Are You Sure"
+              id="componentUsersTabDeleteModalHead"
+            />
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <h6 className="text-muted user-type-content">
-            User with id {id} will be removed
+            <FormattedMessage
+              defaultMessage="User with id"
+              id="componentUsersTabDeleteModalWarningHead"
+            />
+            {id}
+            <FormattedMessage
+              defaultMessage="will be removed"
+              id="componentUsersTabDeleteModalWarningFoot"
+            />
           </h6>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={handleClose} className="popup-close-btn">
-            Close
+            <FormattedMessage
+              defaultMessage="Close"
+              id="componentUsersTabDeleteModalCloseButton"
+            />
           </Button>
           <Button
             variant="primary"
@@ -447,7 +504,10 @@ const UsersTab = () => {
             {deletingUser && (
               <span className="spinner-border spinner-border-sm mr-1"></span>
             )}
-            Delete
+            <FormattedMessage
+              defaultMessage="Delete"
+              id="componentUsersTabDeleteModalDeleteButton"
+            />
           </Button>
         </Modal.Footer>
       </Modal>

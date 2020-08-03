@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Tabs, Tab, Navbar, Nav } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import "../dashboard/dashboard.styles.css";
 import { userActions } from "../../redux/user/user.actions";
@@ -14,6 +14,7 @@ const QuestionsManagement = () => {
   const [key, setKey] = useState("my-questions");
   const history = useHistory();
   const dispatch = useDispatch();
+  const intl = useIntl();
   const user = useSelector((state) => state.authentication.user);
   const loggedIn = useSelector((state) => state.authentication.loggedIn);
 
@@ -39,7 +40,10 @@ const QuestionsManagement = () => {
 
         <Nav className="flex-grow-1 d-flex align-items-center">
           <Nav.Link href="#home" className="py-0 user-manag font-style">
-            Questions Management
+            <FormattedMessage
+              defaultMessage="Questions Management"
+              id="pageQuestionsHeader"
+            />
           </Nav.Link>
           <Nav.Link href="#home">
             <pre> </pre>
@@ -53,12 +57,18 @@ const QuestionsManagement = () => {
             <Tab
               className="py-0 border-0 mr-5"
               eventKey="my-questions"
-              title="My Questions"
+              title={intl.formatMessage({
+                id: "pageQuestionsMyQuestionsTab",
+                defaultMessage: "My Questions",
+              })}
             ></Tab>
             <Tab
               className="py-0 border-0 ml-5"
               eventKey="all-questions"
-              title="All Questions"
+              title={intl.formatMessage({
+                id: "pageQuestionsAllQuestionsTab",
+                defaultMessage: "All Questions",
+              })}
             ></Tab>
           </Tabs>
 
@@ -120,7 +130,10 @@ const QuestionsManagement = () => {
             className="logout pl-0 pl-lg-2 pl-md-2 pointerType"
             onClick={handleLogout}
           >
-            Log Out
+            <FormattedMessage
+              defaultMessage="Logout"
+              id="pageQuestionsLogout"
+            />
           </span>
         </div>
       </Navbar>
