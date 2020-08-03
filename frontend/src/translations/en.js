@@ -9,7 +9,6 @@ export default {
   pageLoginPasswordVariationValidation:
     "Password should contain a capital ,a small and a special character",
   pageLoginPasswordLabel: "Password",
-  pageLoginPasswordError: "Password is Required",
   pageLoginForgotPassword: "Forgot password ?",
   pageLoginResetPasswordLink: "Reset",
   pageLoginHaveIssue: "Have Issue?",
