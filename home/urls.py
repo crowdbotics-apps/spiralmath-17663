@@ -3,5 +3,5 @@ from .views import home
 
 urlpatterns = [
     path("", home, name="home"),
-    re_path("^/#/.*$", home),
+    re_path("^#/.*$", home),
 ]
