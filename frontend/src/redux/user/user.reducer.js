@@ -55,24 +55,34 @@ export const authentication = (state = initialState, action) => {
 export const registration = (state = {}, action) => {
   switch (action.type) {
     case userTypes.REGISTER_REQUEST:
-      return { registering: true };
+      return { registering: true, error: "", success: "", key: "" };
     case userTypes.REGISTER_SUCCESS:
-      return {};
+      return {
+        registering: false,
+        success: "User successfully created",
+        error: "",
+        key: "",
+      };
     case userTypes.REGISTER_FAILURE:
-      return {};
+      return {
+        registering: false,
+        success: "",
+        error: action.error.message,
+        key: action.error.key,
+      };
     default:
       return state;
   }
 };
 
-export const confirmation = (state = {}, action) => {
+export const confirmation = (state = { confirming: false }, action) => {
   switch (action.type) {
     case userTypes.CONFIRMATION_REQUEST:
       return { confirming: true };
     case userTypes.CONFIRMATION_SUCCESS:
-      return {};
+      return { confirming: false };
     case userTypes.CONFIRMATION_FAILURE:
-      return {};
+      return { confirming: false };
     default:
       return state;
   }
@@ -93,7 +103,12 @@ export const userTypesReducer = (
     case userTypes.CREATE_USER_TYPE:
       return { ...state, userTypeCreating: true, error: "" };
     case userTypes.CREATE_USER_TYPE_SUCCESS:
-      return { ...state, userTypeCreating: false, error: "" };
+      return {
+        ...state,
+        userTypeCreating: false,
+        error: "",
+        success: "User Type Created successfully",
+      };
     case userTypes.CREATE_USER_TYPE_FAILURE:
       return { ...state, userTypeCreating: false, error: action.payload };
     case userTypes.GETALL_USER_TYPES:

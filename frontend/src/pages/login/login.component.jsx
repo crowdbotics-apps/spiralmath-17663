@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
 
 import validate from "../../helpers/validation/validateLogin";
 
@@ -29,6 +30,7 @@ const Login = ({ show, toggleShow }) => {
   const { email, password } = inputs;
   const loggingIn = useSelector((state) => state.authentication.loggingIn);
   const loggedIn = useSelector((state) => state.authentication.loggedIn);
+  const user = useSelector((state) => state.authentication.user);
   const dispatch = useDispatch();
 
   // reset login status
@@ -37,8 +39,10 @@ const Login = ({ show, toggleShow }) => {
       // clear alert on location change
       dispatch(alertActions.clear());
     });
-    if (loggedIn) {
-      history.push("/dashboard");
+    if (loggedIn && user.userObj.role === "Admin") {
+      history.push("/admin-dashboard");
+    } else if (loggedIn) {
+      history.push("users-dashboard");
     }
   }, [loggedIn]);
 
@@ -91,7 +95,13 @@ const Login = ({ show, toggleShow }) => {
           )}
 
           <div className="form-container w-50">
-            <h1 className="text-center form-heading">Welcome Back</h1>
+            <h1 className="text-center form-heading">
+              <FormattedMessage
+                id="pageLoginHeader"
+                defaultMessage="Welcome Back"
+                description="header of login page"
+              />
+            </h1>
 
             <Form className="text-center" onSubmit={handleSubmit} noValidate>
               <Form.Group controlId="formEmail" className="relative">
@@ -104,9 +114,20 @@ const Login = ({ show, toggleShow }) => {
                   value={email}
                   onChange={handleChange}
                 />
-                <span className="floating-label">Email</span>
+                <span className="floating-label">
+                  <FormattedMessage
+                    id="pageLoginEmailLabel"
+                    defaultMessage="Email"
+                  />
+                </span>
                 {submitted && errors.email && (
-                  <div className="text-danger">{errors.email}</div>
+                  <div className="text-danger">
+                    <FormattedMessage
+                      id="pageLoginEmailError"
+                      defaultMessage="{error}"
+                      values={{ error: errors.email }}
+                    />
+                  </div>
                 )}
               </Form.Group>
 
@@ -120,7 +141,12 @@ const Login = ({ show, toggleShow }) => {
                   value={password}
                   onChange={handleChange}
                 />
-                <span className="floating-label">Password</span>
+                <span className="floating-label">
+                  <FormattedMessage
+                    defaultMessage="Password"
+                    id="pageLoginPasswordLabel"
+                  />
+                </span>
                 <span className="eye-icon" onClick={handlePasswordVisibility}>
                   <svg
                     width="21"
@@ -138,7 +164,13 @@ const Login = ({ show, toggleShow }) => {
                   </svg>
                 </span>
                 {submitted && errors.password && (
-                  <div className="text-danger">{errors.password}</div>
+                  <div className="text-danger">
+                    <FormattedMessage
+                      defaultMessage="{error}"
+                      id="pageLoginPasswordError"
+                      values={{ error: errors.password }}
+                    />
+                  </div>
                 )}
               </Form.Group>
 
@@ -150,25 +182,41 @@ const Login = ({ show, toggleShow }) => {
                 {loggingIn && (
                   <span className="spinner-border spinner-border-sm mr-1"></span>
                 )}
-                Login
+                <FormattedMessage
+                  defaultMessage="Login"
+                  id="pageLoginLoginButton"
+                />
               </Button>
             </Form>
             <p className="mt-2 text-center login-text">
-              Already have an account?
+              <FormattedMessage
+                defaultMessage="Forgot password ?"
+                id="pageLoginForgotPassword"
+              />
               <Link to="/forgot-password">
-                <span className="text-orange pointerType"> Reset </span>
+                <span className="text-orange pointerType">
+                  <FormattedMessage
+                    defaultMessage="Reset"
+                    id="pageLoginResetPasswordLink"
+                  />
+                </span>
               </Link>
             </p>
           </div>
           <div className="have-issue-text">
             <p className="mt-2">
-              Have issues?
+              <FormattedMessage
+                defaultMessage="Have issues?"
+                id="pageLoginHaveIssue"
+              />
               <span
                 className="text-orange pointerType"
                 onClick={handleContactUs}
               >
-                {" "}
-                Contact us{" "}
+                <FormattedMessage
+                  defaultMessage="Contact us"
+                  id="pageLoginContactUs"
+                />
               </span>
             </p>
           </div>

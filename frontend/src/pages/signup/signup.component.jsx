@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
 
 import validateSignup from "../../helpers/validation/validationSignUp";
 import { history } from "../../helpers/history";
@@ -22,9 +23,9 @@ const SignUp = ({ show, toggleShow }) => {
   const [user, setUser] = useState({
     password: "",
     passwordConfirm: "",
+    termsAndConditions: false,
     token: new URLSearchParams(location.search).get("token"),
   });
-  console.log(user.token);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
   const confirming = useSelector((state) => state.confirmation.confirming);
@@ -38,8 +39,17 @@ const SignUp = ({ show, toggleShow }) => {
   }, []);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser((user) => ({ ...user, [name]: value }));
+    const { name } = e.target;
+    if (name === "password" || name === "passwordConfirm") {
+      const { value } = e.target;
+      setUser((user) => ({
+        ...user,
+        [name]: value,
+      }));
+    } else {
+      const { checked } = e.target;
+      setUser({ ...user, [name]: checked });
+    }
     setErrors({ ...errors, [name]: "" });
   };
 
@@ -84,7 +94,12 @@ const SignUp = ({ show, toggleShow }) => {
         className="term-use"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Termas and conditions</Modal.Title>
+          <Modal.Title>
+            <FormattedMessage
+              defaultMessage="Terms and conditions"
+              id="pageSignupTermsHeader"
+            />
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div class="second-heading-para">
@@ -176,7 +191,10 @@ const SignUp = ({ show, toggleShow }) => {
 
           <div className="form-container w-50">
             <h1 className="text-center mb-3 form-heading">
-              Create Your Account
+              <FormattedMessage
+                defaultMessage="Create Your Account"
+                id="pageSignupCreateYourAccount"
+              />
             </h1>
 
             <Form className="text-center" onSubmit={handleSubmit} noValidate>
@@ -190,7 +208,12 @@ const SignUp = ({ show, toggleShow }) => {
                   value={user.password}
                   onChange={handleChange}
                 />
-                <span className="floating-label">Create Password</span>
+                <span className="floating-label">
+                  <FormattedMessage
+                    defaultMessage="Create Password"
+                    id="pageSignupPasswordLabel"
+                  />
+                </span>
                 <span className="eye-icon">
                   <svg
                     width="21"
@@ -222,7 +245,12 @@ const SignUp = ({ show, toggleShow }) => {
                   value={user.passwordConfirm}
                   onChange={handleChange}
                 />
-                <span className="floating-label">Confirm Password</span>
+                <span className="floating-label">
+                  <FormattedMessage
+                    defaultMessage="Confirm Password"
+                    id="pageSignupPasswordConfirmLabel"
+                  />
+                </span>
                 <span className="eye-icon">
                   <svg
                     width="21"
@@ -246,43 +274,78 @@ const SignUp = ({ show, toggleShow }) => {
 
               <Form.Group className="ml-4" controlId="formBasicCheckbox">
                 <div className="signup-checkbox">
-                  <Form.Check.Input type="checkbox" />
+                  <Form.Check.Input
+                    type="checkbox"
+                    name="termsAndConditions"
+                    checked={user.termsAndConditions}
+                    value={user.termsAndConditions}
+                    onChange={handleChange}
+                  />
                   <Form.Check.Label>
-                    I have read and accepts the &nbsp;
+                    <FormattedMessage
+                      defaultMessage="I have read and accepts the"
+                      id="pageSignupIhaveread"
+                    />
+                    &nbsp;
                   </Form.Check.Label>
                   <span className="checkmark"></span>
                   <span
                     className="text-orange tou pointerType"
                     onClick={handleTermsOfUse}
                   >
-                    Terms of Use
+                    <FormattedMessage
+                      defaultMessage="Terms of Use"
+                      id="pageSignupTermsLink"
+                    />
                   </span>
+                  {submitted && errors.termsAndConditions && (
+                    <div className="text-danger">
+                      {errors.termsAndConditions}
+                    </div>
+                  )}
                 </div>
               </Form.Group>
+
               <Button variant="primary" type="submit" className="custom-btn">
                 {confirming && (
                   <span className="spinner-border spinner-border-sm mr-1"></span>
                 )}
-                Sign up
+                <FormattedMessage
+                  defaultMessage="Sign up"
+                  id="pageSignupSignupLink"
+                />
               </Button>
             </Form>
 
             <p className="mt-2 text-center login-text">
-              Already have an account?
+              <FormattedMessage
+                defaultMessage="Already have an account?"
+                id="pageSignupAlreadyHave"
+              />
               <Link to="/login">
-                <span className="text-orange pointerType"> Log in </span>
+                <span className="text-orange pointerType">
+                  <FormattedMessage
+                    defaultMessage="Log in"
+                    id="pageSignupLoginLink"
+                  />
+                </span>
               </Link>
             </p>
           </div>
           <div className="have-issue-text">
             <p className="mt-2">
-              Have issues?
+              <FormattedMessage
+                id="pageSignupHaveIssue"
+                defaultMessage="Have issues?"
+              />
               <span
                 className="text-orange pointerType"
                 onClick={handleContactUs}
               >
-                {" "}
-                Contact us{" "}
+                <FormattedMessage
+                  defaultMessage="Contact us"
+                  id="pageSignupContactus"
+                />
               </span>
             </p>
           </div>
