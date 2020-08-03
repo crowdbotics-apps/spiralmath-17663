@@ -6,3 +6,10 @@ class SettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Settings
         fields = ['id', 'path', 'value', 'is_deletable']
+
+
+class SettingsUpdate(serializers.ModelSerializer):
+    class Meta:
+        model = Settings
+        fields = ['id', 'path', 'value', 'is_deletable']
+        read_only_fields = ('path', )
