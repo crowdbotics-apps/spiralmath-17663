@@ -182,7 +182,7 @@ const settings = () => {
   };
 
   return fetch(
-    `https://spiralmath-17663.botics.co/api/v1/settings/`,
+    `https://spiralmath-17663.botics.co/api/v1/settings/terms/`,
     requestOptions
   ).then(handleResponse);
 };

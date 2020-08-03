@@ -175,104 +175,114 @@ const UsersTab = () => {
 
   const createUserForm = () => {
     return (
-      <Form noValidate onSubmit={handleSubmit}>
-        <div className="px-4 py-4 border form-border">
-          <Form.Row>
-            <Form.Group as={Col} md="3" controlId="validationCustom01">
-              <Form.Control
-                required
-                type="text"
-                placeholder={intl.formatMessage({
-                  id: "componentUsersTabFirstNameLabel",
-                  defaultMessage: "First Name",
-                })}
-                name="firstName"
-                value={userForm.firstName}
-                onChange={handleChange}
-                className="border-top-0 border-left-0 border-right-0 rounded-0"
-              />
-              {submitted && errors.firstName && (
-                <p className="text-danger form-text-danger">
-                  {errors.firstName}
-                </p>
-              )}
-            </Form.Group>
+      <React.Fragment>
+        {successMessage && (
+          <p
+            className="form-text-danger text-success"
+            onMouseEnter={handleClearMessage}
+          >
+            {successMessage}
+          </p>
+        )}
+        <Form noValidate onSubmit={handleSubmit}>
+          <div className="px-4 py-4 border form-border">
+            <Form.Row>
+              <Form.Group as={Col} md="3" controlId="validationCustom01">
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder={intl.formatMessage({
+                    id: "componentUsersTabFirstNameLabel",
+                    defaultMessage: "First Name",
+                  })}
+                  name="firstName"
+                  value={userForm.firstName}
+                  onChange={handleChange}
+                  className="border-top-0 border-left-0 border-right-0 rounded-0"
+                />
+                {submitted && errors.firstName && (
+                  <p className="text-danger form-text-danger">
+                    {errors.firstName}
+                  </p>
+                )}
+              </Form.Group>
 
-            <Form.Group as={Col} md="3" controlId="validationCustom02">
-              <Form.Control
-                required
-                type="text"
-                placeholder={intl.formatMessage({
-                  id: "componentUsersTabLastNameLabel",
-                  defaultMessage: "Last Name",
-                })}
-                name="lastName"
-                value={userForm.lastName}
-                onChange={handleChange}
-                className="border-top-0 border-left-0 border-right-0 rounded-0"
-              />
-              {submitted && errors.lastName && (
-                <p className="text-danger form-text-danger">
-                  {errors.lastName}
-                </p>
-              )}
-            </Form.Group>
+              <Form.Group as={Col} md="3" controlId="validationCustom02">
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder={intl.formatMessage({
+                    id: "componentUsersTabLastNameLabel",
+                    defaultMessage: "Last Name",
+                  })}
+                  name="lastName"
+                  value={userForm.lastName}
+                  onChange={handleChange}
+                  className="border-top-0 border-left-0 border-right-0 rounded-0"
+                />
+                {submitted && errors.lastName && (
+                  <p className="text-danger form-text-danger">
+                    {errors.lastName}
+                  </p>
+                )}
+              </Form.Group>
 
-            <Form.Group as={Col} md="3" controlId="validationEmail">
-              <Form.Control
-                type="email"
-                placeholder={intl.formatMessage({
-                  id: "componentUsersTabEmailLabel",
-                  defaultMessage: "Email",
-                })}
-                required
-                name="email"
-                value={userForm.email}
-                onChange={handleChange}
-                className="border-top-0 border-left-0 border-right-0 rounded-0"
-              />
-              {submitted && errors.email && (
-                <p className="text-danger form-text-danger">{errors.email}</p>
-              )}
-              {errorKey === "email" && (
-                <p className="text-danger form-text-danger">{errorMessage}</p>
-              )}
-            </Form.Group>
+              <Form.Group as={Col} md="3" controlId="validationEmail">
+                <Form.Control
+                  type="email"
+                  placeholder={intl.formatMessage({
+                    id: "componentUsersTabEmailLabel",
+                    defaultMessage: "Email",
+                  })}
+                  required
+                  name="email"
+                  value={userForm.email}
+                  onChange={handleChange}
+                  className="border-top-0 border-left-0 border-right-0 rounded-0"
+                />
+                {submitted && errors.email && (
+                  <p className="text-danger form-text-danger">{errors.email}</p>
+                )}
+                {errorKey === "email" && (
+                  <p className="text-danger form-text-danger">{errorMessage}</p>
+                )}
+              </Form.Group>
 
-            <Form.Group as={Col} md="3" controlId="exampleForm.SelectCustom">
-              <Form.Control
-                as="select"
-                custom
-                name="role"
-                value={userForm.role}
-                onChange={handleChange}
-                className="border-top-0 border-left-0 border-right-0 rounded-0"
-              >
-                <option>SystemAdministrator</option>
-                <option>Author</option>
-                <option>Reviewer</option>
-              </Form.Control>
-            </Form.Group>
-          </Form.Row>
-        </div>
-        <div className="my-4 d-flex justify-content-end bottom-btn-grp">
-          <Button onClick={handleCloseForm} className="mr-4 cancel-btn">
-            <FormattedMessage
-              defaultMessage="Cancel"
-              id="componentUsersTabCancelButton"
-            />
-          </Button>
-          <Button type="submit" className="save-btn">
-            {(registering || updatingUser) && (
-              <span className="spinner-border spinner-border-sm mr-1"></span>
-            )}
-            <FormattedMessage
-              defaultMessage="Save"
-              id="componentUsersTabSaveButton"
-            />
-          </Button>
-        </div>
-      </Form>
+              <Form.Group as={Col} md="3" controlId="exampleForm.SelectCustom">
+                <Form.Control
+                  as="select"
+                  custom
+                  name="role"
+                  value={userForm.role}
+                  onChange={handleChange}
+                  className="border-top-0 border-left-0 border-right-0 rounded-0"
+                >
+                  <option>SystemAdministrator</option>
+                  <option>Author</option>
+                  <option>Reviewer</option>
+                </Form.Control>
+              </Form.Group>
+            </Form.Row>
+          </div>
+          <div className="my-4 d-flex justify-content-end bottom-btn-grp">
+            <Button onClick={handleCloseForm} className="mr-4 cancel-btn">
+              <FormattedMessage
+                defaultMessage="Cancel"
+                id="componentUsersTabCancelButton"
+              />
+            </Button>
+            <Button type="submit" className="save-btn">
+              {(registering || updatingUser) && (
+                <span className="spinner-border spinner-border-sm mr-1"></span>
+              )}
+              <FormattedMessage
+                defaultMessage="Save"
+                id="componentUsersTabSaveButton"
+              />
+            </Button>
+          </div>
+        </Form>
+      </React.Fragment>
     );
   };
 
@@ -283,14 +293,6 @@ const UsersTab = () => {
   const userTable = () => {
     return (
       <Row>
-        {successMessage && (
-          <p
-            className="form-text-danger text-success"
-            onMouseEnter={handleClearMessage}
-          >
-            {successMessage}
-          </p>
-        )}
         <Col className="mt-3">
           <div>
             <Table
