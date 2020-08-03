@@ -80,6 +80,7 @@ const SignUp = ({ show, toggleShow }) => {
       const data = {
         newPassword: user.password,
         confirmPassword: user.passwordConfirm,
+        token: user.token,
       };
       dispatch(userActions.confirmUser(data));
     }

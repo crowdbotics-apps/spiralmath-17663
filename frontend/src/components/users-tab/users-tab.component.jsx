@@ -12,8 +12,14 @@ const UsersTab = () => {
   const deletingUser = useSelector((state) => state.users.deletingUser);
   const updatingUser = useSelector((state) => state.users.updatingUser);
   const registering = useSelector((state) => state.registration.registering);
-  const errorKey = useSelector((state) => state.registration.key);
-  let errorMessage = useSelector((state) => state.registration.error);
+  const errorKey = useSelector((state) => {
+    console.log("Registration : ", state.registration);
+    return state.registration.key;
+  });
+  let errorMessage = useSelector((state) => {
+    console.log(state.registration);
+    return state.registration.error;
+  });
   let successMessage = useSelector((state) => state.registration.success);
 
   const intl = useIntl();
