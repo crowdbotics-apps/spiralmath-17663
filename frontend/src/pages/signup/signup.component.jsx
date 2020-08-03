@@ -28,6 +28,7 @@ const SignUp = ({ show, toggleShow }) => {
   });
   console.log(settings);
   const location = useLocation();
+  console.log(location);
   const [user, setUser] = useState({
     password: "",
     passwordConfirm: "",
@@ -82,7 +83,7 @@ const SignUp = ({ show, toggleShow }) => {
         confirmPassword: user.passwordConfirm,
         token: user.token,
         acceptedTerms: true,
-        signUp: true,
+        signUp: location.pathname === "/register" ? true : false,
       };
       dispatch(userActions.confirmUser(data));
     }

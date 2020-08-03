@@ -34,6 +34,7 @@ function App() {
             component={QuestionsManagement}
           />
           <Route path="/register" exact component={SignUp} />
+          <Route path="/reset-password" exact component={SignUp} />
           <Route path="/" exact component={Login} />
           <Route path="/forgot-password" exact component={ForgotPassword} />
         </Switch>

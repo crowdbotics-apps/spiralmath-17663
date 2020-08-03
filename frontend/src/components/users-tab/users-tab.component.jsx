@@ -4,7 +4,7 @@ import { Row, Col, Table, Form, Button, Modal } from "react-bootstrap";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import Pagination from "../pagination/pagination.component";
-import { userActions } from "../../redux/user/user.actions";
+import { userActions, alertActions } from "../../redux/user/user.actions";
 import { validateCreateUser } from "../../helpers/validation/validateCreateUser";
 import "./users-tab.styles.css";
 
@@ -179,17 +179,13 @@ const UsersTab = () => {
     setCloseForm(!closeForm);
   };
 
-  const handleClearMessage = () => {
-    successMessage = "";
-  };
-
   const createUserForm = () => {
     return (
       <React.Fragment>
         {successMessage && (
           <p
             className="form-text-danger text-success"
-            onMouse={handleClearMessage}
+            onMouseEnter={handleClearMessage}
           >
             {successMessage}
           </p>
