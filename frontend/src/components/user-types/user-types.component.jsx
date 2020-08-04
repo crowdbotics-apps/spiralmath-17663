@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Row, Col, Table, Form, Button, Modal } from "react-bootstrap";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import Pagination from "../pagination/pagination.component";
 import { userActions } from "../../redux/user/user.actions";
 import { validateCreateUserTypes } from "../../helpers/validation/validateCreateUser";
 
@@ -220,6 +221,16 @@ const UserTypes = () => {
     successMessage = "";
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [userTypePerPage] = useState(10);
+  const indexOfLastUserType = currentPage * userTypePerPage;
+  const indexOfFirstUserType = indexOfLastUserType - userTypePerPage;
+  const currentUserTypes =
+    userTypeArray &&
+    userTypeArray.slice(indexOfFirstUserType, indexOfLastUserType);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   const userTypesTable = () => {
     return (
       <Row>
@@ -271,8 +282,8 @@ const UserTypes = () => {
               </tr>
             </thead>
             <tbody>
-              {userTypeArray
-                ? userTypeArray.map(
+              {currentUserTypes
+                ? currentUserTypes.map(
                     ({
                       userType,
                       description,
@@ -302,6 +313,11 @@ const UserTypes = () => {
                 : ""}
             </tbody>
           </Table>
+          <Pagination
+            userTypePerPage={userTypePerPage}
+            totalUserType={userTypeArray ? userTypeArray.length : 0}
+            paginate={paginate}
+          />
         </Col>
       </Row>
     );

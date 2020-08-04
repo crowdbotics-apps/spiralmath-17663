@@ -27,6 +27,7 @@ function App() {
     <RawIntlProvider value={intlValue}>
       <Container>
         <Switch>
+          <Route path="/" exact component={Login} />
           <AdminRoute path="/admin-dashboard" exact component={Dashboard} />
           <PrivateRoute
             path="/users-dashboard"
@@ -35,7 +36,7 @@ function App() {
           />
           <Route path="/register" exact component={SignUp} />
           <Route path="/reset-password" exact component={SignUp} />
-          <Route path="/" exact component={Login} />
+
           <Route path="/forgot-password" exact component={ForgotPassword} />
         </Switch>
 

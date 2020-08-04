@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Tabs, Tab, Navbar, Nav } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -36,7 +36,7 @@ const Dashboard = () => {
         expand="lg"
         className="px-4 py-0 px-md-0 py-md-0 nav-border border-0 mb-4 mob-padding"
       >
-        <Navbar.Brand href="#home">
+        <Navbar.Brand href="#">
           <Logo />
         </Navbar.Brand>
 

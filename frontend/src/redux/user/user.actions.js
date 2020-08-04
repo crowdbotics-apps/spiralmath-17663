@@ -32,8 +32,8 @@ const login = (email, password) => {
         dispatch(success(user));
       },
       (error) => {
-        dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
+        dispatch(failure(error.detail));
+        dispatch(alertActions.error(error.detail));
       }
     );
   };
@@ -43,7 +43,7 @@ const logout = () => {
   return (dispatch) => {
     userService
       .logout()
-      .catch((error) => dispatch(alertActions.error(error.toString())));
+      .catch((error) => dispatch(alertActions.error(error.detail)));
     dispatch({ type: userTypes.LOGOUT });
   };
 };
@@ -74,7 +74,7 @@ const register = (user) => {
         error = { key, message: error[key][0] };
         console.log("Error2", error);
         dispatch(failure(error));
-        dispatch(alertActions.error(error.toString()));
+        dispatch(alertActions.error(error.detail));
       }
     );
   };
@@ -100,8 +100,8 @@ const confirmUser = (user) => {
         dispatch(alertActions.success("Registration successful"));
       },
       (error) => {
-        dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
+        dispatch(failure(error.detail));
+        dispatch(alertActions.error(error.detail));
       }
     );
   };
@@ -127,8 +127,8 @@ const resetPassword = (email) => {
         dispatch(alertActions.success("Password reset successfully"));
       },
       (error) => {
-        dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
+        dispatch(failure(error.detail));
+        dispatch(alertActions.error(error.detail));
       }
     );
   };
@@ -154,8 +154,8 @@ export const contactUs = (email, message) => {
         dispatch(alertActions.success("Your message was sent successfully"));
       },
       (error) => {
-        dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
+        dispatch(failure(error.detail));
+        dispatch(alertActions.error(error.detail));
       }
     );
   };
@@ -177,7 +177,7 @@ const getAllUsers = () => {
 
     userService.getAllUsers().then(
       (users) => dispatch(success(users)),
-      (error) => dispatch(failure(error.toString()))
+      (error) => dispatch(failure(error.detail))
     );
   };
 };
@@ -201,7 +201,7 @@ const updateUser = (user) => {
         dispatch(success());
       },
       (error) => {
-        dispatch(failure(error.toString()));
+        dispatch(failure(error.detail));
       }
     );
   };
@@ -226,7 +226,7 @@ const deleteUser = (id) => {
         dispatch(success(id));
       },
       (error) => {
-        dispatch(failure(error.toString()));
+        dispatch(failure(error.detail));
       }
     );
   };
@@ -237,7 +237,7 @@ const getAllUserTypes = () => {
     dispatch(request());
     userService.getAllUserTypes().then(
       (comingUserTypes) => dispatch(success(comingUserTypes)),
-      (error) => dispatch(failure(error.toString()))
+      (error) => dispatch(failure(error.detail))
     );
   };
 
@@ -274,7 +274,7 @@ const createUserType = (user) => {
         dispatch(success());
       },
       (error) => {
-        dispatch(failure(error.toString()));
+        dispatch(failure(error.detail));
       }
     );
   };
@@ -299,7 +299,7 @@ const updateUserType = (userTypeObject) => {
         dispatch(success());
       },
       (error) => {
-        dispatch(failure(error.toString()));
+        dispatch(failure(error.detail));
       }
     );
   };
@@ -324,7 +324,7 @@ const deleteUserType = (id) => {
         dispatch(success(id));
       },
       (error) => {
-        dispatch(failure(error.toString()));
+        dispatch(failure(error.detail));
       }
     );
   };
