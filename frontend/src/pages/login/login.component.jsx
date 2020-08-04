@@ -29,8 +29,7 @@ const Login = ({ show, toggleShow }) => {
   const [errors, setErrors] = useState({});
   const { email, password } = inputs;
   const loggingIn = useSelector((state) => state.authentication.loggingIn);
-  const loggedIn = useSelector((state) => state.authentication.loggedIn);
-  const user = useSelector((state) => state.authentication.user);
+
   const dispatch = useDispatch();
 
   // reset login status
@@ -39,12 +38,16 @@ const Login = ({ show, toggleShow }) => {
       // clear alert on location change
       dispatch(alertActions.clear());
     });
-    if (loggedIn && user.userObj.role === "Admin") {
+
+    if (
+      localStorage.getItem("user") &&
+      JSON.parse(localStorage.getItem("user")).userObj.role === "Admin"
+    ) {
       history.push("/admin-dashboard");
-    } else if (loggedIn) {
-      history.push("users-dashboard");
+    } else if (localStorage.getItem("user")) {
+      history.push("/users-dashboard");
     }
-  }, [loggedIn]);
+  }, [localStorage.getItem("user")]);
 
   useEffect(() => {
     if (Object.keys(errors).length === 0 && submitted) {
@@ -170,14 +173,14 @@ const Login = ({ show, toggleShow }) => {
                   <span className="spinner-border spinner-border-sm mr-1"></span>
                 )}
                 <FormattedMessage
-                  defaultMessage="Login"
+                  defaultMessage="Log In"
                   id="pageLoginLoginButton"
                 />
               </Button>
             </Form>
             <p className="mt-2 text-center login-text">
               <FormattedMessage
-                defaultMessage="Forgot password ?"
+                defaultMessage="Forgot Password? "
                 id="pageLoginForgotPassword"
               />
               <Link to="/forgot-password">
@@ -193,7 +196,7 @@ const Login = ({ show, toggleShow }) => {
           <div className="have-issue-text">
             <p className="mt-2">
               <FormattedMessage
-                defaultMessage="Have issues?"
+                defaultMessage="Have issues? "
                 id="pageLoginHaveIssue"
               />
               <span
@@ -201,7 +204,7 @@ const Login = ({ show, toggleShow }) => {
                 onClick={handleContactUs}
               >
                 <FormattedMessage
-                  defaultMessage="Contact us"
+                  defaultMessage="Contact Us"
                   id="pageLoginContactUs"
                 />
               </span>

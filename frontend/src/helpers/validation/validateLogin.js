@@ -19,18 +19,6 @@ export default function validateLogin(values) {
       id: "pageLoginPasswordRequiredValidation",
       defaultMessage: "Password is required",
     });
-  } else if (getPasswordStrength(values.password) === "too short") {
-    errors.password = intl.formatMessage({
-      id: "pageLoginPasswordTooShortValidation",
-      defaultMessage: "Password is too short , at least 8 character long",
-    });
-  } else if (getPasswordStrength(values.password) === "low") {
-    errors.password = intl.formatMessage({
-      id: "pageLoginPasswordVariationValidation",
-      defaultMessage:
-        "Password should contain a capital ,a small and a special character",
-    });
   }
-
   return errors;
 }

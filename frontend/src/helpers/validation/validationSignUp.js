@@ -11,7 +11,8 @@ export default function validateSignup(values) {
   } else if (getPasswordStrength(values.password) === "too short") {
     errors.password = intl.formatMessage({
       id: "pageSignupPasswordTooShortValidation",
-      defaultMessage: "Password is too short , at least 8 character long",
+      defaultMessage:
+        "Password is too short. Password should contain at least 8 characters long.",
     });
   } else if (
     getPasswordStrength(values.password) === "low" ||
@@ -20,26 +21,26 @@ export default function validateSignup(values) {
     errors.password = intl.formatMessage({
       id: "pageSignupPasswordVariationValidation",
       defaultMessage:
-        "Password should contain a capital ,a small and a special character",
+        "Password should contains at least one capital letter, 1 small letter and a special character.",
     });
   }
   if (!values.passwordConfirm) {
     errors.passwordConfirm = intl.formatMessage({
       id: "pageSignupPasswordConfirmRequiredValidation",
-      defaultMessage: "Password Confirm is required",
+      defaultMessage: "Confirm Password is required",
     });
   }
   if (values.password !== values.passwordConfirm) {
     errors.passwordConfirm = intl.formatMessage({
       id: "pageSignupPasswordSameValidation",
-      defaultMessage: "Password should be same",
+      defaultMessage: "Passwords does not match.",
     });
   }
 
   if (!values.termsAndConditions) {
     errors.termsAndConditions = intl.formatMessage({
       id: "pageSignupTermsValidation",
-      defaultMessage: "You should agreed to terms and conditions to proceed",
+      defaultMessage: "You should agree to the Terms of Use.",
     });
   }
 

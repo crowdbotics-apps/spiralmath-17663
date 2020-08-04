@@ -1,4 +1,5 @@
 import { authHeader } from "../../helpers/auth-header";
+import { history } from "../../helpers/history";
 import Cookies from "js-cookie";
 
 const login = (email, password) => {
@@ -8,7 +9,10 @@ const login = (email, password) => {
     body: JSON.stringify({ email, password }),
   };
 
-  return fetch("api/v1/auth/login/", requestOptions)
+  return fetch(
+    "https://spiralmath-17663.botics.co/api/v1/auth/login/",
+    requestOptions
+  )
     .then(handleResponse)
     .then((user) => {
       console.log(user);
@@ -19,19 +23,22 @@ const login = (email, password) => {
     });
 };
 
-const logout = (history) => {
+const logout = () => {
   const requestOptions = {
     method: "POST",
     headers: authHeader(),
   };
   // remove user from local storage to log user out
 
-  return fetch("api/v1/auth/logout/", requestOptions)
+  return fetch(
+    "https://spiralmath-17663.botics.co/api/v1/auth/logout/",
+    requestOptions
+  )
     .then(handleResponse)
     .then(() => {
-      history.push("/");
       localStorage.removeItem("user");
       Cookies.remove("csrftoken");
+      history.push("/");
     });
 };
 
@@ -56,7 +63,10 @@ const register = (user) => {
     body: JSON.stringify(data),
   };
 
-  return fetch("api/v1/user/", requestOptions).then(handleResponse);
+  return fetch(
+    "https://spiralmath-17663.botics.co/api/v1/user/",
+    requestOptions
+  ).then(handleResponse);
 };
 const confirmUser = (user) => {
   const requestOptions = {
@@ -65,9 +75,10 @@ const confirmUser = (user) => {
     body: JSON.stringify(user),
   };
 
-  return fetch("api/v1/user/confirm-token/", requestOptions).then(
-    handleResponse
-  );
+  return fetch(
+    "https://spiralmath-17663.botics.co/api/v1/user/confirm-token/",
+    requestOptions
+  ).then(handleResponse);
 };
 
 const resetPassword = (email) => {
@@ -77,9 +88,10 @@ const resetPassword = (email) => {
     body: JSON.stringify({ email }),
   };
 
-  return fetch("api/v1/user/reset-password/", requestOptions).then(
-    handleResponse
-  );
+  return fetch(
+    "https://spiralmath-17663.botics.co/api/v1/user/reset-password/",
+    requestOptions
+  ).then(handleResponse);
 };
 
 export const contactUs = (data) => {
@@ -89,7 +101,10 @@ export const contactUs = (data) => {
     body: JSON.stringify(data),
   };
 
-  return fetch("api/v1/user/contact-us/", requestOptions).then(handleResponse);
+  return fetch(
+    "https://spiralmath-17663.botics.co/api/v1/user/contact-us/",
+    requestOptions
+  ).then(handleResponse);
 };
 
 const getAllUserTypes = () => {
@@ -98,7 +113,10 @@ const getAllUserTypes = () => {
     headers: authHeader(),
   };
 
-  return fetch("api/v1/user-type/", requestOptions).then(handleResponse);
+  return fetch(
+    "https://spiralmath-17663.botics.co/api/v1/user-type/",
+    requestOptions
+  ).then(handleResponse);
 };
 
 const createUserType = (userTypeObject) => {
@@ -138,7 +156,10 @@ const getAllUsers = () => {
     headers: authHeader(),
   };
 
-  return fetch("api/v1/user/", requestOptions).then(handleResponse);
+  return fetch(
+    "https://spiralmath-17663.botics.co/api/v1/user/",
+    requestOptions
+  ).then(handleResponse);
 };
 
 const updateUser = (user) => {
@@ -191,14 +212,11 @@ function handleResponse(response) {
   return response.text().then((text) => {
     const data = text && JSON.parse(text);
     if (!response.ok) {
-      if (response.status === 401) {
+      if (response.status === 401 || response.status === 403) {
         // auto logout if 401 response returned from api
         logout();
-        window.location.reload(true);
       }
-
-      const error = (data && data.message) || response.statusText;
-      return Promise.reject(error);
+      return Promise.reject(data);
     }
 
     return data;

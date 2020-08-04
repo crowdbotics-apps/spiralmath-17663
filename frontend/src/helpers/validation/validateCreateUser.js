@@ -16,13 +16,13 @@ export const validateCreateUser = (values) => {
   if (!values.firstName) {
     errors.firstName = intl.formatMessage({
       id: "componentUsersTabFirstNameRequiredValidation",
-      defaultMessage: "Firstname is required",
+      defaultMessage: "First name is required",
     });
   }
   if (!values.lastName) {
     errors.lastName = intl.formatMessage({
       id: "componentUsersTabLastNameRequiredValidation",
-      defaultMessage: "Lastname is required",
+      defaultMessage: "Last name is required",
     });
   }
   if (!values.role) {

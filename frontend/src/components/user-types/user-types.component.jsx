@@ -32,7 +32,7 @@ const UserTypes = () => {
   const [userForm, setUserForm] = useState({
     id: "",
     userType: "",
-    createQuestions: true,
+    createQuestions: false,
     reviewQuestions: false,
     edit: false,
   });
@@ -76,7 +76,7 @@ const UserTypes = () => {
           );
           setUserForm({
             userType: "",
-            createQuestions: true,
+            createQuestions: false,
             reviewQuestions: false,
           });
         } else {
@@ -90,7 +90,7 @@ const UserTypes = () => {
           );
           setUserForm({
             userType: "",
-            createQuestions: true,
+            createQuestions: false,
             reviewQuestions: false,
             id: "",
             edit: "",
@@ -110,7 +110,7 @@ const UserTypes = () => {
     if (closeForm === true) {
       setUserForm({
         userType: "",
-        createQuestions: true,
+        createQuestions: false,
         reviewQuestions: false,
         id: "",
         edit: "",
@@ -229,7 +229,7 @@ const UserTypes = () => {
               <tr>
                 <th scope="col" className="border-0 font-style thead">
                   <FormattedMessage
-                    defaultMessage="User Types"
+                    defaultMessage="User Type"
                     id="componentUserTypesTableHeadUserTypes"
                   />
                 </th>
@@ -342,21 +342,16 @@ const UserTypes = () => {
         <Modal.Body>
           <h6 className="text-muted user-type-content">
             <FormattedMessage
-              defaultMessage="User Type"
-              id="componentUserTypesDeleteModalWarningHead"
-            />
-            : {userType}
-            <FormattedMessage
-              defaultMessage="will be removed"
-              id="componentUserTypesDeleteModalWarningFoot"
+              defaultMessage="User Type will be deleted"
+              id="componentUserTypesDeleteModalWarning"
             />
           </h6>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={handleClose} className="popup-close-btn">
             <FormattedMessage
-              defaultMessage="Close"
-              id="componentUserTypesDeleteModalCloseButton"
+              defaultMessage="Cancel"
+              id="componentUserTypesDeleteModalCancelButton"
             />
           </Button>
           <Button
@@ -368,8 +363,8 @@ const UserTypes = () => {
               <span className="spinner-border spinner-border-sm mr-1"></span>
             )}
             <FormattedMessage
-              defaultMessage="Delete"
-              id="componentUserTypesDeleteModalDeleteButton"
+              defaultMessage="Confirm"
+              id="componentUserTypesDeleteModalConfirmButton"
             />
           </Button>
         </Modal.Footer>

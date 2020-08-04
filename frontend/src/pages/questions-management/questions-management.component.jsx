@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Tabs, Tab, Navbar, Nav } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useDispatch } from "react-redux";
 
 import "../dashboard/dashboard.styles.css";
 import { userActions } from "../../redux/user/user.actions";
@@ -15,14 +15,13 @@ const QuestionsManagement = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const intl = useIntl();
-  const user = useSelector((state) => state.authentication.user);
-  const loggedIn = useSelector((state) => state.authentication.loggedIn);
+  const user = JSON.parse(localStorage.getItem("user")) || {};
 
   useEffect(() => {
-    if (!loggedIn) {
+    if (!localStorage.get("user")) {
       history.push("/");
     }
-  }, [loggedIn]);
+  }, [localStorage.get("user")]);
 
   const handleLogout = () => {
     dispatch(userActions.logout(history));

@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import { history } from "./helpers/history";
 import { HashRouter as Router } from "react-router-dom";
 
 import { store, persistor } from "./redux/store";
@@ -13,7 +14,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
+    <Router history={history}>
       <PersistGate persistor={persistor}>
         <App />
       </PersistGate>

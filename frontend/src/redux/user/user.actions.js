@@ -1,6 +1,5 @@
 import { alertTypes, userTypes } from "./user.types";
 import { userService } from "./user.service";
-import { history } from "../../helpers/history";
 
 const success = (message) => {
   return { type: alertTypes.SUCCESS, message };
@@ -40,10 +39,10 @@ const login = (email, password) => {
   };
 };
 
-const logout = (history) => {
+const logout = () => {
   return (dispatch) => {
     userService
-      .logout(history)
+      .logout()
       .catch((error) => dispatch(alertActions.error(error.toString())));
     dispatch({ type: userTypes.LOGOUT });
   };
@@ -125,7 +124,7 @@ const resetPassword = (email) => {
     userService.resetPassword(email).then(
       () => {
         dispatch(success());
-        dispatch(alertActions.success("Reset password successful"));
+        dispatch(alertActions.success("Password reset successfully"));
       },
       (error) => {
         dispatch(failure(error.toString()));
@@ -152,7 +151,7 @@ export const contactUs = (email, message) => {
     userService.contactUs({ email, message }).then(
       () => {
         dispatch(success());
-        dispatch(alertActions.success("Your message sent successfully"));
+        dispatch(alertActions.success("Your message was sent successfully"));
       },
       (error) => {
         dispatch(failure(error.toString()));

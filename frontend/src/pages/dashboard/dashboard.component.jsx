@@ -18,16 +18,17 @@ const Dashboard = () => {
   const [key, setKey] = useState("dashboard");
   const dispatch = useDispatch();
   const history = useHistory();
-  const user = useSelector((state) => state.authentication.user);
-  const loggedIn = useSelector((state) => state.authentication.loggedIn);
+
+  const user = JSON.parse(localStorage.getItem("user")) || {};
+
   useEffect(() => {
-    if (!loggedIn) {
+    if (!localStorage.getItem("user")) {
       history.push("/");
     }
-  }, [loggedIn]);
+  }, [localStorage.getItem("user")]);
 
   const handleLogout = () => {
-    dispatch(userActions.logout(history));
+    dispatch(userActions.logout());
   };
   const navbar = () => {
     return (
@@ -40,13 +41,13 @@ const Dashboard = () => {
         </Navbar.Brand>
 
         <Nav className="flex-grow-1 d-flex align-items-center">
-          <Nav.Link href="#home" className="py-0 user-manag font-style">
+          <Nav.Link href="#" className="py-0 user-manag font-style">
             <FormattedMessage
               defaultMessage="Users Management"
               id="pageUsersManagementHeader"
             />
           </Nav.Link>
-          <Nav.Link href="#home">
+          <Nav.Link href="#">
             <pre> </pre>
           </Nav.Link>
           <Tabs
