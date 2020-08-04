@@ -168,11 +168,11 @@ const UsersTab = () => {
   };
 
   useEffect(() => {
-    if (!updatingUser) handleCloseForm();
+    if (!updatingUser && !errorKey) handleCloseForm();
   }, [updatingUser]);
 
   useEffect(() => {
-    if (!registering) handleCloseForm();
+    if (!registering && !errorKey) handleCloseForm();
   }, [registering]);
 
   const [closeForm, setCloseForm] = useState(false);
@@ -211,6 +211,7 @@ const UsersTab = () => {
                   value={userForm.firstName}
                   onChange={handleChange}
                   className="border-top-0 border-left-0 border-right-0 rounded-0"
+                  maxlength="50"
                 />
                 {submitted && errors.firstName && (
                   <p className="text-danger form-text-danger">
@@ -231,6 +232,7 @@ const UsersTab = () => {
                   value={userForm.lastName}
                   onChange={handleChange}
                   className="border-top-0 border-left-0 border-right-0 rounded-0"
+                  maxlength="50"
                 />
                 {submitted && errors.lastName && (
                   <p className="text-danger form-text-danger">
@@ -251,6 +253,7 @@ const UsersTab = () => {
                   value={userForm.email}
                   onChange={handleChange}
                   className="border-top-0 border-left-0 border-right-0 rounded-0"
+                  maxlength="50"
                 />
                 {submitted && errors.email && (
                   <p className="text-danger form-text-danger">{errors.email}</p>
@@ -267,6 +270,7 @@ const UsersTab = () => {
 
               <Form.Group as={Col} md="3" controlId="exampleForm.SelectCustom">
                 <Form.Control
+                  placeholder="Select Role"
                   as="select"
                   custom
                   name="role"
@@ -311,7 +315,7 @@ const UsersTab = () => {
 
   const handleChangeUpdate = (id) => (e) => {
     const { checked } = e.target;
-    dispatch(userActions.updateUser({ status: checked }));
+    dispatch(userActions.updateUser({ status: checked, id }));
     setUpdateStatus(checked);
   };
 
