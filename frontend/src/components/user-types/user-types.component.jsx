@@ -4,12 +4,12 @@ import { Row, Col, Table, Form, Button, Modal } from "react-bootstrap";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import Pagination from "../pagination/pagination.component";
-import { userActions } from "../../redux/user/user.actions";
+import { userActions, alertActions } from "../../redux/user/user.actions";
 import { validateCreateUserTypes } from "../../helpers/validation/validateCreateUser";
 
 const UserTypes = () => {
   const userTypesState = useSelector((state) => state.userTypes.allUserTypes);
-  let successMessage = useSelector((state) => state.userTypes.success);
+  let successMessage = useSelector((state) => state.alert.message);
   const deletingUserType = useSelector(
     (state) => state.userTypes.deletingUserType
   );
@@ -258,7 +258,7 @@ const UserTypes = () => {
   };
 
   const handleClearMessage = () => {
-    successMessage = "";
+    dispatch(alertActions.clear());
   };
 
   const [currentPage, setCurrentPage] = useState(1);
