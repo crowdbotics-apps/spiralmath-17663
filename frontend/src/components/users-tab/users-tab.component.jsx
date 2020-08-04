@@ -165,11 +165,15 @@ const UsersTab = () => {
         setUserForm({ firstName: "", lastName: "", email: "", role: "Author" });
       }
     }
-
-    if (!updatingUser && !registering) {
-      handleCloseForm();
-    }
   };
+
+  useEffect(() => {
+    if (!updatingUser) handleCloseForm();
+  }, [updatingUser]);
+
+  useEffect(() => {
+    if (!registering) handleCloseForm();
+  }, [registering]);
 
   const [closeForm, setCloseForm] = useState(false);
 
@@ -305,7 +309,7 @@ const UsersTab = () => {
 
   const [updateStatus, setUpdateStatus] = useState(undefined);
 
-  const handleChangeUpdate = (e) => {
+  const handleChangeUpdate = (id) => (e) => {
     const { checked } = e.target;
     dispatch(userActions.updateUser({ status: checked }));
     setUpdateStatus(checked);
@@ -441,7 +445,7 @@ const UsersTab = () => {
                                       : updateStatus
                                   }
                                   label=""
-                                  onChange={handleChangeUpdate}
+                                  onChange={handleChangeUpdate(id)}
                                 />
                               ) : (
                                 ""

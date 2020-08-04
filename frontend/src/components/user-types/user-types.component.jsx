@@ -120,6 +120,14 @@ const UserTypes = () => {
     setCloseForm(!closeForm);
   };
 
+  useEffect(() => {
+    if (!updatingUserType) handleCloseForm();
+  }, [updatingUserType]);
+
+  useEffect(() => {
+    if (!userTypeCreating) handleCloseForm();
+  }, [userTypeCreating]);
+
   const createUserTypeForm = () => {
     return (
       <React.Fragment>
