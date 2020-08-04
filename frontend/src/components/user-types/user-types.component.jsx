@@ -24,6 +24,38 @@ const UserTypes = () => {
   const intl = useIntl();
   const [errors, setErrors] = useState({});
 
+  const userTypeArray = userTypesState.map(
+    ({ id, create_questions, review_questions, name }) => {
+      const description = ((create_questions, review_questions) => {
+        if (create_questions && review_questions) {
+          return intl.formatMessage({
+            defaultMessage: "Can create and review questions",
+            id: "componentUserTypesDescription1",
+          });
+        } else if (create_questions) {
+          return intl.formatMessage({
+            defaultMessage: "Can create questions",
+            id: "componentUserTypesDescription2",
+          });
+        } else if (review_questions) {
+          return intl.formatMessage({
+            defaultMessage: "Can review questions",
+            id: "componentUserTypesDescription3",
+          });
+        }
+      })(create_questions, review_questions);
+
+      return {
+        id,
+        create_questions,
+        review_questions,
+        description,
+        userType: name,
+        buttons,
+      };
+    }
+  );
+
   useEffect(() => {
     if (!updatingUserType && !userTypeCreating) {
       dispatch(userActions.getAllUserTypes());
@@ -456,38 +488,6 @@ const UserTypes = () => {
         </div>
       </div>
     </React.Fragment>
-  );
-
-  const userTypeArray = userTypesState.map(
-    ({ id, create_questions, review_questions, name }) => {
-      const description = ((create_questions, review_questions) => {
-        if (create_questions && review_questions) {
-          return intl.formatMessage({
-            defaultMessage: "Can create and review questions",
-            id: "componentUserTypesDescription1",
-          });
-        } else if (create_questions) {
-          return intl.formatMessage({
-            defaultMessage: "Can create questions",
-            id: "componentUserTypesDescription2",
-          });
-        } else if (review_questions) {
-          return intl.formatMessage({
-            defaultMessage: "Can review questions",
-            id: "componentUserTypesDescription3",
-          });
-        }
-      })(create_questions, review_questions);
-
-      return {
-        id,
-        create_questions,
-        review_questions,
-        description,
-        userType: name,
-        buttons,
-      };
-    }
   );
 
   return (
