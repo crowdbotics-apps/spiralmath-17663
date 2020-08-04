@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Row, Col, Table, Form, Button, Modal } from "react-bootstrap";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import Pagination from "../pagination/pagination.component";
 import { userActions } from "../../redux/user/user.actions";
 import { validateCreateUserTypes } from "../../helpers/validation/validateCreateUser";
 
@@ -32,7 +33,7 @@ const UserTypes = () => {
   const [userForm, setUserForm] = useState({
     id: "",
     userType: "",
-    createQuestions: true,
+    createQuestions: false,
     reviewQuestions: false,
     edit: false,
   });
@@ -76,7 +77,7 @@ const UserTypes = () => {
           );
           setUserForm({
             userType: "",
-            createQuestions: true,
+            createQuestions: false,
             reviewQuestions: false,
           });
         } else {
@@ -90,7 +91,7 @@ const UserTypes = () => {
           );
           setUserForm({
             userType: "",
-            createQuestions: true,
+            createQuestions: false,
             reviewQuestions: false,
             id: "",
             edit: "",
@@ -110,7 +111,7 @@ const UserTypes = () => {
     if (closeForm === true) {
       setUserForm({
         userType: "",
-        createQuestions: true,
+        createQuestions: false,
         reviewQuestions: false,
         id: "",
         edit: "",
@@ -220,6 +221,16 @@ const UserTypes = () => {
     successMessage = "";
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [userTypePerPage] = useState(10);
+  const indexOfLastUserType = currentPage * userTypePerPage;
+  const indexOfFirstUserType = indexOfLastUserType - userTypePerPage;
+  const currentUserTypes =
+    userTypeArray &&
+    userTypeArray.slice(indexOfFirstUserType, indexOfLastUserType);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   const userTypesTable = () => {
     return (
       <Row>
@@ -229,7 +240,7 @@ const UserTypes = () => {
               <tr>
                 <th scope="col" className="border-0 font-style thead">
                   <FormattedMessage
-                    defaultMessage="User Types"
+                    defaultMessage="User Type"
                     id="componentUserTypesTableHeadUserTypes"
                   />
                 </th>
@@ -271,8 +282,8 @@ const UserTypes = () => {
               </tr>
             </thead>
             <tbody>
-              {userTypeArray
-                ? userTypeArray.map(
+              {currentUserTypes
+                ? currentUserTypes.map(
                     ({
                       userType,
                       description,
@@ -302,6 +313,11 @@ const UserTypes = () => {
                 : ""}
             </tbody>
           </Table>
+          <Pagination
+            userTypePerPage={userTypePerPage}
+            totalUserType={userTypeArray ? userTypeArray.length : 0}
+            paginate={paginate}
+          />
         </Col>
       </Row>
     );
@@ -342,21 +358,16 @@ const UserTypes = () => {
         <Modal.Body>
           <h6 className="text-muted user-type-content">
             <FormattedMessage
-              defaultMessage="User Type"
-              id="componentUserTypesDeleteModalWarningHead"
-            />
-            : {userType}
-            <FormattedMessage
-              defaultMessage="will be removed"
-              id="componentUserTypesDeleteModalWarningFoot"
+              defaultMessage="User Type will be deleted"
+              id="componentUserTypesDeleteModalWarning"
             />
           </h6>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={handleClose} className="popup-close-btn">
             <FormattedMessage
-              defaultMessage="Close"
-              id="componentUserTypesDeleteModalCloseButton"
+              defaultMessage="Cancel"
+              id="componentUserTypesDeleteModalCancelButton"
             />
           </Button>
           <Button
@@ -368,8 +379,8 @@ const UserTypes = () => {
               <span className="spinner-border spinner-border-sm mr-1"></span>
             )}
             <FormattedMessage
-              defaultMessage="Delete"
-              id="componentUserTypesDeleteModalDeleteButton"
+              defaultMessage="Confirm"
+              id="componentUserTypesDeleteModalConfirmButton"
             />
           </Button>
         </Modal.Footer>

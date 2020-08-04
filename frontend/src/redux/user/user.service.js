@@ -1,4 +1,5 @@
 import { authHeader } from "../../helpers/auth-header";
+import { history } from "../../helpers/history";
 import Cookies from "js-cookie";
 
 const login = (email, password) => {
@@ -19,7 +20,7 @@ const login = (email, password) => {
     });
 };
 
-const logout = (history) => {
+const logout = () => {
   const requestOptions = {
     method: "POST",
     headers: authHeader(),
@@ -29,9 +30,9 @@ const logout = (history) => {
   return fetch("api/v1/auth/logout/", requestOptions)
     .then(handleResponse)
     .then(() => {
-      history.push("/");
       localStorage.removeItem("user");
       Cookies.remove("csrftoken");
+      history.push("/");
     });
 };
 
@@ -181,24 +182,18 @@ const settings = () => {
     headers: authHeader(),
   };
 
-  return fetch(
-    `https://spiralmath-17663.botics.co/api/v1/settings/terms/`,
-    requestOptions
-  ).then(handleResponse);
+  return fetch(`api/v1/settings/terms/`, requestOptions).then(handleResponse);
 };
 
 function handleResponse(response) {
   return response.text().then((text) => {
     const data = text && JSON.parse(text);
     if (!response.ok) {
-      if (response.status === 401) {
+      if (response.status === 401 || response.status === 403) {
         // auto logout if 401 response returned from api
         logout();
-        window.location.reload(true);
       }
-
-      const error = (data && data.message) || response.statusText;
-      return Promise.reject(error);
+      return Promise.reject(data);
     }
 
     return data;

@@ -13,11 +13,9 @@ const UsersTab = () => {
   const updatingUser = useSelector((state) => state.users.updatingUser);
   const registering = useSelector((state) => state.registration.registering);
   const errorKey = useSelector((state) => {
-    console.log("Registration : ", state.registration);
     return state.registration.key;
   });
   let errorMessage = useSelector((state) => {
-    console.log(state.registration);
     return state.registration.error;
   });
   let successMessage = useSelector((state) => state.registration.success);
@@ -166,6 +164,10 @@ const UsersTab = () => {
         );
         setUserForm({ firstName: "", lastName: "", email: "", role: "Author" });
       }
+    }
+
+    if (!updatingUser && !registering) {
+      handleCloseForm();
     }
   };
 
@@ -322,7 +324,7 @@ const UsersTab = () => {
                 <tr>
                   <th scope="col" className="border-0 font-style thead">
                     <FormattedMessage
-                      defaultMessage="User Id"
+                      defaultMessage="User ID"
                       id="componentUsersTabTableHeadUserId"
                     />
                   </th>
@@ -426,10 +428,10 @@ const UsersTab = () => {
                           </td>
                           <td className="border-right-0 border-left-0">
                             <span className="d-flex justify-content-around">
-                              {status === "10" ? "Active" : ""}
-                              {status === "20" ? "Sent" : ""}
-                              {status === "30" ? "Inactive" : ""}
-                              {status === "10" ? (
+                              {status === 10 ? "Active" : ""}
+                              {status === 20 ? "Sent" : ""}
+                              {status === 30 ? "Inactive" : ""}
+                              {status === 10 ? (
                                 <Form.Check
                                   type="switch"
                                   id={`${id}`}
@@ -439,18 +441,19 @@ const UsersTab = () => {
                                       : updateStatus
                                   }
                                   label=""
+                                  onChange={handleChangeUpdate}
                                 />
                               ) : (
                                 ""
                               )}
-                              {status === "20" ? (
+                              {status === 20 ? (
                                 <button className="btn btn-sm btn-orange">
                                   Resend
                                 </button>
                               ) : (
                                 ""
                               )}
-                              {status === "30" ? (
+                              {status === 30 ? (
                                 <Form.Check
                                   type="switch"
                                   id={`${id}`}
@@ -460,6 +463,7 @@ const UsersTab = () => {
                                       : updateStatus
                                   }
                                   label=""
+                                  onChange={handleChangeUpdate}
                                 />
                               ) : (
                                 ""
@@ -536,13 +540,8 @@ const UsersTab = () => {
         <Modal.Body>
           <h6 className="text-muted user-type-content">
             <FormattedMessage
-              defaultMessage="User with id"
-              id="componentUsersTabDeleteModalWarningHead"
-            />
-            {id}
-            <FormattedMessage
-              defaultMessage="will be removed"
-              id="componentUsersTabDeleteModalWarningFoot"
+              defaultMessage="User will be deleted"
+              id="componentUsersTabDeleteModalWarning"
             />
           </h6>
         </Modal.Body>

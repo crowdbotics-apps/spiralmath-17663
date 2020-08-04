@@ -120,9 +120,7 @@ const ContactUs = ({ show, toggleShow }) => {
                 />
               </span>
               {submitted && errors.message && (
-                <p className="text-danger form-text-danger">
-                  This field is required
-                </p>
+                <p className="text-danger form-text-danger">{errors.message}</p>
               )}
             </Form.Group>
           </Form>

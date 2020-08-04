@@ -114,7 +114,7 @@ export const userTypesReducer = (
         ...state,
         userTypeCreating: false,
         error: "",
-        success: "User Type Created successfully",
+        success: "User Type created successfully.",
       };
     case userTypes.CREATE_USER_TYPE_FAILURE:
       return { ...state, userTypeCreating: false, error: action.payload };
@@ -152,7 +152,7 @@ export const userTypesReducer = (
         ...state,
         allUserTypes,
         deletingUserType: false,
-        success: `UserType with id ${action.payload} is successfully deleted`,
+        success: `User Type deleted successfully `,
       };
     case userTypes.DELETE_USER_TYPE_FAILURE:
       return { ...state, deletingUserType: false, error: action.payloads };
@@ -166,7 +166,7 @@ export const reset = (state = {}, action) => {
     case userTypes.RESET_REQUEST:
       return { reseting: true };
     case userTypes.RESET_SUCCESS:
-      return {};
+      return { success: true };
     case userTypes.RESET_FAILURE:
       return {};
     default:

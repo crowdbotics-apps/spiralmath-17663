@@ -19,6 +19,7 @@ import "./signup.styles.css";
 
 const SignUp = ({ show, toggleShow }) => {
   const alert = useSelector((state) => state.alert);
+
   const settings = useSelector((state) => {
     return (
       state.settings &&
@@ -26,14 +27,16 @@ const SignUp = ({ show, toggleShow }) => {
       state.settings.settings.detail
     );
   });
-  console.log(settings);
+
   const location = useLocation();
-  console.log(location);
+  const pageUrlParams = new URLSearchParams(window.location.search);
+  const token = pageUrlParams.get("token");
+
   const [user, setUser] = useState({
     password: "",
     passwordConfirm: "",
     termsAndConditions: false,
-    token: new URLSearchParams(location.search).get("token"),
+    token,
   });
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
@@ -45,7 +48,16 @@ const SignUp = ({ show, toggleShow }) => {
       // clear alert on location change
       dispatch(alertActions.clear());
     });
-  }, []);
+
+    if (
+      localStorage.getItem("user") &&
+      JSON.parse(localStorage.getItem("user")).userObj.role === "Admin"
+    ) {
+      history.push("/admin-dashboard");
+    } else if (localStorage.getItem("user")) {
+      history.push("/users-dashboard");
+    }
+  }, [localStorage.getItem("user")]);
 
   const handleChange = (e) => {
     const { name } = e.target;
@@ -77,7 +89,9 @@ const SignUp = ({ show, toggleShow }) => {
   }, [errors]);
 
   const submit = () => {
+    console.log("called", user);
     if (user.password && user.passwordConfirm && user.token) {
+      console.log("call");
       const data = {
         newPassword: user.password,
         confirmPassword: user.passwordConfirm,
@@ -188,6 +202,16 @@ const SignUp = ({ show, toggleShow }) => {
       </Modal>
     );
   };
+  const [passwordType1, setPasswordType1] = useState("password");
+  const handlePasswordVisibility1 = () => {
+    if (passwordType1 === "password") setPasswordType1("text");
+    else setPasswordType1("password");
+  };
+  const [passwordType2, setPasswordType2] = useState("password");
+  const handlePasswordVisibility2 = () => {
+    if (passwordType2 === "password") setPasswordType2("text");
+    else setPasswordType2("password");
+  };
 
   return (
     <React.Fragment>
@@ -213,7 +237,7 @@ const SignUp = ({ show, toggleShow }) => {
             <Form className="text-center" onSubmit={handleSubmit} noValidate>
               <Form.Group controlId="formPassword" className="relative">
                 <Form.Control
-                  type="password"
+                  type={passwordType1}
                   className={`input-style input-text ${
                     user.password.length && "label-up"
                   }`}
@@ -227,7 +251,7 @@ const SignUp = ({ show, toggleShow }) => {
                     id="pageSignupPasswordLabel"
                   />
                 </span>
-                <span className="eye-icon">
+                <span className="eye-icon" onClick={handlePasswordVisibility1}>
                   <svg
                     width="21"
                     height="17"
@@ -250,7 +274,7 @@ const SignUp = ({ show, toggleShow }) => {
 
               <Form.Group controlId="formConfirmPassword" className="relative">
                 <Form.Control
-                  type="password"
+                  type={passwordType2}
                   className={`input-style input-text ${
                     user.passwordConfirm.length && "label-up"
                   }`}
@@ -264,7 +288,7 @@ const SignUp = ({ show, toggleShow }) => {
                     id="pageSignupPasswordConfirmLabel"
                   />
                 </span>
-                <span className="eye-icon">
+                <span className="eye-icon" onClick={handlePasswordVisibility2}>
                   <svg
                     width="21"
                     height="17"
@@ -332,13 +356,13 @@ const SignUp = ({ show, toggleShow }) => {
 
             <p className="mt-2 text-center login-text">
               <FormattedMessage
-                defaultMessage="Already have an account?"
+                defaultMessage="Already have an account? "
                 id="pageSignupAlreadyHave"
               />
               <Link to="/login">
                 <span className="text-orange pointerType">
                   <FormattedMessage
-                    defaultMessage="Log in"
+                    defaultMessage="Login"
                     id="pageSignupLoginLink"
                   />
                 </span>
@@ -349,14 +373,14 @@ const SignUp = ({ show, toggleShow }) => {
             <p className="mt-2">
               <FormattedMessage
                 id="pageSignupHaveIssue"
-                defaultMessage="Have issues?"
+                defaultMessage="Have issues? "
               />
               <span
                 className="text-orange pointerType"
                 onClick={handleContactUs}
               >
                 <FormattedMessage
-                  defaultMessage="Contact us"
+                  defaultMessage="Contact Us"
                   id="pageSignupContactus"
                 />
               </span>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Tabs, Tab, Navbar, Nav } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -18,16 +18,17 @@ const Dashboard = () => {
   const [key, setKey] = useState("dashboard");
   const dispatch = useDispatch();
   const history = useHistory();
-  const user = useSelector((state) => state.authentication.user);
-  const loggedIn = useSelector((state) => state.authentication.loggedIn);
+
+  const user = JSON.parse(localStorage.getItem("user")) || {};
+
   useEffect(() => {
-    if (!loggedIn) {
+    if (!localStorage.getItem("user")) {
       history.push("/");
     }
-  }, [loggedIn]);
+  }, [localStorage.getItem("user")]);
 
   const handleLogout = () => {
-    dispatch(userActions.logout(history));
+    dispatch(userActions.logout());
   };
   const navbar = () => {
     return (
@@ -35,18 +36,18 @@ const Dashboard = () => {
         expand="lg"
         className="px-4 py-0 px-md-0 py-md-0 nav-border border-0 mb-4 mob-padding"
       >
-        <Navbar.Brand href="#home">
+        <Navbar.Brand href="#">
           <Logo />
         </Navbar.Brand>
 
         <Nav className="flex-grow-1 d-flex align-items-center">
-          <Nav.Link href="#home" className="py-0 user-manag font-style">
+          <Nav.Link href="#" className="py-0 user-manag font-style">
             <FormattedMessage
               defaultMessage="Users Management"
               id="pageUsersManagementHeader"
             />
           </Nav.Link>
-          <Nav.Link href="#home">
+          <Nav.Link href="#">
             <pre> </pre>
           </Nav.Link>
           <Tabs
