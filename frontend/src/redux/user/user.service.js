@@ -185,10 +185,11 @@ const settings = () => {
   return fetch(`api/v1/settings/terms/`, requestOptions).then(handleResponse);
 };
 
-const sendInvitation = () => {
+const sendInvitation = (id) => {
   const requestOptions = {
     method: "POST",
     headers: authHeader(),
+    body: JSON.stringify({ id }),
   };
 
   return fetch(`api/v1/user/send-invitation/`, requestOptions).then();
