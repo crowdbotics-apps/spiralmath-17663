@@ -100,7 +100,7 @@ export const userTypesReducer = (
     allUserTypes: [],
     loadingUserTypes: false,
     error: "",
-    success: "",
+
     updatingUserType: false,
     deletingUserType: false,
   },
@@ -114,7 +114,6 @@ export const userTypesReducer = (
         ...state,
         userTypeCreating: false,
         error: "",
-        success: "User Type created successfully.",
       };
     case userTypes.CREATE_USER_TYPE_FAILURE:
       return { ...state, userTypeCreating: false, error: action.payload };
@@ -129,12 +128,11 @@ export const userTypesReducer = (
     case userTypes.GETALL_USER_TYPES_FAILURE:
       return { ...state, loadingUserTypes: false, error: action.payload };
     case userTypes.UPDATE_USER_TYPE:
-      return { ...state, updatingUserType: true, error: "", success: "" };
+      return { ...state, updatingUserType: true, error: "" };
     case userTypes.UPDATE_USER_TYPE_SUCCESS:
       return {
         ...state,
         updatingUserType: false,
-        success: "User type successfully updated",
       };
     case userTypes.UPDATE_USER_TYPE_FAILURE:
       return {
@@ -143,7 +141,7 @@ export const userTypesReducer = (
         error: action.payload,
       };
     case userTypes.DELETE_USER_TYPE:
-      return { ...state, deletingUserType: true, error: "", success: "" };
+      return { ...state, deletingUserType: true, error: "" };
     case userTypes.DELETE_USER_TYPE_SUCCESS:
       const allUserTypes = state.allUserTypes.filter(
         (el) => el.id !== action.payload
@@ -152,7 +150,6 @@ export const userTypesReducer = (
         ...state,
         allUserTypes,
         deletingUserType: false,
-        success: `User Type deleted successfully `,
       };
     case userTypes.DELETE_USER_TYPE_FAILURE:
       return { ...state, deletingUserType: false, error: action.payloads };

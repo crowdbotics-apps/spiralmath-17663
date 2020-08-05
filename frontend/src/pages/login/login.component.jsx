@@ -83,13 +83,17 @@ const Login = ({ show, toggleShow }) => {
     toggleShow();
   };
 
+  const handleClearMessage = () => {
+    dispatch(alertActions.clear());
+  };
+
   return (
     <React.Fragment>
       <Row>
         <Col className="mt-3">
           <LogoAboveBox />
           {alert.type === "alert-danger" ? (
-            <div className="w-75 error-msg">
+            <div className="w-75 error-msg" onMouseEnter={handleClearMessage}>
               <p className="text-center">{alert.message}</p>
             </div>
           ) : (

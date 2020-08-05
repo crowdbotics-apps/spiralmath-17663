@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Tabs, Tab, Navbar, Nav } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -18,6 +18,12 @@ const Dashboard = () => {
   const [key, setKey] = useState("dashboard");
   const dispatch = useDispatch();
   const history = useHistory();
+  const userTypeCreating = useSelector(
+    (state) => state.userTypes.userTypeCreating
+  );
+  const updatingUserType = useSelector(
+    (state) => state.userTypes.updatingUserType
+  );
 
   const user = JSON.parse(localStorage.getItem("user")) || {};
 
@@ -26,6 +32,12 @@ const Dashboard = () => {
       history.push("/");
     }
   }, [localStorage.getItem("user")]);
+
+  useEffect(() => {
+    if (!updatingUserType && !userTypeCreating) {
+      dispatch(userActions.getAllUserTypes());
+    }
+  }, [updatingUserType, userTypeCreating]);
 
   const handleLogout = () => {
     dispatch(userActions.logout());
