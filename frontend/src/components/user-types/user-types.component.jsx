@@ -265,6 +265,56 @@ const UserTypes = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const buttons = (userType, userTypeObject) => (
+    <React.Fragment>
+      <div className="d-flex justify-content-end">
+        <div
+          className="ml-2 cursor-pointer"
+          onClick={() => handleShow(userType, userTypeObject.id)}
+        >
+          <svg
+            width="13"
+            height="17"
+            viewBox="0 0 13 17"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g opacity="0.4">
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M11.9401 3.96753H1.54012V14.3675C1.54012 15.3243 2.31665 16.1009 3.27432 16.1009H10.2068C11.1653 16.1009 11.9401 15.3243 11.9401 14.3675V3.96753ZM8.90678 0.5H4.57345L3.70765 1.36753H1.54012C1.06258 1.36753 0.674316 1.7558 0.674316 2.23333V3.10087H12.8076V2.23333C12.8076 1.7558 12.4194 1.36753 11.9401 1.36753H9.77432L8.90678 0.5Z"
+                fill="#494949"
+              />
+            </g>
+          </svg>
+        </div>
+
+        <div
+          className="cursor-pointer ml-4"
+          onClick={() => handleEditForm(userTypeObject)}
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g opacity="0.4">
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M17.2753 4.56006C17.5912 4.87596 17.5912 5.38626 17.2753 5.70216L15.793 7.18446L12.7555 4.14696L14.2378 2.66466C14.5537 2.34876 15.064 2.34876 15.3799 2.66466L17.2753 4.56006ZM2.93018 17.0098V13.9723L11.8888 5.01366L14.9263 8.05116L5.96768 17.0098H2.93018Z"
+                fill="#494949"
+              />
+            </g>
+          </svg>
+        </div>
+      </div>
+    </React.Fragment>
+  );
+
   const userTypesTable = () => {
     return (
       <Row>
@@ -316,6 +366,7 @@ const UserTypes = () => {
               </tr>
             </thead>
             <tbody>
+              {console.log(currentUserTypes)}
               {currentUserTypes
                 ? currentUserTypes.map(
                     ({
@@ -433,56 +484,6 @@ const UserTypes = () => {
     });
     handleCloseForm();
   };
-
-  const buttons = (userType, userTypeObject) => (
-    <React.Fragment>
-      <div className="d-flex justify-content-end">
-        <div
-          className="ml-2 cursor-pointer"
-          onClick={() => handleShow(userType, userTypeObject.id)}
-        >
-          <svg
-            width="13"
-            height="17"
-            viewBox="0 0 13 17"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g opacity="0.4">
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M11.9401 3.96753H1.54012V14.3675C1.54012 15.3243 2.31665 16.1009 3.27432 16.1009H10.2068C11.1653 16.1009 11.9401 15.3243 11.9401 14.3675V3.96753ZM8.90678 0.5H4.57345L3.70765 1.36753H1.54012C1.06258 1.36753 0.674316 1.7558 0.674316 2.23333V3.10087H12.8076V2.23333C12.8076 1.7558 12.4194 1.36753 11.9401 1.36753H9.77432L8.90678 0.5Z"
-                fill="#494949"
-              />
-            </g>
-          </svg>
-        </div>
-
-        <div
-          className="cursor-pointer ml-4"
-          onClick={() => handleEditForm(userTypeObject)}
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g opacity="0.4">
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M17.2753 4.56006C17.5912 4.87596 17.5912 5.38626 17.2753 5.70216L15.793 7.18446L12.7555 4.14696L14.2378 2.66466C14.5537 2.34876 15.064 2.34876 15.3799 2.66466L17.2753 4.56006ZM2.93018 17.0098V13.9723L11.8888 5.01366L14.9263 8.05116L5.96768 17.0098H2.93018Z"
-                fill="#494949"
-              />
-            </g>
-          </svg>
-        </div>
-      </div>
-    </React.Fragment>
-  );
 
   return (
     <React.Fragment>
