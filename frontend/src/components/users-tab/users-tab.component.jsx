@@ -456,11 +456,21 @@ const UsersTab = () => {
                           </td>
                           <td className="border-right-0 border-left-0">
                             <span className="d-flex justify-content-around">
-                              {updateStatus[id].status === 10 ? "Active" : ""}
-                              {updateStatus[id].status === 20 ? "Sent" : ""}
-                              {updateStatus[id].status === 30 ? "Inactive" : ""}
-                              {updateStatus[id].status === 10 ||
-                              updateStatus[id].status === 30 ? (
+                              {updateStatus[id] &&
+                              updateStatus[id].status === 10
+                                ? "Active"
+                                : ""}
+                              {updateStatus[id] &&
+                              updateStatus[id].status === 20
+                                ? "Sent"
+                                : ""}
+                              {updateStatus[id] &&
+                              updateStatus[id].status === 30
+                                ? "Inactive"
+                                : ""}
+                              {updateStatus[id] &&
+                              (updateStatus[id].status === 10 ||
+                                updateStatus[id].status === 30) ? (
                                 <Form.Check
                                   type="switch"
                                   name={id}
