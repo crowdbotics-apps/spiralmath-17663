@@ -281,7 +281,7 @@ const createUserType = (user) => {
     userService.createUserType(user).then(
       () => {
         dispatch(success());
-        dispatch(alertTypes.success("User Type created successfully."));
+        dispatch(alertActions.success("User Type created successfully."));
       },
       (error) => {
         dispatch(failure(error.detail));
@@ -306,7 +306,7 @@ const updateUserType = (userTypeObject) => {
 
     userService.updateUserType(userTypeObject).then(
       () => {
-        dispatch(alertTypes.success("User Type updated successfully."));
+        dispatch(alertActions.success("User Type updated successfully."));
         dispatch(success());
       },
       (error) => {
@@ -332,7 +332,7 @@ const deleteUserType = (id) => {
 
     userService.deleteUserType(id).then(
       () => {
-        dispatch(alertTypes.success("User Type deleted successfully."));
+        dispatch(alertActions.success("User Type deleted successfully."));
         dispatch(success(id));
       },
       (error) => {
