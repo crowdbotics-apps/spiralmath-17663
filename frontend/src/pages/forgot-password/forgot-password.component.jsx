@@ -98,13 +98,23 @@ const ForgotPassword = ({ show, toggleShow }) => {
 
               <p className="text-center instruction-text">
                 <FormattedMessage
-                  defaultMessage="Please enter your email and we will send you an"
+                  defaultMessage="We have sent you the instructions to your email to"
                   id="pageForgotInstructions1"
                 />
                 <br />
                 <FormattedMessage
-                  defaultMessage="instruction email."
+                  defaultMessage="reset your password. If you do not recieve an email,"
                   id="pageForgotInstructions2"
+                />
+                <br />
+                <FormattedMessage
+                  defaultMessage="check your spam folder or make sure your email"
+                  id="pageForgotInstructions3"
+                />
+                <br />
+                <FormattedMessage
+                  defaultMessage="from SpiralMath are approved."
+                  id="pageForgotInstructions4"
                 />
               </p>
             </div>

@@ -32,8 +32,11 @@ export default {
   pageSignupTermsvalidation: "You should agree to the Terms of Use.",
 
   pageForgotHeader: "Reset Your Password",
-  pageForgotInstructions1: "Please enter your email and we will send you an",
-  pageForgotInstructions2: "instruction email.",
+  pageForgotInstructions1: "We have sent you the instructions to your email to",
+  pageForgotInstructions2:
+    "reset your password. If you do not recieve an email,",
+  pageForgotInstructions3: "check your spam folder or make sure your email",
+  pageForgotInstructions4: "from SpiralMath are approved.",
   pageForgotEmailLabel: "Email",
   pageForgotResetButton: "Send Password Reset",
   pageForgotAlreadyHaveAnAccount: "Already have an account? ",
