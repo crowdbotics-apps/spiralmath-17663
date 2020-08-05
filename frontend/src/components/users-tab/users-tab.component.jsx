@@ -19,6 +19,7 @@ const UsersTab = () => {
     return state.registration.error;
   });
   let successMessage = useSelector((state) => state.registration.success);
+  const userTypesState = useSelector((state) => state.userTypes.allUserTypes);
 
   const intl = useIntl();
 
@@ -175,7 +176,7 @@ const UsersTab = () => {
     if (!registering && !errorKey) handleCloseForm();
   }, [registering]);
 
-  const [closeForm, setCloseForm] = useState(false);
+  const [closeForm, setCloseForm] = useState(true);
 
   const handleCloseForm = () => {
     if (closeForm === true) {
@@ -211,7 +212,7 @@ const UsersTab = () => {
                   value={userForm.firstName}
                   onChange={handleChange}
                   className="border-top-0 border-left-0 border-right-0 rounded-0"
-                  maxlength="50"
+                  maxLength="50"
                 />
                 {submitted && errors.firstName && (
                   <p className="text-danger form-text-danger">
@@ -232,7 +233,7 @@ const UsersTab = () => {
                   value={userForm.lastName}
                   onChange={handleChange}
                   className="border-top-0 border-left-0 border-right-0 rounded-0"
-                  maxlength="50"
+                  maxLength="50"
                 />
                 {submitted && errors.lastName && (
                   <p className="text-danger form-text-danger">
@@ -253,7 +254,7 @@ const UsersTab = () => {
                   value={userForm.email}
                   onChange={handleChange}
                   className="border-top-0 border-left-0 border-right-0 rounded-0"
-                  maxlength="50"
+                  maxLength="50"
                 />
                 {submitted && errors.email && (
                   <p className="text-danger form-text-danger">{errors.email}</p>
@@ -278,9 +279,8 @@ const UsersTab = () => {
                   onChange={handleChange}
                   className="border-top-0 border-left-0 border-right-0 rounded-0"
                 >
-                  <option>SystemAdministrator</option>
-                  <option>Author</option>
-                  <option>Reviewer</option>
+                  {userTypesState &&
+                    userTypesState.map(({ name }) => <option>{name}</option>)}
                 </Form.Control>
               </Form.Group>
             </Form.Row>
@@ -311,12 +311,32 @@ const UsersTab = () => {
     dispatch(alertActions.clear());
   };
 
-  const [updateStatus, setUpdateStatus] = useState(undefined);
+  const initialValue = {};
+  const id = "id";
+  const currentUsersStatusArray = currentUsers.map(({ id, status }) => {
+    return { id, status };
+  });
+  const currentUsersStatus = currentUsersStatusArray.reduce((obj, item) => {
+    return {
+      ...obj,
+      [item[id]]: item,
+    };
+  }, initialValue);
+
+  const [updateStatus, setUpdateStatus] = useState(currentUsersStatus);
 
   const handleChangeUpdate = (id) => (e) => {
     const { checked } = e.target;
-    dispatch(userActions.updateUser({ status: checked, id }));
-    setUpdateStatus(checked);
+    console.log(checked);
+    dispatch(userActions.updateUserStatus({ status: checked ? 10 : 30, id }));
+    setUpdateStatus({
+      ...updateStatus,
+      [id]: { id, status: checked ? 10 : 30 },
+    });
+  };
+
+  const handleSendingInvitation = (id) => () => {
+    dispatch(userActions.sendInvitation(id));
   };
 
   const userTable = () => {
@@ -436,45 +456,30 @@ const UsersTab = () => {
                           </td>
                           <td className="border-right-0 border-left-0">
                             <span className="d-flex justify-content-around">
-                              {status === 10 ? "Active" : ""}
-                              {status === 20 ? "Sent" : ""}
-                              {status === 30 ? "Inactive" : ""}
-                              {status === 10 ? (
+                              {updateStatus[id].status === 10 ? "Active" : ""}
+                              {updateStatus[id].status === 20 ? "Sent" : ""}
+                              {updateStatus[id].status === 30 ? "Inactive" : ""}
+                              {updateStatus[id].status === 10 ||
+                              updateStatus[id].status === 30 ? (
                                 <Form.Check
                                   type="switch"
+                                  name={id}
                                   id={`${id}`}
                                   checked={
-                                    updateStatus === undefined
+                                    updateStatus[id].status === 10
                                       ? true
-                                      : updateStatus
+                                      : false
                                   }
                                   label=""
                                   onChange={handleChangeUpdate(id)}
                                 />
                               ) : (
-                                ""
-                              )}
-                              {status === 20 ? (
-                                <button className="btn btn-sm btn-orange">
+                                <button
+                                  className="btn btn-sm btn-orange"
+                                  onClick={handleSendingInvitation(id)}
+                                >
                                   Resend
                                 </button>
-                              ) : (
-                                ""
-                              )}
-                              {status === 30 ? (
-                                <Form.Check
-                                  type="switch"
-                                  id={`${id}`}
-                                  checked={
-                                    updateStatus === undefined
-                                      ? false
-                                      : updateStatus
-                                  }
-                                  label=""
-                                  onChange={handleChangeUpdate}
-                                />
-                              ) : (
-                                ""
                               )}
                             </span>
                           </td>

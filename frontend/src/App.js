@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import { Container } from "react-bootstrap";
-import { RawIntlProvider, FormattedMessage } from "react-intl";
+import { RawIntlProvider } from "react-intl";
 import { generateIntl } from "./helpers/intl";
 
 import en from "./translations/en";
@@ -21,8 +21,6 @@ const messages = { en, hindi };
 const intlValue = generateIntl({ locale: "en", messages: messages["en"] });
 
 function App() {
-  const [locale, setLocale] = useState("en");
-
   return (
     <RawIntlProvider value={intlValue}>
       <Container>

@@ -212,6 +212,9 @@ const SignUp = ({ show, toggleShow }) => {
     if (passwordType2 === "password") setPasswordType2("text");
     else setPasswordType2("password");
   };
+  const handleClearMessage = () => {
+    dispatch(alertActions.clear());
+  };
 
   return (
     <React.Fragment>
@@ -219,7 +222,7 @@ const SignUp = ({ show, toggleShow }) => {
         <Col className="mt-3">
           <LogoAboveBox />
           {alert.type === "alert-danger" ? (
-            <div className="w-75 error-msg">
+            <div className="w-75 error-msg" onMouseEnter={handleClearMessage}>
               <p className="text-center">{alert.message}</p>
             </div>
           ) : (

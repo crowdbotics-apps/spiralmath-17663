@@ -185,6 +185,15 @@ const settings = () => {
   return fetch(`api/v1/settings/terms/`, requestOptions).then(handleResponse);
 };
 
+const sendInvitation = () => {
+  const requestOptions = {
+    method: "POST",
+    headers: authHeader(),
+  };
+
+  return fetch(`api/v1/user/send-invitation/`, requestOptions).then();
+};
+
 function handleResponse(response) {
   return response.text().then((text) => {
     const data = text && JSON.parse(text);
@@ -209,6 +218,7 @@ export const userService = {
   deleteUser,
   getOneUser,
   confirmUser,
+  sendInvitation,
   resetPassword,
   contactUs,
   createUserType,

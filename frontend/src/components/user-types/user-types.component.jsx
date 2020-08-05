@@ -56,12 +56,6 @@ const UserTypes = () => {
     }
   );
 
-  useEffect(() => {
-    if (!updatingUserType && !userTypeCreating) {
-      dispatch(userActions.getAllUserTypes());
-    }
-  }, [updatingUserType, userTypeCreating]);
-
   const [userForm, setUserForm] = useState({
     id: "",
     userType: "",
@@ -354,8 +348,8 @@ const UserTypes = () => {
             </tbody>
           </Table>
           <Pagination
-            userTypePerPage={userTypePerPage}
-            totalUserType={userTypeArray ? userTypeArray.length : 0}
+            usersPerPage={userTypePerPage}
+            totalUsers={userTypeArray ? userTypeArray.length : 0}
             paginate={paginate}
           />
         </Col>

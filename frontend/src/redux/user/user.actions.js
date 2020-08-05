@@ -207,6 +207,15 @@ const updateUser = (user) => {
   };
 };
 
+const updateUserStatus = (user) => {
+  return (dispatch) => {
+    userService.updateUser(user).then(
+      (user) => {},
+      (error) => {}
+    );
+  };
+};
+
 const deleteUser = (id) => {
   const request = () => {
     return { type: userTypes.DELETE_USER_REQUEST };
@@ -341,6 +350,12 @@ export const getSettings = () => {
   };
 };
 
+const sendInvitation = (id) => {
+  return (dispatch) => {
+    userService.sendInvitation(id).then();
+  };
+};
+
 export const alertActions = {
   success,
   error,
@@ -353,8 +368,10 @@ export const userActions = {
   register,
   getAllUsers,
   updateUser,
+  updateUserStatus,
   deleteUser,
   confirmUser,
+  sendInvitation,
   resetPassword,
   contactUs,
   createUserType,
