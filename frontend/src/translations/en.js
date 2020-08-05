@@ -76,8 +76,8 @@ export default {
   componentUserTypesTableHeadUserTypes: "User Type",
   componentUserTypesTableHeadDescription: "Description",
   componentUserTypesTableHeadCreateUserType: "Create User Type",
-  componentUserTypesDeleteModalHeader: "Are You Sure",
-  componentUserTypesDeleteModalWarning: "User Type will be deleted",
+  componentUserTypesDeleteModalHeader: "Are You Sure ?",
+  componentUserTypesDeleteModalWarning: "User Type will be deleted.",
 
   componentUserTypesDeleteModalCancelbutton: "Cancel",
   componentUserTypesDeleteModalConfirmbutton: "Confirm",
