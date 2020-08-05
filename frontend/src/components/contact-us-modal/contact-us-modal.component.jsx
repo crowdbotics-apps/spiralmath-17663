@@ -19,8 +19,7 @@ const ContactUs = ({ show, toggleShow }) => {
   const [errors, setErrors] = useState({});
   const { email, message } = inputs;
   const contacting = useSelector((state) => state.contactUs.contacting);
-  const loggedIn = useSelector((state) => state.authentication.loggedIn);
-  const user = useSelector((state) => state.authentication.user.userObj);
+  const user = JSON.parse(localStorage.getItem("user")) || {};
   const dispatch = useDispatch();
   const alert = useSelector((state) => state.alert);
 
@@ -43,8 +42,8 @@ const ContactUs = ({ show, toggleShow }) => {
   }
 
   const submit = () => {
-    if (loggedIn) {
-      email = user.email;
+    if (localStorage.getItem("user")) {
+      email = user.userObj.email;
     }
     if (email && message) {
       dispatch(userActions.contactUs(email, message));
