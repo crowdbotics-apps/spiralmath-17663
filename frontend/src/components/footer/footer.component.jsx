@@ -9,7 +9,8 @@ const Footer = () => {
       <h6>
         &#169;
         <FormattedMessage
-          defaultMessage="2020 Spiralmath"
+          defaultMessage="2020 Spiralmath Inc. All rights reserved.
+          "
           id="componentFooterText"
         />
       </h6>

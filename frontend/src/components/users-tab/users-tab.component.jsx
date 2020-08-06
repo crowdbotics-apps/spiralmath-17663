@@ -480,7 +480,7 @@ const UsersTab = () => {
                                 />
                               ) : (
                                 <button
-                                  className="btn btn-sm btn-orange"
+                                  className="btn btn-sm resend-btn"
                                   onClick={handleSendingInvitation(id)}
                                 >
                                   Resend

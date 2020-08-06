@@ -105,7 +105,8 @@ const ContactUs = ({ show, toggleShow }) => {
             <Form.Group controlId="formMessage" className="relative">
               <Form.Control
                 type="textarea"
-                className={`input-style input-text ${
+                as="textarea"
+                className={`cus input-style input-text ${
                   message.length && "label-up"
                 }`}
                 name="message"
