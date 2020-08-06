@@ -71,7 +71,8 @@ const UsersTab = () => {
       </div>
     </React.Fragment>
   );
-
+  const initialValue = {};
+  const id1 = "id";
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users.users);
   const usersListArray = users ? users : [];
@@ -89,9 +90,6 @@ const UsersTab = () => {
         last_name,
       })
     );
-
-  const initialValue = {};
-  const id = "id";
   const allUsersStatusArray =
     usersListArrayPreview &&
     usersListArrayPreview.map(({ id, status }) => {
@@ -100,7 +98,7 @@ const UsersTab = () => {
   const allUsersStatus = allUsersStatusArray.reduce((obj, item) => {
     return {
       ...obj,
-      [item[id]]: item,
+      [item[id1]]: item,
     };
   }, initialValue);
 
@@ -127,7 +125,7 @@ const UsersTab = () => {
     firstName: "",
     lastName: "",
     email: "",
-    role: "Author",
+    role: "Select Role",
     edit: false,
   });
   const [submitted, setSubmitted] = useState(false);
