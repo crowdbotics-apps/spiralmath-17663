@@ -111,10 +111,6 @@ const UsersTab = () => {
   const currentUsers =
     usersListArrayPreview &&
     usersListArrayPreview.slice(indexOfFirstUser, indexOfLastUser);
-  const currentUsersStatus = allUsersStatus.slice(
-    indexOfFirstUser,
-    indexOfLastUser
-  );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -324,7 +320,7 @@ const UsersTab = () => {
     dispatch(alertActions.clear());
   };
 
-  const [updateStatus, setUpdateStatus] = useState(currentUsersStatus);
+  const [updateStatus, setUpdateStatus] = useState(allUsersStatus);
 
   const handleChangeUpdate = (id) => (e) => {
     const { checked } = e.target;
