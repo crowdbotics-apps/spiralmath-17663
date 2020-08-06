@@ -77,7 +77,7 @@ const ContactUs = ({ show, toggleShow }) => {
             </div>
           )}
           <Form noValidate onSubmit={handleSubmit}>
-            {!loggedIn ? (
+            {!localStorage.getItem("user") ? (
               <Form.Group controlId="formEmail" className="relative">
                 <Form.Control
                   type="email"

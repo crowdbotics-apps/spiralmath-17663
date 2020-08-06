@@ -233,8 +233,10 @@ const deleteUser = (id) => {
     userService.deleteUser(id).then(
       () => {
         dispatch(success(id));
+        dispatch(alertActions.success("User deleted successfully"));
       },
       (error) => {
+        dispatch(alertActions.error(error.detail));
         dispatch(failure(error.detail));
       }
     );
@@ -336,6 +338,7 @@ const deleteUserType = (id) => {
         dispatch(success(id));
       },
       (error) => {
+        dispatch(alertActions.error("User Type deleted failed"));
         dispatch(failure(error.detail));
       }
     );

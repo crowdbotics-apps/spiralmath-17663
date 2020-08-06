@@ -18,7 +18,9 @@ const UsersTab = () => {
   let errorMessage = useSelector((state) => {
     return state.registration.error;
   });
-  let successMessage = useSelector((state) => state.registration.success);
+  let successMessage = useSelector((state) => state.alert.message);
+  let messageType = useSelector((state) => state.alert.type);
+
   const userTypesState = useSelector((state) => state.userTypes.allUserTypes);
 
   const intl = useIntl();
@@ -189,14 +191,6 @@ const UsersTab = () => {
   const createUserForm = () => {
     return (
       <React.Fragment>
-        {successMessage && (
-          <p
-            className="form-text-danger text-success"
-            onMouseEnter={handleClearMessage}
-          >
-            {successMessage}
-          </p>
-        )}
         <Form noValidate onSubmit={handleSubmit}>
           <div className="px-4 py-4 border form-border">
             <Form.Row>
@@ -609,6 +603,23 @@ const UsersTab = () => {
   return (
     <React.Fragment>
       {closeForm ? createUserForm() : ""}
+      {successMessage && (
+        <Row>
+          <Col className="mt-3">
+            <p
+              className={
+                "form-text-danger text-success" + messageType ===
+                "alert-success"
+                  ? " text-danger"
+                  : " text-success"
+              }
+              onMouseEnter={handleClearMessage}
+            >
+              {successMessage}
+            </p>
+          </Col>
+        </Row>
+      )}
       {show ? handleDeleteModal(show.id) : ""}
       {userTable()}
     </React.Fragment>
