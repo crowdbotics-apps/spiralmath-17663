@@ -130,12 +130,12 @@ const ForgotPassword = ({ show, toggleShow }) => {
               <p className="text-center instruction-text">
                 <FormattedMessage
                   defaultMessage="Please enter your email and we will send you an"
-                  id="pageForgotInstructions1"
+                  id="pageForgotInstructions1.1"
                 />
                 <br />
                 <FormattedMessage
                   defaultMessage="instruction email."
-                  id="pageForgotInstructions2"
+                  id="pageForgotInstructions1.2"
                 />
               </p>
 

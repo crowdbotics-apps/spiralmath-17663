@@ -38,7 +38,7 @@ const QuestionsManagement = () => {
         </Navbar.Brand>
 
         <Nav className="flex-grow-1 d-flex align-items-center">
-          <Nav.Link href="#home" className="py-0 user-manag font-style">
+          <Nav.Link href="#" className="py-0 user-manag font-style">
             <FormattedMessage
               defaultMessage="Questions Management"
               id="pageQuestionsHeader"

@@ -198,6 +198,7 @@ const updateUser = (user) => {
 
     userService.updateUser(user).then(
       (user) => {
+        dispatch(alertActions.success("User updated successfully"));
         dispatch(success());
       },
       (error) => {
