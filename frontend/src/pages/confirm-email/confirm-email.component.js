@@ -1,44 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Form, Button, Row, Col, Modal } from "react-bootstrap";
-
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { validateSignup } from "../../helpers/validation/validationSignUp";
+import { validateReset } from "../../helpers/validation/validationSignUp";
 import { history } from "../../helpers/history";
 import { alertActions } from "../../redux/user/user.actions";
 import { userActions } from "../../redux/user/user.actions";
 
 import LogoAboveBox from "../../components/logo-above-box/logo-above-box.component";
 
-import "./signup.styles.css";
+import "../signup/signup.styles.css";
 
-const SignUp = ({ show, toggleShow }) => {
+const ConfirmEmail = ({ show, toggleShow }) => {
   const alert = useSelector((state) => state.alert);
 
-  const settings = useSelector((state) => {
-    return (
-      state.settings &&
-      state.settings.settings &&
-      state.settings.settings.detail
-    );
-  });
-
-  const location = useLocation();
   const pageUrlParams = new URLSearchParams(window.location.search);
   const token = pageUrlParams.get("token");
 
   const [user, setUser] = useState({
     password: "",
     passwordConfirm: "",
-    termsAndConditions: false,
     token,
   });
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
-  const confirming = useSelector((state) => state.confirmation.confirming);
+  const resetingPassword = useSelector(
+    (state) => state.resetUserPassword.resetingPassword
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -58,24 +48,18 @@ const SignUp = ({ show, toggleShow }) => {
   }, [localStorage.getItem("user")]);
 
   const handleChange = (e) => {
-    const { name } = e.target;
-    if (name === "password" || name === "passwordConfirm") {
-      const { value } = e.target;
-      setUser((user) => ({
-        ...user,
-        [name]: value,
-      }));
-    } else {
-      const { checked } = e.target;
-      setUser({ ...user, [name]: checked });
-    }
-    setErrors({ ...errors, [name]: "" });
+    const { name, value } = e.target;
+
+    setUser((user) => ({
+      ...user,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setErrors(validateSignup(user));
+    setErrors(validateReset(user));
     console.log(errors);
     setSubmitted(true);
   };
@@ -87,113 +71,18 @@ const SignUp = ({ show, toggleShow }) => {
   }, [errors]);
 
   const submit = () => {
-    console.log("called", user);
     if (user.password && user.passwordConfirm && user.token) {
-      console.log("call");
       const data = {
         newPassword: user.password,
         confirmPassword: user.passwordConfirm,
         token: user.token,
         acceptedTerms: true,
-        signUp: location.pathname === "/register" ? true : false,
+        signUp: false,
       };
-      dispatch(userActions.confirmUser(data));
+      dispatch(userActions.resetUserPassword(data));
     }
   };
 
-  const [displayTerms, setDisplayTerms] = useState(false);
-
-  const handleTermsOfUse = () => {
-    setDisplayTerms(true);
-  };
-
-  const closeDisplayTerms = () => setDisplayTerms(false);
-
-  useEffect(() => {
-    dispatch(userActions.getSettings());
-  }, []);
-
-  // <div className="body-content">{settings}</div>
-
-  const termsAndConditions = () => {
-    return (
-      <Modal
-        scrollable={true}
-        show={displayTerms}
-        onHide={closeDisplayTerms}
-        className="term-use"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>
-            <FormattedMessage
-              defaultMessage="Terms and conditions"
-              id="pageSignupTermsHeader"
-            />
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div class="second-heading-para">
-            <p>
-              Welcome to SpiralMath question database. Thank you for agreeing to
-              help with the creating, entering, and reviewing questions and
-              answers.
-            </p>
-            <p>Please consider carefully the terms listed below:</p>
-          </div>
-          <div className="body-content">
-            <ul>
-              <li>
-                • The questions and answers (Q&amp;A) you enter into the
-                database must be from a known source.
-              </li>
-              <li>
-                • You must know who created them, and you will be asked to enter
-                the creator’s name along with the question content.
-              </li>
-              <li>
-                • You acknowledge that the Q&amp;A was not copied from a
-                copyrighted textbook, workbook, worksheet or other source. Also
-                the Q&amp;A was not given to you by another person in a manner
-                that leaves you uncertain about its source or Copyright status.
-              </li>
-              <li>
-                • You acknowledge that the creator of the Q&amp;A has given you
-                permission to enter the content into the SpiralMath database
-                under these terms.
-              </li>
-              <li>
-                • The creator of the Q&amp;A will retain ownership of the
-                Copyright.
-              </li>
-              <li>
-                • The creator hereby assigns to SpiralMath a license to use the
-                Q&A, without time limit, in this database and any other
-                SpiralMath products and services.
-              </li>
-            </ul>
-          </div>
-          <div className="bottom-text">
-            <p>
-              If you have questions about any of these terms, please send us an
-              email at the contact address below.
-            </p>
-            <p>
-              If you agree to these terms please click on “Agree and continue.”
-            </p>
-            <p>If you do not agree with these terms, please click on “Quit.”</p>
-            <p>Thank you for participating.</p>
-          </div>
-          <div className="bottom-text-2">
-            <p>Contact david.robson@spiralmath.net</p>
-            <p>
-              SpiralMath.net is a service of Formative Assessment and Analytics,
-              LLC
-            </p>
-          </div>
-        </Modal.Body>
-      </Modal>
-    );
-  };
   const [passwordType1, setPasswordType1] = useState("password");
   const handlePasswordVisibility1 = () => {
     if (passwordType1 === "password") setPasswordType1("text");
@@ -304,47 +193,13 @@ const SignUp = ({ show, toggleShow }) => {
                 )}
               </Form.Group>
 
-              <Form.Group className="ml-4" controlId="formBasicCheckbox">
-                <div className="signup-checkbox">
-                  <Form.Check.Input
-                    type="checkbox"
-                    name="termsAndConditions"
-                    checked={user.termsAndConditions}
-                    value={user.termsAndConditions}
-                    onChange={handleChange}
-                  />
-                  <Form.Check.Label>
-                    <FormattedMessage
-                      defaultMessage="I have read and accepts the"
-                      id="pageSignupIhaveread"
-                    />
-                    &nbsp;
-                  </Form.Check.Label>
-                  <span className="checkmark"></span>
-                  <span
-                    className="text-orange tou pointerType"
-                    onClick={handleTermsOfUse}
-                  >
-                    <FormattedMessage
-                      defaultMessage="Terms of Use"
-                      id="pageSignupTermsLink"
-                    />
-                  </span>
-                  {submitted && errors.termsAndConditions && (
-                    <div className="text-danger">
-                      {errors.termsAndConditions}
-                    </div>
-                  )}
-                </div>
-              </Form.Group>
-
               <Button variant="primary" type="submit" className="custom-btn">
-                {confirming && (
+                {resetingPassword && (
                   <span className="spinner-border spinner-border-sm mr-1"></span>
                 )}
                 <FormattedMessage
-                  defaultMessage="Sign up"
-                  id="pageSignupSignupLink"
+                  defaultMessage="Reset Password"
+                  id="pageResetLink"
                 />
               </Button>
             </Form>
@@ -366,9 +221,8 @@ const SignUp = ({ show, toggleShow }) => {
           </div>
         </Col>
       </Row>
-      {displayTerms ? termsAndConditions() : ""}
     </React.Fragment>
   );
 };
 
-export default SignUp;
+export default ConfirmEmail;

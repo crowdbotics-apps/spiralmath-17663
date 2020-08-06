@@ -132,7 +132,10 @@ const UsersTab = () => {
     firstName: "",
     lastName: "",
     email: "",
-    role: "Select Role",
+    role: intl.formatMessage({
+      id: "componentUsersTabDefaultSelect1",
+      defaultMessage: "Select Role",
+    }),
     edit: false,
   });
   const [submitted, setSubmitted] = useState(false);
@@ -201,7 +204,15 @@ const UsersTab = () => {
 
   const handleCloseForm = () => {
     if (closeForm === true) {
-      setUserForm({ firstName: "", lastName: "", email: "", role: "Author" });
+      setUserForm({
+        firstName: "",
+        lastName: "",
+        email: "",
+        role: intl.formatMessage({
+          id: "componentUsersTabDefaultSelect2",
+          defaultMessage: "Select Role",
+        }),
+      });
     }
 
     setCloseForm(!closeForm);

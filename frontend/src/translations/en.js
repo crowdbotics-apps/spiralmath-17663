@@ -60,6 +60,8 @@ export default {
   pageQuestionsAllQuestionsTab: "All Questions",
   pageQuestionsLogout: "Logout",
 
+  pageResetLink: "Reset Password",
+
   componentContactHeader: "Contact Us",
   componentContactEmailLable: "Email",
   componentContactMessageLabel: "Message",
@@ -113,4 +115,6 @@ export default {
   componentUsersTabFirstNameRequiredValidation: "First name is required",
   componentUsersTabLastnameRequiredValidation: "Last name is required",
   componentUsersTabRoleRequiredValidation: "Role is required",
+  componentUsersTabDefaultSelect2: "Select Role",
+  componentUsersTabDefaultSelect1: "Select Role",
 };
