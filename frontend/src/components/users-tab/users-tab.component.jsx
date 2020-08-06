@@ -285,7 +285,9 @@ const UsersTab = () => {
                   onChange={handleChange}
                   className="border-top-0 border-left-0 border-right-0 rounded-0"
                 >
-                  <option>Select Role</option>
+                  {userForm.role === "Select Role" && (
+                    <option>Select Role</option>
+                  )}
                   {userTypesState &&
                     userTypesState.map(({ name }) => <option>{name}</option>)}
                 </Form.Control>
