@@ -102,6 +102,9 @@ export default {
   componentUsersTabTableNoUser: "No User",
   componentUsersTabDeleteModalHead: "Are You Sure",
   componentUsersTabDeleteModalWarning: "User will be deleted",
+  omponentUsersTabActive: "Active",
+  omponentUsersTabSent: "Sent",
+  omponentUsersTabInActive: "InActive",
 
   componentUsersTabDeleteModalCloseButton: "Close",
   componentUsersTabDeleteModalDeleteButton: "Delete",

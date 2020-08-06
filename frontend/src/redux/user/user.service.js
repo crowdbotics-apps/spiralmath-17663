@@ -9,7 +9,10 @@ const login = (email, password) => {
     body: JSON.stringify({ email, password }),
   };
 
-  return fetch("api/v1/auth/login/", requestOptions)
+  return fetch(
+    "https://spiralmath-17663.botics.co/api/v1/auth/login/",
+    requestOptions
+  )
     .then(handleResponse)
     .then((user) => {
       console.log(user);

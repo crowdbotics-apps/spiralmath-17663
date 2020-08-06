@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import { connect, useDispatch, useSelector } from "react-redux";
-import { createStructuredSelector } from "reselect";
+import { useDispatch, useSelector } from "react-redux";
+
 import { useHistory } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
 import { userActions, alertActions } from "../../redux/user/user.actions";
 import validate from "../../helpers/validation/validationResetPassword";
-import { selectShow } from "../../redux/modals/modal.select";
-import { toggleShow } from "../../redux/modals/modals.actions";
+
 import LogoAboveBox from "../../components/logo-above-box/logo-above-box.component";
-import ContactUs from "../../components/contact-us-modal/contact-us-modal.component";
 
 const ForgotPassword = ({ show, toggleShow }) => {
   const history = useHistory();
@@ -46,10 +44,6 @@ const ForgotPassword = ({ show, toggleShow }) => {
       submit();
     }
   }, [errors]);
-
-  const handleContactUs = () => {
-    toggleShow();
-  };
 
   const handleChange = (e) => {
     setEmail(e.target.value);
@@ -130,12 +124,12 @@ const ForgotPassword = ({ show, toggleShow }) => {
               <p className="text-center instruction-text">
                 <FormattedMessage
                   defaultMessage="Please enter your email and we will send you an"
-                  id="pageForgotInstructions1.1"
+                  id="pageForgotInstructions1_1"
                 />
                 <br />
                 <FormattedMessage
                   defaultMessage="instruction email."
-                  id="pageForgotInstructions1.2"
+                  id="pageForgotInstructions1_2"
                 />
               </p>
 
@@ -192,40 +186,10 @@ const ForgotPassword = ({ show, toggleShow }) => {
               </p>
             </div>
           )}
-
-          <div className="have-issue-text">
-            <p className="mt-2">
-              <FormattedMessage
-                defaultMessage="Have issues? "
-                id="pageForgotHaveIssue"
-              />
-              <span
-                className="text-orange pointerType"
-                onClick={handleContactUs}
-              >
-                <FormattedMessage
-                  defaultMessage="Contact Us"
-                  id="pageForgotContactUs"
-                />
-              </span>
-            </p>
-          </div>
         </Col>
       </Row>
-
-      {show ? <ContactUs /> : ""}
     </React.Fragment>
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  show: selectShow,
-});
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    toggleShow: () => dispatch(toggleShow()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ForgotPassword);
+export default ForgotPassword;

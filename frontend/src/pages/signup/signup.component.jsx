@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Form, Button, Row, Col, Modal } from "react-bootstrap";
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
@@ -11,10 +10,9 @@ import validateSignup from "../../helpers/validation/validationSignUp";
 import { history } from "../../helpers/history";
 import { alertActions } from "../../redux/user/user.actions";
 import { userActions } from "../../redux/user/user.actions";
-import { selectShow } from "../../redux/modals/modal.select";
-import { toggleShow } from "../../redux/modals/modals.actions";
+
 import LogoAboveBox from "../../components/logo-above-box/logo-above-box.component";
-import ContactUs from "../../components/contact-us-modal/contact-us-modal.component";
+
 import "./signup.styles.css";
 
 const SignUp = ({ show, toggleShow }) => {
@@ -107,10 +105,6 @@ const SignUp = ({ show, toggleShow }) => {
 
   const handleTermsOfUse = () => {
     setDisplayTerms(true);
-  };
-
-  const handleContactUs = () => {
-    toggleShow();
   };
 
   const closeDisplayTerms = () => setDisplayTerms(false);
@@ -372,39 +366,11 @@ const SignUp = ({ show, toggleShow }) => {
               </Link>
             </p>
           </div>
-          <div className="have-issue-text">
-            <p className="mt-2">
-              <FormattedMessage
-                id="pageSignupHaveIssue"
-                defaultMessage="Have issues? "
-              />
-              <span
-                className="text-orange pointerType"
-                onClick={handleContactUs}
-              >
-                <FormattedMessage
-                  defaultMessage="Contact Us"
-                  id="pageSignupContactus"
-                />
-              </span>
-            </p>
-          </div>
         </Col>
       </Row>
       {displayTerms ? termsAndConditions() : ""}
-      {show ? <ContactUs /> : ""}
     </React.Fragment>
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  show: selectShow,
-});
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    toggleShow: () => dispatch(toggleShow()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default SignUp;
