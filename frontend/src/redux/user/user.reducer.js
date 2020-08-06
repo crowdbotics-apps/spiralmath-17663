@@ -259,3 +259,19 @@ export const settings = (state = {}, action) => {
       return {};
   }
 };
+
+export const resetUserPassword = (
+  state = { resetingPassword: false },
+  action
+) => {
+  switch (action.type) {
+    case userTypes.RESET_PASSWORD_REQUEST:
+      return { resetingPassword: true };
+    case userTypes.RESET_PASSWORD_FAILURE:
+      return { resetingPassword: false };
+    case userTypes.RESET_PASSWORD_SUCCESS:
+      return { resetingPassword: false };
+    default:
+      return state;
+  }
+};

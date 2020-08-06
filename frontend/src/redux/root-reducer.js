@@ -12,6 +12,7 @@ import {
   contactUs,
   settings,
   userTypesReducer,
+  resetUserPassword,
 } from "./user/user.reducer";
 import modalReducer from "./modals/modals.reducer";
 
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   settings,
   userTypes: userTypesReducer,
   modal: modalReducer,
+  resetUserPassword,
 });
 
 export default persistReducer(persistConfig, rootReducer);

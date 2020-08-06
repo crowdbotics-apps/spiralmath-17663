@@ -13,7 +13,9 @@ const login = (email, password) => {
     "https://spiralmath-17663.botics.co/api/v1/auth/login/",
     requestOptions
   )
-    .then(handleResponse)
+    .then((res) => {
+      handleResponse(res, false);
+    })
     .then((user) => {
       console.log(user);
       // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -82,6 +84,17 @@ const resetPassword = (email) => {
   };
 
   return fetch("api/v1/user/reset-password/", requestOptions).then(
+    handleResponse
+  );
+};
+const resetUserPassword = (data) => {
+  const requestOptions = {
+    method: "POST",
+    headers: authHeader(),
+    body: JSON.stringify(data),
+  };
+
+  return fetch("api/v1/user/confirm-token/", requestOptions).then(
     handleResponse
   );
 };
@@ -198,13 +211,13 @@ const sendInvitation = (id) => {
   return fetch(`api/v1/user/send-invitation/`, requestOptions).then();
 };
 
-function handleResponse(response) {
+function handleResponse(response, isLogout = true) {
   return response.text().then((text) => {
     const data = text && JSON.parse(text);
     if (!response.ok) {
       if (response.status === 401 || response.status === 403) {
         // auto logout if 401 response returned from api
-        logout();
+        isLogout && logout();
       }
       return Promise.reject(data);
     }
@@ -224,6 +237,7 @@ export const userService = {
   confirmUser,
   sendInvitation,
   resetPassword,
+  resetUserPassword,
   contactUs,
   createUserType,
   getAllUserTypes,

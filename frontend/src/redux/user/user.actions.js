@@ -124,6 +124,32 @@ const resetPassword = (email) => {
     userService.resetPassword(email).then(
       () => {
         dispatch(success());
+        dispatch(alertActions.success("Password reset link sent successfully"));
+      },
+      (error) => {
+        dispatch(failure(error.detail));
+        dispatch(alertActions.error(error.detail));
+      }
+    );
+  };
+};
+const resetUserPassword = (data) => {
+  const request = () => {
+    return { type: userTypes.RESET_PASSWORD_REQUEST };
+  };
+  const success = () => {
+    return { type: userTypes.RESET_PASSWORD_SUCCESS };
+  };
+  const failure = (error) => {
+    return { type: userTypes.RESET_PASSWORD_FAILURE, error };
+  };
+
+  return (dispatch) => {
+    dispatch(request());
+
+    userService.resetUserPassword(data).then(
+      () => {
+        dispatch(success());
         dispatch(alertActions.success("Password reset successfully"));
       },
       (error) => {
@@ -377,6 +403,7 @@ export const userActions = {
   confirmUser,
   sendInvitation,
   resetPassword,
+  resetUserPassword,
   contactUs,
   createUserType,
   getAllUserTypes,
