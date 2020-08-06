@@ -60,6 +60,7 @@ const UserTypes = () => {
 
   const userTypesState = useSelector((state) => state.userTypes.allUserTypes);
   let successMessage = useSelector((state) => state.alert.message);
+  let messageType = useSelector((state) => state.alert.type);
   const deletingUserType = useSelector(
     (state) => state.userTypes.deletingUserType
   );
@@ -207,14 +208,6 @@ const UserTypes = () => {
   const createUserTypeForm = () => {
     return (
       <React.Fragment>
-        {successMessage && (
-          <p
-            className="form-text-danger text-success"
-            onMouseEnter={handleClearMessage}
-          >
-            {successMessage}
-          </p>
-        )}
         <Form noValidate onSubmit={handleSubmit}>
           <div className="px-4 py-4 border form-border">
             <Form.Row>
@@ -435,7 +428,7 @@ const UserTypes = () => {
         <Modal.Header closeButton className="justify-content-center">
           <Modal.Title id="contained-modal-title-vcenter">
             <FormattedMessage
-              defaultMessage="Are You Sure"
+              defaultMessage="Are You Sure ? "
               id="componentUserTypesDeleteModalHeader"
             />
           </Modal.Title>
@@ -443,7 +436,7 @@ const UserTypes = () => {
         <Modal.Body>
           <h6 className="text-muted user-type-content">
             <FormattedMessage
-              defaultMessage="User Type will be deleted"
+              defaultMessage="User Type will be deleted."
               id="componentUserTypesDeleteModalWarning"
             />
           </h6>
@@ -488,6 +481,23 @@ const UserTypes = () => {
   return (
     <React.Fragment>
       {closeForm ? createUserTypeForm() : ""}
+      {successMessage && (
+        <Row>
+          <Col className="mt-3">
+            <p
+              className={
+                "form-text-danger text-success" + messageType ===
+                "alert-success"
+                  ? " text-danger"
+                  : " text-success"
+              }
+              onMouseEnter={handleClearMessage}
+            >
+              {successMessage}
+            </p>
+          </Col>
+        </Row>
+      )}
       {show ? handleDeleteModal(show.userType, show.id) : ""}
       {userTypesTable()}
     </React.Fragment>

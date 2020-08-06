@@ -18,10 +18,10 @@ const QuestionsManagement = () => {
   const user = JSON.parse(localStorage.getItem("user")) || {};
 
   useEffect(() => {
-    if (!localStorage.get("user")) {
+    if (!localStorage.getItem("user")) {
       history.push("/");
     }
-  }, [localStorage.get("user")]);
+  }, [localStorage.getItem("user")]);
 
   const handleLogout = () => {
     dispatch(userActions.logout(history));
