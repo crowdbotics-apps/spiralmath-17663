@@ -21,12 +21,12 @@ User = get_user_model()
 def _auth(user: User):
     """Check user authentication and return it serialized."""
     if not user or not user.pk:
-        raise NotAuthenticated
+        raise NotAuthenticated(detail='Credentials provided are not valid.')
     if user.status in (  # TODO for Natali consider to refactor
             User.STATUS.INACTIVE,
             User.STATUS.INVITATION,
     ):
-        raise NotAuthenticated
+        raise NotAuthenticated(detail='You have been deactivated or haven\'t accepted invitation yet.')
 
     user_object = UserSerializerBase(user).data
 
