@@ -91,7 +91,8 @@ h1.form-heading {
   font-family: Open Sans;
 }
 
-input:focus ~ .floating-label, .label-up {
+input:focus ~ .floating-label,
+.label-up {
   top: -13px;
   bottom: 10px;
   font-family: Open Sans;
@@ -353,7 +354,38 @@ button.custom-btn {
 }
 
 input[type="textarea"] {
+  min-height: 120px !important;
+}
+
+.cus {
   height: 120px !important;
+  resize: none;
+  background: linear-gradient(0deg, #ffffff, #ffffff);
+  border: 1px solid #e5e5e5;
+  border-radius: 24px !important;
+  height: 48px;
+  margin-bottom: 38px;
+  padding-left: 13px;
+  font-size: 16px;
+  line-height: 22px;
+  color: #333333;
+  mix-blend-mode: normal;
+  font-family: Open Sans;
+}
+
+textarea:focus ~ .floating-label,
+.label-up ~ .floating-label {
+  top: -13px;
+  bottom: 10px;
+  font-family: Open Sans;
+  left: 25px;
+  opacity: 1;
+  background: #fff;
+  height: fit-content;
+  padding: 5px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #8d8d8d;
 }
 
 form input.input-style {
@@ -516,16 +548,18 @@ input:focus {
 }
 */
 
-
-.custom-btn:focus, .save-btn:focus {
+.custom-btn:focus,
+.save-btn:focus {
   outline: none !important;
   box-shadow: inherit !important;
 }
 
-.custom-btn:hover, .custom-btn:focus,
-.save-btn:hover, .save-btn:focus {
-  background-color: #3C7EBF !important;
-  border-color: #3C7EBF !important;
+.custom-btn:hover,
+.custom-btn:focus,
+.save-btn:hover,
+.save-btn:focus {
+  background-color: #3c7ebf !important;
+  border-color: #3c7ebf !important;
 }
 
 .cancel-btn:focus {
@@ -537,12 +571,12 @@ input:focus {
   color: rgba(0, 0, 0, 0.6) !important;
 }
 
-
 /*Pagination css start here*/
-.page-item .pagination-link:focus, .page-item .pagination-link:hover {
+.page-item .pagination-link:focus,
+.page-item .pagination-link:hover {
   box-shadow: inherit;
   background-color: inherit;
-  color: #8D8D8D;
+  color: #8d8d8d;
 }
 
 .page-item .pagination-link {
@@ -552,13 +586,12 @@ input:focus {
   font-weight: normal;
   font-size: 14px;
   line-height: 19px;
-  color: #8D8D8D;
+  color: #8d8d8d;
 }
 
-.page-item .pagination-link.active{
+.page-item .pagination-link.active {
   color: #333333;
 }
-
 
 /*delete popup css start here*/
 
@@ -606,13 +639,13 @@ body .delete-modal .modal-dialog .modal-footer {
 body .popup-close-btn:focus {
   box-shadow: inherit !important;
   background-color: inherit !important;
-  border-color: inherit !important;  
+  border-color: inherit !important;
 }
 
 body .popup-save-btn:focus {
   box-shadow: inherit !important;
-  background: #3C7EBF !important;;
-  color: #FFFFFF !important;;
+  background: #3c7ebf !important;
+  color: #ffffff !important;
 }
 
 body .popup-close-btn:focus {
@@ -620,7 +653,8 @@ body .popup-close-btn:focus {
   opacity: 0.6 !important;
 }
 
-body .popup-close-btn, body  .popup-close-btn:hover {
+body .popup-close-btn,
+body .popup-close-btn:hover {
   font-family: Open Sans;
   font-style: normal;
   font-weight: normal;
@@ -632,12 +666,13 @@ body .popup-close-btn, body  .popup-close-btn:hover {
   opacity: 0.6;
   background-color: transparent;
   border: transparent;
-  padding: 8px 45px
+  padding: 8px 45px;
 }
 
-body  .popup-save-btn, body  .popup-save-btn:hover {
-  background: #3C7EBF;
-  color: #FFFFFF;
+body .popup-save-btn,
+body .popup-save-btn:hover {
+  background: #3c7ebf;
+  color: #ffffff;
   font-family: Open Sans;
   font-style: normal;
   font-weight: bold;
@@ -645,10 +680,10 @@ body  .popup-save-btn, body  .popup-save-btn:hover {
   line-height: 22px;
   text-align: center;
   border-radius: 23px;
-  padding: 8px 61px
+  padding: 8px 61px;
 }
 
-.close:focus{
+.close:focus {
   outline: 0;
 }
 
@@ -660,14 +695,13 @@ body  .popup-save-btn, body  .popup-save-btn:hover {
   font-size: 14px;
   line-height: 19px;
   letter-spacing: -0.115385px;
-  color: #9D9D9D;
+  color: #9d9d9d;
 }
 
-
-.item-list-view .card  {
+.item-list-view .card {
   width: 100% !important;
   border-radius: 0px 19px 0px 0px;
-  border-color: #E0E0E0 !important;
+  border-color: #e0e0e0 !important;
 }
 
 .item-list-view .card-header {
@@ -687,7 +721,7 @@ body  .popup-save-btn, body  .popup-save-btn:hover {
 }
 
 .item-list-view .card-header:before {
-  content: ' ';
+  content: " ";
   position: absolute;
   height: 10px;
   width: 10px;
@@ -707,35 +741,34 @@ body  .popup-save-btn, body  .popup-save-btn:hover {
   margin-bottom: 0 !important;
 }
 
-
 .item-list-view .card-body {
   padding: 16px !important;
   position: absolute;
   bottom: 0;
 }
 
-.created .card-title{
-  color: #3C7EBF;
+.created .card-title {
+  color: #3c7ebf;
 }
 
-.approved .card-title{
-  color:#6FCF97;
+.approved .card-title {
+  color: #6fcf97;
 }
 
-.pending .card-title{
-  color:  #BDBDBD;
+.pending .card-title {
+  color: #bdbdbd;
 }
 
-.rejected .card-title{
-  color: #EB5757;
+.rejected .card-title {
+  color: #eb5757;
 }
 
-.authors .card-title{
-  color: #9B51E0;
+.authors .card-title {
+  color: #9b51e0;
 }
 
-.reviewers .card-title{
-  color: #56CCF2;
+.reviewers .card-title {
+  color: #56ccf2;
 }
 
 .user-name {
@@ -749,21 +782,23 @@ body  .popup-save-btn, body  .popup-save-btn:hover {
 }
 
 @media screen and (max-width: 991px) {
-  nav.navbar-nav, div.navbar-nav {
+  nav.navbar-nav,
+  div.navbar-nav {
     flex-direction: unset !important;
   }
-  
+
   .logout {
     font-size: 10px;
     padding-top: 3px;
   }
 
-  html body .navbar-style a, html body .navbar-style a.active {
+  html body .navbar-style a,
+  html body .navbar-style a.active {
     font-size: 12px !important;
   }
 
   .user-name {
-    font-size: 12px !important; 
+    font-size: 12px !important;
   }
 
   .notification-icon:after {
@@ -772,7 +807,7 @@ body  .popup-save-btn, body  .popup-save-btn:hover {
   }
 
   .user-name {
-    margin-top: -5px; 
+    margin-top: -5px;
   }
   body .ipad-create-user-icon {
     width: 33px;

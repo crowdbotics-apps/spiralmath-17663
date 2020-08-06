@@ -66,7 +66,7 @@ export default {
   componentContactEmailInvalidValidation: "Email is invalid",
   componentContactMessageRequiredValidation: "This field is required",
 
-  componentFooterText: "2020 SpiralMath",
+  componentFooterText: "2020 Spiralmath Inc. All rights reserved.",
 
   componentUserTypesUserTypeLabel: "User Type",
   componentUserTypesCreateQuestionsLabel: "Can Create Questions",
