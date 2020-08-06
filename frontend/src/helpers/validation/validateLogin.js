@@ -1,4 +1,3 @@
-import getPasswordStrength from "./passwordChecker";
 import { intl } from "../intl";
 
 export default function validateLogin(values) {

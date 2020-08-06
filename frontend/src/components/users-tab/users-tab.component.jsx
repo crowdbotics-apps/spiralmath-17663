@@ -9,6 +9,7 @@ import { validateCreateUser } from "../../helpers/validation/validateCreateUser"
 import "./users-tab.styles.css";
 
 const UsersTab = () => {
+  const [updateStatus, setUpdateStatus] = useState({});
   const deletingUser = useSelector((state) => state.users.deletingUser);
   const updatingUser = useSelector((state) => state.users.updatingUser);
   const registering = useSelector((state) => state.registration.registering);
@@ -90,17 +91,23 @@ const UsersTab = () => {
         last_name,
       })
     );
-  const allUsersStatusArray =
-    usersListArrayPreview &&
-    usersListArrayPreview.map(({ id, status }) => {
-      return { id, status };
-    });
-  const allUsersStatus = allUsersStatusArray.reduce((obj, item) => {
-    return {
-      ...obj,
-      [item[id1]]: item,
-    };
-  }, initialValue);
+
+  useEffect(() => {
+    const usersListArray = users ? users : [];
+
+    const allUsersStatusArray =
+      usersListArray &&
+      usersListArray.map(({ id, status }) => {
+        return { id, status };
+      });
+    const allUsersStatus = allUsersStatusArray.reduce((obj, item) => {
+      return {
+        ...obj,
+        [item[id1]]: item,
+      };
+    }, initialValue);
+    setUpdateStatus(allUsersStatus);
+  }, [users]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(10);
@@ -320,8 +327,6 @@ const UsersTab = () => {
     dispatch(alertActions.clear());
   };
 
-  const [updateStatus, setUpdateStatus] = useState(allUsersStatus);
-
   const handleChangeUpdate = (id) => (e) => {
     const { checked } = e.target;
     console.log(checked);
@@ -456,15 +461,24 @@ const UsersTab = () => {
                               {console.log(updateStatus)}
                               {updateStatus[id] &&
                               updateStatus[id].status === 10
-                                ? "Active"
+                                ? intl.formatMessage({
+                                    id: "componentUsersTabActive",
+                                    defaultMessage: "Active",
+                                  })
                                 : ""}
                               {updateStatus[id] &&
                               updateStatus[id].status === 20
-                                ? "Sent"
+                                ? intl.formatMessage({
+                                    id: "componentUsersTabSent",
+                                    defaultMessage: "Sent",
+                                  })
                                 : ""}
                               {updateStatus[id] &&
                               updateStatus[id].status === 30
-                                ? "Inactive"
+                                ? intl.formatMessage({
+                                    id: "componentUsersTabInActive",
+                                    defaultMessage: "InActive",
+                                  })
                                 : ""}
                               {updateStatus[id] &&
                               (updateStatus[id].status === 10 ||

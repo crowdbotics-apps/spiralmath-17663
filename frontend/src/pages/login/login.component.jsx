@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
@@ -11,13 +9,10 @@ import validate from "../../helpers/validation/validateLogin";
 
 import { userActions } from "../../redux/user/user.actions";
 import { alertActions } from "../../redux/user/user.actions";
-import { selectShow } from "../../redux/modals/modal.select";
-import { toggleShow } from "../../redux/modals/modals.actions";
 
 import LogoAboveBox from "../../components/logo-above-box/logo-above-box.component";
-import ContactUs from "../../components/contact-us-modal/contact-us-modal.component";
 
-const Login = ({ show, toggleShow }) => {
+const Login = () => {
   const history = useHistory();
   const alert = useSelector((state) => state.alert);
   const [inputs, setInputs] = useState({
@@ -77,10 +72,6 @@ const Login = ({ show, toggleShow }) => {
   const handlePasswordVisibility = () => {
     if (passwordType === "password") setPasswordType("text");
     else setPasswordType("password");
-  };
-
-  const handleContactUs = () => {
-    toggleShow();
   };
 
   const handleClearMessage = () => {
@@ -197,38 +188,10 @@ const Login = ({ show, toggleShow }) => {
               </Link>
             </p>
           </div>
-          <div className="have-issue-text">
-            <p className="mt-2">
-              <FormattedMessage
-                defaultMessage="Have issues? "
-                id="pageLoginHaveIssue"
-              />
-              <span
-                className="text-orange pointerType"
-                onClick={handleContactUs}
-              >
-                <FormattedMessage
-                  defaultMessage="Contact Us"
-                  id="pageLoginContactUs"
-                />
-              </span>
-            </p>
-          </div>
         </Col>
       </Row>
-      {show ? <ContactUs /> : ""}
     </React.Fragment>
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  show: selectShow,
-});
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    toggleShow: () => dispatch(toggleShow()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;
