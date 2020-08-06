@@ -45,6 +45,8 @@ export default {
   pageForgotContactUs: "Contact Us",
   pageForgotEmailRequiredValidation: "Email is required",
   pageForgotEmailInvalidValidation: "Email is invalid",
+  pageForgotInstructions1_1: "Please enter your email and we will send you an",
+  pageForgotInstructions1_2: "instruction email.",
 
   pageUsersManagementHeader: "Users Management",
   pageUsersDashboardTab: "Dashboard",

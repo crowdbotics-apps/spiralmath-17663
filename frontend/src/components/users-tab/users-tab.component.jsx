@@ -90,6 +90,20 @@ const UsersTab = () => {
       })
     );
 
+  const initialValue = {};
+  const id = "id";
+  const allUsersStatusArray =
+    usersListArrayPreview &&
+    usersListArrayPreview.map(({ id, status }) => {
+      return { id, status };
+    });
+  const allUsersStatus = allUsersStatusArray.reduce((obj, item) => {
+    return {
+      ...obj,
+      [item[id]]: item,
+    };
+  }, initialValue);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(10);
   const indexOfLastUser = currentPage * usersPerPage;
@@ -97,6 +111,10 @@ const UsersTab = () => {
   const currentUsers =
     usersListArrayPreview &&
     usersListArrayPreview.slice(indexOfFirstUser, indexOfLastUser);
+  const currentUsersStatus = allUsersStatus.slice(
+    indexOfFirstUser,
+    indexOfLastUser
+  );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -273,6 +291,7 @@ const UsersTab = () => {
                   onChange={handleChange}
                   className="border-top-0 border-left-0 border-right-0 rounded-0"
                 >
+                  <option>Select Role</option>
                   {userTypesState &&
                     userTypesState.map(({ name }) => <option>{name}</option>)}
                 </Form.Control>
@@ -304,18 +323,6 @@ const UsersTab = () => {
   const handleClearMessage = () => {
     dispatch(alertActions.clear());
   };
-
-  const initialValue = {};
-  const id = "id";
-  const currentUsersStatusArray = currentUsers.map(({ id, status }) => {
-    return { id, status };
-  });
-  const currentUsersStatus = currentUsersStatusArray.reduce((obj, item) => {
-    return {
-      ...obj,
-      [item[id]]: item,
-    };
-  }, initialValue);
 
   const [updateStatus, setUpdateStatus] = useState(currentUsersStatus);
 

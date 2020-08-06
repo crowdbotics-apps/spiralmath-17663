@@ -14,7 +14,7 @@ const Pagination = ({ usersPerPage, totalUsers, paginate }) => {
           <li key={number} className="page-item">
             <span
               onClick={() => paginate(number)}
-              className="page-link border-0 pagination-link"
+              className="page-link border-0 pagination-link pointerType"
             >
               {number}
             </span>
