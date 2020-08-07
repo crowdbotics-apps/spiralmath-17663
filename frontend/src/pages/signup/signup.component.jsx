@@ -264,7 +264,14 @@ const SignUp = ({ show, toggleShow }) => {
                   </svg>
                 </span>
                 {submitted && errors.password && (
-                  <div className="text-danger">{errors.password}</div>
+                  <div
+                    style={
+                      errors.password.length > 80 ? { bottom: "-40px" } : {}
+                    }
+                    className="text-danger"
+                  >
+                    {errors.password}
+                  </div>
                 )}
               </Form.Group>
 
@@ -301,7 +308,7 @@ const SignUp = ({ show, toggleShow }) => {
                   </svg>
                 </span>
                 {submitted && errors.passwordConfirm && (
-                  <div className="text-danger">{errors.passwordConfirm}</div>
+                  <div className=" text-danger">{errors.passwordConfirm}</div>
                 )}
               </Form.Group>
 
