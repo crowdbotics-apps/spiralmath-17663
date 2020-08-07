@@ -80,7 +80,7 @@ const UsersTab = () => {
   const usersListArrayPreview =
     usersListArray &&
     usersListArray.map(
-      ({ id, first_name, last_name, email, role, status }) => ({
+      ({ id, first_name, last_name, email, user_type, status }) => ({
         id,
         name: first_name + " " + last_name,
         email,
@@ -136,6 +136,7 @@ const UsersTab = () => {
       id: "componentUsersTabDefaultSelect1",
       defaultMessage: "Select Role",
     }),
+    user_type: this.role,
     edit: false,
   });
   const [submitted, setSubmitted] = useState(false);
@@ -174,6 +175,7 @@ const UsersTab = () => {
             last_name: userForm.lastName,
             email: userForm.email,
             role: userForm.role,
+            user_type: userForm.role,
           })
         );
         setUserForm({ firstName: "", lastName: "", email: "", role: "Author" });
@@ -185,6 +187,7 @@ const UsersTab = () => {
             last_name: userForm.lastName,
             email: userForm.email,
             role: userForm.role,
+            user_type: userForm.role,
           })
         );
         setUserForm({ firstName: "", lastName: "", email: "", role: "Author" });
@@ -523,7 +526,7 @@ const UsersTab = () => {
                               first_name,
                               last_name,
                               email,
-                              role,
+                              user_type,
                             })}
                           </td>
                         </tr>
@@ -623,6 +626,7 @@ const UsersTab = () => {
       firstName: user.first_name,
       lastName: user.last_name,
       email: user.email,
+
       edit: true,
     });
     handleCloseForm();
