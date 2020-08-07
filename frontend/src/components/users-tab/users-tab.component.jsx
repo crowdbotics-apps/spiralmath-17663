@@ -84,7 +84,7 @@ const UsersTab = () => {
         id,
         name: first_name + " " + last_name,
         email,
-        role,
+        user_type,
         status,
         buttons,
         first_name,
@@ -449,7 +449,7 @@ const UsersTab = () => {
                       id,
                       name,
                       email,
-                      role,
+                      user_type,
                       status,
                       buttons,
                       first_name,
@@ -465,7 +465,7 @@ const UsersTab = () => {
                             {email}
                           </td>
                           <td className="border-right-0 border-left-0">
-                            {role}
+                            {user_type}
                           </td>
                           <td className="border-right-0 border-left-0">
                             <span className="d-flex justify-content-around">
