@@ -343,7 +343,7 @@ const UsersTab = () => {
 
   const handleChangeUpdate = (id) => (e) => {
     const { checked } = e.target;
-    console.log(checked);
+
     dispatch(userActions.updateUserStatus({ status: checked ? 10 : 30, id }));
     setUpdateStatus({
       ...updateStatus,
@@ -472,7 +472,6 @@ const UsersTab = () => {
                           </td>
                           <td className="border-right-0 border-left-0">
                             <span className="d-flex justify-content-around">
-                              {console.log(updateStatus)}
                               {updateStatus[id] &&
                               updateStatus[id].status === 10
                                 ? intl.formatMessage({

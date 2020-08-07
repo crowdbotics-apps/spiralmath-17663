@@ -27,15 +27,17 @@ const login = (email, password) => {
   return (dispatch) => {
     dispatch(request());
 
-    userService.login(email, password).then(
-      (user) => {
+    userService
+      .login(email, password)
+      .then((user) => {
+        console.log(user);
         dispatch(success(user));
-      },
-      (error) => {
+      })
+      .catch((error) => {
         dispatch(failure(error.detail));
+        console.log(error);
         dispatch(alertActions.error(error.detail));
-      }
-    );
+      });
   };
 };
 

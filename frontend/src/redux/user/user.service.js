@@ -13,12 +13,11 @@ const login = (email, password) => {
     "https://spiralmath-17663.botics.co/api/v1/auth/login/",
     requestOptions
   ).then((res) => {
-    handleResponse(res, false).then((user) => {
-      console.log(user);
+    return handleResponse(res, false).then((user) => {
       // store user details and jwt token in local storage to keep user logged in between page refreshes
       localStorage.setItem("user", JSON.stringify(user));
       history.push("/admin-dashboard");
-      return user;
+      return Promise.resolve(user);
     });
   });
 };
@@ -205,7 +204,10 @@ const settings = () => {
     headers: authHeader(),
   };
 
-  return fetch(`api/v1/settings/terms/`, requestOptions).then(handleResponse);
+  return fetch(
+    `https://spiralmath-17663.botics.co/api/v1/settings/terms/`,
+    requestOptions
+  ).then(handleResponse);
 };
 
 const sendInvitation = (id) => {
@@ -228,7 +230,6 @@ function handleResponse(response, isLogout = true) {
       }
       return Promise.reject(data);
     }
-    console.log(data);
 
     return Promise.resolve(data);
   });
