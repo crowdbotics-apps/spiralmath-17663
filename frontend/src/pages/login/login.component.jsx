@@ -24,8 +24,10 @@ const Login = () => {
   const [errors, setErrors] = useState({});
   const { email, password } = inputs;
   const loggingIn = useSelector((state) => state.authentication.loggingIn);
-  const localUser = useSelector((state) => state.authentication.user);
-  console.log(localUser, localUser === {});
+  const localUser =
+    localStorage.getItem("user") !== "undefined"
+      ? JSON.parse(localStorage.getItem("user"))
+      : undefined;
 
   const dispatch = useDispatch();
 

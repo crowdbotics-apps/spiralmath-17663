@@ -15,7 +15,10 @@ const QuestionsManagement = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const intl = useIntl();
-  const localUser = useSelector((state) => state.authentication.user);
+  const localUser =
+    localStorage.getItem("user") !== "undefined"
+      ? JSON.parse(localStorage.getItem("user"))
+      : undefined;
 
   useEffect(() => {
     if (!localUser) {

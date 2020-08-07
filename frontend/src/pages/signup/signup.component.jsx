@@ -17,7 +17,10 @@ import "./signup.styles.css";
 
 const SignUp = ({ show, toggleShow }) => {
   const alert = useSelector((state) => state.alert);
-  const localUser = useSelector((state) => state.authentication.user);
+  const localUser =
+    localStorage.getItem("user") !== "undefined"
+      ? JSON.parse(localStorage.getItem("user"))
+      : undefined;
 
   const settings = useSelector((state) => {
     return (

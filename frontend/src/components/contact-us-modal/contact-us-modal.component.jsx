@@ -19,7 +19,10 @@ const ContactUs = ({ show, toggleShow }) => {
   const [errors, setErrors] = useState({});
   const { email, message } = inputs;
   const contacting = useSelector((state) => state.contactUs.contacting);
-  const localUser = useSelector((state) => state.authentication.user);
+  const localUser =
+    localStorage.getItem("user") !== "undefined"
+      ? JSON.parse(localStorage.getItem("user"))
+      : undefined;
   const dispatch = useDispatch();
   const alert = useSelector((state) => state.alert);
 

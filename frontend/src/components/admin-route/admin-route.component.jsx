@@ -3,7 +3,10 @@ import { useSelector } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 
 const AdminRoute = ({ component: Component, ...rest }) => {
-  const localUser = useSelector((state) => state.authentication.user);
+  const localUser =
+    localStorage.getItem("user") !== "undefined"
+      ? JSON.parse(localStorage.getItem("user"))
+      : undefined;
 
   return (
     <Route

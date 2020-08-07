@@ -15,7 +15,10 @@ import "../signup/signup.styles.css";
 
 const ConfirmEmail = ({ show, toggleShow }) => {
   const alert = useSelector((state) => state.alert);
-  const localUser = useSelector((state) => state.authentication.user);
+  const localUser =
+    localStorage.getItem("user") !== "undefined"
+      ? JSON.parse(localStorage.getItem("user"))
+      : undefined;
 
   const pageUrlParams = new URLSearchParams(window.location.search);
   const token = pageUrlParams.get("token");
