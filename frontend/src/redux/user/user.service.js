@@ -12,17 +12,15 @@ const login = (email, password) => {
   return fetch(
     "https://spiralmath-17663.botics.co/api/v1/auth/login/",
     requestOptions
-  )
-    .then((res) => {
-      handleResponse(res, false);
-    })
-    .then((user) => {
+  ).then((res) => {
+    handleResponse(res, false).then((user) => {
       console.log(user);
       // store user details and jwt token in local storage to keep user logged in between page refreshes
       localStorage.setItem("user", JSON.stringify(user));
-
+      history.push("/admin-dashboard");
       return user;
     });
+  });
 };
 
 const logout = () => {
@@ -32,7 +30,10 @@ const logout = () => {
   };
   // remove user from local storage to log user out
 
-  return fetch("api/v1/auth/logout/", requestOptions)
+  return fetch(
+    "https://spiralmath-17663.botics.co/api/v1/auth/logout/",
+    requestOptions
+  )
     .then(handleResponse)
     .then(() => {
       localStorage.removeItem("user");
@@ -115,7 +116,10 @@ const getAllUserTypes = () => {
     headers: authHeader(),
   };
 
-  return fetch("api/v1/user-type/", requestOptions).then(handleResponse);
+  return fetch(
+    "https://spiralmath-17663.botics.co/api/v1/user-type/",
+    requestOptions
+  ).then(handleResponse);
 };
 
 const createUserType = (userTypeObject) => {
@@ -155,7 +159,10 @@ const getAllUsers = () => {
     headers: authHeader(),
   };
 
-  return fetch("api/v1/user/", requestOptions).then(handleResponse);
+  return fetch(
+    "https://spiralmath-17663.botics.co/api/v1/user/",
+    requestOptions
+  ).then(handleResponse);
 };
 
 const updateUser = (user) => {
@@ -221,8 +228,9 @@ function handleResponse(response, isLogout = true) {
       }
       return Promise.reject(data);
     }
+    console.log(data);
 
-    return data;
+    return Promise.resolve(data);
   });
 }
 

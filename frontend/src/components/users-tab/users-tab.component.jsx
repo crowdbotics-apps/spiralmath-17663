@@ -578,7 +578,7 @@ const UsersTab = () => {
         <Modal.Header closeButton className="justify-content-center">
           <Modal.Title id="contained-modal-title-vcenter">
             <FormattedMessage
-              defaultMessage="Are You Sure"
+              defaultMessage="Are You Sure?"
               id="componentUsersTabDeleteModalHead"
             />
           </Modal.Title>

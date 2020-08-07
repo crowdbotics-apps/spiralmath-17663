@@ -80,7 +80,7 @@ export default {
   componentUserTypesTableHeadUserTypes: "User Type",
   componentUserTypesTableHeadDescription: "Description",
   componentUserTypesTableHeadCreateUserType: "Create User Type",
-  componentUserTypesDeleteModalHeader: "Are You Sure ?",
+  componentUserTypesDeleteModalHeader: "Are You Sure?",
   componentUserTypesDeleteModalWarning: "User Type will be deleted.",
 
   componentUserTypesDeleteModalCancelbutton: "Cancel",
@@ -102,7 +102,7 @@ export default {
   componentUsersTabTableHeadStatus: "Status",
   componentUsersTabTableHeadCreateUser: "Create User",
   componentUsersTabTableNoUser: "No User",
-  componentUsersTabDeleteModalHead: "Are You Sure",
+  componentUsersTabDeleteModalHead: "Are You Sure?",
   componentUsersTabDeleteModalWarning: "User will be deleted",
   omponentUsersTabActive: "Active",
   omponentUsersTabSent: "Sent",
