@@ -80,11 +80,11 @@ const UsersTab = () => {
   const usersListArrayPreview =
     usersListArray &&
     usersListArray.map(
-      ({ id, first_name, last_name, email, role, status }) => ({
+      ({ id, first_name, last_name, email, user_type, status }) => ({
         id,
         name: first_name + " " + last_name,
         email,
-        role,
+        user_type,
         status,
         buttons,
         first_name,
@@ -136,6 +136,7 @@ const UsersTab = () => {
       id: "componentUsersTabDefaultSelect1",
       defaultMessage: "Select Role",
     }),
+    user_type: this.role,
     edit: false,
   });
   const [submitted, setSubmitted] = useState(false);
@@ -174,6 +175,7 @@ const UsersTab = () => {
             last_name: userForm.lastName,
             email: userForm.email,
             role: userForm.role,
+            user_type: userForm.role,
           })
         );
         setUserForm({ firstName: "", lastName: "", email: "", role: "Author" });
@@ -185,6 +187,7 @@ const UsersTab = () => {
             last_name: userForm.lastName,
             email: userForm.email,
             role: userForm.role,
+            user_type: userForm.role,
           })
         );
         setUserForm({ firstName: "", lastName: "", email: "", role: "Author" });
@@ -449,7 +452,7 @@ const UsersTab = () => {
                       id,
                       name,
                       email,
-                      role,
+                      user_type,
                       status,
                       buttons,
                       first_name,
@@ -465,7 +468,7 @@ const UsersTab = () => {
                             {email}
                           </td>
                           <td className="border-right-0 border-left-0">
-                            {role}
+                            {user_type}
                           </td>
                           <td className="border-right-0 border-left-0">
                             <span className="d-flex justify-content-around">
@@ -523,7 +526,7 @@ const UsersTab = () => {
                               first_name,
                               last_name,
                               email,
-                              role,
+                              user_type,
                             })}
                           </td>
                         </tr>
@@ -578,7 +581,7 @@ const UsersTab = () => {
         <Modal.Header closeButton className="justify-content-center">
           <Modal.Title id="contained-modal-title-vcenter">
             <FormattedMessage
-              defaultMessage="Are You Sure"
+              defaultMessage="Are You Sure?"
               id="componentUsersTabDeleteModalHead"
             />
           </Modal.Title>
@@ -623,6 +626,7 @@ const UsersTab = () => {
       firstName: user.first_name,
       lastName: user.last_name,
       email: user.email,
+
       edit: true,
     });
     handleCloseForm();

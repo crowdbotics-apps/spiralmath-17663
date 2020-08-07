@@ -428,7 +428,7 @@ const UserTypes = () => {
         <Modal.Header closeButton className="justify-content-center">
           <Modal.Title id="contained-modal-title-vcenter">
             <FormattedMessage
-              defaultMessage="Are You Sure ? "
+              defaultMessage="Are You Sure? "
               id="componentUserTypesDeleteModalHeader"
             />
           </Modal.Title>
