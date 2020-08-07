@@ -25,7 +25,7 @@ let user =
   localStorageUser !== "undefined" ? JSON.parse(localStorageUser) : null;
 const initialState = user
   ? { loggedIn: true, user, loggingIn: false, error: "" }
-  : { loggedIn: false, loggingIn: false, user: {}, error: "" };
+  : { loggedIn: false, loggingIn: false, user: null, error: "" };
 
 export const authentication = (state = initialState, action) => {
   switch (action.type) {
@@ -34,6 +34,7 @@ export const authentication = (state = initialState, action) => {
         ...state,
         error: "",
         loggingIn: true,
+        user: null,
       };
     case userTypes.LOGIN_SUCCESS:
       return {
@@ -44,9 +45,9 @@ export const authentication = (state = initialState, action) => {
         user: action.user,
       };
     case userTypes.LOGIN_FAILURE:
-      return { ...state, error: action.payload, loggingIn: false };
+      return { ...state, error: action.payload, loggingIn: false, user: null };
     case userTypes.LOGOUT:
-      return { ...state, loggedIn: false };
+      return { ...state, loggedIn: false, user: null };
     default:
       return state;
   }

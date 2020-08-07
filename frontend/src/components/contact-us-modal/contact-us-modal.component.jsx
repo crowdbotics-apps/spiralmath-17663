@@ -19,7 +19,7 @@ const ContactUs = ({ show, toggleShow }) => {
   const [errors, setErrors] = useState({});
   const { email, message } = inputs;
   const contacting = useSelector((state) => state.contactUs.contacting);
-  const user = JSON.parse(localStorage.getItem("user")) || {};
+  const localUser = useSelector((state) => state.authentication.user);
   const dispatch = useDispatch();
   const alert = useSelector((state) => state.alert);
 
@@ -42,8 +42,8 @@ const ContactUs = ({ show, toggleShow }) => {
   }
 
   const submit = () => {
-    if (localStorage.getItem("user")) {
-      email = user.userObj.email;
+    if (localUser) {
+      email = localUser.userObj.email;
     }
     if (email && message) {
       dispatch(userActions.contactUs(email, message));
@@ -77,7 +77,7 @@ const ContactUs = ({ show, toggleShow }) => {
             </div>
           )}
           <Form noValidate onSubmit={handleSubmit}>
-            {!localStorage.getItem("user") ? (
+            {!localUser ? (
               <Form.Group controlId="formEmail" className="relative">
                 <Form.Control
                   type="email"
