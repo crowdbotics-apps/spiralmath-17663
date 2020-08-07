@@ -22,6 +22,7 @@ const ForgotPassword = ({ show, toggleShow }) => {
   const success = useSelector((state) => {
     return state.reset.success !== undefined ? true : false;
   });
+  const localUser = useSelector((state) => state.authentication.user);
 
   useEffect(() => {
     history.listen((location, action) => {
@@ -29,15 +30,12 @@ const ForgotPassword = ({ show, toggleShow }) => {
       dispatch(alertActions.clear());
     });
 
-    if (
-      localStorage.getItem("user") &&
-      JSON.parse(localStorage.getItem("user")).userObj.role === "Admin"
-    ) {
+    if (localUser && localUser.userObj.role === "Admin") {
       history.push("/admin-dashboard");
-    } else if (localStorage.getItem("user")) {
+    } else if (localUser) {
       history.push("/users-dashboard");
     }
-  }, [localStorage.getItem("user")]);
+  }, [localUser]);
 
   useEffect(() => {
     if (Object.keys(errors).length === 0 && submitted) {

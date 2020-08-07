@@ -15,6 +15,7 @@ import "../signup/signup.styles.css";
 
 const ConfirmEmail = ({ show, toggleShow }) => {
   const alert = useSelector((state) => state.alert);
+  const localUser = useSelector((state) => state.authentication.user);
 
   const pageUrlParams = new URLSearchParams(window.location.search);
   const token = pageUrlParams.get("token");
@@ -37,15 +38,12 @@ const ConfirmEmail = ({ show, toggleShow }) => {
       dispatch(alertActions.clear());
     });
 
-    if (
-      localStorage.getItem("user") &&
-      JSON.parse(localStorage.getItem("user")).userObj.role === "Admin"
-    ) {
+    if (localUser && localUser.userObj.role === "Admin") {
       history.push("/admin-dashboard");
-    } else if (localStorage.getItem("user")) {
+    } else if (localUser) {
       history.push("/users-dashboard");
     }
-  }, [localStorage.getItem("user")]);
+  }, [localUser]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

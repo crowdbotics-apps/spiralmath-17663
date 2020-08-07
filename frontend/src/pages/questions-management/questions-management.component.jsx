@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Tabs, Tab, Navbar, Nav } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import "../dashboard/dashboard.styles.css";
 import { userActions } from "../../redux/user/user.actions";
@@ -15,13 +15,13 @@ const QuestionsManagement = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const intl = useIntl();
-  const user = JSON.parse(localStorage.getItem("user")) || {};
+  const localUser = useSelector((state) => state.authentication.user);
 
   useEffect(() => {
-    if (!localStorage.getItem("user")) {
+    if (!localUser) {
       history.push("/");
     }
-  }, [localStorage.getItem("user")]);
+  }, [localUser]);
 
   const handleLogout = () => {
     dispatch(userActions.logout(history));
@@ -124,7 +124,7 @@ const QuestionsManagement = () => {
               </g>
             </svg>
           </span>
-          {user.userObj.first_name + " " + user.userObj.last_name}
+          {localUser.userObj.first_name + " " + localUser.userObj.last_name}
           <span
             className="logout pl-0 pl-lg-2 pl-md-2 pointerType"
             onClick={handleLogout}

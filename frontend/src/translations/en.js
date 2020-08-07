@@ -15,7 +15,7 @@ export default {
   pageSignupCreateYourAccount: "Create Your Account",
   pageSignupPasswordLabel: "Create Password",
   pageSignupPasswordConfirmLabel: "Confirm Password",
-  pageSignupIhaveread: "I have read and accepts the",
+  pageSignupIhaveread: "I have read and accept the",
   pageSignupTermsLink: "Terms of use",
   pageSignupSignupLink: "Sign up",
   pageSignupAlreadyHave: "Already have an account? ",

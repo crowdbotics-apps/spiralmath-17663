@@ -24,6 +24,8 @@ const Login = () => {
   const [errors, setErrors] = useState({});
   const { email, password } = inputs;
   const loggingIn = useSelector((state) => state.authentication.loggingIn);
+  const localUser = useSelector((state) => state.authentication.user);
+  console.log(localUser, localUser === {});
 
   const dispatch = useDispatch();
 
@@ -34,15 +36,12 @@ const Login = () => {
       dispatch(alertActions.clear());
     });
 
-    if (
-      localStorage.getItem("user") &&
-      JSON.parse(localStorage.getItem("user")).userObj.role === "Admin"
-    ) {
+    if (localUser && localUser.userObj.role === "Admin") {
       history.push("/admin-dashboard");
-    } else if (localStorage.getItem("user")) {
+    } else if (localUser) {
       history.push("/users-dashboard");
     }
-  }, [localStorage.getItem("user")]);
+  }, [localUser]);
 
   useEffect(() => {
     if (Object.keys(errors).length === 0 && submitted) {

@@ -136,7 +136,7 @@ const UsersTab = () => {
       id: "componentUsersTabDefaultSelect1",
       defaultMessage: "Select Role",
     }),
-    user_type: this.role,
+    user_type: "",
     edit: false,
   });
   const [submitted, setSubmitted] = useState(false);

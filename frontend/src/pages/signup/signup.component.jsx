@@ -17,6 +17,7 @@ import "./signup.styles.css";
 
 const SignUp = ({ show, toggleShow }) => {
   const alert = useSelector((state) => state.alert);
+  const localUser = useSelector((state) => state.authentication.user);
 
   const settings = useSelector((state) => {
     return (
@@ -47,15 +48,12 @@ const SignUp = ({ show, toggleShow }) => {
       dispatch(alertActions.clear());
     });
 
-    if (
-      localStorage.getItem("user") &&
-      JSON.parse(localStorage.getItem("user")).userObj.role === "Admin"
-    ) {
+    if (localUser && localUser.userObj.role === "Admin") {
       history.push("/admin-dashboard");
-    } else if (localStorage.getItem("user")) {
+    } else if (localUser) {
       history.push("/users-dashboard");
     }
-  }, [localStorage.getItem("user")]);
+  }, [localUser]);
 
   const handleChange = (e) => {
     const { name } = e.target;
@@ -315,7 +313,7 @@ const SignUp = ({ show, toggleShow }) => {
                   />
                   <Form.Check.Label>
                     <FormattedMessage
-                      defaultMessage="I have read and accepts the"
+                      defaultMessage="I have read and accept the"
                       id="pageSignupIhaveread"
                     />
                     &nbsp;
