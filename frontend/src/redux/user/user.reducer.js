@@ -34,7 +34,6 @@ export const authentication = (state = initialState, action) => {
         ...state,
         error: "",
         loggingIn: true,
-        user: null,
       };
     case userTypes.LOGIN_SUCCESS:
       return {
@@ -45,7 +44,7 @@ export const authentication = (state = initialState, action) => {
         user: action.user,
       };
     case userTypes.LOGIN_FAILURE:
-      return { ...state, error: action.payload, loggingIn: false, user: null };
+      return { ...state, error: action.payload, loggingIn: false };
     case userTypes.LOGOUT:
       return { ...state, loggedIn: false, user: null };
     default:

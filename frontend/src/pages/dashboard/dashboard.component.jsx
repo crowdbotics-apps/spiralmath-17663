@@ -25,7 +25,10 @@ const Dashboard = () => {
     (state) => state.userTypes.updatingUserType
   );
 
-  const localUser = useSelector((state) => state.authentication.user);
+  const localUser =
+    localStorage.getItem("user") !== "undefined"
+      ? JSON.parse(localStorage.getItem("user"))
+      : undefined;
 
   useEffect(() => {
     if (!localUser) {

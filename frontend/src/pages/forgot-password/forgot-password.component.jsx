@@ -22,7 +22,10 @@ const ForgotPassword = ({ show, toggleShow }) => {
   const success = useSelector((state) => {
     return state.reset.success !== undefined ? true : false;
   });
-  const localUser = useSelector((state) => state.authentication.user);
+  const localUser =
+    localStorage.getItem("user") !== "undefined"
+      ? JSON.parse(localStorage.getItem("user"))
+      : undefined;
 
   useEffect(() => {
     history.listen((location, action) => {
