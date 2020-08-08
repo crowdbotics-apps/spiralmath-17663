@@ -143,7 +143,7 @@ const UsersTab = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
+    console.log(value);
     setUserForm((userForm) => ({ ...userForm, [name]: value }));
     setErrors({ ...errors, [name]: "" });
     errorMessage = "";
@@ -175,7 +175,7 @@ const UsersTab = () => {
             last_name: userForm.lastName,
             email: userForm.email,
             role: userForm.role,
-            user_type: userForm.role,
+            user_type: parseInt(userForm.role),
           })
         );
         setUserForm({ firstName: "", lastName: "", email: "", role: "Author" });
@@ -309,8 +309,11 @@ const UsersTab = () => {
                   {userForm.role === "Select Role" && (
                     <option>Select Role</option>
                   )}
+
                   {userTypesState &&
-                    userTypesState.map(({ name }) => <option>{name}</option>)}
+                    userTypesState.map(({ name, id }) => (
+                      <option value={id}>{name}</option>
+                    ))}
                 </Form.Control>
               </Form.Group>
             </Form.Row>

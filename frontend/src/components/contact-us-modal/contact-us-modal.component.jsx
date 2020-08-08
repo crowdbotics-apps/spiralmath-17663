@@ -17,7 +17,8 @@ const ContactUs = ({ show, toggleShow }) => {
   });
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
-  const { email, message } = inputs;
+  const { message } = inputs;
+  let { email } = inputs;
   const contacting = useSelector((state) => state.contactUs.contacting);
   const localUser =
     localStorage.getItem("user") !== "undefined"
@@ -27,6 +28,7 @@ const ContactUs = ({ show, toggleShow }) => {
   const alert = useSelector((state) => state.alert);
 
   useEffect(() => {
+    console.log(errors);
     if (Object.keys(errors).length === 0 && submitted) {
       submit();
     }
