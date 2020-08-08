@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Form, Button, Row, Col, Modal } from "react-bootstrap";
-
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
 import { validateSignup } from "../../helpers/validation/validationSignUp";
 import { history } from "../../helpers/history";
 import { alertActions } from "../../redux/user/user.actions";
 import { userActions } from "../../redux/user/user.actions";
-
 import LogoAboveBox from "../../components/logo-above-box/logo-above-box.component";
-
 import "./signup.styles.css";
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 const SignUp = ({ show, toggleShow }) => {
   const alert = useSelector((state) => state.alert);
@@ -22,6 +22,9 @@ const SignUp = ({ show, toggleShow }) => {
       ? JSON.parse(localStorage.getItem("user"))
       : undefined;
 
+  const query = useQuery();
+  const token = query.get("token");
+
   const settings = useSelector((state) => {
     return (
       state.settings &&
@@ -29,10 +32,6 @@ const SignUp = ({ show, toggleShow }) => {
       state.settings.settings.detail
     );
   });
-
-  const location = useLocation();
-  const pageUrlParams = new URLSearchParams(window.location.search);
-  const token = pageUrlParams.get("token");
 
   const [user, setUser] = useState({
     password: "",
@@ -96,7 +95,7 @@ const SignUp = ({ show, toggleShow }) => {
         confirmPassword: user.passwordConfirm,
         token: user.token,
         acceptedTerms: true,
-        signUp: location.pathname === "/register" ? true : false,
+        signUp: true,
       };
       dispatch(userActions.confirmUser(data));
     }
@@ -264,14 +263,7 @@ const SignUp = ({ show, toggleShow }) => {
                   </svg>
                 </span>
                 {submitted && errors.password && (
-                  <div
-                    style={
-                      errors.password.length > 80 ? { bottom: "-40px" } : {}
-                    }
-                    className="text-danger"
-                  >
-                    {errors.password}
-                  </div>
+                  <div className="text-danger">{errors.password}</div>
                 )}
               </Form.Group>
 

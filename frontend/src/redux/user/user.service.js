@@ -54,6 +54,7 @@ const register = (user) => {
     last_name: user["last_name"],
     role: user["role"],
     password: pass,
+    user_type: user["user_type"],
   };
 
   const requestOptions = {
@@ -94,7 +95,7 @@ const resetUserPassword = (data) => {
     body: JSON.stringify(data),
   };
 
-  return fetch("api/v1/user/confirm-token/", requestOptions).then(
+  return fetch("api/v1/user/confirm-email/", requestOptions).then(
     handleResponse
   );
 };
