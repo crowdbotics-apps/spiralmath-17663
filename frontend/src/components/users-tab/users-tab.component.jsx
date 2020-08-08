@@ -24,6 +24,16 @@ const UsersTab = () => {
 
   const userTypesState = useSelector((state) => state.userTypes.allUserTypes);
 
+  const initialValue = {};
+  const id1 = "id";
+
+  const allUsersTypes = userTypesState.reduce((obj, item) => {
+    return {
+      ...obj,
+      [item[id1]]: item,
+    };
+  }, initialValue);
+
   const intl = useIntl();
 
   const buttons = (id, user) => (
@@ -72,8 +82,7 @@ const UsersTab = () => {
       </div>
     </React.Fragment>
   );
-  const initialValue = {};
-  const id1 = "id";
+
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users.users);
   const usersListArray = users ? users : [];
@@ -471,7 +480,7 @@ const UsersTab = () => {
                             {email}
                           </td>
                           <td className="border-right-0 border-left-0">
-                            {user_type}
+                            {allUsersTypes[user_type].name}
                           </td>
                           <td className="border-right-0 border-left-0">
                             <span className="d-flex justify-content-around">
