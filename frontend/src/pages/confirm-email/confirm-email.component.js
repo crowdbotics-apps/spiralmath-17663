@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Form, Button, Row, Col, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { FormattedMessage } from "react-intl";
@@ -13,6 +13,10 @@ import LogoAboveBox from "../../components/logo-above-box/logo-above-box.compone
 
 import "../signup/signup.styles.css";
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 const ConfirmEmail = ({ show, toggleShow }) => {
   const alert = useSelector((state) => state.alert);
   const localUser =
@@ -20,8 +24,8 @@ const ConfirmEmail = ({ show, toggleShow }) => {
       ? JSON.parse(localStorage.getItem("user"))
       : undefined;
 
-  const pageUrlParams = new URLSearchParams(window.location.search);
-  const token = pageUrlParams.get("token");
+  const query = useQuery();
+  const token = query.get("token");
 
   const [user, setUser] = useState({
     password: "",
@@ -114,8 +118,8 @@ const ConfirmEmail = ({ show, toggleShow }) => {
           <div className="form-container w-50">
             <h1 className="text-center mb-3 form-heading">
               <FormattedMessage
-                defaultMessage="Create Your Account"
-                id="pageSignupCreateYourAccount"
+                defaultMessage="Reset Your Password"
+                id="pageConfirmEmailResetYourPassword"
               />
             </h1>
 
