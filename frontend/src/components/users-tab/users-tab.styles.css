@@ -170,9 +170,9 @@ table tbody td {
 }
 
 .resend-btn {
-  background: #f1a139;
-  border-radius: 11px;
-  padding: 0 8px;
-  color: #fff;
-  line-height: normal;
+  background: #f1a139 !important;
+  border-radius: 11px !important;
+  padding: 0 8px !important;
+  color: #fff !important;
+  line-height: normal !important;
 }

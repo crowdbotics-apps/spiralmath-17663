@@ -124,7 +124,10 @@ const ConfirmEmail = ({ show, toggleShow }) => {
             </h1>
 
             <Form className="text-center" onSubmit={handleSubmit} noValidate>
-              <Form.Group controlId="formPassword" className="relative">
+              <Form.Group
+                controlId="formPassword"
+                className="relative create-password-field"
+              >
                 <Form.Control
                   type={passwordType1}
                   className={`input-style input-text ${

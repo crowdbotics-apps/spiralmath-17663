@@ -27,16 +27,12 @@ const UsersTab = () => {
   const initialValue = {};
   const id1 = "id";
 
-  let allUsersTypes;
-
-  useEffect(() => {
-    allUsersTypes = userTypesState.reduce((obj, item) => {
-      return {
-        ...obj,
-        [item[id1]]: item,
-      };
-    }, initialValue);
-  }, [userTypesState]);
+  const allUsersTypes = userTypesState.reduce((obj, item) => {
+    return {
+      ...obj,
+      [item[id1]]: item,
+    };
+  }, initialValue);
 
   const intl = useIntl();
 
@@ -486,10 +482,11 @@ const UsersTab = () => {
                           <td className="border-right-0 border-left-0">
                             {console.log(allUsersTypes)}
                             {allUsersTypes !== {} &&
-                              allUsersTypes[user_type].name}
+                              user_type !== null &&
+                              allUsersTypes[parseInt(user_type)].name}
                           </td>
                           <td className="border-right-0 border-left-0">
-                            <span className="d-flex justify-content-around">
+                            <span className="d-flex justify-content-between">
                               {updateStatus[id] &&
                               updateStatus[id].status === 10
                                 ? intl.formatMessage({
