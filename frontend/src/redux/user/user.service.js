@@ -95,7 +95,7 @@ const resetUserPassword = (data) => {
     body: JSON.stringify(data),
   };
 
-  return fetch("api/v1/user/confirm-email/", requestOptions).then(
+  return fetch("api/v1/user/confirm-token/", requestOptions).then(
     handleResponse
   );
 };
