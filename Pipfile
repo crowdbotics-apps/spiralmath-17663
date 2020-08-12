@@ -25,3 +25,5 @@ drf-yasg = "~=1.17.1"
 # fcm-django is used for mobile notifications. It can be removed if unneeded.
 fcm-django = "~=0.3.4"
 pyexcel = "~=0.6.3"
+pyexcel-xlsx = "~=0.5.8"
+pyexcel-xls = "~=0.5.8"
