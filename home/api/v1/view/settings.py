@@ -1,12 +1,15 @@
+import pyexcel
+
 from rest_framework import mixins, viewsets
 from django.contrib.auth import get_user_model
 
-from rest_framework.permissions import AllowAny
-from rest_framework.exceptions import PermissionDenied, ValidationError
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.exceptions import PermissionDenied, ValidationError, NotFound
 from rest_framework.decorators import action
 from rest_framework.response import Response
+
 from home.api.v1.serializer.settings import SettingsSerializer, SettingsUpdate
-from home.models import Settings, TERMS_CONDITION
+from home.models import Settings, TERMS_CONDITION, STANDARD_CODE_PATH
 
 User = get_user_model()
 
@@ -70,6 +73,8 @@ class SettingsViewSet(
     def terms(self, request):
         """Get Terms and Condition text."""
         terms = Settings.objects.filter(path=TERMS_CONDITION).first()
+        if not terms:
+            raise NotFound
         return Response(
             data={
                 'detail': terms.value,
@@ -81,3 +86,45 @@ class SettingsViewSet(
         if setting and not setting.is_deletable:
             raise PermissionDenied
         return super(SettingsViewSet, self).destroy(request, *args, **kwargs)
+
+    @action(
+        detail=False,
+        methods=['post'],
+        url_path='upload',
+    )
+    def upload(self, request, *args, **kwargs):
+        """Upload Standard Code xlsx."""
+        if request.FILES['file']:
+            file_obj = request.FILES['file']
+            filename = file_obj.name
+            extension = filename.split(".")[-1]
+            if extension not in ['xlsx', 'xls', 'csv']:
+                raise ValidationError(detail={'file': ['Only xlsx, xls, csv files are allowed.']})
+            content = file_obj.read()
+            sheet = pyexcel.get_sheet(file_type=extension, file_content=content)
+            sheet.name_columns_by_row(0)
+            standard_code = Settings.objects.filter(path=STANDARD_CODE_PATH).first()
+            if not standard_code:
+                standard_code = Settings()
+                standard_code.path = STANDARD_CODE_PATH
+            standard_code.value_json = sheet.dict
+            standard_code.save()
+
+            return Response({"details": SettingsSerializer(standard_code).data})
+        raise ValidationError(detail={'file': ['File is required.']})
+
+    @action(
+        detail=False,
+        methods=['get'],
+        url_path='standard-code',
+    )
+    def standard_code(self, request):
+        """Get Standard Code json."""
+        standard_code = Settings.objects.filter(path=STANDARD_CODE_PATH).first()
+        if not standard_code:
+            raise NotFound
+        return Response(
+            data={
+                'detail': standard_code.value_json,
+            },
+        )

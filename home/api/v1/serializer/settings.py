@@ -5,11 +5,11 @@ from home.models import Settings
 class SettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Settings
-        fields = ['id', 'path', 'value', 'is_deletable']
+        fields = ['id', 'path', 'value', 'value_json', 'is_deletable']
 
 
 class SettingsUpdate(serializers.ModelSerializer):
     class Meta:
         model = Settings
-        fields = ['id', 'path', 'value', 'is_deletable']
+        fields = ['path', 'value', 'value_json', 'is_deletable']
         read_only_fields = ('path', )

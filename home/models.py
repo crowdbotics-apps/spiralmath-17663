@@ -3,10 +3,12 @@ from django.db import models
 # Create your models here.
 
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 
 TERMS_CONDITION = 'terms-condition'
 NON_REGISTERED_EMAIL_PATH = 'non-registered-email'
 REGISTERED_EMAIL_PATH = 'registered-email'
+STANDARD_CODE_PATH = 'standard-code'
 
 
 class CustomText(models.Model):
@@ -40,6 +42,7 @@ class Settings(models.Model):
     """Settings."""
     path = models.CharField(max_length=200, blank=True, unique=True)
     value = models.TextField(blank=True)
+    value_json = JSONField(blank=True, null=True, default=None)
     is_deletable = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)

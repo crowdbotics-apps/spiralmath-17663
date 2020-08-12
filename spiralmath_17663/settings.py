@@ -192,6 +192,8 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 100,
 }
 
+FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
+                        "django_excel.TemporaryExcelFileUploadHandler")
 
 # Custom user model
 AUTH_USER_MODEL = "users.User"
