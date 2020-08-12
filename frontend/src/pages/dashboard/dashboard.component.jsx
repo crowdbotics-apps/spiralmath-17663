@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { Tabs, Tab, Navbar, Nav } from "react-bootstrap";
+import {
+  Tabs,
+  Tab,
+  Navbar,
+  Nav,
+  OverlayTrigger,
+  Popover,
+  InputGroup,
+  FormControl,
+} from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import "./dashboard.styles.css";
 import { ReactComponent as Logo } from "../../assets/img/logo.svg";
-
+import ListUser from "../../components/list-user/list-user.component";
+import UserMessageList from "../../components/user-message-list/user-message-list.component";
 import { userActions } from "../../redux/user/user.actions";
+// import CustomPopover from "../../components/custom-popover/custom-popover.component";
 import AdminDashboard from "../../components/admin-dashboard/adminDashboard.component";
 import UsersTab from "../../components/users-tab/users-tab.component";
 import UserTypes from "../../components/user-types/user-types.component";
@@ -16,8 +27,11 @@ import Settings from "../../components/settings/settings.component";
 const Dashboard = () => {
   const intl = useIntl();
   const [key, setKey] = useState("dashboard");
+  const [list, setList] = useState(true);
+  const [userData, setUserData] = useState({});
   const dispatch = useDispatch();
   const history = useHistory();
+
   const userTypeCreating = useSelector(
     (state) => state.userTypes.userTypeCreating
   );
@@ -36,15 +50,254 @@ const Dashboard = () => {
     }
   }, [localUser]);
 
-  useEffect(() => {
-    if (!updatingUserType && !userTypeCreating) {
-      dispatch(userActions.getAllUserTypes());
-    }
-  }, [updatingUserType, userTypeCreating]);
+  // useEffect(() => {
+  //   if (!updatingUserType && !userTypeCreating) {
+  //     dispatch(userActions.getAllUserTypes());
+  //   }
+  // }, [updatingUserType, userTypeCreating]);
 
   const handleLogout = () => {
     dispatch(userActions.logout());
   };
+
+  const users = [
+    {
+      id: 83,
+      email: "rajparmar7879+1@gmail.com",
+      first_name: "Raj",
+      last_name: "Parmar",
+      user_type: null,
+      accepted_terms_date: null,
+      role: "Admin",
+      status: 10,
+    },
+    {
+      id: 98,
+      email: "jcghvbjnk@iuyhvjh.com",
+      first_name: "rem0",
+      last_name: "nbdvb",
+      user_type: 84,
+      accepted_terms_date: null,
+      role: "Editor",
+      status: 20,
+    },
+    {
+      id: 32,
+      email: "david.robson@spiralmath.net",
+      first_name: "david",
+      last_name: "robson",
+      user_type: null,
+      accepted_terms_date: null,
+      role: "Admin",
+      status: 10,
+    },
+    {
+      id: 34,
+      email: "super-admin@spiralmath.com",
+      first_name: "super-admin",
+      last_name: "super-admin",
+      user_type: 10,
+      accepted_terms_date: null,
+      role: "Admin",
+      status: 10,
+    },
+    {
+      id: 33,
+      email: "rajparmar7879@gmail.com",
+      first_name: "Raj",
+      last_name: "Parmar",
+      user_type: null,
+      accepted_terms_date: null,
+      role: "Editor",
+      status: 10,
+    },
+    {
+      id: 85,
+      email: "dtr@gmail.com",
+      first_name: "sdsd",
+      last_name: "sadas",
+      user_type: null,
+      accepted_terms_date: null,
+      role: "Editor",
+      status: 20,
+    },
+    {
+      id: 90,
+      email: "abourahalramzi+2@gmail.com",
+      first_name: "Ramzi2",
+      last_name: "Abourahal2",
+      user_type: null,
+      accepted_terms_date: null,
+      role: "Editor",
+      status: 20,
+    },
+    {
+      id: 86,
+      email: "vds@gmail.com",
+      first_name: "siucisRajhj",
+      last_name: "sdcjb",
+      user_type: null,
+      accepted_terms_date: null,
+      role: "Editor",
+      status: 20,
+    },
+    {
+      id: 94,
+      email: "ytfkj@oihjhgcfhjbk.com",
+      first_name: "ramsjf",
+      last_name: "gyfjhjhk",
+      user_type: null,
+      accepted_terms_date: null,
+      role: "Editor",
+      status: 20,
+    },
+    {
+      id: 89,
+      email: "abourahalramzi@gmail.com",
+      first_name: "Ramzi",
+      last_name: "abou rahal",
+      user_type: null,
+      accepted_terms_date: null,
+      role: "Editor",
+      status: 20,
+    },
+    {
+      id: 43,
+      email: "abourahalramzi+1@gmail.com",
+      first_name: "Ramzi",
+      last_name: "Author",
+      user_type: null,
+      accepted_terms_date: null,
+      role: "Editor",
+      status: 20,
+    },
+    {
+      id: 91,
+      email: "yogus@gmail.com",
+      first_name: "yogus",
+      last_name: "pos",
+      user_type: null,
+      accepted_terms_date: "2020-08-08T00:00:00Z",
+      role: "Editor",
+      status: 10,
+    },
+    {
+      id: 99,
+      email: "deeyo@gmail.com",
+      first_name: "dee",
+      last_name: "yo",
+      user_type: 10,
+      accepted_terms_date: null,
+      role: "Editor",
+      status: 20,
+    },
+    {
+      id: 97,
+      email: "jitenroy@gmail.com",
+      first_name: "jiten",
+      last_name: "Roy",
+      user_type: 13,
+      accepted_terms_date: null,
+      role: "Editor",
+      status: 20,
+    },
+    {
+      id: 100,
+      email: "new-user@test.com",
+      first_name: "new-user",
+      last_name: "new-user",
+      user_type: 12,
+      accepted_terms_date: "2020-08-09T00:00:00Z",
+      role: "Editor",
+      status: 10,
+    },
+    {
+      id: 101,
+      email: "rajparmar7879+11@gmail.com",
+      first_name: "rony",
+      last_name: "desla",
+      user_type: 83,
+      accepted_terms_date: "2020-08-10T00:00:00Z",
+      role: "Editor",
+      status: 10,
+    },
+    {
+      id: 92,
+      email: "vyhhsds@gmail.cm",
+      first_name: "lama",
+      last_name: "hsgdx",
+      user_type: 12,
+      accepted_terms_date: null,
+      role: "Editor",
+      status: 20,
+    },
+    {
+      id: 102,
+      email: "message4davidr@yahoo.com",
+      first_name: "David",
+      last_name: "Message",
+      user_type: 12,
+      accepted_terms_date: null,
+      role: "Editor",
+      status: 20,
+    },
+  ];
+
+  const handleUserMessages = (userDataObj) => () => {
+    setUserData(userDataObj);
+    setList(!list);
+  };
+
+  const backToUserList = () => {
+    setList(!list);
+  };
+
+  const CustomPopover = (
+    <Popover id="popover-positioned-bottom">
+      <Popover.Title>
+        {list ? (
+          <InputGroup className="mb-3">
+            <InputGroup.Prepend>
+              <InputGroup.Text id="basic-addon1">#</InputGroup.Text>
+            </InputGroup.Prepend>
+            <FormControl
+              placeholder="Search"
+              aria-label="Username"
+              aria-describedby="basic-addon1"
+            />
+          </InputGroup>
+        ) : (
+          <h4>
+            <span className="pointerType" onClick={backToUserList}>
+              {"< "}
+            </span>
+            {userData.name}
+          </h4>
+        )}
+      </Popover.Title>
+
+      <div className="list">
+        {list ? (
+          users.map((user) => (
+            <div
+              key={user.id}
+              onClick={handleUserMessages({
+                userId: user.id,
+                name: user.first_name + " " + user.last_name,
+              })}
+            >
+              <ListUser user={user} />
+            </div>
+          ))
+        ) : (
+          <UserMessageList userId={userData.userId} />
+        )}
+      </div>
+
+      <Popover.Content></Popover.Content>
+    </Popover>
+  );
+
   const navbar = () => {
     return (
       <Navbar
@@ -106,23 +359,28 @@ const Dashboard = () => {
           </Tabs>
 
           <div className="d-flex justify-content-around pr-1 align-top pr-md-2">
-            <div className="pr-2 cursor-pointer pr-md-2 pr-lg-3">
-              <svg
-                width="18"
-                height="14"
-                viewBox="0 0 18 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M15.659 2.00118L16.0353 1.76599H15.5916H2.01582H1.57204L1.94836 2.00118L8.73624 6.24361L8.80369 6.28577L8.87115 6.24361L15.659 2.00118ZM15.5916 12.2023H15.7188V12.0751V3.59023V3.36059L15.5241 3.4823L8.80369 7.68256L2.08327 3.4823L1.88854 3.36059V3.59023V12.0751V12.2023H2.01582H15.5916ZM15.5916 0.323562C16.4546 0.323562 17.1613 1.03022 17.1613 1.89326V12.0751C17.1613 12.9381 16.4546 13.6448 15.5916 13.6448H2.01582C1.15277 13.6448 0.44612 12.9381 0.44612 12.0751V1.89326C0.44612 1.03022 1.15277 0.323562 2.01582 0.323562H15.5916Z"
-                  fill="#858585"
-                  stroke="white"
-                  strokeWidth="0.254545"
-                />
-              </svg>
-            </div>
-
+            <OverlayTrigger
+              trigger="click"
+              placement="bottom"
+              overlay={CustomPopover}
+            >
+              <div className="pr-2 cursor-pointer pr-md-2 pr-lg-3">
+                <svg
+                  width="18"
+                  height="14"
+                  viewBox="0 0 18 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M15.659 2.00118L16.0353 1.76599H15.5916H2.01582H1.57204L1.94836 2.00118L8.73624 6.24361L8.80369 6.28577L8.87115 6.24361L15.659 2.00118ZM15.5916 12.2023H15.7188V12.0751V3.59023V3.36059L15.5241 3.4823L8.80369 7.68256L2.08327 3.4823L1.88854 3.36059V3.59023V12.0751V12.2023H2.01582H15.5916ZM15.5916 0.323562C16.4546 0.323562 17.1613 1.03022 17.1613 1.89326V12.0751C17.1613 12.9381 16.4546 13.6448 15.5916 13.6448H2.01582C1.15277 13.6448 0.44612 12.9381 0.44612 12.0751V1.89326C0.44612 1.03022 1.15277 0.323562 2.01582 0.323562H15.5916Z"
+                    fill="#858585"
+                    stroke="white"
+                    strokeWidth="0.254545"
+                  />
+                </svg>
+              </div>
+            </OverlayTrigger>
             <div className="pr-2 notification-icon cursor-pointer pr-md-2 pr-lg-3">
               <svg
                 width="17"

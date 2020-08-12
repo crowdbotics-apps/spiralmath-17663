@@ -16,6 +16,7 @@ import Dashboard from "./pages/dashboard/dashboard.component";
 import QuestionsManagement from "./pages/questions-management/questions-management.component";
 import Footer from "./components/footer/footer.component";
 
+import "../node_modules/react-quill/dist/quill.snow.css";
 import "./App.css";
 
 const messages = { en, hindi };
@@ -27,7 +28,7 @@ function App() {
       <Container>
         <Switch>
           <Route path="/" exact component={Login} />
-          <AdminRoute path="/admin-dashboard" exact component={Dashboard} />
+          <Route path="/admin-dashboard" exact component={Dashboard} />
           <PrivateRoute
             path="/users-dashboard"
             exact
