@@ -1,30 +1,32 @@
 from django.core.validators import validate_email
-from rest_framework import exceptions, mixins, viewsets
+from django.contrib.auth import password_validation, get_user_model
+from django.core.mail import send_mail
+from django.core.exceptions import ValidationError as DjangoValidationError
+from django.utils import timezone
+
+from rest_framework import exceptions, mixins, viewsets, status
 from rest_framework.permissions import AllowAny
 from rest_framework.generics import get_object_or_404
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError, PermissionDenied, NotFound
 from rest_framework.response import Response
-from rest_framework import status
-
-from django.contrib.auth import password_validation
-from django.core.mail import send_mail
-from django.core.exceptions import ValidationError as DjangoValidationError
-from django.utils import timezone
 
 from home.models import Settings, NON_REGISTERED_EMAIL_PATH, REGISTERED_EMAIL_PATH
 from home.api.v1.serializer.auth import SignupSerializer
-from home.api.v1.serializer.user import ResetPasswordSerializer, InvitationSerializer, UserEditorUpdate, ContactUsSerializer
-from home.api.v1.view.auth import internal_login
-
 from home.api.v1.serializer.user import (
     UserCreate,
     UserList,
+    UserShortList,
     UserSerializerBase,
     UserUpdate,
+    UserEditorUpdate,
+    ResetPasswordSerializer,
+    InvitationSerializer,
+    ContactUsSerializer
 )
+from home.api.v1.view.auth import internal_login
+from users.models import User as UserModel
 
-from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
@@ -237,3 +239,17 @@ class UserViewSet(
                     'detail': 'Message have been sent.',
                 },
             )
+
+    @action(
+        detail=False,
+        methods=['get'],
+        url_path='short-list',
+    )
+    def short_list(self, request):
+        return Response(
+                data={
+                    'detail': UserShortList(
+                        list(UserModel.objects.filter(status=User.STATUS.ACTIVE).all()), many=True
+                    ).data
+                }
+        )
