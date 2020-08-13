@@ -36,6 +36,19 @@ class UserList(UserSerializerBase):
         fields = UserSerializerBase.Meta.fields + ['status']
 
 
+class UserShortList(serializers.ModelSerializer):
+    """List all users for any user - id and full names only."""
+
+    fullname = serializers.SerializerMethodField(read_only=True)
+
+    def get_fullname(self, obj):
+        """Get user full name."""
+        return obj.full_name()
+
+    class Meta(UserSerializerBase.Meta):
+        fields = ['id', 'fullname']
+
+
 class UserCreate(UserSerializerBase):
     """Create a user Serializer."""
 

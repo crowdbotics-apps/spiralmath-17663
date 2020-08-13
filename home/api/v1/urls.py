@@ -5,6 +5,7 @@ from home.api.v1.view.auth import AuthViewSet, SignupViewSet
 from home.api.v1.view.user import UserViewSet
 from home.api.v1.view.user_type import UserTypeViewSet
 from home.api.v1.view.settings import SettingsViewSet
+from home.api.v1.view.messages import MessagesViewSet
 
 router = DefaultRouter()
 router.register("signup", SignupViewSet, basename="signup")
@@ -12,6 +13,7 @@ router.register("auth", AuthViewSet, basename="auth")
 router.register("user", UserViewSet, basename="user")
 router.register("user-type", UserTypeViewSet, basename="user-type")
 router.register("settings", SettingsViewSet, basename="settings")
+router.register("messages", MessagesViewSet, basename="messages")
 
 urlpatterns = [
     path("", include(router.urls)),

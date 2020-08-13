@@ -49,3 +49,16 @@ class Settings(models.Model):
 
     def __str__(self):
         return str(self.pk)
+
+
+class Messages(models.Model):
+    """Messages."""
+    users = JSONField(unique=True, default=[])
+    content = JSONField(blank=True, null=True, default={})
+    status = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.pk)
+

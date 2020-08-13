@@ -77,6 +77,10 @@ class User(AbstractUser):
             fail_silently=False,
         )
 
+    def full_name(self):
+        """Get user full name."""
+        return f'{self.first_name} {self.last_name}'
+
 
 class UserType(models.Model):
     """UserType"""
