@@ -24,6 +24,9 @@ const ListUser = ({ user }) => {
       </span>
       <div className="user-details">
         <span className="name">{user.first_name + " " + user.last_name}</span>
+        <span className="msg-num">
+          10
+        </span>
       </div>
     </div>
   );

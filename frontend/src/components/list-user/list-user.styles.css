@@ -1,6 +1,130 @@
+/*Notification popup css start here*/
 .user-item {
   width: 100%;
   display: flex;
-  height: 80px;
   margin-bottom: 15px;
+}
+
+.user-item .user-icon {
+	margin-right: 15px;
+}
+
+.list {
+	padding: 0 15px 15px 15px;
+}
+
+.user-details {
+	border-bottom: 1px solid #E5E5E5;
+    width: 100%;
+}
+
+.input-icon .input-group-prepend span {
+	background-color: inherit;
+	padding-right: 0;
+}
+
+.input-icon input {
+	border-left: 0;
+}
+
+.user-details .name {
+	padding-bottom: 15px;
+	display: inline-block;
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 19px;
+	color: #000000;
+	mix-blend-mode: normal;
+	opacity: 0.7;
+	width: 80%;
+}
+
+.msg-num {
+	background: #F1A139;
+	float: right;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 10px;
+	line-height: 14px;
+	color: #FFFFFF;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 10px;
+}
+
+#popover-positioned-bottom {
+	background: #FFFFFF;
+	box-shadow: 5px 9px 14px rgba(0, 0, 0, 0.15), -2px 0px 5px rgba(0, 0, 0, 0.06);
+	border: none;
+	border-radius: 0;
+}
+
+.pointer-type {
+	float: left;
+}
+
+.arrow:after,.arrow:before {
+	display: none !important;
+}
+
+#popover-positioned-bottom .popover-header {
+  background-color: inherit;
+  border: none;
+  border-radius: 0;
+}
+
+.user-message-list ul {
+	padding-left: 0;
+}
+
+.user-message-list .message-item {
+	display: flex;
+}
+
+.user-message-list .message-item .user-icon {
+	padding-right: 15px;
+	display: inline-block;
+}
+
+.user-message-list .message-item .user-details .name {
+	padding-bottom: 0;
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 11px;
+	line-height: 15px;
+	color: #000000;
+	mix-blend-mode: normal;
+	opacity: 0.7;
+}
+
+.user-message-list .message-item .user-details {
+	border-bottom: 0;
+}
+
+#popover-positioned-bottom h4 {
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 12px;
+	line-height: 16px;
+	color: #000000;
+	mix-blend-mode: normal;
+	opacity: 0.7;
+	border-bottom: 1px solid #E5E5E5;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.popup-active svg path {
+	fill: #F1A139;
 }
