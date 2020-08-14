@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Button, Form, Col } from "react-bootstrap";
 import { FormattedMessage, useIntl } from "react-intl";
 import ReactQuill from "react-quill";
 
+import { settingActions } from "../../redux/setting/setting.actions";
 import "../users-tab/users-tab.styles.css";
 
 const Settings = () => {
@@ -80,11 +81,43 @@ const Settings = () => {
     );
   };
 
+  const [file, setFile] = useState("");
+  const [fileError, setFileError] = useState("");
+  const inputRef = useRef(null);
+
+  const handleFile = (e) => {
+    let file = e.target.files[0];
+    setFileError("");
+    setFile(file);
+  };
+
+  const handleUpload = (e) => {
+    if (!file) {
+      setFileError("no file choosen");
+    }
+
+    if (!fileError) {
+      let file = file;
+      let formData = new FormData();
+      formData.append("file", file);
+    }
+  };
+
   const uploadExcel = () => {
     return (
       <div>
         <h4>Standards</h4>
-        <Button variant="outline-primary">Primary</Button>
+        <input
+          style={{ display: "none" }}
+          type="file"
+          name="file"
+          ref={inputRef}
+          onChange={handleFile}
+        />
+
+        <Button variant="outline-primary" onClick>
+          Upload Excel File
+        </Button>
       </div>
     );
   };

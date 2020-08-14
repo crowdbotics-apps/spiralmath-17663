@@ -1,5 +1,6 @@
 import messageTypes from "./message.types";
 import messageService from "./message.services";
+import { alertActions } from "../user/user.actions";
 
 const get_message_user_list = () => {
   return (dispatch) => {
@@ -19,6 +20,16 @@ const get_message_user_list = () => {
   };
 };
 
+const send_message = (data) => {
+  return (dispatch) => {
+    messageService.send_message(data).then(
+      (data) => dispatch(alertActions.success("message sent successfully")),
+      (error) => dispatch(alertActions.error(error.detail))
+    );
+  };
+};
+
 export default {
   get_message_user_list,
+  send_message,
 };

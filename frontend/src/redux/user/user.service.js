@@ -1,11 +1,14 @@
-import { authHeader } from "../../helpers/auth-header";
-import { history } from "../../helpers/history";
 import Cookies from "js-cookie";
+
+import handleResponse from "../../helpers/handleResponse";
+import authHeader from "../../helpers/authHeader";
+import { history } from "../../helpers/history";
 
 const login = (email, password) => {
   const requestOptions = {
     method: "POST",
     headers: authHeader(),
+    credentials: "include",
     body: JSON.stringify({ email, password }),
   };
 
@@ -26,6 +29,7 @@ const logout = () => {
   const requestOptions = {
     method: "POST",
     headers: authHeader(),
+    credentials: "include",
   };
   // remove user from local storage to log user out
 
@@ -60,6 +64,7 @@ const register = (user) => {
   const requestOptions = {
     method: "POST",
     headers: authHeader(),
+    credentials: "include",
     body: JSON.stringify(data),
   };
 
@@ -69,6 +74,7 @@ const confirmUser = (user) => {
   const requestOptions = {
     method: "POST",
     headers: authHeader(),
+    credentials: "include",
     body: JSON.stringify(user),
   };
 
@@ -80,6 +86,7 @@ const confirmUser = (user) => {
 const resetPassword = (email) => {
   const requestOptions = {
     method: "POST",
+    credentials: "include",
     headers: authHeader(),
     body: JSON.stringify({ email }),
   };
@@ -91,6 +98,7 @@ const resetPassword = (email) => {
 const resetUserPassword = (data) => {
   const requestOptions = {
     method: "POST",
+    credentials: "include",
     headers: authHeader(),
     body: JSON.stringify(data),
   };
@@ -103,6 +111,7 @@ const resetUserPassword = (data) => {
 export const contactUs = (data) => {
   const requestOptions = {
     method: "POST",
+    credentials: "include",
     headers: authHeader(),
     body: JSON.stringify(data),
   };
@@ -113,6 +122,7 @@ export const contactUs = (data) => {
 const getAllUserTypes = () => {
   const requestOptions = {
     method: "GET",
+    credentials: "include",
     headers: authHeader(),
   };
 
@@ -125,6 +135,7 @@ const getAllUserTypes = () => {
 const createUserType = (userTypeObject) => {
   const requestOptions = {
     method: "POST",
+    credentials: "include",
     headers: authHeader(),
     body: JSON.stringify(userTypeObject),
   };
@@ -135,6 +146,7 @@ const createUserType = (userTypeObject) => {
 const updateUserType = (userTypeObject) => {
   const requestOptions = {
     method: "PATCH",
+    credentials: "include",
     headers: authHeader(),
     body: JSON.stringify(userTypeObject),
   };
@@ -147,6 +159,7 @@ const updateUserType = (userTypeObject) => {
 const deleteUserType = (id) => {
   const requestOptions = {
     method: "DELETE",
+    credentials: "include",
     headers: authHeader(),
   };
 
@@ -220,21 +233,6 @@ const sendInvitation = (id) => {
 
   return fetch(`api/v1/user/send-invitation/`, requestOptions).then();
 };
-
-function handleResponse(response, isLogout = true) {
-  return response.text().then((text) => {
-    const data = text && JSON.parse(text);
-    if (!response.ok) {
-      if (response.status === 401 || response.status === 403) {
-        // auto logout if 401 response returned from api
-        isLogout && logout();
-      }
-      return Promise.reject(data);
-    }
-
-    return Promise.resolve(data);
-  });
-}
 
 export const userService = {
   login,

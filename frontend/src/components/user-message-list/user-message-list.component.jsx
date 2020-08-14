@@ -1,4 +1,5 @@
 import React from "react";
+import { InputGroup, FormControl } from "react-bootstrap";
 
 const userMessageList = [
   {
@@ -31,7 +32,7 @@ const userMessageList = [
 
 const UserMessageList = ({}) => {
   return (
-    <div class="user-message-list">
+    <div className="user-message-list">
       <ul>
         {userMessageList.map((message) => {
           return (
@@ -64,6 +65,13 @@ const UserMessageList = ({}) => {
           );
         })}
       </ul>
+      <InputGroup className="mb-1">
+        <FormControl
+          placeholder="Write a message"
+          aria-label="Username"
+          aria-describedby="basic-addon1"
+        />
+      </InputGroup>
     </div>
   );
 };

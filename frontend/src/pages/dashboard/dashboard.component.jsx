@@ -18,6 +18,7 @@ import { ReactComponent as Logo } from "../../assets/img/logo.svg";
 import ListUser from "../../components/list-user/list-user.component";
 import UserMessageList from "../../components/user-message-list/user-message-list.component";
 import { userActions } from "../../redux/user/user.actions";
+import messageActions from "../../redux/message/message.actions";
 // import CustomPopover from "../../components/custom-popover/custom-popover.component";
 import AdminDashboard from "../../components/admin-dashboard/adminDashboard.component";
 import UsersTab from "../../components/users-tab/users-tab.component";
@@ -55,198 +56,55 @@ const Dashboard = () => {
     }
   }, [localUser]);
 
-  // useEffect(() => {
-  //   if (!updatingUserType && !userTypeCreating) {
-  //     dispatch(userActions.getAllUserTypes());
-  //   }
-  // }, [updatingUserType, userTypeCreating]);
+  useEffect(() => {
+    if (!updatingUserType && !userTypeCreating) {
+      dispatch(userActions.getAllUserTypes());
+    }
+  }, [updatingUserType, userTypeCreating]);
+
+  useEffect(() => {
+    dispatch(messageActions.get_message_user_list());
+  }, []);
 
   const handleLogout = () => {
     dispatch(userActions.logout());
   };
 
-  const users = [
-    {
-      id: 83,
-      email: "rajparmar7879+1@gmail.com",
-      first_name: "Raj",
-      last_name: "Parmar",
-      user_type: null,
-      accepted_terms_date: null,
-      role: "Admin",
-      status: 10,
-    },
-    {
-      id: 98,
-      email: "jcghvbjnk@iuyhvjh.com",
-      first_name: "rem0",
-      last_name: "nbdvb",
-      user_type: 84,
-      accepted_terms_date: null,
-      role: "Editor",
-      status: 20,
-    },
-    {
-      id: 32,
-      email: "david.robson@spiralmath.net",
-      first_name: "david",
-      last_name: "robson",
-      user_type: null,
-      accepted_terms_date: null,
-      role: "Admin",
-      status: 10,
-    },
-    {
-      id: 34,
-      email: "super-admin@spiralmath.com",
-      first_name: "super-admin",
-      last_name: "super-admin",
-      user_type: 10,
-      accepted_terms_date: null,
-      role: "Admin",
-      status: 10,
-    },
-    {
-      id: 33,
-      email: "rajparmar7879@gmail.com",
-      first_name: "Raj",
-      last_name: "Parmar",
-      user_type: null,
-      accepted_terms_date: null,
-      role: "Editor",
-      status: 10,
-    },
-    {
-      id: 85,
-      email: "dtr@gmail.com",
-      first_name: "sdsd",
-      last_name: "sadas",
-      user_type: null,
-      accepted_terms_date: null,
-      role: "Editor",
-      status: 20,
-    },
-    {
-      id: 90,
-      email: "abourahalramzi+2@gmail.com",
-      first_name: "Ramzi2",
-      last_name: "Abourahal2",
-      user_type: null,
-      accepted_terms_date: null,
-      role: "Editor",
-      status: 20,
-    },
-    {
-      id: 86,
-      email: "vds@gmail.com",
-      first_name: "siucisRajhj",
-      last_name: "sdcjb",
-      user_type: null,
-      accepted_terms_date: null,
-      role: "Editor",
-      status: 20,
-    },
-    {
-      id: 94,
-      email: "ytfkj@oihjhgcfhjbk.com",
-      first_name: "ramsjf",
-      last_name: "gyfjhjhk",
-      user_type: null,
-      accepted_terms_date: null,
-      role: "Editor",
-      status: 20,
-    },
-    {
-      id: 89,
-      email: "abourahalramzi@gmail.com",
-      first_name: "Ramzi",
-      last_name: "abou rahal",
-      user_type: null,
-      accepted_terms_date: null,
-      role: "Editor",
-      status: 20,
-    },
-    {
-      id: 43,
-      email: "abourahalramzi+1@gmail.com",
-      first_name: "Ramzi",
-      last_name: "Author",
-      user_type: null,
-      accepted_terms_date: null,
-      role: "Editor",
-      status: 20,
-    },
-    {
-      id: 91,
-      email: "yogus@gmail.com",
-      first_name: "yogus",
-      last_name: "pos",
-      user_type: null,
-      accepted_terms_date: "2020-08-08T00:00:00Z",
-      role: "Editor",
-      status: 10,
-    },
-    {
-      id: 99,
-      email: "deeyo@gmail.com",
-      first_name: "dee",
-      last_name: "yo",
-      user_type: 10,
-      accepted_terms_date: null,
-      role: "Editor",
-      status: 20,
-    },
-    {
-      id: 97,
-      email: "jitenroy@gmail.com",
-      first_name: "jiten",
-      last_name: "Roy",
-      user_type: 13,
-      accepted_terms_date: null,
-      role: "Editor",
-      status: 20,
-    },
-    {
-      id: 100,
-      email: "new-user@test.com",
-      first_name: "new-user",
-      last_name: "new-user",
-      user_type: 12,
-      accepted_terms_date: "2020-08-09T00:00:00Z",
-      role: "Editor",
-      status: 10,
-    },
-    {
-      id: 101,
-      email: "rajparmar7879+11@gmail.com",
-      first_name: "rony",
-      last_name: "desla",
-      user_type: 83,
-      accepted_terms_date: "2020-08-10T00:00:00Z",
-      role: "Editor",
-      status: 10,
-    },
-    {
-      id: 92,
-      email: "vyhhsds@gmail.cm",
-      first_name: "lama",
-      last_name: "hsgdx",
-      user_type: 12,
-      accepted_terms_date: null,
-      role: "Editor",
-      status: 20,
-    },
-    {
-      id: 102,
-      email: "message4davidr@yahoo.com",
-      first_name: "David",
-      last_name: "Message",
-      user_type: 12,
-      accepted_terms_date: null,
-      role: "Editor",
-      status: 20,
-    },
-  ];
+  let users = useSelector((state) => state.message.userList);
+  if (users.length === 0) {
+    users = [
+      {
+        id: 83,
+        email: "rajparmar7879+1@gmail.com",
+        first_name: "Raj",
+        last_name: "Parmar",
+        user_type: null,
+        accepted_terms_date: null,
+        role: "Admin",
+        status: 10,
+      },
+      {
+        id: 98,
+        email: "jcghvbjnk@iuyhvjh.com",
+        first_name: "rem0",
+        last_name: "nbdvb",
+        user_type: 84,
+        accepted_terms_date: null,
+        role: "Editor",
+        status: 20,
+      },
+      {
+        id: 32,
+        email: "david.robson@spiralmath.net",
+        first_name: "david",
+        last_name: "robson",
+        user_type: null,
+        accepted_terms_date: null,
+        role: "Admin",
+        status: 10,
+      },
+    ];
+  }
 
   const handleUserMessages = (userDataObj) => () => {
     setUserData(userDataObj);
@@ -264,10 +122,31 @@ const Dashboard = () => {
           <InputGroup className="mb-3 input-icon">
             <InputGroup.Prepend>
               <InputGroup.Text id="basic-addon1">
-                <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M10.7719 3.52298C10.7719 5.18436 9.42508 6.53118 7.7637 6.53118C6.10233 6.53118 4.75551 5.18436 4.75551 3.52298C4.75551 1.8616 6.10233 0.514789 7.7637 0.514789C9.42508 0.514789 10.7719 1.8616 10.7719 3.52298Z" fill="#858585" stroke="#858585" stroke-width="0.931921"/>
-                  <path d="M1.28139 12.2092C1.28139 11.7925 1.49211 11.3907 1.92595 11.0024C2.36245 10.6116 2.98931 10.2693 3.71906 9.98986C4.93764 9.52319 6.35755 9.26355 7.44489 9.21397C7.2442 10.1077 7.08983 11.8011 8.16252 13.4803H1.68397C1.46361 13.4803 1.28139 13.2981 1.28139 13.0777V12.2092Z" fill="#858585" stroke="#858585" stroke-width="0.931921"/>
-                  <path d="M16.7049 12.287C17.2085 11.4299 17.4549 10.3906 17.2192 9.26561C16.8549 7.50847 15.3764 6.10491 13.5978 5.87991C10.7799 5.51562 8.40137 7.88347 8.77637 10.7013C9.01208 12.4799 10.4049 13.9585 12.1621 14.3227C13.2871 14.5585 14.3264 14.312 15.1835 13.8085L17.1763 15.8013C17.3767 16.0016 17.6484 16.1142 17.9317 16.1142C18.215 16.1142 18.4867 16.0016 18.6871 15.8013C18.8874 15.601 18.9999 15.3293 18.9999 15.046C18.9999 14.7626 18.8874 14.4909 18.6871 14.2906L16.7049 12.287ZM13.0299 12.2656C11.8514 12.2656 10.8871 11.3013 10.8871 10.1228C10.8871 8.94419 11.8514 7.9799 13.0299 7.9799C14.2085 7.9799 15.1728 8.94419 15.1728 10.1228C15.1728 11.3013 14.2085 12.2656 13.0299 12.2656Z" fill="#858585" stroke="white" stroke-width="0.919691"/>
+                <svg
+                  width="20"
+                  height="17"
+                  viewBox="0 0 20 17"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M10.7719 3.52298C10.7719 5.18436 9.42508 6.53118 7.7637 6.53118C6.10233 6.53118 4.75551 5.18436 4.75551 3.52298C4.75551 1.8616 6.10233 0.514789 7.7637 0.514789C9.42508 0.514789 10.7719 1.8616 10.7719 3.52298Z"
+                    fill="#858585"
+                    stroke="#858585"
+                    strokeWidth="0.931921"
+                  />
+                  <path
+                    d="M1.28139 12.2092C1.28139 11.7925 1.49211 11.3907 1.92595 11.0024C2.36245 10.6116 2.98931 10.2693 3.71906 9.98986C4.93764 9.52319 6.35755 9.26355 7.44489 9.21397C7.2442 10.1077 7.08983 11.8011 8.16252 13.4803H1.68397C1.46361 13.4803 1.28139 13.2981 1.28139 13.0777V12.2092Z"
+                    fill="#858585"
+                    stroke="#858585"
+                    strokeWidth="0.931921"
+                  />
+                  <path
+                    d="M16.7049 12.287C17.2085 11.4299 17.4549 10.3906 17.2192 9.26561C16.8549 7.50847 15.3764 6.10491 13.5978 5.87991C10.7799 5.51562 8.40137 7.88347 8.77637 10.7013C9.01208 12.4799 10.4049 13.9585 12.1621 14.3227C13.2871 14.5585 14.3264 14.312 15.1835 13.8085L17.1763 15.8013C17.3767 16.0016 17.6484 16.1142 17.9317 16.1142C18.215 16.1142 18.4867 16.0016 18.6871 15.8013C18.8874 15.601 18.9999 15.3293 18.9999 15.046C18.9999 14.7626 18.8874 14.4909 18.6871 14.2906L16.7049 12.287ZM13.0299 12.2656C11.8514 12.2656 10.8871 11.3013 10.8871 10.1228C10.8871 8.94419 11.8514 7.9799 13.0299 7.9799C14.2085 7.9799 15.1728 8.94419 15.1728 10.1228C15.1728 11.3013 14.2085 12.2656 13.0299 12.2656Z"
+                    fill="#858585"
+                    stroke="white"
+                    strokeWidth="0.919691"
+                  />
                 </svg>
               </InputGroup.Text>
             </InputGroup.Prepend>
@@ -279,10 +158,19 @@ const Dashboard = () => {
           </InputGroup>
         ) : (
           <h4>
-            <span className="pointerType pointer-type" onClick={backToUserList}>              
-              <svg width="10" height="17" viewBox="0 0 10 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9.1706 1.28718C9.07764 1.19398 8.9672 1.12004 8.84562 1.06959C8.72403 1.01913 8.59369 0.993164 8.46205 0.993164C8.33041 0.993164 8.20007 1.01913 8.07849 1.06959C7.9569 1.12004 7.84647 1.19398 7.7535 1.28718L1.10035 7.94033C1.02613 8.0144 0.967244 8.10238 0.927067 8.19923C0.886891 8.29609 0.866211 8.39991 0.866211 8.50477C0.866211 8.60962 0.886891 8.71345 0.927067 8.8103C0.967244 8.90716 1.02613 8.99514 1.10035 9.06921L7.7535 15.7224C8.14581 16.1147 8.7783 16.1147 9.1706 15.7224C9.5629 15.3301 9.5629 14.6976 9.1706 14.3053L3.37411 8.50077L9.17861 2.69627C9.5629 2.31197 9.5629 1.67148 9.1706 1.28718Z" fill="#858585"/>
-              </svg>              
+            <span className="pointerType pointer-type" onClick={backToUserList}>
+              <svg
+                width="10"
+                height="17"
+                viewBox="0 0 10 17"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9.1706 1.28718C9.07764 1.19398 8.9672 1.12004 8.84562 1.06959C8.72403 1.01913 8.59369 0.993164 8.46205 0.993164C8.33041 0.993164 8.20007 1.01913 8.07849 1.06959C7.9569 1.12004 7.84647 1.19398 7.7535 1.28718L1.10035 7.94033C1.02613 8.0144 0.967244 8.10238 0.927067 8.19923C0.886891 8.29609 0.866211 8.39991 0.866211 8.50477C0.866211 8.60962 0.886891 8.71345 0.927067 8.8103C0.967244 8.90716 1.02613 8.99514 1.10035 9.06921L7.7535 15.7224C8.14581 16.1147 8.7783 16.1147 9.1706 15.7224C9.5629 15.3301 9.5629 14.6976 9.1706 14.3053L3.37411 8.50077L9.17861 2.69627C9.5629 2.31197 9.5629 1.67148 9.1706 1.28718Z"
+                  fill="#858585"
+                />
+              </svg>
             </span>
             {userData.name}
           </h4>

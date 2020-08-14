@@ -1,7 +1,9 @@
 import Cookies from "js-cookie";
 
-export function authHeader() {
+export default function authHeader() {
   const csrftoken = Cookies.get("csrftoken");
+  console.log(document.cookie);
+  console.log(csrftoken);
 
   const userLang = navigator.language || navigator.userLanguage;
 
