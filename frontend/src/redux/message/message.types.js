@@ -1,0 +1,3 @@
+export default {
+  GET_MESSAGE_USER_LIST: "GET_MESSAGE_USER_LIST",
+};

@@ -23,10 +23,15 @@ import AdminDashboard from "../../components/admin-dashboard/adminDashboard.comp
 import UsersTab from "../../components/users-tab/users-tab.component";
 import UserTypes from "../../components/user-types/user-types.component";
 import Settings from "../../components/settings/settings.component";
+import MyQuestions from "../../components/my-questions/my-questions.component";
+import AllQuestions from "../../components/all-questions/all-questions.component";
 
 const Dashboard = () => {
   const intl = useIntl();
-  const [key, setKey] = useState("dashboard");
+  const [keyUsersManagement, setKeyUsersManagement] = useState("dashboard");
+  const [keyQuestionsManagement, setKeyQuestionsManagement] = useState(
+    "my-questions"
+  );
   const [list, setList] = useState(true);
   const [userData, setUserData] = useState({});
   const dispatch = useDispatch();
@@ -318,53 +323,91 @@ const Dashboard = () => {
 
         <Nav className="flex-grow-1 d-flex align-items-center">
           <Nav.Link href="#" className="py-0 user-manag font-style">
-            <FormattedMessage
-              defaultMessage="Users Management"
-              id="pageUsersManagementHeader"
-            />
+            {localUser &&
+            localUser.userObj &&
+            localUser.userObj.role === "Admin" ? (
+              <FormattedMessage
+                defaultMessage="Users Management"
+                id="pageUsersManagementHeader"
+              />
+            ) : (
+              <FormattedMessage
+                defaultMessage="Questions Management"
+                id="pageQuestionsHeader"
+              />
+            )}
           </Nav.Link>
           <Nav.Link href="#">
             <pre> </pre>
           </Nav.Link>
-          <Tabs
-            id="controlled-tab"
-            className="mr-auto navbar-style justify-content-around flex-grow-1 border-bottom-0"
-            activeKey={key}
-            onSelect={(k) => setKey(k)}
-          >
-            <Tab
-              className="py-0 border-0"
-              eventKey="dashboard"
-              title={intl.formatMessage({
-                id: "pageUsersDashboardTab",
-                defaultMessage: "Dashboard",
-              })}
-            ></Tab>
-            <Tab
-              className="py-0 border-0"
-              eventKey="users"
-              title={intl.formatMessage({
-                id: "pageUsersUsersTab",
-                defaultMessage: "Users",
-              })}
-            ></Tab>
-            <Tab
-              className="py-0 border-0"
-              eventKey="user-types"
-              title={intl.formatMessage({
-                id: "pageUsersUserTypesTab",
-                defaultMessage: "User Types",
-              })}
-            ></Tab>
-            <Tab
-              className="py-0 border-0"
-              eventKey="settings"
-              title={intl.formatMessage({
-                id: "pageUsersSettingsTab",
-                defaultMessage: "Settings",
-              })}
-            ></Tab>
-          </Tabs>
+
+          {localUser &&
+          localUser.userObj &&
+          localUser.userObj.role === "Admin" ? (
+            <Tabs
+              id="controlled-tab"
+              className="mr-auto navbar-style justify-content-around flex-grow-1 border-bottom-0"
+              activeKey={keyUsersManagement}
+              onSelect={(k) => setKeyUsersManagement(k)}
+            >
+              <Tab
+                className="py-0 border-0"
+                eventKey="dashboard"
+                title={intl.formatMessage({
+                  id: "pageUsersDashboardTab",
+                  defaultMessage: "Dashboard",
+                })}
+              ></Tab>
+              <Tab
+                className="py-0 border-0"
+                eventKey="users"
+                title={intl.formatMessage({
+                  id: "pageUsersUsersTab",
+                  defaultMessage: "Users",
+                })}
+              ></Tab>
+              <Tab
+                className="py-0 border-0"
+                eventKey="user-types"
+                title={intl.formatMessage({
+                  id: "pageUsersUserTypesTab",
+                  defaultMessage: "User Types",
+                })}
+              ></Tab>
+              <Tab
+                className="py-0 border-0"
+                eventKey="settings"
+                title={intl.formatMessage({
+                  id: "pageUsersSettingsTab",
+                  defaultMessage: "Settings",
+                })}
+              ></Tab>
+            </Tabs>
+          ) : (
+            <Tabs
+              id="controlled-tab"
+              className="mr-auto navbar-style justify-content-center flex-grow-1 border-bottom-0"
+              activeKey={keyQuestionsManagement}
+              onSelect={(k) => setKeyQuestionsManagement(k)}
+            >
+              <Tab
+                className="py-0 border-0 mr-5"
+                eventKey="my-questions"
+                title={intl.formatMessage({
+                  id: "pageQuestionsMyQuestionsTab",
+                  defaultMessage: "My Questions",
+                })}
+              ></Tab>
+              <Tab
+                className="py-0 border-0 ml-5"
+                eventKey="all-questions"
+                title={intl.formatMessage({
+                  id: "pageQuestionsAllQuestionsTab",
+                  defaultMessage: "All Questions",
+                })}
+              ></Tab>
+            </Tabs>
+          )}
 
           <div className="d-flex justify-content-around pr-1 align-top pr-md-2">
             <OverlayTrigger
@@ -439,10 +482,26 @@ const Dashboard = () => {
   return (
     <React.Fragment>
       {navbar()}
-      {key === "dashboard" ? <AdminDashboard /> : ""}
-      {key === "users" ? <UsersTab /> : ""}
-      {key === "user-types" ? <UserTypes /> : ""}
-      {key === "settings" ? <Settings /> : ""}
+      {localUser &&
+      localUser.userObj &&
+      localUser.userObj.role === "Admin" &&
+      keyUsersManagement === "dashboard" ? (
+        <AdminDashboard />
+      ) : (
+        ""
+      )}
+      {keyUsersManagement === "users" ? <UsersTab /> : ""}
+      {keyUsersManagement === "user-types" ? <UserTypes /> : ""}
+      {keyUsersManagement === "settings" ? <Settings /> : ""}
+      {localUser &&
+      localUser.userObj &&
+      localUser.userObj.role === "Editor" &&
+      keyQuestionsManagement === "my-questions" ? (
+        <MyQuestions />
+      ) : (
+        ""
+      )}
+      {keyQuestionsManagement === "all-questions" ? <AllQuestions /> : ""}
     </React.Fragment>
   );
 };

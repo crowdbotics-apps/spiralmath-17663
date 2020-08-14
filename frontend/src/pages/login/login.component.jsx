@@ -38,10 +38,8 @@ const Login = () => {
       dispatch(alertActions.clear());
     });
 
-    if (localUser && localUser.userObj.role === "Admin") {
-      history.push("/admin-dashboard");
-    } else if (localUser) {
-      history.push("/users-dashboard");
+    if (localUser) {
+      history.push("/dashboard");
     }
   }, [localUser]);
 
