@@ -23,10 +23,8 @@ const ListUser = ({ user }) => {
         </svg>
       </span>
       <div className="user-details">
-        <span className="name">{user.first_name + " " + user.last_name}</span>
-        <span className="msg-num">
-          10
-        </span>
+        <span className="name">{user.fullname}</span>
+        <span className="msg-num">10</span>
       </div>
     </div>
   );
