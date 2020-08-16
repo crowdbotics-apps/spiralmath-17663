@@ -184,14 +184,14 @@ const Dashboard = () => {
               key={user.id}
               onClick={handleUserMessages({
                 userId: user.id,
-                name: user.first_name + " " + user.last_name,
+                name: user.full_name,
               })}
             >
               <ListUser user={user} />
             </div>
           ))
         ) : (
-          <UserMessageList userId={userData.userId} />
+          <UserMessageList userId={userData.userId} messageId={2} />
         )}
       </div>
 

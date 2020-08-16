@@ -234,7 +234,7 @@ const sendInvitation = (id) => {
   return fetch(`api/v1/user/send-invitation/`, requestOptions).then();
 };
 
-export const userService = {
+export default {
   login,
   logout,
   register,

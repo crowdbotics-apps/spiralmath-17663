@@ -29,7 +29,28 @@ const send_message = (data) => {
   };
 };
 
+const get_single_user_messages = (id) => {
+  return (dispatch) => {
+    dispatch({ type: messageTypes.GET_SINGLE_USER_MESSAGES_REQUEST });
+    messageService.get_single_user_messages(id).then(
+      (data) => {
+        dispatch({
+          type: messageTypes.GET_SINGLE_USER_MESSAGES_SUCCESS,
+          payload: data.content,
+        });
+      },
+      (error) => {
+        dispatch({
+          type: messageTypes.GET_SINGLE_USER_MESSAGES_FAILURE,
+          payload: error,
+        });
+      }
+    );
+  };
+};
+
 export default {
   get_message_user_list,
+  get_single_user_messages,
   send_message,
 };
