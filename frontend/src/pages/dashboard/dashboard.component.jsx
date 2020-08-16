@@ -35,6 +35,7 @@ const Dashboard = () => {
   );
   const [list, setList] = useState(true);
   const [userData, setUserData] = useState({});
+  const [searchUser, setSearchUser] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -71,6 +72,7 @@ const Dashboard = () => {
   };
 
   let users = useSelector((state) => state.message.userList);
+
   if (users.length === 0) {
     users = [
       {
@@ -78,6 +80,7 @@ const Dashboard = () => {
         email: "rajparmar7879+1@gmail.com",
         first_name: "Raj",
         last_name: "Parmar",
+        fullname: "Raj Parmar",
         user_type: null,
         accepted_terms_date: null,
         role: "Admin",
@@ -88,6 +91,7 @@ const Dashboard = () => {
         email: "jcghvbjnk@iuyhvjh.com",
         first_name: "rem0",
         last_name: "nbdvb",
+        fullname: "Yogesh Vishnole",
         user_type: 84,
         accepted_terms_date: null,
         role: "Editor",
@@ -98,6 +102,7 @@ const Dashboard = () => {
         email: "david.robson@spiralmath.net",
         first_name: "david",
         last_name: "robson",
+        fullname: "poornesh",
         user_type: null,
         accepted_terms_date: null,
         role: "Admin",
@@ -106,6 +111,12 @@ const Dashboard = () => {
     ];
   }
 
+  users = users.filter(
+    (user) =>
+      user.fullname &&
+      user.fullname.toLowerCase().includes(searchUser.toLowerCase())
+  );
+
   const handleUserMessages = (userDataObj) => () => {
     setUserData(userDataObj);
     setList(!list);
@@ -113,6 +124,10 @@ const Dashboard = () => {
 
   const backToUserList = () => {
     setList(!list);
+  };
+
+  const onSearchUserChange = (e) => {
+    setSearchUser(e.target.value);
   };
 
   const CustomPopover = (
@@ -152,8 +167,10 @@ const Dashboard = () => {
             </InputGroup.Prepend>
             <FormControl
               placeholder="Search"
-              aria-label="Username"
+              aria-label="search-user"
               aria-describedby="basic-addon1"
+              value={searchUser}
+              onChange={onSearchUserChange}
             />
           </InputGroup>
         ) : (
@@ -184,7 +201,7 @@ const Dashboard = () => {
               key={user.id}
               onClick={handleUserMessages({
                 userId: user.id,
-                name: user.full_name,
+                name: user.fullname,
               })}
             >
               <ListUser user={user} />
