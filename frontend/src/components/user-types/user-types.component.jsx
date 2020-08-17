@@ -6,6 +6,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 import Pagination from "../pagination/pagination.component";
 import { userActions, alertActions } from "../../redux/user/user.actions";
 import { validateCreateUserTypes } from "../../helpers/validation/validateCreateUser";
+import { ReactComponent as DeleteIcon } from "../../assets/img/delete-icon.svg";
+import { ReactComponent as EditIcon } from "../../assets/img/edit-icon.svg";
+import { ReactComponent as CreateUserIcon } from "../../assets/img/create-user-icon.svg";
 
 const UserTypes = () => {
   const buttons = (userType, userTypeObject) => (
@@ -15,44 +18,14 @@ const UserTypes = () => {
           className="ml-2 cursor-pointer"
           onClick={() => handleShow(userType, userTypeObject.id)}
         >
-          <svg
-            width="13"
-            height="17"
-            viewBox="0 0 13 17"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g opacity="0.4">
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M11.9401 3.96753H1.54012V14.3675C1.54012 15.3243 2.31665 16.1009 3.27432 16.1009H10.2068C11.1653 16.1009 11.9401 15.3243 11.9401 14.3675V3.96753ZM8.90678 0.5H4.57345L3.70765 1.36753H1.54012C1.06258 1.36753 0.674316 1.7558 0.674316 2.23333V3.10087H12.8076V2.23333C12.8076 1.7558 12.4194 1.36753 11.9401 1.36753H9.77432L8.90678 0.5Z"
-                fill="#494949"
-              />
-            </g>
-          </svg>
+          <DeleteIcon />
         </div>
 
         <div
           className="cursor-pointer ml-4"
           onClick={() => handleEditForm(userTypeObject)}
         >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g opacity="0.4">
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M17.2753 4.56006C17.5912 4.87596 17.5912 5.38626 17.2753 5.70216L15.793 7.18446L12.7555 4.14696L14.2378 2.66466C14.5537 2.34876 15.064 2.34876 15.3799 2.66466L17.2753 4.56006ZM2.93018 17.0098V13.9723L11.8888 5.01366L14.9263 8.05116L5.96768 17.0098H2.93018Z"
-                fill="#494949"
-              />
-            </g>
-          </svg>
+          <EditIcon />
         </div>
       </div>
     </React.Fragment>
@@ -334,20 +307,7 @@ const UserTypes = () => {
                   onClick={handleCloseForm}
                 >
                   <span className="create-user-icon">
-                    <svg
-                      width="11"
-                      height="11"
-                      viewBox="0 0 11 11"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M4.98394 0.705078V4.98394H0.705078V6.41022H4.98394V10.6891H6.41022V6.41022H10.6891V4.98394H6.41022V0.705078H4.98394Z"
-                        fill="white"
-                      />
-                    </svg>
+                    <CreateUserIcon />
                   </span>
                   <b>
                     <FormattedMessage

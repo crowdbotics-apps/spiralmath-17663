@@ -1,20 +1,18 @@
 import Cookies from "js-cookie";
 
+import requestOptions from "../../helpers/requestOptions";
 import handleResponse from "../../helpers/handleResponse";
-import authHeader from "../../helpers/authHeader";
 import { history } from "../../helpers/history";
 
 const login = (email, password) => {
-  const requestOptions = {
+  const requestOptionsModified = {
+    ...requestOptions,
     method: "POST",
-    headers: authHeader(),
-    credentials: "include",
     body: JSON.stringify({ email, password }),
   };
-
   return fetch(
     "https://spiralmath-17663.botics.co/api/v1/auth/login/",
-    requestOptions
+    requestOptionsModified
   ).then((res) => {
     return handleResponse(res, false).then((user) => {
       // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -26,16 +24,15 @@ const login = (email, password) => {
 };
 
 const logout = () => {
-  const requestOptions = {
+  const requestOptionsModified = {
+    ...requestOptions,
     method: "POST",
-    headers: authHeader(),
-    credentials: "include",
   };
   // remove user from local storage to log user out
 
   return fetch(
     "https://spiralmath-17663.botics.co/api/v1/auth/logout/",
-    requestOptions
+    requestOptionsModified
   )
     .then(handleResponse)
     .then(() => {
@@ -61,71 +58,62 @@ const register = (user) => {
     user_type: user["user_type"],
   };
 
-  const requestOptions = {
+  const requestOptionsModified = {
+    ...requestOptions,
     method: "POST",
-    headers: authHeader(),
-    credentials: "include",
     body: JSON.stringify(data),
   };
 
-  return fetch("api/v1/user/", requestOptions).then(handleResponse);
+  return fetch("api/v1/user/", requestOptionsModified).then(handleResponse);
 };
 const confirmUser = (user) => {
-  const requestOptions = {
+  const requestOptionsModified = {
+    ...requestOptions,
     method: "POST",
-    headers: authHeader(),
-    credentials: "include",
     body: JSON.stringify(user),
   };
 
-  return fetch("api/v1/user/confirm-token/", requestOptions).then(
+  return fetch("api/v1/user/confirm-token/", requestOptionsModified).then(
     handleResponse
   );
 };
 
 const resetPassword = (email) => {
-  const requestOptions = {
+  const requestOptionsModified = {
+    ...requestOptions,
     method: "POST",
-    credentials: "include",
-    headers: authHeader(),
     body: JSON.stringify({ email }),
   };
 
-  return fetch("api/v1/user/reset-password/", requestOptions).then(
+  return fetch("api/v1/user/reset-password/", requestOptionsModified).then(
     handleResponse
   );
 };
 const resetUserPassword = (data) => {
-  const requestOptions = {
+  const requestOptionsModified = {
+    ...requestOptions,
     method: "POST",
-    credentials: "include",
-    headers: authHeader(),
     body: JSON.stringify(data),
   };
 
-  return fetch("api/v1/user/confirm-token/", requestOptions).then(
+  return fetch("api/v1/user/confirm-token/", requestOptionsModified).then(
     handleResponse
   );
 };
 
 export const contactUs = (data) => {
-  const requestOptions = {
+  const requestOptionsModified = {
+    ...requestOptions,
     method: "POST",
-    credentials: "include",
-    headers: authHeader(),
     body: JSON.stringify(data),
   };
 
-  return fetch("api/v1/user/contact-us/", requestOptions).then(handleResponse);
+  return fetch("api/v1/user/contact-us/", requestOptionsModified).then(
+    handleResponse
+  );
 };
 
 const getAllUserTypes = () => {
-  const requestOptions = {
-    method: "GET",
-    credentials: "include",
-    headers: authHeader(),
-  };
-
   return fetch(
     "https://spiralmath-17663.botics.co/api/v1/user-type/",
     requestOptions
@@ -133,45 +121,44 @@ const getAllUserTypes = () => {
 };
 
 const createUserType = (userTypeObject) => {
-  const requestOptions = {
+  const requestOptionsModified = {
+    ...requestOptions,
     method: "POST",
-    credentials: "include",
-    headers: authHeader(),
+
     body: JSON.stringify(userTypeObject),
   };
 
-  return fetch("api/v1/user-type/", requestOptions).then(handleResponse);
-};
-
-const updateUserType = (userTypeObject) => {
-  const requestOptions = {
-    method: "PATCH",
-    credentials: "include",
-    headers: authHeader(),
-    body: JSON.stringify(userTypeObject),
-  };
-
-  return fetch(`api/v1/user-type/${userTypeObject.id}/`, requestOptions).then(
+  return fetch("api/v1/user-type/", requestOptionsModified).then(
     handleResponse
   );
 };
 
-const deleteUserType = (id) => {
-  const requestOptions = {
-    method: "DELETE",
-    credentials: "include",
-    headers: authHeader(),
+const updateUserType = (userTypeObject) => {
+  const requestOptionsModified = {
+    ...requestOptions,
+    method: "PATCH",
+
+    body: JSON.stringify(userTypeObject),
   };
 
-  return fetch(`api/v1/user-type/${id}/`, requestOptions).then(handleResponse);
+  return fetch(
+    `api/v1/user-type/${userTypeObject.id}/`,
+    requestOptionsModified
+  ).then(handleResponse);
+};
+
+const deleteUserType = (id) => {
+  const requestOptionsModified = {
+    ...requestOptions,
+    method: "DELETE",
+  };
+
+  return fetch(`api/v1/user-type/${id}/`, requestOptionsModified).then(
+    handleResponse
+  );
 };
 
 const getAllUsers = () => {
-  const requestOptions = {
-    method: "GET",
-    headers: authHeader(),
-  };
-
   return fetch(
     "https://spiralmath-17663.botics.co/api/v1/user/",
     requestOptions
@@ -184,40 +171,34 @@ const updateUser = (user) => {
   } else {
     user["role"] = "Admin";
   }
-  const requestOptions = {
+  const requestOptionsModified = {
     method: "PATCH",
-    headers: authHeader(),
+    ...requestOptions,
     body: JSON.stringify(user),
   };
 
-  return fetch(`api/v1/user/${user.id}/`, requestOptions).then(handleResponse);
+  return fetch(`api/v1/user/${user.id}/`, requestOptionsModified).then(
+    handleResponse
+  );
 };
 
 // prefixed function name with underscore because delete is a reserved word in javascript
 const deleteUser = (id) => {
-  const requestOptions = {
+  const requestOptionsModified = {
+    ...requestOptions,
     method: "DELETE",
-    headers: authHeader(),
   };
 
-  return fetch(`api/v1/user/${id}/`, requestOptions).then(handleResponse);
+  return fetch(`api/v1/user/${id}/`, requestOptionsModified).then(
+    handleResponse
+  );
 };
 
 const getOneUser = (id) => {
-  const requestOptions = {
-    method: "GET",
-    headers: authHeader(),
-  };
-
   return fetch(`api/v1/user/${id}/`, requestOptions).then(handleResponse);
 };
 
 const settings = () => {
-  const requestOptions = {
-    method: "GET",
-    headers: authHeader(),
-  };
-
   return fetch(
     `https://spiralmath-17663.botics.co/api/v1/settings/terms/`,
     requestOptions
@@ -225,13 +206,14 @@ const settings = () => {
 };
 
 const sendInvitation = (id) => {
-  const requestOptions = {
+  const requestOptionsModified = {
+    ...requestOptions,
     method: "POST",
-    headers: authHeader(),
+
     body: JSON.stringify({ id }),
   };
 
-  return fetch(`api/v1/user/send-invitation/`, requestOptions).then();
+  return fetch(`api/v1/user/send-invitation/`, requestOptionsModified).then();
 };
 
 export default {

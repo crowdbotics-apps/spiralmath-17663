@@ -1,16 +1,15 @@
 import handleResponse from "../../helpers/handleResponse";
-import authHeader from "../../helpers/authHeader";
+import requestOptions from "../../helpers/requestOptions";
 
 const upload_file = (data) => {
-  const requestOptions = {
+  const requestOptionsModified = {
+    ...requestOptions,
     method: "POST",
-    credentials: "include",
-    headers: authHeader(),
     body: data,
   };
   return fetch(
     "https://spiralmath-17663.botics.co/api/v1/settings/upload/",
-    requestOptions
+    requestOptionsModified
   ).then(handleResponse);
 };
 
