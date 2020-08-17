@@ -1,15 +1,28 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Button, Form, Col } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { FormattedMessage, useIntl } from "react-intl";
 import ReactQuill from "react-quill";
 
-import { settingActions } from "../../redux/setting/setting.actions";
+import settingActions from "../../redux/setting/setting.actions";
 import "../users-tab/users-tab.styles.css";
 
 const Settings = () => {
   const intl = useIntl();
+  const dispatch = useDispatch();
+  const inputRef = useRef(null);
+  const [file, setFile] = useState("");
 
-  const contactUsEmailForm = () => {
+  useEffect(() => {
+    if (file) {
+      let formData = new FormData();
+      formData.append("file", file);
+      dispatch(settingActions.upload_file(formData));
+      setFile("");
+    }
+  }, [file]);
+
+  const renderContactUsEmailForm = () => {
     return (
       <Form noValidate>
         <div className="px-4 py-4 border form-border border-color">
@@ -55,7 +68,7 @@ const Settings = () => {
     );
   };
 
-  const settingsEditor = () => {
+  const renderSettingsEditor = () => {
     return (
       <div>
         <ReactQuill
@@ -82,29 +95,19 @@ const Settings = () => {
     );
   };
 
-  const [file, setFile] = useState("");
-  const [fileError, setFileError] = useState("");
-  const inputRef = useRef(null);
-
   const handleFile = (e) => {
     let file = e.target.files[0];
-    setFileError("");
     setFile(file);
   };
 
-  const handleUpload = (e) => {
+  const handleClick = (e) => {
     if (!file) {
-      setFileError("no file choosen");
-    }
-
-    if (!fileError) {
-      let file = file;
-      let formData = new FormData();
-      formData.append("file", file);
+      inputRef.current.click();
+    } else {
     }
   };
 
-  const uploadExcel = () => {
+  const renderUploadExcel = () => {
     return (
       <div className="d-flex alignment">
         <h4 className="standard-text">Standards</h4>
@@ -115,8 +118,7 @@ const Settings = () => {
           ref={inputRef}
           onChange={handleFile}
         />
-
-        <Button variant="outline-primary" onClick  className="upload-excel">
+        <Button variant="outline-primary" onClick={handleClick} className="upload-excel">
           Upload Excel File
         </Button>
       </div>
@@ -125,9 +127,9 @@ const Settings = () => {
 
   return (
     <React.Fragment>
-      {settingsEditor()}
-      {contactUsEmailForm()}
-      {uploadExcel()}
+      {renderSettingsEditor()}
+      {renderContactUsEmailForm()}
+      {renderUploadExcel()}
     </React.Fragment>
   );
 };
