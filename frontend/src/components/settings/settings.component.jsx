@@ -12,26 +12,26 @@ const Settings = () => {
   const contactUsEmailForm = () => {
     return (
       <Form noValidate>
-        <div className="px-4 py-4 border form-border">
+        <div className="px-4 py-4 border form-border border-color">
           <Form.Row>
-            <Form.Group as={Col} md="3">
-              <h5>Contact Us Email</h5>
+            <Form.Group as={Col} md="2" className="align-self">
+              <h5 className="contact-us-email-text">Contact Us Email</h5>
             </Form.Group>
 
             <Form.Group as={Col} md="3" controlId="validationEmail">
-              <Form.Label>Non Registered Users</Form.Label>
+              <Form.Label className="label-color">Non Registered Users</Form.Label>
               <Form.Control
                 type="email"
                 required
-                className="border-top-0 border-left-0 border-right-0 rounded-0"
+                className="setting-input-style border-top-0 border-left-0 border-right-0 rounded-0"
                 maxLength="50"
               />
             </Form.Group>
             <Form.Group as={Col} md="3" controlId="validationEmail">
-              <Form.Label>Registered Users</Form.Label>
+              <Form.Label className="label-color">Registered Users</Form.Label>
               <Form.Control
                 type="email"
-                className="border-top-0 border-left-0 border-right-0 rounded-0"
+                className="setting-input-style border-top-0 border-left-0 border-right-0 rounded-0"
                 maxLength="50"
               />
             </Form.Group>
@@ -62,6 +62,7 @@ const Settings = () => {
           modules={Settings.modules}
           formats={Settings.formats}
           placeholder="Write something amazing..."
+          className="setting-input"
         />
         <div className="my-4 d-flex justify-content-end bottom-btn-grp">
           <Button className="mr-4 cancel-btn">
@@ -105,8 +106,8 @@ const Settings = () => {
 
   const uploadExcel = () => {
     return (
-      <div>
-        <h4>Standards</h4>
+      <div className="d-flex alignment">
+        <h4 className="standard-text">Standards</h4>
         <input
           style={{ display: "none" }}
           type="file"
@@ -115,7 +116,7 @@ const Settings = () => {
           onChange={handleFile}
         />
 
-        <Button variant="outline-primary" onClick>
+        <Button variant="outline-primary" onClick  className="upload-excel">
           Upload Excel File
         </Button>
       </div>
