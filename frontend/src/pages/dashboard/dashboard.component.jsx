@@ -29,6 +29,7 @@ import { ReactComponent as SearchIcon } from "../../assets/img/search-icon.svg";
 import { ReactComponent as UserIcon } from "../../assets/img/user-icon.svg";
 import { ReactComponent as MessageIcon } from "../../assets/img/message-icon.svg";
 import { ReactComponent as NotificationIcon } from "../../assets/img/notification-icon.svg";
+import { ReactComponent as BackIcon } from "../../assets/img/back-icon.svg";
 import { ReactComponent as Logo } from "../../assets/img/logo.svg";
 
 const Dashboard = () => {
@@ -155,7 +156,7 @@ const Dashboard = () => {
         ) : (
           <h4>
             <span className="pointerType pointer-type" onClick={backToUserList}>
-              <UserIcon />
+              <BackIcon />
             </span>
             {userData.name}
           </h4>
