@@ -791,6 +791,83 @@ body .popup-save-btn:hover {
   bottom: -40px !important;
 }
 
+.setting-input .ql-editor {
+  height: 160px !important;
+}
+
+.setting-input .ql-snow, .border-color {
+  border-color: #E5E2E2 !important;
+}
+
+.label-color {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  text-transform: capitalize;
+  color: #828282;
+  margin-bottom: 0;
+}
+
+body .setting-input-style {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  color: #000000;
+  padding-left: 0 !important;
+}
+
+.contact-us-email-text {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  letter-spacing: -0.115385px;
+  color: #333333;
+  height: 100%;
+  align-items: center;
+  display: flex;
+}
+
+.align-self {
+  align-self: center;
+}
+
+.alignment {
+  align-items: center;
+}
+
+.standard-text {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  letter-spacing: -0.115385px;
+  color: #333333;
+  padding-left: 24px;
+  padding-right: 40px;
+}
+
+body .alignment .upload-excel {
+  border: 1px solid #3C7EBF;
+  border-radius: 55.4px;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #3C7EBF;
+  padding: 10px 80px;
+}
+
 @media screen and (max-width: 991px) {
   nav.navbar-nav,
   div.navbar-nav {

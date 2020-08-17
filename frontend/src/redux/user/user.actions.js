@@ -1,5 +1,5 @@
 import { alertTypes, userTypes } from "./user.types";
-import { userService } from "./user.service";
+import userService from "./user.services";
 
 const success = (message) => {
   return { type: alertTypes.SUCCESS, message };

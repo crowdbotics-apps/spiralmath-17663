@@ -1,20 +1,20 @@
 import React from "react";
 
 import { ReactComponent as UserIcon } from "../../assets/img/user-icon.svg";
-import "./list-user.styles.css";
 
-const ListUser = ({ user }) => {
+const MessageItem = ({ message }) => {
+  const userName = Object.keys(message.text)[0];
   return (
-    <div className="user-item pointerType">
+    <div className="message-item">
       <span className="user-icon">
         <UserIcon />
       </span>
       <div className="user-details">
-        <span className="name">{user.fullname}</span>
-        <span className="msg-num">10</span>
+        <span className="name">{userName}</span>
+        <p>{message.text[userName]}</p>
       </div>
     </div>
   );
 };
 
-export default ListUser;
+export default MessageItem;

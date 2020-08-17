@@ -1,37 +1,50 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Button, Form, Col } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { FormattedMessage, useIntl } from "react-intl";
 import ReactQuill from "react-quill";
 
-import { settingActions } from "../../redux/setting/setting.actions";
+import settingActions from "../../redux/setting/setting.actions";
 import "../users-tab/users-tab.styles.css";
 
 const Settings = () => {
   const intl = useIntl();
+  const dispatch = useDispatch();
+  const inputRef = useRef(null);
+  const [file, setFile] = useState("");
 
-  const contactUsEmailForm = () => {
+  useEffect(() => {
+    if (file) {
+      let formData = new FormData();
+      formData.append("file", file);
+      dispatch(settingActions.upload_file(formData));
+      setFile("");
+    }
+  }, [file]);
+
+  const renderContactUsEmailForm = () => {
     return (
       <Form noValidate>
-        <div className="px-4 py-4 border form-border">
+        <div className="px-4 py-4 border form-border border-color">
           <Form.Row>
-            <Form.Group as={Col} md="3">
-              <h5>Contact Us Email</h5>
+            <Form.Group as={Col} md="2" className="align-self">
+              <h5 className="contact-us-email-text">Contact Us Email</h5>
             </Form.Group>
 
             <Form.Group as={Col} md="3" controlId="validationEmail">
-              <Form.Label>Non Registered Users</Form.Label>
+              <Form.Label className="label-color">Non Registered Users</Form.Label>
               <Form.Control
                 type="email"
                 required
-                className="border-top-0 border-left-0 border-right-0 rounded-0"
+                className="setting-input-style border-top-0 border-left-0 border-right-0 rounded-0"
                 maxLength="50"
               />
             </Form.Group>
             <Form.Group as={Col} md="3" controlId="validationEmail">
-              <Form.Label>Registered Users</Form.Label>
+              <Form.Label className="label-color">Registered Users</Form.Label>
               <Form.Control
                 type="email"
-                className="border-top-0 border-left-0 border-right-0 rounded-0"
+                className="setting-input-style border-top-0 border-left-0 border-right-0 rounded-0"
                 maxLength="50"
               />
             </Form.Group>
@@ -55,13 +68,14 @@ const Settings = () => {
     );
   };
 
-  const settingsEditor = () => {
+  const renderSettingsEditor = () => {
     return (
       <div>
         <ReactQuill
           modules={Settings.modules}
           formats={Settings.formats}
           placeholder="Write something amazing..."
+          className="setting-input"
         />
         <div className="my-4 d-flex justify-content-end bottom-btn-grp">
           <Button className="mr-4 cancel-btn">
@@ -81,32 +95,22 @@ const Settings = () => {
     );
   };
 
-  const [file, setFile] = useState("");
-  const [fileError, setFileError] = useState("");
-  const inputRef = useRef(null);
-
   const handleFile = (e) => {
     let file = e.target.files[0];
-    setFileError("");
     setFile(file);
   };
 
-  const handleUpload = (e) => {
+  const handleClick = (e) => {
     if (!file) {
-      setFileError("no file choosen");
-    }
-
-    if (!fileError) {
-      let file = file;
-      let formData = new FormData();
-      formData.append("file", file);
+      inputRef.current.click();
+    } else {
     }
   };
 
-  const uploadExcel = () => {
+  const renderUploadExcel = () => {
     return (
-      <div>
-        <h4>Standards</h4>
+      <div className="d-flex alignment">
+        <h4 className="standard-text">Standards</h4>
         <input
           style={{ display: "none" }}
           type="file"
@@ -114,8 +118,7 @@ const Settings = () => {
           ref={inputRef}
           onChange={handleFile}
         />
-
-        <Button variant="outline-primary" onClick>
+        <Button variant="outline-primary" onClick={handleClick} className="upload-excel">
           Upload Excel File
         </Button>
       </div>
@@ -124,9 +127,9 @@ const Settings = () => {
 
   return (
     <React.Fragment>
-      {settingsEditor()}
-      {contactUsEmailForm()}
-      {uploadExcel()}
+      {renderSettingsEditor()}
+      {renderContactUsEmailForm()}
+      {renderUploadExcel()}
     </React.Fragment>
   );
 };
