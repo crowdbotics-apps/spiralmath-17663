@@ -32,6 +32,15 @@ import { ReactComponent as NotificationIcon } from "../../assets/img/notificatio
 import { ReactComponent as BackIcon } from "../../assets/img/back-icon.svg";
 import { ReactComponent as Logo } from "../../assets/img/logo.svg";
 
+const mapUserIdToMessageId = (id, list) => {
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].users[1] === id) {
+      return list[i].id;
+    }
+  }
+  return false;
+};
+
 const Dashboard = () => {
   const intl = useIntl();
   const [keyUsersManagement, setKeyUsersManagement] = useState("dashboard");
@@ -41,6 +50,7 @@ const Dashboard = () => {
   const [list, setList] = useState(true);
   const [userData, setUserData] = useState({});
   const [searchUser, setSearchUser] = useState("");
+  const [messageId, setMessageId] = useState();
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -72,11 +82,16 @@ const Dashboard = () => {
     dispatch(messageActions.get_message_user_list());
   }, []);
 
+  useEffect(() => {
+    dispatch(messageActions.get_messages_id());
+  }, []);
+
   const handleLogout = () => {
     dispatch(userActions.logout());
   };
 
   let users = useSelector((state) => state.message.userList);
+  const message_id_list = useSelector((state) => state.message.messagesIdList);
 
   if (users.length === 0) {
     users = [
@@ -124,6 +139,7 @@ const Dashboard = () => {
 
   const handleUserMessages = (userDataObj) => () => {
     setUserData(userDataObj);
+    setMessageId(mapUserIdToMessageId(userDataObj.userId, message_id_list));
     setList(!list);
   };
 
@@ -177,7 +193,7 @@ const Dashboard = () => {
             </div>
           ))
         ) : (
-          <UserMessageList userId={userData.userId} messageId={2} />
+          <UserMessageList userId={userData.userId} messageId={messageId} />
         )}
       </div>
 

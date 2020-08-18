@@ -20,11 +20,30 @@ const get_message_user_list = () => {
   };
 };
 
+const get_messages_id = () => {
+  return (dispatch) => {
+    dispatch({ type: messageTypes.GET_MESSAGES_ID_REQUEST });
+    messageService.get_messages_id().then(
+      (data) =>
+        dispatch({
+          type: messageTypes.GET_MESSAGES_ID_SUCCESS,
+          payload: data,
+        }),
+      (error) =>
+        dispatch({
+          type: messageTypes.GET_MESSAGES_ID_FAILURE,
+          payload: error,
+        })
+    );
+  };
+};
+
 const send_message = (data) => {
   return (dispatch) => {
+    dispatch({ type: messageTypes.SEND_MESSAGE_REQUEST });
     messageService.send_message(data).then(
-      (data) => dispatch(alertActions.success("message sent successfully")),
-      (error) => dispatch(alertActions.error(error.detail))
+      (data) => dispatch({ type: messageTypes.SEND_MESSAGE_SUCCESS }),
+      (error) => dispatch({ type: messageTypes.SEND_MESSAGE_FAILURE })
     );
   };
 };
@@ -51,6 +70,7 @@ const get_single_user_messages = (id) => {
 
 export default {
   get_message_user_list,
+  get_messages_id,
   get_single_user_messages,
   send_message,
 };
