@@ -189,7 +189,7 @@ export const contactUs = (email, message) => {
   };
 };
 
-const getAllUsers = () => {
+const getAllUsers = (pageNumber) => {
   function request() {
     return { type: userTypes.GETALL_USERS_REQUEST };
   }
@@ -203,7 +203,7 @@ const getAllUsers = () => {
   return (dispatch) => {
     dispatch(request());
 
-    userService.getAllUsers().then(
+    userService.getAllUsers(pageNumber).then(
       (users) => dispatch(success(users)),
       (error) => dispatch(failure(error.detail))
     );

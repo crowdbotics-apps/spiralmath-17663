@@ -93,11 +93,7 @@ const UsersTab = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(10);
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers =
-    usersListArrayPreview &&
-    usersListArrayPreview.slice(indexOfFirstUser, indexOfLastUser);
+  const currentUsers = usersListArrayPreview;
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -105,9 +101,9 @@ const UsersTab = () => {
 
   useEffect(() => {
     if (!updatingUser && !registering) {
-      dispatch(userActions.getAllUsers());
+      dispatch(userActions.getAllUsers(currentPage - 1));
     }
-  }, [updatingUser, registering]);
+  }, [updatingUser, registering, currentPage]);
 
   const [userForm, setUserForm] = useState({
     id: "",
