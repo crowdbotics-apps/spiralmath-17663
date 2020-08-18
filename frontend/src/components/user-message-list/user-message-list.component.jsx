@@ -9,10 +9,13 @@ const UserMessageList = ({ userId, messageId }) => {
   const dispatch = useDispatch();
   const [message, setMessage] = useState("");
   const userMessageList = useSelector((state) => state.message.userMessageList);
+  const sendingMessage = useSelector((state) => state.message.sendingMessage);
 
   useEffect(() => {
-    dispatch(messageActions.get_single_user_messages(messageId));
-  }, [userMessageList]);
+    if (messageId && !sendingMessage) {
+      dispatch(messageActions.get_single_user_messages(messageId));
+    }
+  }, [sendingMessage]);
 
   const handleChange = (e) => {
     setMessage(e.target.value);
@@ -37,7 +40,7 @@ const UserMessageList = ({ userId, messageId }) => {
         {userMessageList.length === 0
           ? null
           : userMessageList.map((message) => {
-              return <MessageItem key={message.id} message={message} />;
+              return <MessageItem key={message.date} message={message} />;
             })}
       </ul>
       <InputGroup className="mb-1">
