@@ -205,7 +205,8 @@ export const users = (state = initialUsersState, action) => {
       return {
         ...state,
         loadingUsers: false,
-        users: action.users,
+        users: action.payload.users,
+        count: action.payload.count,
         errorMessage: "",
       };
     case userTypes.GETALL_USERS_FAILURE:
