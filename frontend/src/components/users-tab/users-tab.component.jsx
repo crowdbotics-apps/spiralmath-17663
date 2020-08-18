@@ -58,6 +58,7 @@ const UsersTab = () => {
 
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users.users);
+  const usersCount = useSelector((state) => state.users.count || 0);
   const usersListArray = users ? users : [];
   const usersListArrayPreview =
     usersListArray &&
@@ -504,7 +505,7 @@ const UsersTab = () => {
             </Table>
             <Pagination
               usersPerPage={usersPerPage}
-              totalUsers={users ? users.length : 0}
+              totalUsers={usersCount}
               paginate={paginate}
             />
           </div>
