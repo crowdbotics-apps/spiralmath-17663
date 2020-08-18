@@ -158,9 +158,9 @@ const deleteUserType = (id) => {
   );
 };
 
-const getAllUsers = () => {
+const getAllUsers = (pageNumber) => {
   return fetch(
-    "https://spiralmath-17663.botics.co/api/v1/user/",
+    `https://spiralmath-17663.botics.co/api/v1/user/?limit=10&offset=${pageNumber}`,
     requestOptions
   ).then(handleResponse);
 };
