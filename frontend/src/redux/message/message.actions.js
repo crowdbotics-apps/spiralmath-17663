@@ -55,7 +55,7 @@ const get_single_user_messages = (id) => {
       (data) => {
         dispatch({
           type: messageTypes.GET_SINGLE_USER_MESSAGES_SUCCESS,
-          payload: data.content,
+          payload: data.details.content,
         });
       },
       (error) => {
