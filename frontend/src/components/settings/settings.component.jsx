@@ -8,10 +8,10 @@ import settingActions from "../../redux/setting/setting.actions";
 import "../users-tab/users-tab.styles.css";
 
 const Settings = () => {
-  const intl = useIntl();
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const [file, setFile] = useState("");
+  const [terms, setTerms] = useState("");
 
   useEffect(() => {
     if (file) {
@@ -22,17 +22,32 @@ const Settings = () => {
     }
   }, [file]);
 
+  const handleTermsChange = (e) => {
+    setTerms(e);
+    console.log(e.replace("<br>", "<br/>"));
+  };
+
   const renderContactUsEmailForm = () => {
     return (
       <Form noValidate>
         <div className="px-4 py-4 border form-border border-color">
           <Form.Row>
             <Form.Group as={Col} md="2" className="align-self">
-              <h5 className="contact-us-email-text">Contact Us Email</h5>
+              <h5 className="contact-us-email-text">
+                <FormattedMessage
+                  defaultMessage="Contact Us Email"
+                  id="componentSettingsContact"
+                />
+              </h5>
             </Form.Group>
 
             <Form.Group as={Col} md="3" controlId="validationEmail">
-              <Form.Label className="label-color">Non Registered Users</Form.Label>
+              <Form.Label className="label-color">
+                <FormattedMessage
+                  defaultMessage=" Non Registered Users"
+                  id="componentSettingsNonRegUser"
+                />
+              </Form.Label>
               <Form.Control
                 type="email"
                 required
@@ -41,7 +56,12 @@ const Settings = () => {
               />
             </Form.Group>
             <Form.Group as={Col} md="3" controlId="validationEmail">
-              <Form.Label className="label-color">Registered Users</Form.Label>
+              <Form.Label className="label-color">
+                <FormattedMessage
+                  defaultMessage="Registered Users"
+                  id="componentSettingsRegUser"
+                />
+              </Form.Label>
               <Form.Control
                 type="email"
                 className="setting-input-style border-top-0 border-left-0 border-right-0 rounded-0"
@@ -74,6 +94,8 @@ const Settings = () => {
         <ReactQuill
           modules={Settings.modules}
           formats={Settings.formats}
+          onChange={handleTermsChange}
+          value={terms}
           placeholder="Write something amazing..."
           className="setting-input"
         />
@@ -118,7 +140,11 @@ const Settings = () => {
           ref={inputRef}
           onChange={handleFile}
         />
-        <Button variant="outline-primary" onClick={handleClick} className="upload-excel">
+        <Button
+          variant="outline-primary"
+          onClick={handleClick}
+          className="upload-excel"
+        >
           Upload Excel File
         </Button>
       </div>

@@ -30,6 +30,7 @@ const UserMessageList = ({ userId, messageId }) => {
         dispatch(
           messageActions.send_message({ userTo: userId, newMessage: message })
         );
+        setMessage("");
       }
     }
   };
