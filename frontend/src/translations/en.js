@@ -55,12 +55,16 @@ export default {
   pageUsersSettingsTab: "Settings",
   pageUsersLogout: "Logout",
 
-  pageQuestionsHeaader: "Questions Management",
+  pageQuestionsHeader: "Questions Management",
   pageQuestionsMyQuestionsTab: "My Questions",
   pageQuestionsAllQuestionsTab: "All Questions",
   pageQuestionsLogout: "Logout",
 
   pageResetLink: "Reset Password",
+
+  componentSettingsContact: "Contact Us Email",
+  componentSettingsNonRegUser: " Non Registered Users",
+  componentSettingsRegUser: "Registered Users",
 
   componentContactHeader: "Contact Us",
   componentContactEmailLable: "Email",

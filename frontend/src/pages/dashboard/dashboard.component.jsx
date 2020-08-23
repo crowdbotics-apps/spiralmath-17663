@@ -18,7 +18,6 @@ import ListUser from "../../components/list-user/list-user.component";
 import UserMessageList from "../../components/user-message-list/user-message-list.component";
 import { userActions } from "../../redux/user/user.actions";
 import messageActions from "../../redux/message/message.actions";
-// import CustomPopover from "../../components/custom-popover/custom-popover.component";
 import AdminDashboard from "../../components/admin-dashboard/adminDashboard.component";
 import UsersTab from "../../components/users-tab/users-tab.component";
 import UserTypes from "../../components/user-types/user-types.component";
@@ -162,7 +161,10 @@ const Dashboard = () => {
               </InputGroup.Text>
             </InputGroup.Prepend>
             <FormControl
-              placeholder="Search"
+              placeholder={intl.formatMessage({
+                id: "componentDashboardSearchUser",
+                defaultMessage: "Search",
+              })}
               aria-label="search-user"
               aria-describedby="basic-addon1"
               value={searchUser}
