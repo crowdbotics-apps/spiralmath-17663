@@ -59,6 +59,7 @@ class MessagesViewSet(
             content = [content]
         chat.content = content
         chat.status = False
+        chat.unread_counter = chat.unread_counter + 1
         chat.save()
         return Response({"details": MessagesFull(chat).data})
 
@@ -76,6 +77,7 @@ class MessagesViewSet(
             raise NotFound(detail='Chat is not found.')
         last_message = chat.content[-1]
         if last_message['to_id'] is user_id:
+            chat.unread_counter = 0
             chat.status = True
             chat.save()
         return Response({"details": MessagesFull(chat).data})
