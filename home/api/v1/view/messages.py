@@ -59,7 +59,10 @@ class MessagesViewSet(
             content = [content]
         chat.content = content
         chat.status = False
-        chat.unread_counter = chat.unread_counter + 1
+        if chat.unread_counter is None:
+            chat.unread_counter = 1
+        else:
+            chat.unread_counter = chat.unread_counter + 1
         chat.save()
         return Response({"details": MessagesFull(chat).data})
 
