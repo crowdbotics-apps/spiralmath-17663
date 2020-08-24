@@ -795,8 +795,9 @@ body .popup-save-btn:hover {
   height: 160px !important;
 }
 
-.setting-input .ql-snow, .border-color {
-  border-color: #E5E2E2 !important;
+.setting-input .ql-snow,
+.border-color {
+  border-color: #e5e2e2 !important;
 }
 
 .label-color {
@@ -854,7 +855,7 @@ body .setting-input-style {
 }
 
 body .alignment .upload-excel {
-  border: 1px solid #3C7EBF;
+  border: 1px solid #3c7ebf;
   border-radius: 55.4px;
   font-family: Open Sans;
   font-style: normal;
@@ -864,7 +865,7 @@ body .alignment .upload-excel {
   display: flex;
   align-items: center;
   text-align: center;
-  color: #3C7EBF;
+  color: #3c7ebf;
   padding: 10px 80px;
 }
 

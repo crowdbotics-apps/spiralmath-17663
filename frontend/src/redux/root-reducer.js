@@ -16,6 +16,7 @@ import {
 } from "./user/user.reducer";
 import modalReducer from "./modals/modals.reducer";
 import messageReducer from "./message/message.reducer";
+import mainSettings from "./setting/setting.reducer";
 
 const persistConfig = {
   key: "root",
@@ -36,6 +37,7 @@ const rootReducer = combineReducers({
   modal: modalReducer,
   resetUserPassword,
   message: messageReducer,
+  mainSettings,
 });
 
 export default persistReducer(persistConfig, rootReducer);
