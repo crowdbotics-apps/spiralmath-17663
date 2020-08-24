@@ -24,6 +24,7 @@ export default (state = initialState, action) => {
     case messageTypes.GET_SINGLE_USER_MESSAGES_REQUEST:
       return {
         ...state,
+        userMessageList: [],
         loadUserMessageList: true,
         errorUserMessageList: "",
       };

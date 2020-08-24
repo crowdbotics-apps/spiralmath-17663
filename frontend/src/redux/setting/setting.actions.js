@@ -1,13 +1,12 @@
 import settingService from "./setting.services";
 import settingTypes from "./setting.types";
-import { alertActions } from "../user/user.actions";
 
 const upload_file = (data) => {
   return (dispatch) => {
     dispatch({ type: settingTypes.FILE_UPLOAD_REQUEST });
     settingService.upload_file(data).then(
-      (data) => console.log(data),
-      (error) => console.log(error)
+      (data) => dispatch({ type: settingTypes.FILE_UPLOAD_SUCCESS }),
+      (error) => dispatch({ type: settingTypes.FILE_UPLOAD_FAILURE })
     );
   };
 };
@@ -25,9 +24,24 @@ const upload_terms = (data) => {
 const upload_emails = (data) => {
   return (dispatch) => {
     dispatch({ type: settingTypes.EMAIL_UPLOAD_REQUEST });
-    settingService.upload_email(data).then(
+    settingService.upload_emails(data).then(
       (data) => dispatch({ type: settingTypes.EMAIL_UPLOAD_SUCCESS }),
       (error) => dispatch({ type: settingTypes.EMAIL_UPLOAD_FAILURE })
+    );
+  };
+};
+
+const get_settings = () => {
+  return (dispatch) => {
+    dispatch({ type: settingTypes.GET_SETTINGS_REQUEST });
+    settingService.get_settings().then(
+      (data) =>
+        dispatch({
+          type: settingTypes.GET_SETTINGS_SUCCESS,
+          payload: data.results,
+        }),
+      (error) =>
+        dispatch({ type: settingTypes.GET_SETTINGS_FAILURE, payload: error })
     );
   };
 };
@@ -36,4 +50,5 @@ export default {
   upload_file,
   upload_terms,
   upload_emails,
+  get_settings,
 };
