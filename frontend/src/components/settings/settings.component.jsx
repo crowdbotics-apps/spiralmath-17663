@@ -31,16 +31,18 @@ const Settings = () => {
   let dispSet;
 
   if (settings.length > 0) {
+    console.log(settings);
     settings.map((el) => {
       if (
         el.path === "terms-condition" ||
-        el.path === "standard-code" ||
         el.path === "non-registered-email" ||
         el.path === "registered-email"
       ) {
         dispSet[el.path] = el.value;
+        console.log(el);
       }
     });
+    console.log(dispSet);
     setTerms(dispSet["terms-condition"]);
     setEmails({
       non_registered: dispSet["non-registered-email"],
