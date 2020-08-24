@@ -56,6 +56,7 @@ class Messages(models.Model):
     users = JSONField(unique=True, default=[])
     content = JSONField(blank=True, null=True, default={})
     status = models.BooleanField(default=False)
+    unread_counter = models.IntegerField(null=True, blank=True, default=None)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 

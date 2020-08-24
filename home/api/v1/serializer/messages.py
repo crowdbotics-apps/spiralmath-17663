@@ -5,13 +5,13 @@ from home.models import Messages
 class MessagesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Messages
-        fields = ['id', 'users', 'status', 'modified']
+        fields = ['id', 'users', 'status', 'unread_counter', 'modified']
 
 
 class MessagesFull(serializers.ModelSerializer):
     class Meta:
         model = Messages
-        fields = ['id', 'users', 'content', 'status']
+        fields = ['id', 'users', 'content', 'status', 'unread_counter']
 
 
 class MessagesCreate(serializers.ModelSerializer):
