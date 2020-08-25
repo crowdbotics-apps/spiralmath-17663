@@ -11,6 +11,8 @@ const initialState = {
   loadMessagesIdList: false,
   errorMessagesIdList: "",
   sendingMessage: false,
+  miniMessageList: [],
+  miniMessageListLoading: false,
 };
 
 export default (state = initialState, action) => {
@@ -60,6 +62,16 @@ export default (state = initialState, action) => {
       return { ...state, sendingMessage: false };
     case messageTypes.SEND_MESSAGE_FAILURE:
       return { ...state, sendingMessage: false };
+    case messageTypes.GET_MESSAGES_REQUEST:
+      return { ...state, miniMessageListLoading: true, miniMessageList: [] };
+    case messageTypes.GET_MESSAGES_SUCCESS:
+      return {
+        ...state,
+        miniMessageListLoading: false,
+        miniMessageList: action.payload,
+      };
+    case messageTypes.GET_MESSAGES_FAILURE:
+      return { ...state, miniMessageListLoading: false };
     default:
       return state;
   }

@@ -67,10 +67,30 @@ const get_single_user_messages = (id) => {
     );
   };
 };
+const get_messages = () => {
+  return (dispatch) => {
+    dispatch({ type: messageTypes.GET_MESSAGES_REQUEST });
+    messageService.get_messages().then(
+      (data) => {
+        dispatch({
+          type: messageTypes.GET_MESSAGES_SUCCESS,
+          payload: data.results,
+        });
+      },
+      (error) => {
+        dispatch({
+          type: messageTypes.GET_MESSAGES_FAILURE,
+          payload: error,
+        });
+      }
+    );
+  };
+};
 
 export default {
   get_message_user_list,
   get_messages_id,
   get_single_user_messages,
+  get_messages,
   send_message,
 };
