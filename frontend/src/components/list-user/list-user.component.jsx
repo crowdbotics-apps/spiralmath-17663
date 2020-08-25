@@ -11,7 +11,9 @@ const ListUser = ({ user }) => {
       </span>
       <div className="user-details">
         <span className="name">{user.fullname}</span>
-        <span className="msg-num">10</span>
+        {user.unreadCount ? (
+          <span className="msg-num">{user.unreadCount}</span>
+        ) : null}
       </div>
     </div>
   );

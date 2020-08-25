@@ -10,6 +10,8 @@ import { ReactComponent as EditIcon } from "../../assets/img/edit-icon.svg";
 const Settings = () => {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
+  const editorRef = useRef(null);
+  const emailsRef = useRef(null);
   const [emailsEditMode, setEmailsEditMode] = useState(false);
   const [termsEditMode, setTermsEditMode] = useState(false);
   const [file, setFile] = useState("");
@@ -28,31 +30,46 @@ const Settings = () => {
     (state) => state.mainSettings.uploadingTerms
   );
   const settings = useSelector((state) => state.mainSettings.settings);
-  let dispSet;
 
-  if (settings.length > 0) {
-    console.log(settings);
-    settings.map((el) => {
-      if (
-        el.path === "terms-condition" ||
-        el.path === "non-registered-email" ||
-        el.path === "registered-email"
-      ) {
-        dispSet[el.path] = el.value;
-        console.log(el);
+  useEffect(() => {
+    if (!uploadingTerms || !uploadingEmails) {
+      let dispSet = {};
+
+      if (settings.length > 0) {
+        console.log(settings);
+        settings.map((el) => {
+          if (
+            el.path === "terms-condition" ||
+            el.path === "non-registered-email" ||
+            el.path === "registered-email"
+          ) {
+            dispSet[el.path] = el.value;
+            console.log(el);
+          }
+        });
+        console.log(dispSet);
+        setTerms(dispSet["terms-condition"]);
+        setEmails({
+          non_registered: dispSet["non-registered-email"],
+          registered: dispSet["registered-email"],
+        });
       }
-    });
-    console.log(dispSet);
-    setTerms(dispSet["terms-condition"]);
-    setEmails({
-      non_registered: dispSet["non-registered-email"],
-      registered: dispSet["registered-email"],
-    });
-  }
+    }
+  }, [uploadingEmails, uploadingTerms]);
 
   useEffect(() => {
     dispatch(settingActions.get_settings());
   }, []);
+  useEffect(() => {
+    if (emailsEditMode) {
+      emailsRef.current.focus();
+    }
+  }, [emailsEditMode]);
+  useEffect(() => {
+    if (termsEditMode) {
+      editorRef.current.focus();
+    }
+  }, [termsEditMode]);
 
   useEffect(() => {
     if (file) {
@@ -112,6 +129,7 @@ const Settings = () => {
               <Form.Control
                 type="email"
                 value={emails.non_registered}
+                ref={emailsRef}
                 onChange={handleEmailChange("non_registered")}
                 required
                 className="setting-input-style border-top-0 border-left-0 border-right-0 rounded-0"
@@ -182,6 +200,7 @@ const Settings = () => {
           modules={Settings.modules}
           formats={Settings.formats}
           onChange={handleTermsChange}
+          ref={editorRef}
           value={terms}
           placeholder="Write something amazing..."
           className="setting-input"

@@ -40,6 +40,16 @@ const mapUserIdToMessageId = (id, list) => {
   return false;
 };
 
+const addUnreadCount = (userList, messageList) => {
+  for (let i = 0; i < userList.length; i++) {
+    for (let j = 0; j < messageList.length; j++) {
+      if (messageList[j].users[1] === userList[i].id) {
+        userList[i].unreadCount = messageList[j].unread_counter;
+      }
+    }
+  }
+};
+
 const Dashboard = () => {
   const intl = useIntl();
   const [keyUsersManagement, setKeyUsersManagement] = useState("dashboard");
@@ -59,6 +69,9 @@ const Dashboard = () => {
   const updatingUserType = useSelector(
     (state) => state.userTypes.updatingUserType
   );
+  let users = useSelector((state) => state.message.userList);
+  const message_id_list = useSelector((state) => state.message.messagesIdList);
+  const messages = useSelector((state) => state.message.miniMessageList);
 
   const localUser =
     localStorage.getItem("user") !== "undefined"
@@ -79,23 +92,25 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(messageActions.get_message_user_list());
+    dispatch(messageActions.get_messages());
   }, []);
 
   useEffect(() => {
     dispatch(messageActions.get_messages_id());
   }, []);
 
+  useEffect(() => {
+    addUnreadCount(users, messages);
+  }, [users, messages]);
+
   const handleLogout = () => {
     dispatch(userActions.logout());
   };
 
-  let users = useSelector((state) => state.message.userList);
-  const message_id_list = useSelector((state) => state.message.messagesIdList);
-
   if (users.length === 0) {
     users = [
       {
-        id: 83,
+        id: 91,
         email: "rajparmar7879+1@gmail.com",
         first_name: "Raj",
         last_name: "Parmar",
@@ -106,7 +121,7 @@ const Dashboard = () => {
         status: 10,
       },
       {
-        id: 98,
+        id: 100,
         email: "jcghvbjnk@iuyhvjh.com",
         first_name: "rem0",
         last_name: "nbdvb",
@@ -117,7 +132,29 @@ const Dashboard = () => {
         status: 20,
       },
       {
-        id: 32,
+        id: 101,
+        email: "david.robson@spiralmath.net",
+        first_name: "david",
+        last_name: "robson",
+        fullname: "poornesh",
+        user_type: null,
+        accepted_terms_date: null,
+        role: "Admin",
+        status: 10,
+      },
+      {
+        id: 123,
+        email: "david.robson@spiralmath.net",
+        first_name: "david",
+        last_name: "robson",
+        fullname: "poornesh",
+        user_type: null,
+        accepted_terms_date: null,
+        role: "Admin",
+        status: 10,
+      },
+      {
+        id: 110,
         email: "david.robson@spiralmath.net",
         first_name: "david",
         last_name: "robson",

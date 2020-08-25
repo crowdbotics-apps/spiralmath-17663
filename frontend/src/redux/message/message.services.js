@@ -26,9 +26,14 @@ const get_single_user_messages = (id) => {
   );
 };
 
+const get_messages = () => {
+  return fetch(`api/v1/messages/`, requestOptions).then(handleResponse);
+};
+
 export default {
   get_message_user_list,
   get_messages_id,
+  get_messages,
   get_single_user_messages,
   send_message,
 };
