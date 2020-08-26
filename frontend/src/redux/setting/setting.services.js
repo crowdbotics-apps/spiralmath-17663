@@ -8,7 +8,7 @@ const upload_file = (data) => {
     headers: {
       ...requestOptions.headers,
     },
-    body: data,
+    body: JSON.stringify(data),
   };
   return fetch(
     "https://spiralmath-17663.botics.co/api/v1/settings/upload/",
@@ -24,7 +24,7 @@ const upload_terms = (data) => {
   const requestOptionsModified = {
     ...requestOptions,
     method: "POST",
-    body: request,
+    body: JSON.stringify(request),
   };
   return fetch(
     "https://spiralmath-17663.botics.co/api/v1/settings/",
@@ -35,13 +35,13 @@ const upload_terms = (data) => {
 const upload_emails = (data) => {
   const request = {
     path: "emails",
-    value: JSON.stringify(data),
+    value: data,
   };
 
   const requestOptionsModified = {
     ...requestOptions,
     method: "POST",
-    body: request,
+    body: JSON.stringify(request),
   };
   return fetch(
     "https://spiralmath-17663.botics.co/api/v1/settings/",
