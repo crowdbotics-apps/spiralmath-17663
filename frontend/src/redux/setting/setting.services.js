@@ -7,7 +7,6 @@ const upload_file = (data) => {
     method: "POST",
     headers: {
       ...requestOptions.headers,
-      "Content-Type": "multipart/form-data",
     },
     body: data,
   };
@@ -24,7 +23,7 @@ const upload_terms = (data) => {
   };
   const requestOptionsModified = {
     ...requestOptions,
-    method: "PATCH",
+    method: "POST",
     body: request,
   };
   return fetch(
@@ -41,7 +40,7 @@ const upload_emails = (data) => {
 
   const requestOptionsModified = {
     ...requestOptions,
-    method: "PATCH",
+    method: "POST",
     body: request,
   };
   return fetch(
