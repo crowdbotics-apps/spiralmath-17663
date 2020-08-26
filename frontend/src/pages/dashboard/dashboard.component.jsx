@@ -57,6 +57,7 @@ const Dashboard = () => {
     "my-questions"
   );
   const [list, setList] = useState(true);
+  const [showMessagePopover, setShowMessagePopover] = useState(false);
   const [userData, setUserData] = useState({});
   const [searchUser, setSearchUser] = useState("");
   const [messageId, setMessageId] = useState();
@@ -340,11 +341,16 @@ const Dashboard = () => {
 
           <div className="d-flex justify-content-around pr-1 align-top pr-md-2">
             <OverlayTrigger
-              trigger="click"
+              show={showMessagePopover}
               placement="bottom"
               overlay={CustomPopover}
             >
-              <div className="pr-2 cursor-pointer pr-md-2 pr-lg-3 popup-active">
+              <div
+                className={`pr-2 cursor-pointer pr-md-2 pr-lg-3 ${
+                  showMessagePopover ? "popup-active" : ""
+                }`}
+                onClick={() => setShowMessagePopover(!showMessagePopover)}
+              >
                 <MessageIcon />
               </div>
             </OverlayTrigger>

@@ -5,6 +5,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ReactQuill from "react-quill";
 
 import settingActions from "../../redux/setting/setting.actions";
+import { emailsValidation } from "../../helpers/validation/settingsValidation";
 import { ReactComponent as EditIcon } from "../../assets/img/edit-icon.svg";
 
 const Settings = () => {
@@ -12,6 +13,8 @@ const Settings = () => {
   const inputRef = useRef(null);
   const editorRef = useRef(null);
   const emailsRef = useRef(null);
+  const [errors, setErrors] = useState({});
+  const [error, setError] = useState("");
   const [emailsEditMode, setEmailsEditMode] = useState(false);
   const [termsEditMode, setTermsEditMode] = useState(false);
   const [file, setFile] = useState("");
@@ -32,34 +35,34 @@ const Settings = () => {
   const settings = useSelector((state) => state.mainSettings.settings);
 
   useEffect(() => {
-    if (!uploadingTerms || !uploadingEmails) {
-      let dispSet = {};
+    let dispSet = {};
 
-      if (settings.length > 0) {
-        console.log(settings);
-        settings.map((el) => {
-          if (
-            el.path === "terms-condition" ||
-            el.path === "non-registered-email" ||
-            el.path === "registered-email"
-          ) {
-            dispSet[el.path] = el.value;
-            console.log(el);
-          }
-        });
-        console.log(dispSet);
-        setTerms(dispSet["terms-condition"]);
-        setEmails({
-          non_registered: dispSet["non-registered-email"],
-          registered: dispSet["registered-email"],
-        });
-      }
+    if (settings.length > 0) {
+      console.log(settings);
+      settings.map((el) => {
+        if (
+          el.path === "terms-condition" ||
+          el.path === "non-registered-email" ||
+          el.path === "registered-email"
+        ) {
+          dispSet[el.path] = el.value;
+          console.log(el);
+        }
+      });
+      console.log(dispSet);
+      setTerms(dispSet["terms-condition"]);
+      setEmails({
+        non_registered: dispSet["non-registered-email"],
+        registered: dispSet["registered-email"],
+      });
     }
-  }, [uploadingEmails, uploadingTerms]);
+  }, [settings]);
 
   useEffect(() => {
-    dispatch(settingActions.get_settings());
-  }, []);
+    if (!uploadingTerms || !uploadingEmails) {
+      dispatch(settingActions.get_settings());
+    }
+  }, [uploadingEmails, uploadingTerms]);
   useEffect(() => {
     if (emailsEditMode) {
       emailsRef.current.focus();
@@ -80,6 +83,12 @@ const Settings = () => {
     }
   }, [file]);
 
+  useEffect(() => {
+    if (Object.keys(errors).length === 0) {
+      submitEmails();
+    }
+  }, [errors]);
+
   const handleEmailsEditMode = () => {
     setEmailsEditMode(!emailsEditMode);
   };
@@ -90,15 +99,21 @@ const Settings = () => {
 
   const handleTermsChange = (e) => {
     setTerms(e.replace("<br>", "<br/>"));
+    setError("");
   };
 
   const handleEmailChange = (name) => (e) => {
     const { value } = e.target;
     setEmails({ ...emails, [name]: value });
+    setErrors({ ...errors, [name]: "" });
   };
 
   const emailsSubmit = (e) => {
     e.preventDefault();
+    setErrors(emailsValidation(emails));
+  };
+
+  const submitEmails = () => {
     if (emails.non_registered && emails.registered) {
       dispatch(settingActions.upload_emails());
     }
@@ -134,7 +149,11 @@ const Settings = () => {
                 required
                 className="setting-input-style border-top-0 border-left-0 border-right-0 rounded-0"
                 maxLength="50"
+                readOnly={!emailsEditMode}
               />
+              {errors.non_registered && (
+                <div className="text-danger">{errors.non_registered}</div>
+              )}
             </Form.Group>
             <Form.Group as={Col} md="3" controlId="validationEmail">
               <Form.Label className="label-color">
@@ -149,7 +168,11 @@ const Settings = () => {
                 onChange={handleEmailChange("registered")}
                 className="setting-input-style border-top-0 border-left-0 border-right-0 rounded-0"
                 maxLength="50"
+                readOnly={!emailsEditMode}
               />
+              {errors.registered && (
+                <div className="text-danger">{errors.registered}</div>
+              )}
             </Form.Group>
             <div className="emails-edit-icon" onClick={handleEmailsEditMode}>
               <EditIcon />
@@ -186,6 +209,8 @@ const Settings = () => {
     if (terms) {
       dispatch(settingActions.upload_terms(terms));
       setTerms("");
+    } else {
+      setError("This field is required");
     }
   };
 
@@ -204,8 +229,11 @@ const Settings = () => {
           value={terms}
           placeholder="Write something amazing..."
           className="setting-input"
+          readOnly={!termsEditMode}
         />
+
         <div className="my-4 d-flex justify-content-end bottom-btn-grp">
+          {error && <div className="text-danger">{error}</div>}
           {termsEditMode ? (
             <React.Fragment>
               <Button className="mr-4 cancel-btn">
