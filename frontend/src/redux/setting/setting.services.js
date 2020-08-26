@@ -6,7 +6,8 @@ const upload_file = (data) => {
     ...requestOptions,
     method: "POST",
     headers: {
-      ...requestOptions.headers,
+      "X-CSRFTOKEN": requestOptions.headers["X-CSRFTOKEN"],
+      "Accept-Language": requestOptions.headers["Accept-Language"],
     },
     body: JSON.stringify(data),
   };
