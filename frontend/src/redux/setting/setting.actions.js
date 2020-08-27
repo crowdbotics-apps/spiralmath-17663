@@ -21,12 +21,26 @@ const upload_terms = (data) => {
   };
 };
 
-const upload_emails = (data) => {
+const upload_non_registered = (data) => {
   return (dispatch) => {
-    dispatch({ type: settingTypes.EMAIL_UPLOAD_REQUEST });
-    settingService.upload_emails(data).then(
-      (data) => dispatch({ type: settingTypes.EMAIL_UPLOAD_SUCCESS }),
-      (error) => dispatch({ type: settingTypes.EMAIL_UPLOAD_FAILURE })
+    dispatch({ type: settingTypes.NON_UPLOAD_REQUEST });
+    settingService.upload_non_registered(data).then(
+      (data) => dispatch({ type: settingTypes.NON_UPLOAD_SUCCESS }),
+      (error) => dispatch({ type: settingTypes.NON_UPLOAD_FAILURE })
+    );
+  };
+};
+
+const upload_registered = (data) => {
+  return (dispatch) => {
+    dispatch({ type: settingTypes.R_UPLOAD_REQUEST });
+    settingService.upload_registered(data).then(
+      (data) => {
+        dispatch({ type: settingTypes.R_UPLOAD_SUCCESS });
+      },
+      (error) => {
+        dispatch({ type: settingTypes.R_UPLOAD_FAILURE });
+      }
     );
   };
 };
@@ -49,6 +63,7 @@ const get_settings = () => {
 export default {
   upload_file,
   upload_terms,
-  upload_emails,
+  upload_non_registered,
+  upload_registered,
   get_settings,
 };

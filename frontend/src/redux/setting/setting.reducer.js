@@ -2,7 +2,8 @@ import settingTypes from "./setting.types";
 
 const initialState = {
   uploadingFile: false,
-  uploadingEmails: false,
+  uploadingNon: false,
+  uploadingR: false,
   uploadingTerms: false,
   gettingSettings: false,
   settings: [],
@@ -22,12 +23,18 @@ export default (state = initialState, action) => {
       return { ...state, uploadingTerms: false };
     case settingTypes.TERMS_UPLOAD_FAILURE:
       return { ...state, uploadingTerms: false };
-    case settingTypes.EMAIL_UPLOAD_REQUEST:
-      return { ...state, uploadingEmails: true };
-    case settingTypes.EMAIL_UPLOAD_SUCCESS:
-      return { ...state, uploadingEmails: false };
-    case settingTypes.EMAIL_UPLOAD_FAILURE:
-      return { ...state, uploadingEmails: false };
+    case settingTypes.NON_UPLOAD_REQUEST:
+      return { ...state, uploadingNon: true };
+    case settingTypes.NON_UPLOAD_SUCCESS:
+      return { ...state, uploadingNon: false };
+    case settingTypes.NON_UPLOAD_FAILURE:
+      return { ...state, uploadingNon: false };
+    case settingTypes.R_UPLOAD_REQUEST:
+      return { ...state, uploadingR: true };
+    case settingTypes.R_UPLOAD_SUCCESS:
+      return { ...state, uploadingR: false };
+    case settingTypes.R_UPLOAD_FAILURE:
+      return { ...state, uploadingR: false };
     case settingTypes.GET_SETTINGS_REQUEST:
       return { ...state, gettingSettings: true, settings: [] };
     case settingTypes.GET_SETTINGS_FAILURE:

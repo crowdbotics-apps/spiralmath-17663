@@ -1,0 +1,17 @@
+.emails-edit-icon {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
+
+.terms-edit-icon {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
+
+form-control:disabled,
+.form-control[readonly] {
+  background-color: white !important;
+  opacity: 1;
+}
