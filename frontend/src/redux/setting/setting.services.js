@@ -28,7 +28,7 @@ const upload_terms = (data) => {
     body: JSON.stringify(request),
   };
   return fetch(
-    "https://spiralmath-17663.botics.co/api/v1/settings/1",
+    "https://spiralmath-17663.botics.co/api/v1/settings/1/",
     requestOptionsModified
   ).then(handleResponse);
 };
@@ -45,7 +45,7 @@ const upload_non_registered = (data) => {
     body: JSON.stringify(request),
   };
   return fetch(
-    "https://spiralmath-17663.botics.co/api/v1/settings/2",
+    "https://spiralmath-17663.botics.co/api/v1/settings/2/",
     requestOptionsModified
   ).then(handleResponse);
 };
@@ -54,7 +54,6 @@ const upload_registered = (data) => {
     path: "registered-email",
     value: data.registered,
   };
-  console.log("Req", request);
 
   const requestOptionsModified = {
     ...requestOptions,
@@ -62,7 +61,7 @@ const upload_registered = (data) => {
     body: JSON.stringify(request),
   };
   return fetch(
-    "https://spiralmath-17663.botics.co/api/v1/settings/3",
+    "https://spiralmath-17663.botics.co/api/v1/settings/3/",
     requestOptionsModified
   ).then(handleResponse);
 };

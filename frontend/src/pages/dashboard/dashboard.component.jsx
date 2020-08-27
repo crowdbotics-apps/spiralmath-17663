@@ -274,25 +274,25 @@ const Dashboard = () => {
         )}
       </Popover.Title>
 
-      <div className="list">
+      <div>
         {list ? (
-          users.map((user) => (
-            <div
-              key={user.id}
-              onClick={handleUserMessages({
-                userId: user.id,
-                name: user.fullname,
-              })}
-            >
-              <ListUser user={user} />
-            </div>
-          ))
+          <div className="list">
+            {users.map((user) => (
+              <div
+                key={user.id}
+                onClick={handleUserMessages({
+                  userId: user.id,
+                  name: user.fullname,
+                })}
+              >
+                <ListUser user={user} />
+              </div>
+            ))}
+          </div>
         ) : (
           <UserMessageList userId={userData.userId} messageId={messageId} />
         )}
       </div>
-
-      <Popover.Content></Popover.Content>
     </Popover>
   );
 
