@@ -30,10 +30,7 @@ const logout = () => {
   };
   // remove user from local storage to log user out
 
-  return fetch(
-    "https://spiralmath-17663.botics.co/api/v1/auth/logout/",
-    requestOptionsModified
-  )
+  return fetch("api/v1/auth/logout/", requestOptionsModified)
     .then(handleResponse)
     .then(() => {
       localStorage.removeItem("user");

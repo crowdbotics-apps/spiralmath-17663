@@ -11,6 +11,8 @@
 
 .list {
   padding: 0 15px 15px 15px;
+  height: 340px;
+  overflow-y: auto;
 }
 
 .user-details {

@@ -9,7 +9,7 @@ const upload_file = (data) => {
       "X-CSRFTOKEN": requestOptions.headers["X-CSRFTOKEN"],
       "Accept-Language": requestOptions.headers["Accept-Language"],
     },
-    body: JSON.stringify(data),
+    body: data,
   };
   return fetch(
     "https://spiralmath-17663.botics.co/api/v1/settings/upload/",
@@ -24,28 +24,45 @@ const upload_terms = (data) => {
   };
   const requestOptionsModified = {
     ...requestOptions,
-    method: "POST",
+    method: "PATCH",
     body: JSON.stringify(request),
   };
   return fetch(
-    "https://spiralmath-17663.botics.co/api/v1/settings/",
+    "https://spiralmath-17663.botics.co/api/v1/settings/1",
     requestOptionsModified
   ).then(handleResponse);
 };
 
-const upload_emails = (data) => {
+const upload_non_registered = (data) => {
   const request = {
-    path: "emails",
-    value: data,
+    path: "non-registered-email",
+    value: data.non_registered,
   };
 
   const requestOptionsModified = {
     ...requestOptions,
-    method: "POST",
+    method: "PATCH",
     body: JSON.stringify(request),
   };
   return fetch(
-    "https://spiralmath-17663.botics.co/api/v1/settings/",
+    "https://spiralmath-17663.botics.co/api/v1/settings/2",
+    requestOptionsModified
+  ).then(handleResponse);
+};
+const upload_registered = (data) => {
+  const request = {
+    path: "registered-email",
+    value: data.registered,
+  };
+  console.log("Req", request);
+
+  const requestOptionsModified = {
+    ...requestOptions,
+    method: "PATCH",
+    body: JSON.stringify(request),
+  };
+  return fetch(
+    "https://spiralmath-17663.botics.co/api/v1/settings/3",
     requestOptionsModified
   ).then(handleResponse);
 };
@@ -59,7 +76,8 @@ const get_settings = () => {
 
 export default {
   upload_file,
-  upload_emails,
+  upload_non_registered,
+  upload_registered,
   upload_terms,
   get_settings,
 };

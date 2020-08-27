@@ -7,6 +7,7 @@ import ReactQuill from "react-quill";
 import settingActions from "../../redux/setting/setting.actions";
 import { emailsValidation } from "../../helpers/validation/settingsValidation";
 import { ReactComponent as EditIcon } from "../../assets/img/edit-icon.svg";
+import "./settings.styles.css";
 
 const Settings = () => {
   const dispatch = useDispatch();
@@ -26,12 +27,12 @@ const Settings = () => {
   const uploadingFile = useSelector(
     (state) => state.mainSettings.uploadingFile
   );
-  const uploadingEmails = useSelector(
-    (state) => state.mainSettings.uploadingEmails
-  );
+  const uploadingNon = useSelector((state) => state.mainSettings.uploadingNon);
+  const uploadingR = useSelector((state) => state.mainSettings.uploadingR);
   const uploadingTerms = useSelector(
     (state) => state.mainSettings.uploadingTerms
   );
+
   const settings = useSelector((state) => state.mainSettings.settings);
 
   useEffect(() => {
@@ -46,7 +47,6 @@ const Settings = () => {
           el.path === "registered-email"
         ) {
           dispSet[el.path] = el.value;
-          console.log(el);
         }
       });
       console.log(dispSet);
@@ -59,10 +59,10 @@ const Settings = () => {
   }, [settings]);
 
   useEffect(() => {
-    if (!uploadingTerms || !uploadingEmails) {
+    if (!uploadingTerms || !uploadingNon || !uploadingR) {
       dispatch(settingActions.get_settings());
     }
-  }, [uploadingEmails, uploadingTerms]);
+  }, [uploadingNon, uploadingR, uploadingTerms]);
   useEffect(() => {
     if (emailsEditMode) {
       emailsRef.current.focus();
@@ -85,7 +85,11 @@ const Settings = () => {
 
   useEffect(() => {
     if (Object.keys(errors).length === 0) {
-      submitEmails();
+      if (emails.non_registered && emails.registered) {
+        dispatch(settingActions.upload_non_registered(emails));
+        dispatch(settingActions.upload_registered(emails));
+      }
+      setEmails({ non_registered: "", registered: "" });
     }
   }, [errors]);
 
@@ -113,17 +117,10 @@ const Settings = () => {
     setErrors(emailsValidation(emails));
   };
 
-  const submitEmails = () => {
-    if (emails.non_registered && emails.registered) {
-      dispatch(settingActions.upload_emails());
-    }
-    setEmails({ non_registered: "", registered: "" });
-  };
-
   const renderContactUsEmailForm = () => {
     return (
       <Form noValidate onSubmit={emailsSubmit}>
-        <div className="px-4 py-4 border form-border border-color">
+        <div className="px-4 py-4 border form-border border-color position-relative ">
           <Form.Row>
             <Form.Group as={Col} md="2" className="align-self">
               <h5 className="contact-us-email-text">
@@ -189,7 +186,7 @@ const Settings = () => {
                 />
               </Button>
               <Button type="submit" className="save-btn">
-                {uploadingEmails && (
+                {uploadingNon && uploadingR && (
                   <span className="spinner-border spinner-border-sm mr-1 text-primary"></span>
                 )}
                 <FormattedMessage
@@ -216,7 +213,7 @@ const Settings = () => {
 
   const renderSettingsEditor = () => {
     return (
-      <div>
+      <div className="position-relative">
         <div className="terms-edit-icon" onClick={handleTermsEditMode}>
           <EditIcon />
         </div>
