@@ -11,7 +11,12 @@
 
 .list {
   padding: 0 15px 15px 15px;
-  height: 340px;
+  height: 250px;
+  overflow-y: auto;
+}
+
+.m-list {
+  height: 200px;
   overflow-y: auto;
 }
 
@@ -81,6 +86,10 @@
   background-color: inherit;
   border: none;
   border-radius: 0;
+}
+
+.user-message-list {
+  padding: 5px;
 }
 
 .user-message-list ul {

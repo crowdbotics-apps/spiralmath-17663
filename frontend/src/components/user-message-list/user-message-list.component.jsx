@@ -37,7 +37,7 @@ const UserMessageList = ({ userId, messageId }) => {
 
   return (
     <div className="user-message-list">
-      <ul>
+      <ul className="m-list">
         {userMessageList.length === 0
           ? null
           : userMessageList.map((message) => {
