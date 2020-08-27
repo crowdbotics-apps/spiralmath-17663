@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Form, Button, Row, Col, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { FormattedMessage } from "react-intl";
+import parse from "html-react-parser";
 
 import { validateSignup } from "../../helpers/validation/validationSignUp";
 import { history } from "../../helpers/history";
@@ -194,7 +195,7 @@ const SignUp = ({ show, toggleShow }) => {
             // </div>
           }
 
-          {settings ? settings : null}
+          {settings ? parse(settings) : null}
         </Modal.Body>
       </Modal>
     );
