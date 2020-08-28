@@ -49,6 +49,7 @@ const Settings = () => {
                dispSet[el.path] = el.value;
             }
          });
+
          console.log(dispSet);
          setTerms(dispSet["terms-condition"]);
          setEmails({
@@ -63,6 +64,7 @@ const Settings = () => {
          dispatch(settingActions.get_settings());
       }
    }, [uploadingNon, uploadingR, uploadingTerms]);
+
    useEffect(() => {
       if (emailsEditMode) {
          emailsRef.current.focus();
@@ -102,7 +104,7 @@ const Settings = () => {
    };
 
    const handleTermsChange = (e) => {
-      setTerms(terms);
+      setTerms(e);
       setError("");
    };
 
