@@ -1,5 +1,4 @@
 import React from "react";
-import Select from "react-select";
 import { useIntl } from "react-intl";
 import { Row, Col, Table, Form, Button, Modal } from "react-bootstrap";
 
