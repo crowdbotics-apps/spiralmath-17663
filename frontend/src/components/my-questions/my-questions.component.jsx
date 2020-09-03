@@ -1,7 +1,10 @@
 import React from "react";
 
+//components
+import EditorQuestionsTable from "../editor-questions-table/editor-questions-table.component";
+
 const MyQuestions = () => {
-  return <h3 className="text-muted text-center">Coming soon .... </h3>;
+   return <EditorQuestionsTable />;
 };
 
 export default MyQuestions;
