@@ -80,8 +80,8 @@ const Dashboard = () => {
    }, []);
 
    useEffect(() => {
-      dispatch(messageActions.get_messages_id());
-   }, [messageId]);
+      if (list) dispatch(messageActions.get_messages_id());
+   }, [list]);
 
    useEffect(() => {
       setUnreadCount(addUnreadCount(users, message_id_list));
