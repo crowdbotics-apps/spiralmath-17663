@@ -8,7 +8,7 @@ export const mapUserIdToMessageId = (id, list) => {
 };
 
 export const addUnreadCount = (userList, messageList) => {
-   let unreadCount;
+   let unreadCount = 0;
    for (let i = 0; i < userList.length; i++) {
       for (let j = 0; j < messageList.length; j++) {
          if (messageList[j].users[1] === userList[i].id) {

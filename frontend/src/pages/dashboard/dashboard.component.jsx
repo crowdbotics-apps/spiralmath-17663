@@ -34,7 +34,6 @@ import { ReactComponent as BackIcon } from "../../assets/img/back-icon.svg";
 import { ReactComponent as Logo } from "../../assets/img/logo.svg";
 
 const Dashboard = () => {
-   let unreadCount = 0;
    const intl = useIntl();
    const [keyUsersManagement, setKeyUsersManagement] = useState("dashboard");
    const [keyQuestionsManagement, setKeyQuestionsManagement] = useState(
@@ -45,6 +44,7 @@ const Dashboard = () => {
    const [userData, setUserData] = useState({});
    const [searchUser, setSearchUser] = useState("");
    const [messageId, setMessageId] = useState();
+   const [unreadCount, setUnreadCount] = useState(0);
    const dispatch = useDispatch();
    const history = useHistory();
 
@@ -56,7 +56,6 @@ const Dashboard = () => {
    );
    let users = useSelector((state) => state.message.userList);
    const message_id_list = useSelector((state) => state.message.messagesIdList);
-   const messages = useSelector((state) => state.message.miniMessageList);
    const questionType = useSelector((state) => state.local.questions);
 
    const localUser =
@@ -78,135 +77,19 @@ const Dashboard = () => {
 
    useEffect(() => {
       dispatch(messageActions.get_message_user_list());
-      dispatch(messageActions.get_messages());
    }, []);
 
    useEffect(() => {
       dispatch(messageActions.get_messages_id());
-   }, []);
+   }, [messageId]);
 
    useEffect(() => {
-      unreadCount = addUnreadCount(users, messages);
-   }, [users, messages]);
+      setUnreadCount(addUnreadCount(users, message_id_list));
+   }, [users, message_id_list]);
 
    const handleLogout = () => {
       dispatch(userActions.logout());
    };
-
-   if (users.length === 0) {
-      users = [
-         {
-            id: 91,
-            email: "rajparmar7879+1@gmail.com",
-            first_name: "Raj",
-            last_name: "Parmar",
-            fullname: "Raj Parmar",
-            user_type: null,
-            accepted_terms_date: null,
-            role: "Admin",
-            status: 10,
-         },
-         {
-            id: 100,
-            email: "jcghvbjnk@iuyhvjh.com",
-            first_name: "rem0",
-            last_name: "nbdvb",
-            fullname: "Yogesh Vishnole",
-            user_type: 84,
-            accepted_terms_date: null,
-            role: "Editor",
-            status: 20,
-         },
-         {
-            id: 101,
-            email: "david.robson@spiralmath.net",
-            first_name: "david",
-            last_name: "robson",
-            fullname: "poornesh",
-            user_type: null,
-            accepted_terms_date: null,
-            role: "Admin",
-            status: 10,
-         },
-         {
-            id: 123,
-            email: "david.robson@spiralmath.net",
-            first_name: "david",
-            last_name: "robson",
-            fullname: "poornesh",
-            user_type: null,
-            accepted_terms_date: null,
-            role: "Admin",
-            status: 10,
-         },
-         {
-            id: 113,
-            email: "david.robson@spiralmath.net",
-            first_name: "david",
-            last_name: "robson",
-            fullname: "poornesh",
-            user_type: null,
-            accepted_terms_date: null,
-            role: "Admin",
-            status: 10,
-         },
-         {
-            id: 1102,
-            email: "david.robson@spiralmath.net",
-            first_name: "david",
-            last_name: "robson",
-            fullname: "poornesh",
-            user_type: null,
-            accepted_terms_date: null,
-            role: "Admin",
-            status: 10,
-         },
-         {
-            id: 1101,
-            email: "david.robson@spiralmath.net",
-            first_name: "david",
-            last_name: "robson",
-            fullname: "poornesh",
-            user_type: null,
-            accepted_terms_date: null,
-            role: "Admin",
-            status: 10,
-         },
-         {
-            id: 11,
-            email: "david.robson@spiralmath.net",
-            first_name: "david",
-            last_name: "robson",
-            fullname: "poornesh",
-            user_type: null,
-            accepted_terms_date: null,
-            role: "Admin",
-            status: 10,
-         },
-         {
-            id: 110,
-            email: "david.robson@spiralmath.net",
-            first_name: "david",
-            last_name: "robson",
-            fullname: "poornesh",
-            user_type: null,
-            accepted_terms_date: null,
-            role: "Admin",
-            status: 10,
-         },
-         {
-            id: 10,
-            email: "david.robson@spiralmath.net",
-            first_name: "david",
-            last_name: "robson",
-            fullname: "poornesh",
-            user_type: null,
-            accepted_terms_date: null,
-            role: "Admin",
-            status: 10,
-         },
-      ];
-   }
 
    users = users.filter(
       (user) =>
@@ -316,7 +199,6 @@ const Dashboard = () => {
                <Nav.Link href="#">
                   <pre> </pre>
                </Nav.Link>
-
                {localUser &&
                   localUser.userObj &&
                   localUser.userObj.role === "Admin" && (
@@ -361,48 +243,51 @@ const Dashboard = () => {
                      </Tabs>
                   )}
                {localUser &&
-               localUser.userObj &&
-               localUser.userObj.role === "Editor" &&
-               questionType === false ? (
-                  <Tabs
-                     id="controlled-tab"
-                     className="mr-auto navbar-style justify-content-center flex-grow-1 border-bottom-0"
-                     activeKey={keyQuestionsManagement}
-                     onSelect={(k) => setKeyQuestionsManagement(k)}
-                  >
-                     <Tab
-                        className="py-0 border-0 mr-5"
-                        eventKey="my-questions"
-                        title={intl.formatMessage({
-                           id: "pageQuestionsMyQuestionsTab",
-                           defaultMessage: "My Questions",
-                        })}
-                     ></Tab>
-                     <Tab
-                        className="py-0 border-0 ml-5"
-                        eventKey="all-questions"
-                        title={intl.formatMessage({
-                           id: "pageQuestionsAllQuestionsTab",
-                           defaultMessage: "All Questions",
-                        })}
-                     ></Tab>
-                  </Tabs>
-               ) : (
-                  <Tabs
-                     id="controlled-tab"
-                     className="mr-auto navbar-style justify-content-center flex-grow-1 border-bottom-0"
-                  >
-                     <Tab
-                        className="py-0 border-0 ml-5 single-tab"
-                        eventKey="questions"
-                        title={intl.formatMessage({
-                           id: "pageQuestionsQuestionsTab",
-                           defaultMessage: "Questions",
-                        })}
-                     ></Tab>
-                  </Tabs>
-               )}
-
+                  localUser.userObj &&
+                  localUser.userObj.role === "Editor" &&
+                  questionType === false && (
+                     <Tabs
+                        id="controlled-tab"
+                        className="mr-auto navbar-style justify-content-center flex-grow-1 border-bottom-0"
+                        activeKey={keyQuestionsManagement}
+                        onSelect={(k) => setKeyQuestionsManagement(k)}
+                     >
+                        <Tab
+                           className="py-0 border-0 mr-5"
+                           eventKey="my-questions"
+                           title={intl.formatMessage({
+                              id: "pageQuestionsMyQuestionsTab",
+                              defaultMessage: "My Questions",
+                           })}
+                        ></Tab>
+                        <Tab
+                           className="py-0 border-0 ml-5"
+                           eventKey="all-questions"
+                           title={intl.formatMessage({
+                              id: "pageQuestionsAllQuestionsTab",
+                              defaultMessage: "All Questions",
+                           })}
+                        ></Tab>
+                     </Tabs>
+                  )}
+               {localUser &&
+                  localUser.userObj &&
+                  localUser.userObj.role === "Editor" &&
+                  questionType !== false && (
+                     <Tabs
+                        id="controlled-tab"
+                        className="mr-auto navbar-style justify-content-center flex-grow-1 border-bottom-0"
+                     >
+                        <Tab
+                           className="py-0 border-0 ml-5 single-tab"
+                           eventKey="questions"
+                           title={intl.formatMessage({
+                              id: "pageQuestionsQuestionsTab",
+                              defaultMessage: "Questions",
+                           })}
+                        ></Tab>
+                     </Tabs>
+                  )}
                <div className="d-flex justify-content-around pr-1 align-top pr-md-2">
                   <OverlayTrigger
                      show={showMessagePopover}

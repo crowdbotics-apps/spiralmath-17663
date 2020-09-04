@@ -392,7 +392,12 @@ export const getSettings = () => {
 const sendInvitation = (id) => {
    return (dispatch) => {
       userService.sendInvitation(id).then(
-         (res) => dispatch(alertActions.success(res.detail)),
+         () =>
+            dispatch(
+               alertActions.success(
+                  "Invitation instructions have been sent to the user"
+               )
+            ),
          () => dispatch(alertActions.error("Sending Ivitation Failed ! Retry"))
       );
    };
