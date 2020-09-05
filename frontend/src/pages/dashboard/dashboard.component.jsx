@@ -103,6 +103,10 @@ const Dashboard = () => {
       setList(!list);
    };
 
+   const setMessageIdProp = (value) => {
+      setMessageId(value);
+   };
+
    const backToUserList = () => {
       setList(!list);
    };
@@ -164,6 +168,7 @@ const Dashboard = () => {
                <UserMessageList
                   userId={userData.userId}
                   messageId={messageId}
+                  setMessageIdProp={setMessageIdProp}
                />
             )}
          </div>

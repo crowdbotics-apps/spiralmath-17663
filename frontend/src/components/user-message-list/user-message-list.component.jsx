@@ -4,20 +4,30 @@ import { useDispatch, useSelector } from "react-redux";
 
 import messageActions from "../../redux/message/message.actions";
 import MessageItem from "../message-item/message-item.component";
+import { mapUserIdToMessageId } from "../../helpers/utils";
 
-const UserMessageList = ({ userId, messageId }) => {
+const UserMessageList = ({ userId, messageId, setMessageIdProp }) => {
    const dispatch = useDispatch();
    const [message, setMessage] = useState("");
-   const userMessageList = useSelector(
-      (state) => state.message.userMessageList
-   );
+   let userMessageList = useSelector((state) => state.message.userMessageList);
+
    const sendingMessage = useSelector((state) => state.message.sendingMessage);
+   const message_id_list = useSelector((state) => state.message.messagesIdList);
+   if (!messageId) {
+      userMessageList = [];
+   }
 
    useEffect(() => {
       if (messageId && !sendingMessage) {
          dispatch(messageActions.get_single_user_messages(messageId));
+      } else if (!messageId) {
+         dispatch(messageActions.get_messages_id());
       }
-   }, [sendingMessage]);
+   }, [sendingMessage, messageId]);
+
+   useEffect(() => {
+      setMessageIdProp(mapUserIdToMessageId(userId, message_id_list));
+   }, [message_id_list]);
 
    const handleChange = (e) => {
       setMessage(e.target.value);
