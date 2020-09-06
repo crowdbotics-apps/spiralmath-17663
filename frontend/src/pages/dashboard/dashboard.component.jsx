@@ -96,7 +96,7 @@ const Dashboard = () => {
          user.fullname &&
          user.fullname.toLowerCase().includes(searchUser.toLowerCase())
    );
-   users = users.filter((user) => user.id == localUser.userObj.id);
+   users = users.filter((user) => user.id === localUser.userObj.id);
 
    const handleUserMessages = (userDataObj) => () => {
       setUserData(userDataObj);
@@ -153,22 +153,17 @@ const Dashboard = () => {
          <div>
             {list ? (
                <div className="list">
-                  {users.map((user) => {
-                     if (user.id === localUser.userObj.id) {
-                        return null;
-                     }
-                     return (
-                        <div
-                           key={user.id}
-                           onClick={handleUserMessages({
-                              userId: user.id,
-                              name: user.fullname,
-                           })}
-                        >
-                           <ListUser user={user} />
-                        </div>
-                     );
-                  })}
+                  {users.map((user) => (
+                     <div
+                        key={user.id}
+                        onClick={handleUserMessages({
+                           userId: user.id,
+                           name: user.fullname,
+                        })}
+                     >
+                        <ListUser user={user} />
+                     </div>
+                  ))}
                </div>
             ) : (
                <UserMessageList
