@@ -96,7 +96,7 @@ const Dashboard = () => {
          user.fullname &&
          user.fullname.toLowerCase().includes(searchUser.toLowerCase())
    );
-   users = users.filter((user) => user.id === localUser.userObj.id);
+   users = users.filter((user) => user.id !== localUser.userObj.id);
 
    const handleUserMessages = (userDataObj) => () => {
       setUserData(userDataObj);
