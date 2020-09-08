@@ -1,82 +1,82 @@
 import handleResponse from "../../helpers/handleResponse";
-import requestOptions from "../../helpers/requestOptions";
+import authHeader from "../../helpers/authHeader";
 
 const upload_file = (data) => {
-  const requestOptionsModified = {
-    ...requestOptions,
-    method: "POST",
-    headers: {
-      "X-CSRFTOKEN": requestOptions.headers["X-CSRFTOKEN"],
-      "Accept-Language": requestOptions.headers["Accept-Language"],
-    },
-    body: data,
-  };
-  return fetch(
-    "https://spiralmath-17663.botics.co/api/v1/settings/upload/",
-    requestOptionsModified
-  ).then(handleResponse);
+   const requestOptions = {
+      method: "POST",
+      headers: authHeader(),
+      body: data,
+   };
+   return fetch(
+      "https://spiralmath-17663.botics.co/api/v1/settings/upload/",
+      requestOptions
+   ).then(handleResponse);
 };
 
 const upload_terms = (data) => {
-  const request = {
-    path: "terms-condition",
-    value: data,
-  };
-  const requestOptionsModified = {
-    ...requestOptions,
-    method: "PATCH",
-    body: JSON.stringify(request),
-  };
-  return fetch(
-    "https://spiralmath-17663.botics.co/api/v1/settings/1/",
-    requestOptionsModified
-  ).then(handleResponse);
+   const request = {
+      path: "terms-condition",
+      value: data,
+   };
+   const requestOptions = {
+      method: "PATCH",
+      headers: authHeader(),
+      body: JSON.stringify(request),
+   };
+   return fetch(
+      "https://spiralmath-17663.botics.co/api/v1/settings/1/",
+      requestOptions
+   ).then(handleResponse);
 };
 
 const upload_non_registered = (data) => {
-  const request = {
-    path: "non-registered-email",
-    value: data.non_registered,
-  };
+   const request = {
+      path: "non-registered-email",
+      value: data.non_registered,
+   };
 
-  const requestOptionsModified = {
-    ...requestOptions,
-    method: "PATCH",
-    body: JSON.stringify(request),
-  };
-  return fetch(
-    "https://spiralmath-17663.botics.co/api/v1/settings/2/",
-    requestOptionsModified
-  ).then(handleResponse);
+   const requestOptions = {
+      method: "PATCH",
+      headers: authHeader(),
+      body: JSON.stringify(request),
+   };
+   return fetch(
+      "https://spiralmath-17663.botics.co/api/v1/settings/2/",
+      requestOptions
+   ).then(handleResponse);
 };
 const upload_registered = (data) => {
-  const request = {
-    path: "registered-email",
-    value: data.registered,
-  };
+   const request = {
+      path: "registered-email",
+      value: data.registered,
+   };
 
-  const requestOptionsModified = {
-    ...requestOptions,
-    method: "PATCH",
-    body: JSON.stringify(request),
-  };
-  return fetch(
-    "https://spiralmath-17663.botics.co/api/v1/settings/3/",
-    requestOptionsModified
-  ).then(handleResponse);
+   const requestOptions = {
+      method: "PATCH",
+      headers: authHeader(),
+      body: JSON.stringify(request),
+   };
+   return fetch(
+      "https://spiralmath-17663.botics.co/api/v1/settings/3/",
+      requestOptions
+   ).then(handleResponse);
 };
 
 const get_settings = () => {
-  return fetch(
-    "https://spiralmath-17663.botics.co/api/v1/settings/",
-    requestOptions
-  ).then(handleResponse);
+   const requestOptions = {
+      method: "GET",
+      headers: authHeader(),
+   };
+   return fetch(
+      "https://spiralmath-17663.botics.co/api/v1/settings/",
+      requestOptions
+   ).then(handleResponse);
 };
 
 export default {
-  upload_file,
-  upload_non_registered,
-  upload_registered,
-  upload_terms,
-  get_settings,
+   upload_file,
+   upload_non_registered,
+   upload_registered,
+   upload_terms,
+   get_settings,
 };

@@ -1,16 +1,18 @@
 import Cookies from "js-cookie";
-
-import requestOptions from "../../helpers/requestOptions";
+import authHeader from "../../helpers/authHeader";
 import handleResponse from "../../helpers/handleResponse";
 import { history } from "../../helpers/history";
 
 const login = (email, password) => {
-   const requestOptionsModified = {
-      ...requestOptions,
+   const requestOptions = {
       method: "POST",
+      headers: authHeader(),
       body: JSON.stringify({ email, password }),
    };
-   return fetch("api/v1/auth/login/", requestOptionsModified).then((res) => {
+   return fetch(
+      "https://spiralmath-17663.botics.co/api/v1/auth/login/",
+      requestOptions
+   ).then((res) => {
       return handleResponse(res, false).then((user) => {
          // store user details and jwt token in local storage to keep user logged in between page refreshes
          localStorage.setItem("user", JSON.stringify(user));
@@ -21,13 +23,16 @@ const login = (email, password) => {
 };
 
 const logout = () => {
-   const requestOptionsModified = {
-      ...requestOptions,
+   const requestOptions = {
       method: "POST",
+      headers: authHeader(),
    };
    // remove user from local storage to log user out
 
-   return fetch("api/v1/auth/logout/", requestOptionsModified)
+   return fetch(
+      "https://spiralmath-17663.botics.co/api/v1/auth/logout/",
+      requestOptions
+   )
       .then(handleResponse)
       .then(() => {
          localStorage.removeItem("user");
@@ -52,104 +57,104 @@ const register = (user) => {
       user_type: user["user_type"],
    };
 
-   const requestOptionsModified = {
-      ...requestOptions,
+   const requestOptions = {
       method: "POST",
+      headers: authHeader(),
       body: JSON.stringify(data),
    };
 
-   return fetch("api/v1/user/", requestOptionsModified).then(handleResponse);
+   return fetch("api/v1/user/", requestOptions).then(handleResponse);
 };
 const confirmUser = (user) => {
-   const requestOptionsModified = {
-      ...requestOptions,
+   const requestOptions = {
       method: "POST",
+      headers: authHeader(),
       body: JSON.stringify(user),
    };
 
-   return fetch("api/v1/user/confirm-token/", requestOptionsModified).then(
+   return fetch("api/v1/user/confirm-token/", requestOptions).then(
       handleResponse
    );
 };
 
 const resetPassword = (email) => {
-   const requestOptionsModified = {
-      ...requestOptions,
+   const requestOptions = {
       method: "POST",
+      headers: authHeader(),
       body: JSON.stringify({ email }),
    };
 
-   return fetch("api/v1/user/reset-password/", requestOptionsModified).then(
+   return fetch("api/v1/user/reset-password/", requestOptions).then(
       handleResponse
    );
 };
 const resetUserPassword = (data) => {
-   const requestOptionsModified = {
-      ...requestOptions,
+   const requestOptions = {
       method: "POST",
+      headers: authHeader(),
       body: JSON.stringify(data),
    };
 
-   return fetch("api/v1/user/confirm-token/", requestOptionsModified).then(
+   return fetch("api/v1/user/confirm-token/", requestOptions).then(
       handleResponse
    );
 };
 
 export const contactUs = (data) => {
-   const requestOptionsModified = {
-      ...requestOptions,
+   const requestOptions = {
       method: "POST",
+      headers: authHeader(),
       body: JSON.stringify(data),
    };
 
-   return fetch("api/v1/user/contact-us/", requestOptionsModified).then(
-      handleResponse
-   );
+   return fetch("api/v1/user/contact-us/", requestOptions).then(handleResponse);
 };
 
 const getAllUserTypes = () => {
+   const requestOptions = {
+      method: "GET",
+      headers: authHeader(),
+   };
    return fetch("api/v1/user-type/", requestOptions).then(handleResponse);
 };
 
 const createUserType = (userTypeObject) => {
-   const requestOptionsModified = {
-      ...requestOptions,
+   const requestOptions = {
       method: "POST",
+      headers: authHeader(),
 
       body: JSON.stringify(userTypeObject),
    };
 
-   return fetch("api/v1/user-type/", requestOptionsModified).then(
-      handleResponse
-   );
+   return fetch("api/v1/user-type/", requestOptions).then(handleResponse);
 };
 
 const updateUserType = (userTypeObject) => {
-   const requestOptionsModified = {
-      ...requestOptions,
+   const requestOptions = {
       method: "PATCH",
-
+      headers: authHeader(),
       body: JSON.stringify(userTypeObject),
    };
 
-   return fetch(
-      `api/v1/user-type/${userTypeObject.id}/`,
-      requestOptionsModified
-   ).then(handleResponse);
-};
-
-const deleteUserType = (id) => {
-   const requestOptionsModified = {
-      ...requestOptions,
-      method: "DELETE",
-   };
-
-   return fetch(`api/v1/user-type/${id}/`, requestOptionsModified).then(
+   return fetch(`api/v1/user-type/${userTypeObject.id}/`, requestOptions).then(
       handleResponse
    );
 };
 
+const deleteUserType = (id) => {
+   const requestOptions = {
+      method: "DELETE",
+      headers: authHeader(),
+   };
+
+   return fetch(`api/v1/user-type/${id}/`, requestOptions).then(handleResponse);
+};
+
 const getAllUsers = (pageNumber) => {
+   const requestOptions = {
+      method: "GET",
+      headers: authHeader(),
+   };
    return fetch(
       `api/v1/user/?limit=10&offset=${pageNumber}`,
       requestOptions
@@ -162,46 +167,50 @@ const updateUser = (user) => {
    } else {
       user["role"] = "Admin";
    }
-   const requestOptionsModified = {
+   const requestOptions = {
       method: "PATCH",
-      ...requestOptions,
+      headers: authHeader(),
       body: JSON.stringify(user),
    };
 
-   return fetch(`api/v1/user/${user.id}/`, requestOptionsModified).then(
-      handleResponse
-   );
+   return fetch(`api/v1/user/${user.id}/`, requestOptions).then(handleResponse);
 };
 
 // prefixed function name with underscore because delete is a reserved word in javascript
 const deleteUser = (id) => {
-   const requestOptionsModified = {
-      ...requestOptions,
+   const requestOptions = {
       method: "DELETE",
+      headers: authHeader(),
    };
 
-   return fetch(`api/v1/user/${id}/`, requestOptionsModified).then(
-      handleResponse
-   );
+   return fetch(`api/v1/user/${id}/`, requestOptions).then(handleResponse);
 };
 
 const getOneUser = (id) => {
+   const requestOptions = {
+      method: "GET",
+      headers: authHeader(),
+   };
    return fetch(`api/v1/user/${id}/`, requestOptions).then(handleResponse);
 };
 
 const settings = () => {
+   const requestOptions = {
+      method: "GET",
+      headers: authHeader(),
+   };
    return fetch(`api/v1/settings/terms/`, requestOptions).then(handleResponse);
 };
 
 const sendInvitation = (id) => {
-   const requestOptionsModified = {
-      ...requestOptions,
+   const requestOptions = {
       method: "POST",
+      headers: authHeader(),
 
       body: JSON.stringify({ id }),
    };
 
-   return fetch(`api/v1/user/send-invitation/`, requestOptionsModified).then();
+   return fetch(`api/v1/user/send-invitation/`, requestOptions).then();
 };
 
 export default {
