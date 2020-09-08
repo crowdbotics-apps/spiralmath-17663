@@ -452,7 +452,6 @@ const UsersTab = () => {
                                           {email}
                                        </td>
                                        <td className="border-right-0 border-left-0">
-                                          {console.log(allUsersTypes)}
                                           {allUsersTypes !== {} &&
                                              user_type !== null &&
                                              allUsersTypes[parseInt(user_type)]
