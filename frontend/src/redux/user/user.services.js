@@ -68,7 +68,11 @@ const register = (user) => {
 const confirmUser = (user) => {
    const requestOptions = {
       method: "POST",
-      headers: authHeader(),
+      headers: {
+         Accept: "application/json",
+         "Content-Type": "application/json",
+         "Accept-Language": userLang,
+      },
       body: JSON.stringify(user),
    };
 
