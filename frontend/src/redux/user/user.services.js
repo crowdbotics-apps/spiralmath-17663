@@ -71,7 +71,6 @@ const confirmUser = (user) => {
       headers: {
          Accept: "application/json",
          "Content-Type": "application/json",
-         "Accept-Language": userLang,
       },
       body: JSON.stringify(user),
    };
