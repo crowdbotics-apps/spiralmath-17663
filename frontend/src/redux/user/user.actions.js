@@ -30,7 +30,6 @@ const login = (email, password) => {
       userService
          .login(email, password)
          .then((user) => {
-            console.log(user);
             dispatch(success(user));
          })
          .catch((error) => {
@@ -87,7 +86,7 @@ const confirmUser = (user) => {
       return { type: userTypes.CONFIRMATION_REQUEST };
    };
    const success = (user) => {
-      return { type: userTypes.CONFIRMATION_SUCCESS, user };
+      return { type: userTypes.LOGIN_SUCCESS, user };
    };
    const failure = (error) => {
       return { type: userTypes.CONFIRMATION_FAILURE, error };
@@ -98,7 +97,7 @@ const confirmUser = (user) => {
 
       userService.confirmUser(user).then(
          (user) => {
-            dispatch(success());
+            dispatch(success(user));
             dispatch(alertActions.success("Registration successful"));
          },
          (error) => {

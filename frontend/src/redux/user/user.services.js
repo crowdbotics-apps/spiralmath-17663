@@ -75,9 +75,15 @@ const confirmUser = (user) => {
       body: JSON.stringify(user),
    };
 
-   return fetch("api/v1/user/confirm-token/", requestOptions).then(
-      handleResponse
-   );
+   return fetch("api/v1/user/confirm-token/", requestOptions).then((res) => {
+      return handleResponse(res, false).then((user) => {
+         console.log(user);
+         // store user details and jwt token in local storage to keep user logged in between page refreshes
+         localStorage.setItem("user", JSON.stringify(user));
+         history.push("/admin-dashboard");
+         return Promise.resolve(user);
+      });
+   });
 };
 
 const resetPassword = (email) => {
