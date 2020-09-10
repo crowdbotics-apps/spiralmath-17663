@@ -10,7 +10,7 @@ export default function authHeader() {
       return {
          Accept: "application/json",
          "Content-Type": "application/json",
-         "X-CSRFTOKEN": csrftoken,
+         "X-CSRFToken": csrftoken,
          "Accept-Language": userLang,
       };
    } else {
