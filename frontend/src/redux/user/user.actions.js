@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { alertTypes, userTypes } from "./user.types";
 import userService from "./user.services";
 
@@ -93,8 +94,9 @@ const confirmUser = (user) => {
    };
 
    return (dispatch) => {
+      Cookies.remove("csrftoken");
+      localStorage.removeItem("user");
       dispatch(request());
-
       userService.confirmUser(user).then(
          (user) => {
             dispatch(success(user));
