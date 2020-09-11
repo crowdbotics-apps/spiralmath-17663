@@ -16,7 +16,7 @@ const login = (email, password) => {
       return handleResponse(res, false).then((user) => {
          // store user details and jwt token in local storage to keep user logged in between page refreshes
          localStorage.setItem("user", JSON.stringify(user));
-         history.push("/admin-dashboard");
+         history.push("/dashboard");
          return Promise.resolve(user);
       });
    });
@@ -80,7 +80,7 @@ const confirmUser = (user) => {
          console.log(user);
          // store user details and jwt token in local storage to keep user logged in between page refreshes
          localStorage.setItem("user", JSON.stringify(user));
-         history.push("/admin-dashboard");
+         history.push("/dashboard");
          return Promise.resolve(user);
       });
    });
