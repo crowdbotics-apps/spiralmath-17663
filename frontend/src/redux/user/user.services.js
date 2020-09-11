@@ -42,7 +42,7 @@ const logout = () => {
 };
 
 const register = (user) => {
-   if (user["role"] !== "SystemAdministrator") {
+   if (user["role"] != "10") {
       user["role"] = "Editor";
    } else {
       user["role"] = "Admin";
