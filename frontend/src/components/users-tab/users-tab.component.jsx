@@ -106,7 +106,7 @@ const UsersTab = () => {
 
    useEffect(() => {
       if (!updatingUser && !registering) {
-         dispatch(userActions.getAllUsers(currentPage - 1));
+         dispatch(userActions.getAllUsers((currentPage - 1) * 10));
       }
    }, [updatingUser, registering, currentPage]);
 
@@ -459,6 +459,9 @@ const UsersTab = () => {
                                        <td className="border-right-0 border-left-0">
                                           {allUsersTypes !== {} &&
                                              user_type !== null &&
+                                             allUsersTypes[
+                                                parseInt(user_type)
+                                             ] &&
                                              allUsersTypes[parseInt(user_type)]
                                                 .name}
                                        </td>
