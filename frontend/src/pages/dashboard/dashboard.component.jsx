@@ -70,7 +70,7 @@ const Dashboard = () => {
    }, [localUser]);
 
    useEffect(() => {
-      if (localUser.role === "Admin") {
+      if (localUser.userObj.role === "Admin") {
          if (!updatingUserType && !userTypeCreating) {
             dispatch(userActions.getAllUserTypes());
          }

@@ -50,7 +50,6 @@ const UsersTab = () => {
             <div
                className="cursor-pointer ml-4"
                onClick={() => {
-                  editFormRef.current.scrollIntoView(true);
                   handleEditForm(user);
                }}
             >
@@ -78,6 +77,12 @@ const UsersTab = () => {
             last_name,
          })
       );
+
+   useEffect(() => {
+      if (userForm.edit && editFormRef.current) {
+         editFormRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+   }, [userForm.edit]);
 
    useEffect(() => {
       const usersListArray = users ? users : [];
