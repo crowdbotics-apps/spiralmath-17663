@@ -79,12 +79,6 @@ const UsersTab = () => {
       );
 
    useEffect(() => {
-      if (userForm.edit && editFormRef.current) {
-         editFormRef.current.scrollIntoView({ behavior: "smooth" });
-      }
-   }, [userForm.edit]);
-
-   useEffect(() => {
       const usersListArray = users ? users : [];
 
       const allUsersStatusArray =
@@ -142,6 +136,12 @@ const UsersTab = () => {
       setErrors(validateCreateUser(userForm));
       setSubmitted(true);
    }
+
+   useEffect(() => {
+      if (userForm.edit && editFormRef.current) {
+         editFormRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+   }, [userForm.edit]);
 
    useEffect(() => {
       if (Object.keys(errors).length === 0 && submitted) {
