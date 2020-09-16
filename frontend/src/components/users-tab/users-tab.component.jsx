@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Row, Col, Table, Form, Button, Modal } from "react-bootstrap";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -14,6 +14,7 @@ import "./users-tab.styles.css";
 
 const UsersTab = () => {
    const [updateStatus, setUpdateStatus] = useState({});
+   const editFormRef = useRef(null);
    const deletingUser = useSelector((state) => state.users.deletingUser);
    const updatingUser = useSelector((state) => state.users.updatingUser);
    const registering = useSelector((state) => state.registration.registering);
@@ -48,7 +49,10 @@ const UsersTab = () => {
             </div>
             <div
                className="cursor-pointer ml-4"
-               onClick={() => handleEditForm(user)}
+               onClick={() => {
+                  editFormRef.current.scrollIntoView(true);
+                  handleEditForm(user);
+               }}
             >
                <EditIcon />
             </div>
@@ -213,7 +217,7 @@ const UsersTab = () => {
    const createUserForm = () => {
       return (
          <React.Fragment>
-            <Form noValidate onSubmit={handleSubmit}>
+            <Form noValidate onSubmit={handleSubmit} ref={editFormRef}>
                <div className="px-4 py-4 border form-border">
                   <Form.Row>
                      <Form.Group as={Col} md="3" controlId="validationCustom01">
@@ -307,7 +311,9 @@ const UsersTab = () => {
 
                            {userTypesState &&
                               userTypesState.map(({ name, id }) => (
-                                 <option value={id}>{name}</option>
+                                 <option key={id} value={id}>
+                                    {name}
+                                 </option>
                               ))}
                         </Form.Control>
                      </Form.Group>
@@ -437,7 +443,6 @@ const UsersTab = () => {
                                  name,
                                  email,
                                  user_type,
-
                                  buttons,
                                  first_name,
                                  last_name,
@@ -621,7 +626,7 @@ const UsersTab = () => {
          firstName: user.first_name,
          lastName: user.last_name,
          email: user.email,
-
+         role: user.user_type,
          edit: true,
       });
       handleCloseForm();
