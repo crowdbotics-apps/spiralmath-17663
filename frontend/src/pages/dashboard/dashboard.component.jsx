@@ -70,9 +70,10 @@ const Dashboard = () => {
    }, [localUser]);
 
    useEffect(() => {
-      if (!updatingUserType && !userTypeCreating) {
-         dispatch(userActions.getAllUserTypes());
-      }
+      if (localUser.role === "Admin")
+         if (!updatingUserType && !userTypeCreating) {
+            dispatch(userActions.getAllUserTypes());
+         }
    }, [updatingUserType, userTypeCreating]);
 
    useEffect(() => {
@@ -212,7 +213,12 @@ const Dashboard = () => {
                         id="controlled-tab"
                         className="mr-auto navbar-style justify-content-around flex-grow-1 border-bottom-0"
                         activeKey={keyUsersManagement}
-                        onSelect={(k) => setKeyUsersManagement(k)}
+                        onSelect={(k, e) => {
+                           if (e) {
+                              setKeyUsersManagement(k);
+                              e.currentTarget.blur();
+                           }
+                        }}
                      >
                         <Tab
                            className="py-0 border-0"
@@ -256,7 +262,12 @@ const Dashboard = () => {
                         id="controlled-tab"
                         className="mr-auto navbar-style justify-content-center flex-grow-1 border-bottom-0"
                         activeKey={keyQuestionsManagement}
-                        onSelect={(k) => setKeyQuestionsManagement(k)}
+                        onSelect={(k, e) => {
+                           if (e) {
+                              setKeyQuestionsManagement(k);
+                              e.currentTarget.blur();
+                           }
+                        }}
                      >
                         <Tab
                            className="py-0 border-0 mr-5"
