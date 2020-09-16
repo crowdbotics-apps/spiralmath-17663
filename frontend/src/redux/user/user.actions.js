@@ -201,7 +201,10 @@ const getAllUsers = (pageNumber) => {
    function success(users) {
       return {
          type: userTypes.GETALL_USERS_SUCCESS,
-         payload: { count: users.count, users: users.results || [] },
+         payload: {
+            count: users.count,
+            users: users.results || [],
+         },
       };
    }
    function failure(error) {
