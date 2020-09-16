@@ -215,7 +215,7 @@ const Dashboard = () => {
                         className="mr-auto navbar-style justify-content-around flex-grow-1 border-bottom-0"
                         activeKey={keyUsersManagement}
                         onSelect={(k, e) => {
-                           if (e) {
+                           if (e.type == "click") {
                               setKeyUsersManagement(k);
                               e.currentTarget.blur();
                            }
