@@ -53,8 +53,8 @@ class Settings(models.Model):
 
 class Messages(models.Model):
     """Messages."""
-    users = JSONField(unique=True, default=[])
-    content = JSONField(blank=True, null=True, default={})
+    users = JSONField(unique=True, default=list)
+    content = JSONField(blank=True, null=True, default=dict)
     status = models.BooleanField(default=False)
     unread_counter = models.IntegerField(null=True, blank=True, default=None)
     created = models.DateTimeField(auto_now_add=True)

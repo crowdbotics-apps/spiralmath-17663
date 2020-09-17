@@ -1,8 +1,10 @@
 import pyexcel
 
-from rest_framework import mixins, viewsets
+import datetime
+
 from django.contrib.auth import get_user_model
 
+from rest_framework import mixins, viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.exceptions import PermissionDenied, ValidationError, NotFound
 from rest_framework.decorators import action
@@ -95,6 +97,7 @@ class SettingsViewSet(
     def upload(self, request, *args, **kwargs):
         """Upload Standard Code xlsx."""
         if request.FILES['file']:
+            standard_code_content = {}
             file_obj = request.FILES['file']
             filename = file_obj.name
             extension = filename.split(".")[-1]
@@ -107,7 +110,14 @@ class SettingsViewSet(
             if not standard_code:
                 standard_code = Settings()
                 standard_code.path = STANDARD_CODE_PATH
-            standard_code.value_json = sheet.dict
+            for key, value in sheet.dict.items():
+                item_content = []
+                for item in value:
+                    if isinstance(item, datetime.date):
+                        item = item.strftime('%Y-%m-%d')
+                    item_content.append(item)
+                standard_code_content[key] = item_content
+            standard_code.value_json = standard_code_content
             standard_code.save()
 
             return Response({"details": SettingsSerializer(standard_code).data})
