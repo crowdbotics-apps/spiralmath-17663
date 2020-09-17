@@ -4,7 +4,7 @@ import authHeader from "../../helpers/authHeader";
 const upload_file = (data) => {
    const requestOptions = {
       method: "POST",
-      headers: authHeader(),
+      headers: { ...authHeader(), "Content-Type": "multipart/form-data" },
       body: data,
    };
    return fetch(
@@ -21,10 +21,10 @@ const upload_terms = (data) => {
 
    const requestOptions = {
       method: "PATCH",
-      headers: { ...authHeader(), "Content-Type": "multipart/form-data" },
+      headers: authHeader(),
       body: JSON.stringify(request),
    };
-   console.log("options", requestOptions);
+
    return fetch(
       "https://spiralmath-17663.botics.co/api/v1/settings/1/",
       requestOptions
