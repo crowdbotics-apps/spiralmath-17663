@@ -1,7 +1,6 @@
 import handleResponse from "../../helpers/handleResponse";
 import authHeader from "../../helpers/authHeader";
 import { uploadHeader } from "../../helpers/utils";
-import { uploadHeader } from "./../../helpers/utils";
 
 const upload_file = (data) => {
    const requestOptions = {
