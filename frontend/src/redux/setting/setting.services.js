@@ -1,10 +1,12 @@
 import handleResponse from "../../helpers/handleResponse";
 import authHeader from "../../helpers/authHeader";
+import { uploadHeader } from "../../helpers/utils";
+import { uploadHeader } from "./../../helpers/utils";
 
 const upload_file = (data) => {
    const requestOptions = {
       method: "POST",
-      headers: { ...authHeader(), "Content-Type": "multipart/form-data" },
+      headers: uploadHeader(),
       body: data,
    };
    return fetch(
