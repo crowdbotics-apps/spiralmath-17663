@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 export const mapUserIdToMessageId = (id, list) => {
    for (let i = 0; i < list.length; i++) {
       if (list[i].users[0] === id || list[i].users[1] === id) {
@@ -23,4 +25,19 @@ export const addUnreadCount = (userList, messageList) => {
       }
    }
    return unreadCount;
+};
+
+export const uploadHeader = () => {
+   const csrftoken = Cookies.get("csrftoken");
+   console.log(csrftoken);
+
+   const userLang = navigator.language || navigator.userLanguage;
+
+   if (csrftoken) {
+      return {
+         Accept: "application/json",
+         "X-CSRFToken": csrftoken,
+         "Accept-Language": userLang,
+      };
+   }
 };
