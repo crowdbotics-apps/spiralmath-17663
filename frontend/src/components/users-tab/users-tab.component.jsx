@@ -104,10 +104,10 @@ const UsersTab = () => {
    const [errors, setErrors] = useState({});
 
    useEffect(() => {
-      if (!updatingUser && !registering) {
+      if (!updatingUser && !registering && !deletingUser) {
          dispatch(userActions.getAllUsers((currentPage - 1) * 10));
       }
-   }, [updatingUser, registering, currentPage]);
+   }, [updatingUser, registering, currentPage, deletingUser]);
 
    const [userForm, setUserForm] = useState({
       id: "",
@@ -557,6 +557,7 @@ const UsersTab = () => {
                      usersPerPage={usersPerPage}
                      totalUsers={usersCount}
                      paginate={paginate}
+                     currentPage={currentPage}
                   />
                </div>
             </Col>

@@ -20,7 +20,7 @@ const upload_terms = (data) => {
    };
    const requestOptions = {
       method: "PATCH",
-      headers: authHeader(),
+      headers: { ...authHeader(), "Content-Type": "multipart/form-data" },
       body: JSON.stringify(request),
    };
    return fetch(

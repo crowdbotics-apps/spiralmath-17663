@@ -29,6 +29,10 @@ body {
    cursor: pointer;
 }
 
+.active-page {
+   color: orange;
+}
+
 @keyframes App-logo-spin {
    from {
       transform: rotate(0deg);
