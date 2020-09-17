@@ -29,8 +29,8 @@ body {
    cursor: pointer;
 }
 
-.active-page {
-   color: orange;
+.active-page span {
+   color: orange !important;
 }
 
 @keyframes App-logo-spin {
