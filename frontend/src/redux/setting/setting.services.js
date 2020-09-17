@@ -18,11 +18,13 @@ const upload_terms = (data) => {
       path: "terms-condition",
       value: data,
    };
+
    const requestOptions = {
       method: "PATCH",
       headers: { ...authHeader(), "Content-Type": "multipart/form-data" },
       body: JSON.stringify(request),
    };
+   console.log("options", requestOptions);
    return fetch(
       "https://spiralmath-17663.botics.co/api/v1/settings/1/",
       requestOptions
