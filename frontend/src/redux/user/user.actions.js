@@ -276,7 +276,7 @@ const deleteUser = (id) => {
             dispatch(alertActions.success("User deleted successfully"));
          },
          (error) => {
-            dispatch(alertActions.error(error.detail));
+            dispatch(alertActions.error("User deleting failed"));
             dispatch(failure(error.detail));
          }
       );
@@ -396,13 +396,13 @@ export const getSettings = () => {
 const sendInvitation = (id) => {
    return (dispatch) => {
       userService.sendInvitation(id).then(
-         () =>
+         (data) =>
             dispatch(
                alertActions.success(
                   "Invitation instructions have been sent to the user"
                )
             ),
-         () => dispatch(alertActions.error("Sending Ivitation Failed ! Retry"))
+         (error) => dispatch(alertActions.error("Sending Invitation Failed ! Retry"))
       );
    };
 };

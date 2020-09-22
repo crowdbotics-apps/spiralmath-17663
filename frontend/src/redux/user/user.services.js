@@ -219,7 +219,7 @@ const sendInvitation = (id) => {
       body: JSON.stringify({ id }),
    };
 
-   return fetch(`api/v1/user/send-invitation/`, requestOptions).then();
+   return fetch(`api/v1/user/send-invitation/`, requestOptions).then(handleResponse);
 };
 
 export default {

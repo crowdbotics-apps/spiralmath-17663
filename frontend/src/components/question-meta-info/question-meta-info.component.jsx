@@ -1,6 +1,9 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { SingleSelect } from "react-select-material-ui";
 import { Row, Col, Table, Form, Button, Modal } from "react-bootstrap";
+
+import "./question-meta-info.styles.css";
 
 const gradeLevel = ["PK", "K", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 const millsDiffLevel = [1, 2, 3, 4, 5];
@@ -8,6 +11,10 @@ const DOK = [1, 2, 3, 4];
 
 const QuestionMetaInfo = () => {
    const intl = useIntl();
+   const options = ["Africa", "America", "Asia", "Europe"];
+   const handleChange = (value) => {
+      console.log(value);
+   };
    return (
       <Form noValidate>
          <Form.Row>
@@ -66,12 +73,12 @@ const QuestionMetaInfo = () => {
          </Form.Row>
          <Form.Row>
             <Form.Group as={Col} md="3">
-               <Form.Control
-                  as="select"
-                  className="floating-type border-top-0 border-left-0 border-right-0 rounded-0"
-               >
-                  <option>Standard Code</option>
-               </Form.Control>
+               <SingleSelect
+                  value="America"
+                  placeholder="Select a continent"
+                  options={options}
+                  onChange={handleChange}
+               />
             </Form.Group>
             <Form.Group as={Col} md="4">
                <Form.Control

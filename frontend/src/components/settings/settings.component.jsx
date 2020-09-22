@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Button, Form, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { FormattedMessage, useIntl } from "react-intl";
+
 import ReactQuill from "react-quill";
 
 import settingActions from "../../redux/setting/setting.actions";
@@ -133,7 +134,7 @@ const Settings = () => {
                      </h5>
                   </Form.Group>
 
-                  <Form.Group as={Col} md="3" controlId="validationEmail">
+                  <Form.Group as={Col} md="3" controlId="validationSetting1Email">
                      <Form.Label className="label-color">
                         <FormattedMessage
                            defaultMessage=" Non Registered Users"
@@ -156,7 +157,7 @@ const Settings = () => {
                         </div>
                      )}
                   </Form.Group>
-                  <Form.Group as={Col} md="3" controlId="validationEmail">
+                  <Form.Group as={Col} md="3" controlId="validationSetting2Email">
                      <Form.Label className="label-color">
                         <FormattedMessage
                            defaultMessage="Registered Users"

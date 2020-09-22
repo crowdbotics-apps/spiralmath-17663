@@ -18,6 +18,7 @@ import modalReducer from "./modals/modals.reducer";
 import messageReducer from "./message/message.reducer";
 import mainSettings from "./setting/setting.reducer";
 import localReducer from "./local/local.reducer";
+import questionReducer from "./question/question.reducer";
 
 const persistConfig = {
    key: "root",
@@ -40,6 +41,7 @@ const rootReducer = combineReducers({
    message: messageReducer,
    mainSettings,
    local: localReducer,
+   question: questionReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);

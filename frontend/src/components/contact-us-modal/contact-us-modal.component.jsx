@@ -28,7 +28,6 @@ const ContactUs = ({ show, toggleShow }) => {
   const alert = useSelector((state) => state.alert);
 
   useEffect(() => {
-    console.log(errors);
     if (Object.keys(errors).length === 0 && submitted) {
       submit();
     }

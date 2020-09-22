@@ -5,12 +5,12 @@ export const alert = (state = {}, action) => {
    switch (action.type) {
       case alertTypes.SUCCESS:
          return {
-            type: "alert-success",
+            type: "SUCCESS",
             message: action.message,
          };
       case alertTypes.ERROR:
          return {
-            type: "alert-danger",
+            type: "ERROR",
             message: action.message,
          };
       case alertTypes.CLEAR:
@@ -100,7 +100,6 @@ export const userTypesReducer = (
       allUserTypes: [],
       loadingUserTypes: false,
       error: "",
-
       updatingUserType: false,
       deletingUserType: false,
    },

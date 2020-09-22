@@ -12,7 +12,7 @@ import { ReactComponent as CreateUserIcon } from "../../assets/img/create-user-i
 import { ReactComponent as UpArrowIcon } from "../../assets/img/up-arrow-icon.svg";
 import "./editor-question-table.styles.css";
 
-const EditorQuestionsTable = () => {
+const EditorQuestionsTable = ({ questions, renderDeleteEdit }) => {
    //popoverlogic
    const [showQuestionsPopover, setShowQuestionsPopover] = useState(false);
    //pagination logic
@@ -99,7 +99,31 @@ const EditorQuestionsTable = () => {
                         </th>
                      </tr>
                   </thead>
-                  <tbody></tbody>
+                  <tbody>
+                     {questions.map((question) => {
+                        return (
+                           <tr key={question.id}>
+                              <td className="border-right-0">{question.id}</td>
+                              <td className="border-right-0 border-left-0">
+                                 {question.question}
+                              </td>
+                              <td className="border-right-0 border-left-0">
+                                 {question.gradeLevel}
+                              </td>
+                              <td className="border-right-0 border-left-0">
+                                 {question.status}
+                              </td>
+                              <td className="border-right-0 border-left-0">
+                                 {question.feedback}
+                              </td>
+
+                              <td className="border-left-0">
+                                 {renderDeleteEdit(question.id, question)}
+                              </td>
+                           </tr>
+                        );
+                     })}
+                  </tbody>
                </Table>
                <Pagination
                   questionsPerPage={questionsPerPage}

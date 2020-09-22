@@ -4,6 +4,9 @@ import { Row, Col, Table, Form, Button, Modal } from "react-bootstrap";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import Pagination from "../pagination/pagination.component";
+import DeleteModal from "../ui/delete-modal/delete-modal.component";
+import MessageBar from "../ui/message-bar/message-bar.component";
+import DeleteEditGroup from "../ui/delete-edit-group/delete-edit-group.component"
 import { userActions, alertActions } from "../../redux/user/user.actions";
 import { validateCreateUser } from "../../helpers/validation/validateCreateUser";
 import { ReactComponent as DeleteIcon } from "../../assets/img/delete-icon.svg";
@@ -24,10 +27,10 @@ const UsersTab = () => {
    let errorMessage = useSelector((state) => {
       return state.registration.error;
    });
-   let successMessage = useSelector((state) => state.alert.message);
+   let message = useSelector((state) => state.alert.message);
    let messageType = useSelector((state) => state.alert.type);
-
    const userTypesState = useSelector((state) => state.userTypes.allUserTypes);
+   const users = useSelector((state) => state.users.users);
 
    const initialValue = {};
    const id1 = "id";
@@ -40,27 +43,7 @@ const UsersTab = () => {
    }, initialValue);
 
    const intl = useIntl();
-
-   const buttons = (id, user) => (
-      <React.Fragment>
-         <div className="d-flex justify-content-end">
-            <div className="ml-2 cursor-pointer" onClick={() => handleShow(id)}>
-               <DeleteIcon />
-            </div>
-            <div
-               className="cursor-pointer ml-4"
-               onClick={() => {
-                  handleEditForm(user);
-               }}
-            >
-               <EditIcon />
-            </div>
-         </div>
-      </React.Fragment>
-   );
-
    const dispatch = useDispatch();
-   const users = useSelector((state) => state.users.users);
    const usersCount = useSelector((state) => state.users.count || 0);
    const usersListArray = users ? users : [];
    const usersListArrayPreview =
@@ -72,7 +55,7 @@ const UsersTab = () => {
             email,
             user_type,
             status,
-            buttons,
+
             first_name,
             last_name,
          })
@@ -107,7 +90,7 @@ const UsersTab = () => {
       if (!updatingUser && !registering && !deletingUser) {
          dispatch(userActions.getAllUsers((currentPage - 1) * 10));
       }
-   }, [updatingUser, registering, currentPage, deletingUser]);
+   }, [updatingUser, registering, currentPage, deletingUser,users]);
 
    const [userForm, setUserForm] = useState({
       id: "",
@@ -125,7 +108,6 @@ const UsersTab = () => {
 
    const handleChange = (e) => {
       const { name, value } = e.target;
-      console.log(value);
       setUserForm((userForm) => ({ ...userForm, [name]: value }));
       setErrors({ ...errors, [name]: "" });
       errorMessage = "";
@@ -448,7 +430,7 @@ const UsersTab = () => {
                                  name,
                                  email,
                                  user_type,
-                                 buttons,
+
                                  first_name,
                                  last_name,
                               }) => {
@@ -529,13 +511,17 @@ const UsersTab = () => {
                                        </td>
 
                                        <td className="border-left-0">
-                                          {buttons(id, {
+                                       <DeleteEditGroup  handleShow={handleShow}
+                                            handleEditForm={handleEditForm}
+                                            handleShowParam={id}
+                                            handleEditFormParam={{
                                              id,
                                              first_name,
                                              last_name,
                                              email,
                                              user_type,
-                                          })}
+                                            }}/>
+                                          
                                        </td>
                                     </tr>
                                  );
@@ -566,66 +552,13 @@ const UsersTab = () => {
    };
 
    const [show, setShow] = useState({ userType: "" });
-
    const handleClose = () => setShow({ ...show, showModal: false });
    const handleShow = (id) => setShow({ ...show, showModal: true, id });
-
    const handleDeleteUser = (id) => {
       dispatch(userActions.deleteUser(id));
       if (!deletingUser) {
          handleClose();
       }
-   };
-
-   const handleDeleteModal = (id) => {
-      return (
-         <Modal
-            show={show.showModal}
-            onHide={handleClose}
-            className="delete-modal"
-            size="sm"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-         >
-            <Modal.Header closeButton className="justify-content-center">
-               <Modal.Title id="contained-modal-title-vcenter">
-                  <FormattedMessage
-                     defaultMessage="Are You Sure?"
-                     id="componentUsersTabDeleteModalHead"
-                  />
-               </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-               <h6 className="text-muted user-type-content">
-                  <FormattedMessage
-                     defaultMessage="User will be deleted"
-                     id="componentUsersTabDeleteModalWarning"
-                  />
-               </h6>
-            </Modal.Body>
-            <Modal.Footer>
-               <Button onClick={handleClose} className="popup-close-btn">
-                  <FormattedMessage
-                     defaultMessage="Close"
-                     id="componentUsersTabDeleteModalCloseButton"
-                  />
-               </Button>
-               <Button
-                  variant="primary"
-                  className="popup-save-btn"
-                  onClick={() => handleDeleteUser(id)}
-               >
-                  {deletingUser && (
-                     <span className="spinner-border spinner-border-sm mr-1"></span>
-                  )}
-                  <FormattedMessage
-                     defaultMessage="Delete"
-                     id="componentUsersTabDeleteModalDeleteButton"
-                  />
-               </Button>
-            </Modal.Footer>
-         </Modal>
-      );
    };
 
    const handleEditForm = (user) => {
@@ -644,24 +577,24 @@ const UsersTab = () => {
    return (
       <React.Fragment>
          {closeForm ? createUserForm() : ""}
-         {successMessage && (
-            <Row>
-               <Col className="mt-3">
-                  <p
-                     className={
-                        "form-text-danger text-success" + messageType ===
-                        "alert-success"
-                           ? " text-danger"
-                           : " text-success"
-                     }
-                     onMouseEnter={handleClearMessage}
-                  >
-                     {successMessage}
-                  </p>
-               </Col>
-            </Row>
+         {message && (
+            <MessageBar
+               messageType={messageType}
+               message={message}
+               handleClearMessage={handleClearMessage}
+            />
          )}
-         {show ? handleDeleteModal(show.id) : ""}
+         {show ? (
+            <DeleteModal
+               id={show.id}
+               showModal={show.showModal}
+               deleting={deletingUser}
+               handleClose={handleClose}
+               handleDelete={handleDeleteUser}
+               message="User will be deleted"
+               messageId="componentUsersTabDeleteModalWarning"
+            />
+         ) : null}
          {userTable()}
       </React.Fragment>
    );
