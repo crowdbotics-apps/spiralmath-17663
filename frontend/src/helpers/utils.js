@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import { intl } from "./intl";
 
 export const mapUserIdToMessageId = (id, list) => {
    for (let i = 0; i < list.length; i++) {
@@ -39,5 +40,27 @@ export const uploadHeader = () => {
          "X-CSRFToken": csrftoken,
          "Accept-Language": userLang,
       };
+   }
+};
+
+export const generateUserTypeDescription = (
+   create_questions,
+   review_questions
+) => {
+   if (create_questions && review_questions) {
+      return intl.formatMessage({
+         defaultMessage: "Can create and review questions",
+         id: "componentUserTypesDescription1",
+      });
+   } else if (create_questions) {
+      return intl.formatMessage({
+         defaultMessage: "Can create questions",
+         id: "componentUserTypesDescription2",
+      });
+   } else if (review_questions) {
+      return intl.formatMessage({
+         defaultMessage: "Can review questions",
+         id: "componentUserTypesDescription3",
+      });
    }
 };

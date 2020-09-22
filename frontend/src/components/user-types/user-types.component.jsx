@@ -4,6 +4,10 @@ import { Row, Col, Table, Form, Button, Modal } from "react-bootstrap";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import Pagination from "../pagination/pagination.component";
+import DeleteModal from "../ui/delete-modal/delete-modal.component";
+import MessageBar from "../ui/message-bar/message-bar.component";
+import DeleteEditGroup from "../ui/delete-edit-group/delete-edit-group.component";
+import { generateUserTypeDescription } from "../../helpers/utils";
 import { userActions, alertActions } from "../../redux/user/user.actions";
 import { validateCreateUserTypes } from "../../helpers/validation/validateCreateUser";
 import { ReactComponent as DeleteIcon } from "../../assets/img/delete-icon.svg";
@@ -11,28 +15,9 @@ import { ReactComponent as EditIcon } from "../../assets/img/edit-icon.svg";
 import { ReactComponent as CreateUserIcon } from "../../assets/img/create-user-icon.svg";
 
 const UserTypes = () => {
-   const buttons = (userType, userTypeObject) => (
-      <React.Fragment>
-         <div className="d-flex justify-content-end">
-            <div
-               className="ml-2 cursor-pointer"
-               onClick={() => handleShow(userType, userTypeObject.id)}
-            >
-               <DeleteIcon />
-            </div>
-
-            <div
-               className="cursor-pointer ml-4"
-               onClick={() => handleEditForm(userTypeObject)}
-            >
-               <EditIcon />
-            </div>
-         </div>
-      </React.Fragment>
-   );
    const editFormRef = useRef(null);
    const userTypesState = useSelector((state) => state.userTypes.allUserTypes);
-   let successMessage = useSelector((state) => state.alert.message);
+   let message = useSelector((state) => state.alert.message);
    let messageType = useSelector((state) => state.alert.type);
    const deletingUserType = useSelector(
       (state) => state.userTypes.deletingUserType
@@ -50,32 +35,16 @@ const UserTypes = () => {
 
    const userTypeArray = userTypesState.map(
       ({ id, create_questions, review_questions, name }) => {
-         const description = ((create_questions, review_questions) => {
-            if (create_questions && review_questions) {
-               return intl.formatMessage({
-                  defaultMessage: "Can create and review questions",
-                  id: "componentUserTypesDescription1",
-               });
-            } else if (create_questions) {
-               return intl.formatMessage({
-                  defaultMessage: "Can create questions",
-                  id: "componentUserTypesDescription2",
-               });
-            } else if (review_questions) {
-               return intl.formatMessage({
-                  defaultMessage: "Can review questions",
-                  id: "componentUserTypesDescription3",
-               });
-            }
-         })(create_questions, review_questions);
-
+         const description = generateUserTypeDescription(
+            create_questions,
+            review_questions
+         );
          return {
             id,
             create_questions,
             review_questions,
             description,
             userType: name,
-            buttons,
          };
       }
    );
@@ -325,7 +294,6 @@ const UserTypes = () => {
                      </tr>
                   </thead>
                   <tbody>
-                     {console.log(currentUserTypes)}
                      {currentUserTypes
                         ? currentUserTypes.map(
                              ({
@@ -337,7 +305,7 @@ const UserTypes = () => {
                                 review_questions,
                              }) => {
                                 return (
-                                   <tr key={userType}>
+                                   <tr key={id}>
                                       <td className="border-right-0">
                                          {userType}
                                       </td>
@@ -345,12 +313,17 @@ const UserTypes = () => {
                                          {description}
                                       </td>
                                       <td className="border-left-0">
-                                         {buttons(userType, {
-                                            userType,
-                                            create_questions,
-                                            review_questions,
-                                            id,
-                                         })}
+                                         <DeleteEditGroup
+                                            handleShow={handleShow}
+                                            handleEditForm={handleEditForm}
+                                            handleShowParam={userType}
+                                            handleEditFormParam={{
+                                               userType,
+                                               create_questions,
+                                               review_questions,
+                                               id,
+                                            }}
+                                         />
                                       </td>
                                    </tr>
                                 );
@@ -383,57 +356,6 @@ const UserTypes = () => {
       }
    };
 
-   const handleDeleteModal = (userType, id) => {
-      return (
-         <Modal
-            show={show.showModal}
-            onHide={handleClose}
-            className="delete-modal"
-            size="sm"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-         >
-            <Modal.Header closeButton className="justify-content-center">
-               <Modal.Title id="contained-modal-title-vcenter">
-                  <FormattedMessage
-                     defaultMessage="Are You Sure? "
-                     id="componentUserTypesDeleteModalHeader"
-                  />
-               </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-               <h6 className="text-muted user-type-content">
-                  <FormattedMessage
-                     defaultMessage="User Type will be deleted."
-                     id="componentUserTypesDeleteModalWarning"
-                  />
-               </h6>
-            </Modal.Body>
-            <Modal.Footer>
-               <Button onClick={handleClose} className="popup-close-btn">
-                  <FormattedMessage
-                     defaultMessage="Cancel"
-                     id="componentUserTypesDeleteModalCancelButton"
-                  />
-               </Button>
-               <Button
-                  variant="primary"
-                  className="popup-save-btn"
-                  onClick={() => handleDeleteUserType(id)}
-               >
-                  {deletingUserType && (
-                     <span className="spinner-border spinner-border-sm mr-1"></span>
-                  )}
-                  <FormattedMessage
-                     defaultMessage="Confirm"
-                     id="componentUserTypesDeleteModalConfirmButton"
-                  />
-               </Button>
-            </Modal.Footer>
-         </Modal>
-      );
-   };
-
    const handleEditForm = (userType) => {
       setUserForm({
          ...userForm,
@@ -449,24 +371,25 @@ const UserTypes = () => {
    return (
       <React.Fragment>
          {closeForm ? createUserTypeForm() : ""}
-         {successMessage && (
-            <Row>
-               <Col className="mt-3">
-                  <p
-                     className={
-                        "form-text-danger text-success" + messageType ===
-                        "alert-success"
-                           ? " text-danger"
-                           : " text-success"
-                     }
-                     onMouseEnter={handleClearMessage}
-                  >
-                     {successMessage}
-                  </p>
-               </Col>
-            </Row>
+         {message && (
+            <MessageBar
+               messageType={messageType}
+               message={message}
+               handleClearMessage={handleClearMessage}
+            />
          )}
-         {show ? handleDeleteModal(show.userType, show.id) : ""}
+         {show ? (
+            <DeleteModal
+               id={show.id}
+               showModal={show.showModal}
+               deleting={deletingUserType}
+               handleClose={handleClose}
+               handleDelete={handleDeleteUserType}
+               message="UserType will be deleted"
+               messageId="componentUserTypesDeleteModalWarning"
+            />
+         ) : null}
+
          {userTypesTable()}
       </React.Fragment>
    );

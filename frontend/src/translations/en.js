@@ -86,7 +86,6 @@ export default {
    componentUserTypesTableHeadUserTypes: "User Type",
    componentUserTypesTableHeadDescription: "Description",
    componentUserTypesTableHeadCreateUserType: "Create User Type",
-   componentUserTypesDeleteModalHeader: "Are You Sure?",
    componentUserTypesDeleteModalWarning: "User Type will be deleted.",
 
    componentUserTypesDeleteModalCancelbutton: "Cancel",
@@ -108,7 +107,6 @@ export default {
    componentUsersTabTableHeadStatus: "Status",
    componentUsersTabTableHeadCreateUser: "Create User",
    componentUsersTabTableNoUser: "No User",
-   componentUsersTabDeleteModalHead: "Are You Sure?",
    componentUsersTabDeleteModalWarning: "User will be deleted",
    omponentUsersTabActive: "Active",
    omponentUsersTabSent: "Sent",
@@ -123,4 +121,8 @@ export default {
    componentUsersTabRoleRequiredValidation: "Role is required",
    componentUsersTabDefaultSelect2: "Select Role",
    componentUsersTabDefaultSelect1: "Select Role",
+
+   componentDeleteModalDeleteModalHeader: "Are You Sure?",
+
+   questionDeleteMessage: "Question will be deleted",
 };

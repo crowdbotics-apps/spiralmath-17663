@@ -1,21 +1,22 @@
 import React from "react";
 import { Form, Col } from "react-bootstrap";
+import MathquillInput from "../mathquill-input/mathquill-input.component";
 import { ReactComponent as A } from "../../assets/img/A.svg";
 import { ReactComponent as B } from "../../assets/img/B.svg";
 import { ReactComponent as C } from "../../assets/img/C.svg";
 import { ReactComponent as Cross } from "../../assets/img/cross.svg";
 import { ReactComponent as Tick } from "../../assets/img/tick.svg";
+import "./multiple-choice.styles.css";
 
 const MultipleChoice = () => {
    return (
       <Form noValidate>
          <Form.Row>
             <Form.Group as={Col} md="8">
-               <Form.Control
-                  type="text"
-                  placeholder="Question:"
-                  className=" border-top-0 border-left-0 border-right-0 rounded-0"
-               />
+               <Form.Label className="question-label">
+                  Enter question
+               </Form.Label>
+               <MathquillInput />
             </Form.Group>
          </Form.Row>
          <Form.Row className="d-flex">
