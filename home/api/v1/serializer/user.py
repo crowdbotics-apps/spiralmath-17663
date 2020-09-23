@@ -10,6 +10,21 @@ User = get_user_model()
 class UserSerializerBase(serializers.ModelSerializer):
     """List any users Serializer."""
 
+    createQuestions = serializers.SerializerMethodField(read_only=True)
+    reviewQuestions = serializers.SerializerMethodField(read_only=True)
+
+    def get_createQuestions(self, obj):
+        """Get user.user_type.create_questions."""
+        if obj.user_type:
+            return obj.user_type.create_questions
+        return False
+
+    def get_reviewQuestions(self, obj):
+        """Get user.user_type.review_questions."""
+        if obj.user_type:
+            return obj.user_type.review_questions
+        return False
+
     class Meta(object):
         model = User
         fields: List[str] = [
@@ -18,6 +33,8 @@ class UserSerializerBase(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'user_type',
+            'createQuestions',
+            'reviewQuestions',
             'accepted_terms_date',
             'role',
             'status',
