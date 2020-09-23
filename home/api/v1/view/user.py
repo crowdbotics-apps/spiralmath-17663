@@ -79,7 +79,7 @@ class UserViewSet(
             # admin has access to all users
             pass
         elif role == User.ROLE.EDITOR:
-            # customer has access only to himself
+            # editor has access only to himself
             queryset = queryset.filter(pk=self.request.user.pk)
         else:
             raise PermissionDenied
