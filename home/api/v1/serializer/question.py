@@ -7,6 +7,7 @@ from rest_framework.validators import UniqueValidator
 from typing import List
 from home.models import Question, Settings, STANDARD_CODE_PATH
 from rest_framework.response import Response
+from django.conf import settings
 
 
 def validate_grade_level(data_grade_level):
@@ -18,14 +19,6 @@ def validate_grade_level(data_grade_level):
 
 class QuestionBase(serializers.ModelSerializer):
     """List any question Serializer."""
-
-    imagePath = serializers.SerializerMethodField(read_only=True)
-
-    def get_imagePath(self, obj):
-        """Get image path."""
-        if obj.image:
-            return str(obj.image).split("home")[1]
-        return ''
 
     class Meta(object):
         model = Question
@@ -50,7 +43,6 @@ class QuestionBase(serializers.ModelSerializer):
             'creator',
             'standard_code',
             'standard_set',
-            'imagePath',
             'created',
             'reviewer_date',
             'modified',
@@ -114,5 +106,8 @@ class QuestionUpdate(QuestionBase):
             raise ValidationError(detail={'reviewer_name': ['This user cannot review questions.']})
         if 'grade_level' in updating_attributes and not validate_grade_level(data['grade_level']):
             raise ValidationError(detail={'grade_level': ['This Grade Level is not available.']})
+        lang_codes = [c for (c, name) in settings.LANGUAGES]
+        if 'language' in updating_attributes and data['language'] not in lang_codes:
+            raise ValidationError(detail={'grade_level': ['This language is not available.']})
         return data
 

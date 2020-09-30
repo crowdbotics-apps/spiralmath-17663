@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import environ
+from django.utils.translation import gettext_lazy as _
 
 env = environ.Env()
 
@@ -51,7 +52,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites'
+    'django.contrib.sites',
+    'storages',
 ]
 LOCAL_APPS = [
     'home',
@@ -151,6 +153,10 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+LANGUAGES = [
+    ('en', _('English')),
+    ('es', _('Spanish')),
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
@@ -206,6 +212,15 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'user-enroll@spiralmath.net'
 
 FRONTEND_URL = 'https://spiralmath-17663.botics.co'
+
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+AWS_STORAGE_REGION = os.getenv('AWS_STORAGE_REGION')
+AWS_LOCATION = 'static'
 
 # Security
 # https://docs.djangoproject.com/en/1.11/topics/security/
