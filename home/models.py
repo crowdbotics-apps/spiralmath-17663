@@ -8,6 +8,7 @@ from django.contrib.postgres.fields import JSONField
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.translation import ugettext_lazy as _
 
+
 User = get_user_model()
 
 
@@ -117,14 +118,14 @@ class Question(models.Model):
         )
     value = models.TextField(_("Value"))
     author_name = models.CharField(_("Author Name"), max_length=200)
-    # reviewer_name = models.CharField(_("Reviewer Name"), max_length=200)
     reviewer_name = models.ForeignKey('users.User', on_delete=models.SET_NULL, null=True)
     grade_level = models.CharField(_("Grade Level"), max_length=3)
+    language = models.TextField(_("Language"), default='en')
     question_type = models.CharField(
         _("Question type"), choices=QTYPE.choices, default=QTYPE.SHORT_ANSWER, max_length=100
     )
     content_source = models.TextField(_("Content source"), null=True, blank=True)
-    image = models.ImageField(_("Image"), null=True, blank=True, upload_to='home/static/questions_pictures')
+    image = models.ImageField(_("Image"), null=True, blank=True)
     image_source = models.CharField(_("Image source"), null=True, blank=True, max_length=250)
     alt_text = models.CharField(_("Alt text"), max_length=200, null=True, blank=True)
     mills_difficulty_level = models.IntegerField(
