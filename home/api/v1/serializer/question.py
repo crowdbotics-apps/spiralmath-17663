@@ -98,8 +98,8 @@ class QuestionUpdate(QuestionBase):
         updating_attributes = list(dict.keys(data))
         if not request_user_type.create_questions:
             if len(updating_attributes) > 2 or\
-                    (len(updating_attributes) == 2 and updating_attributes[0] is not
-                     ['approved_status', 'reviewer_feedback']):
+                    (len(updating_attributes) == 2
+                     and ('approved_status' not in updating_attributes and 'reviewer_feedback' not in updating_attributes)):
                 raise PermissionDenied
         if not request_user_type.review_questions and \
                 ('approved_status' in updating_attributes or 'reviewer_feedback' in updating_attributes):
