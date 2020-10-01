@@ -123,6 +123,8 @@ export default {
    componentUsersTabDefaultSelect1: "Select Role",
 
    componentDeleteModalDeleteModalHeader: "Are You Sure?",
-
    questionDeleteMessage: "Question will be deleted",
+   reviewsTab: "My Reviews",
+
+   requiredFieldError: "This field is required",
 };

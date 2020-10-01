@@ -14,9 +14,7 @@ const login = (email, password) => {
       requestOptions
    ).then((res) => {
       return handleResponse(res, false).then((user) => {
-         // store user details and jwt token in local storage to keep user logged in between page refreshes
          localStorage.setItem("user", JSON.stringify(user));
-         history.push("/dashboard");
          return Promise.resolve(user);
       });
    });
@@ -219,7 +217,9 @@ const sendInvitation = (id) => {
       body: JSON.stringify({ id }),
    };
 
-   return fetch(`api/v1/user/send-invitation/`, requestOptions).then(handleResponse);
+   return fetch(`api/v1/user/send-invitation/`, requestOptions).then(
+      handleResponse
+   );
 };
 
 export default {

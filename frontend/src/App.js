@@ -7,13 +7,13 @@ import { generateIntl } from "./helpers/intl";
 
 import en from "./translations/en";
 import hindi from "./translations/hindi";
-import PrivateRoute from "./components/private-route/private-route.component";
+import PrivateRoute from "./components/Common/private-route/private-route.component";
 import SignUp from "./pages/signup/signup.component";
 import ConfirmEmail from "./pages/confirm-email/confirm-email.component";
 import Login from "./pages/login/login.component";
 import ForgotPassword from "./pages/forgot-password/forgot-password.component";
 import Dashboard from "./pages/dashboard/dashboard.component";
-import Footer from "./components/footer/footer.component";
+import Footer from "./components/Common/footer/footer.component";
 
 import "../node_modules/react-quill/dist/quill.snow.css";
 import "./App.css";

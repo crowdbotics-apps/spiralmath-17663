@@ -6,7 +6,7 @@ export default function handleResponse(response, isLogout = true) {
       if (!response.ok) {
          if (response.status === 401 || response.status === 403) {
             // auto logout if 401 response returned from api
-            isLogout && userService.logout();
+            // isLogout && userService.logout();
          }
          return Promise.reject(data);
       }
