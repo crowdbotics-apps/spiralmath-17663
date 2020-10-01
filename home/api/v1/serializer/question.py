@@ -38,6 +38,7 @@ class QuestionBase(serializers.ModelSerializer):
             'question_style',
             'summative_status',
             'approved_status',
+            'reviewer_feedback',
             'state_model',
             'author_memo',
             'creator',
@@ -54,7 +55,7 @@ class QuestionList(QuestionBase):
     """List any questions Serializer."""
 
     class Meta(QuestionBase.Meta):
-        fields = ['id', 'value', 'approved_status']
+        fields = ['id', 'value', 'approved_status', 'creator']
 
 
 class QuestionCreate(QuestionBase):
@@ -96,10 +97,12 @@ class QuestionUpdate(QuestionBase):
         request_user_type = request.user.user_type
         updating_attributes = list(dict.keys(data))
         if not request_user_type.create_questions:
-            if len(updating_attributes) > 1 or\
-                    (len(updating_attributes) == 1 and updating_attributes[0] is not 'approved_status'):
+            if len(updating_attributes) > 2 or\
+                    (len(updating_attributes) == 2
+                     and ('approved_status' not in updating_attributes and 'reviewer_feedback' not in updating_attributes)):
                 raise PermissionDenied
-        if not request_user_type.review_questions and 'approved_status' in updating_attributes:
+        if not request_user_type.review_questions and \
+                ('approved_status' in updating_attributes or 'reviewer_feedback' in updating_attributes):
             raise PermissionDenied
 
         if 'reviewer_name' in updating_attributes and not data['reviewer_name'].user_type.review_questions:

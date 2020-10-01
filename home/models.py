@@ -137,6 +137,7 @@ class Question(models.Model):
     question_style = models.CharField(_("Question Style"), choices=QSTYLE.choices, default=QSTYLE.WORD, max_length=100)
     summative_status = models.BooleanField(_("Summative status"), default=False)
     approved_status = models.PositiveSmallIntegerField(_("Approved status"), choices=ASTATUS.choices, default=ASTATUS.PENDING)
+    reviewer_feedback = models.TextField(_("Reviewer feedback"), null=True, blank=True)
     state_model = models.BooleanField(_("State-model"), default=False)
     author_memo = models.TextField(_("Author memo"), null=True, blank=True)
     creator = models.ForeignKey('Creator', on_delete=models.SET_NULL, null=True)
