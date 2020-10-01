@@ -57,10 +57,8 @@ const Question = ({ questionType }) => {
    const [errors, setErrors] = useState({});
 
    useEffect(() => {
-      if (!standardCode) {
-         dispatch(questionActions.getStandardCode());
-      }
-   }, [standardCode]);
+      dispatch(questionActions.getStandardCode());
+   }, []);
 
    useEffect(() => {
       if (Object.keys(errors).length === 0 && submitted) {
@@ -134,6 +132,10 @@ const Question = ({ questionType }) => {
       setErrors({ ...errors, [name]: "" });
    };
 
+   const handleQuestionChange = (e) => {
+      setFormState((prev) => ({ ...prev, value: e }));
+   };
+
    const handleSubmit = (e) => {
       console.log(answer);
       e.preventDefault();
@@ -167,9 +169,9 @@ const Question = ({ questionType }) => {
          value = e.target.value;
          console.log(value);
       }
-      if (questionType === "SA" || questionType === "LA") {
+      if (questionType === "sa" || questionType === "la") {
          setAnswer({ value: e.trim() });
-      } else if (questionType === "TF") {
+      } else if (questionType === "t/f") {
          console.log(value);
          if (name === "true") {
             setAnswer({
@@ -468,7 +470,10 @@ const Question = ({ questionType }) => {
                   <Form.Label className="question-label">
                      Enter question
                   </Form.Label>
-                  <MathquillInput name="value" />
+                  <MathquillInput
+                     name="value"
+                     handleQuestionChange={handleQuestionChange}
+                  />
                   {submitted && errors.value && (
                      <p className="text-danger form-text-danger">
                         {errors.value}
@@ -483,7 +488,7 @@ const Question = ({ questionType }) => {
                         Enter Answer
                      </Form.Label>
                      <MathquillInput
-                        handleAnswerChange={handleAnswerChange("enter_answer")}
+                        handleAnswerChange={handleAnswerChange("value")}
                      />
                   </Form.Group>
                </Form.Row>
