@@ -4,6 +4,7 @@ import questionService from "./question.service";
 const getStandardCode = () => {
    return (dispatch) => {
       questionService.getStandardCode().then((data) => {
+         console.log(data);
          dispatch({
             type: questionTypes.GETSTANDARDCODE_SUCCESS,
             payload: data.detail,
