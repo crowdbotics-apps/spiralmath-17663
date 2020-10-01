@@ -12,20 +12,23 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { FormattedMessage, useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 
 import "./dashboard.styles.css";
 import { mapUserIdToMessageId, addUnreadCount } from "../../helpers/utils";
-import ListUser from "../../components/list-user/list-user.component";
-import UserMessageList from "../../components/user-message-list/user-message-list.component";
+import ListUser from "../../components/ui/list-user/list-user.component";
+import UserMessageList from "../../components/Common/user-message-list/user-message-list.component";
 import { userActions } from "../../redux/user/user.actions";
 import messageActions from "../../redux/message/message.actions";
-import AdminDashboard from "../../components/admin-dashboard/adminDashboard.component";
-import UsersTab from "../../components/users-tab/users-tab.component";
-import UserTypes from "../../components/user-types/user-types.component";
-import Settings from "../../components/settings/settings.component";
-import MyQuestions from "../../components/my-questions/my-questions.component";
-import AllQuestions from "../../components/all-questions/all-questions.component";
-import Question from "../../components/question/question.component";
+import AdminInfo from "../../components/Admin/admin-info/admin-info.component";
+import UsersTab from "../../components/Admin/users-tab/users-tab.component";
+import UserTypes from "../../components/Admin/user-types/user-types.component";
+import Settings from "../../components/Admin/settings/settings.component";
+import MyQuestions from "../../components/Author/my-questions/my-questions.component";
+import AllQuestions from "../../components/Author/all-questions/all-questions.component";
+import AllQuestionsReviews from "./../../components/Reviewer/all-questions-review/all-questions-reviews.compnent";
+import MyReviews from "../../components/Reviewer/my-reviews/my-reviews.component";
+import Question from "../../components/Author/question/question.component";
 import { ReactComponent as SearchIcon } from "../../assets/img/search-icon.svg";
 import { ReactComponent as UserIcon } from "../../assets/img/user-icon.svg";
 import { ReactComponent as MessageIcon } from "../../assets/img/message-icon.svg";
@@ -39,6 +42,10 @@ const Dashboard = () => {
    const [keyQuestionsManagement, setKeyQuestionsManagement] = useState(
       "my-questions"
    );
+   const [keyReviewsManagement, setKeyReviewsManagement] = useState(
+      "my-reviews"
+   );
+
    const [list, setList] = useState(true);
    const [showMessagePopover, setShowMessagePopover] = useState(false);
    const [userData, setUserData] = useState({});
@@ -258,6 +265,7 @@ const Dashboard = () => {
                {localUser &&
                   localUser.userObj &&
                   localUser.userObj.role === "Editor" &&
+                  localUser.userObj.createQuestions &&
                   questionType === false && (
                      <Tabs
                         id="controlled-tab"
@@ -288,6 +296,41 @@ const Dashboard = () => {
                         ></Tab>
                      </Tabs>
                   )}
+               {localUser &&
+                  localUser.userObj &&
+                  localUser.userObj.role === "Editor" &&
+                  !localUser.userObj.createQuestions &&
+                  questionType === false && (
+                     <Tabs
+                        id="controlled-tab"
+                        className="mr-auto navbar-style justify-content-center flex-grow-1 border-bottom-0"
+                        activeKey={keyReviewsManagement}
+                        onSelect={(k, e) => {
+                           if (e) {
+                              setKeyReviewsManagement(k);
+                              e.currentTarget.blur();
+                           }
+                        }}
+                     >
+                        <Tab
+                           className="py-0 border-0 mr-5"
+                           eventKey="my-reviews"
+                           title={intl.formatMessage({
+                              id: "reviewsTab",
+                              defaultMessage: "My Reviews",
+                           })}
+                        ></Tab>
+                        <Tab
+                           className="py-0 border-0 ml-5"
+                           eventKey="all-questions-reviews"
+                           title={intl.formatMessage({
+                              id: "pageQuestionsAllQuestionsTab",
+                              defaultMessage: "All Questions",
+                           })}
+                        ></Tab>
+                     </Tabs>
+                  )}
+
                {localUser &&
                   localUser.userObj &&
                   localUser.userObj.role === "Editor" &&
@@ -359,7 +402,7 @@ const Dashboard = () => {
          localUser.userObj &&
          localUser.userObj.role === "Admin" &&
          keyUsersManagement === "dashboard" ? (
-            <AdminDashboard />
+            <AdminInfo />
          ) : (
             ""
          )}
@@ -369,6 +412,7 @@ const Dashboard = () => {
          {localUser &&
          localUser.userObj &&
          localUser.userObj.role === "Editor" &&
+         localUser.userObj.createQuestions &&
          keyQuestionsManagement === "my-questions" &&
          questionType === false ? (
             <MyQuestions />
@@ -387,6 +431,22 @@ const Dashboard = () => {
          keyQuestionsManagement === "my-questions" &&
          questionType !== false ? (
             <Question questionType={questionType} />
+         ) : (
+            ""
+         )}
+         {localUser &&
+         localUser.userObj &&
+         localUser.userObj.role === "Editor" &&
+         !localUser.userObj.createQuestions &&
+         keyReviewsManagement === "my-reviews" &&
+         questionType === false ? (
+            <MyReviews />
+         ) : (
+            ""
+         )}
+         {keyReviewsManagement === "all-questions-reviews" &&
+         questionType === false ? (
+            <AllQuestionsReviews />
          ) : (
             ""
          )}

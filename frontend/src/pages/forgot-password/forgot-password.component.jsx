@@ -9,7 +9,7 @@ import { FormattedMessage } from "react-intl";
 import { userActions, alertActions } from "../../redux/user/user.actions";
 import validate from "../../helpers/validation/validationResetPassword";
 
-import LogoAboveBox from "../../components/logo-above-box/logo-above-box.component";
+import LogoAboveBox from "../../components/Common/logo-above-box/logo-above-box.component";
 
 const ForgotPassword = ({ show, toggleShow }) => {
    const history = useHistory();

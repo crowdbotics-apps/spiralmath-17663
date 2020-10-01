@@ -10,7 +10,7 @@ import { history } from "../../helpers/history";
 import { alertActions } from "../../redux/user/user.actions";
 import { userActions } from "../../redux/user/user.actions";
 import { ReactComponent as EyeIcon } from "../../assets/img/eye-icon.svg";
-import LogoAboveBox from "../../components/logo-above-box/logo-above-box.component";
+import LogoAboveBox from "../../components/Common/logo-above-box/logo-above-box.component";
 import "./signup.styles.css";
 
 function useQuery() {

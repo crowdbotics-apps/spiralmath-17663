@@ -33,6 +33,10 @@ body {
    color: orange !important;
 }
 
+.z-negative {
+   z-index: -1;
+}
+
 @keyframes App-logo-spin {
    from {
       transform: rotate(0deg);
@@ -132,8 +136,13 @@ input:focus ~ .floating-label,
 }
 */
 
+@-moz-document url-prefix() {
+   .floating-label {
+      height: 30px !important;
+   }
+}
+
 .floating-label {
-   height: 30px !important;
    position: absolute;
    pointer-events: none;
    left: 20px;

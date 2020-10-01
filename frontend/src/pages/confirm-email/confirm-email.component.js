@@ -8,7 +8,7 @@ import { validateReset } from "../../helpers/validation/validationSignUp";
 import { history } from "../../helpers/history";
 import { alertActions } from "../../redux/user/user.actions";
 import { userActions } from "../../redux/user/user.actions";
-import LogoAboveBox from "../../components/logo-above-box/logo-above-box.component";
+import LogoAboveBox from "../../components/Common/logo-above-box/logo-above-box.component";
 import { ReactComponent as EyeIcon } from "../../assets/img/eye-icon.svg";
 import "../signup/signup.styles.css";
 

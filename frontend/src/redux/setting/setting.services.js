@@ -8,10 +8,7 @@ const upload_file = (data) => {
       headers: uploadHeader(),
       body: data,
    };
-   return fetch(
-      "https://spiralmath-17663.botics.co/api/v1/settings/upload/",
-      requestOptions
-   ).then(handleResponse);
+   return fetch("api/v1/settings/upload/", requestOptions).then(handleResponse);
 };
 
 const upload_terms = (data) => {
@@ -26,10 +23,7 @@ const upload_terms = (data) => {
       body: JSON.stringify(request),
    };
 
-   return fetch(
-      "https://spiralmath-17663.botics.co/api/v1/settings/1/",
-      requestOptions
-   ).then(handleResponse);
+   return fetch("api/v1/settings/1/", requestOptions).then(handleResponse);
 };
 
 const upload_non_registered = (data) => {
@@ -43,10 +37,7 @@ const upload_non_registered = (data) => {
       headers: authHeader(),
       body: JSON.stringify(request),
    };
-   return fetch(
-      "https://spiralmath-17663.botics.co/api/v1/settings/2/",
-      requestOptions
-   ).then(handleResponse);
+   return fetch("api/v1/settings/2/", requestOptions).then(handleResponse);
 };
 const upload_registered = (data) => {
    const request = {
@@ -59,10 +50,7 @@ const upload_registered = (data) => {
       headers: authHeader(),
       body: JSON.stringify(request),
    };
-   return fetch(
-      "https://spiralmath-17663.botics.co/api/v1/settings/3/",
-      requestOptions
-   ).then(handleResponse);
+   return fetch("api/v1/settings/3/", requestOptions).then(handleResponse);
 };
 
 const get_settings = () => {
@@ -70,10 +58,7 @@ const get_settings = () => {
       method: "GET",
       headers: authHeader(),
    };
-   return fetch(
-      "https://spiralmath-17663.botics.co/api/v1/settings/",
-      requestOptions
-   ).then(handleResponse);
+   return fetch("api/v1/settings/", requestOptions).then(handleResponse);
 };
 
 export default {

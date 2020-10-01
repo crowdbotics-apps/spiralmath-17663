@@ -19,6 +19,7 @@ import messageReducer from "./message/message.reducer";
 import mainSettings from "./setting/setting.reducer";
 import localReducer from "./local/local.reducer";
 import questionReducer from "./question/question.reducer";
+import questionFormStateReducer from "./questioFormState/questionFormState.reducer";
 
 const persistConfig = {
    key: "root",
@@ -42,6 +43,7 @@ const rootReducer = combineReducers({
    mainSettings,
    local: localReducer,
    question: questionReducer,
+   questionFormStateReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);
