@@ -35,6 +35,7 @@ const Question = ({ questionType }) => {
    const standardCode = useSelector(selectStandardCode);
    const creatingAnswer = useSelector(selectAnswerStatus);
    const initialFormState = useSelector(selectFormState);
+   console.log(standardCode);
 
    const [formState, setFormState] = useState({
       ...initialFormState,
