@@ -12,41 +12,6 @@ import { selectAllQuestionsCount } from "../../../redux/question/question.select
 //actions
 import questionActions from "../../../redux/question/question.action";
 
-const allQuestions = [
-   {
-      id: "00001",
-      value: "How many leaves on the tree?",
-      grade_level: "PK",
-      approved_status: 10,
-      feedback: "-/-",
-      question_type: "mc",
-   },
-   {
-      id: "00002",
-      value: "How many leaves on the tree?",
-      grade_level: "PK",
-      approved_status: 20,
-      feedback: "Hello Hi I am approved You",
-      question_type: "t/f",
-   },
-   {
-      id: "00003",
-      value: "How many leaves on the tree?",
-      grade_level: "PK",
-      approved_status: 30,
-      feedback: "Hello Hi I am approved You",
-      question_type: "la",
-   },
-   {
-      id: "00004",
-      value: "How many leaves on the tree?",
-      grade_level: "PK",
-      approved_status: 10,
-      feedback: "-/-",
-      question_type: "sa",
-   },
-];
-
 const AllQuestions = () => {
    const dispatch = useDispatch();
    //pagination
@@ -69,7 +34,7 @@ const AllQuestions = () => {
 
    return (
       <>
-         <EditorQuestionsTable questions={allQuestions} all={true} />
+         <EditorQuestionsTable questions={currentQuestions} all={true} />
          <Pagination
             usersPerPage={questionsPerPage}
             totalUsers={questionsCount}

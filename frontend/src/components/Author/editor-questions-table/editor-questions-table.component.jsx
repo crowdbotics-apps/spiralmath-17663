@@ -161,7 +161,8 @@ const EditorQuestionsTable = ({ questions, renderDeleteEdit, all }) => {
                                        !all && "border-right-0"
                                     } border-left-0`}
                                  >
-                                    {question.feedback && question.feedback}
+                                    {question.reviewer_feedback &&
+                                       question.reviewer_feedback}
                                  </td>
                                  {!all && (
                                     <td className="border-left-0">

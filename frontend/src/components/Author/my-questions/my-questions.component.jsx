@@ -115,7 +115,7 @@ const MyQuestions = () => {
    return (
       <>
          <EditorQuestionsTable
-            questions={myQuestions}
+            questions={currentQuestions}
             renderDeleteEdit={renderDeleteEdit}
          />
          <Pagination
