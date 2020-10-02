@@ -22,13 +22,13 @@
    border-radius: 50%;
 }
 .circle-approved {
-   background-color: #eb5757;
+   background-color: #6fcf97;
 }
 .circle-pending {
    background-color: #f2994a;
 }
 .circle-rejected {
-   background-color: #6fcf97;
+   background-color: #eb5757;
 }
 .status-box {
    display: flex;

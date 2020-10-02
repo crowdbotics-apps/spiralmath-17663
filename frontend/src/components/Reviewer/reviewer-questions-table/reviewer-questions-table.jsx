@@ -3,15 +3,12 @@ import { Row, Col, Table, OverlayTrigger, Popover } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
 
 //components
-import Pagination from "../../Common/pagination/pagination.component";
 import { ReactComponent as UpArrowIcon } from "../../../assets/img/up-arrow-icon.svg";
+//static
+import { approvedStyle, approvedText } from "../../../helpers/utils";
+import { ReactComponent as EditSvg } from "../../../assets/img/edit-svg.svg";
 
-const ReviewerQuestionsTable = ({ reviews, renderEdit }) => {
-   //pagination logic
-   const [currentPage, setCurrentPage] = useState(1);
-   const [reviewsPerPage] = useState(10);
-   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
+const ReviewerQuestionsTable = ({ questions, handleReviewForm }) => {
    return (
       <Row>
          <Col className="mt-3">
@@ -65,13 +62,57 @@ const ReviewerQuestionsTable = ({ reviews, renderEdit }) => {
                         ></th>
                      </tr>
                   </thead>
-                  <tbody></tbody>
+                  <tbody>
+                     {questions &&
+                        questions.map((question) => {
+                           return (
+                              <tr key={question.id}>
+                                 <td className="border-right-0">
+                                    {question.id && question.id}
+                                 </td>
+                                 <td className="border-right-0 border-left-0">
+                                    {question.value && question.value}
+                                 </td>
+                                 <td className="border-right-0 border-left-0">
+                                    {question.author_name &&
+                                       question.author_name}
+                                 </td>
+                                 <td className="border-right-0 border-left-0">
+                                    <div className="status-box">
+                                       <div
+                                          className={`circle ${approvedStyle(
+                                             question.approved_status &&
+                                                question.approved_status
+                                          )}`}
+                                       ></div>
+                                       <div className="status-text">
+                                          {approvedText(
+                                             question.approved_status &&
+                                                question.approved_status
+                                          )}
+                                       </div>
+                                    </div>
+                                 </td>
+                                 <td className={`border-left-0 border-right-0`}>
+                                    {question.reviewer_feedback
+                                       ? question.reviewer_feedback
+                                       : "-/-"}
+                                 </td>
+                                 <td className="border-left-0">
+                                    <div
+                                       className="pointerType"
+                                       onClick={() =>
+                                          handleReviewForm(question)
+                                       }
+                                    >
+                                       <EditSvg />
+                                    </div>
+                                 </td>
+                              </tr>
+                           );
+                        })}
+                  </tbody>
                </Table>
-               <Pagination
-                  reviewsPerPage={reviewsPerPage}
-                  totalReviews={10}
-                  paginate={paginate}
-               />
             </div>
          </Col>
       </Row>

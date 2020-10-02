@@ -8,6 +8,7 @@ import { setQuestionType } from "../../../redux/local/local.actions";
 import questionActions from "../../../redux//question/question.action";
 import { selectStandardCode } from "../../../redux/question/question.select";
 import MathquillInput from "../mathquill-input/mathquill-input.component";
+import ReviewInput from "../../Reviewer/review-input/review-input.component";
 import MessageBar from "../../ui/message-bar/message-bar.component";
 import { validateCreateQuestion } from "./../../../helpers/validation/validationQuestion";
 import { ReactComponent as A } from "../../../assets/img/A.svg";
@@ -15,33 +16,41 @@ import { ReactComponent as B } from "../../../assets/img/B.svg";
 import { ReactComponent as C } from "../../../assets/img/C.svg";
 import { ReactComponent as Cross } from "../../../assets/img/cross.svg";
 import { ReactComponent as Tick } from "../../../assets/img/tick.svg";
-import initialFormState from "./formState";
 import "./question.styles.css";
 import { selectAnswerStatus } from "./../../../redux/question/question.select";
 import { selectFormState } from "./../../../redux/questioFormState/questionFormState.select";
+import AuthorDetails from "../../Reviewer/author-details/author-details.component";
 
-const gradeLevel = ["PK", "K", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-const millsDiffLevel = [1, 2, 3, 4, 5];
+const localUser =
+   localStorage.getItem("user") && localStorage.getItem("user") !== "undefined"
+      ? JSON.parse(localStorage.getItem("user"))
+      : undefined;
+
+const millsDiffLevel = [
+   { value: 1, label: "Mills Difficulty : 1" },
+   { value: 2, label: "Mills Difficulty : 2" },
+   { value: 3, label: "Mills Difficulty : 3" },
+   { value: 4, label: "Mills Difficulty : 4" },
+   { value: 5, label: "Mills Difficulty : 5" },
+];
 const DOK = [1, 2, 3, 4];
 const questionStyles = ["Numeric", "Word"];
-const languages = ["English", "Spanish"];
 
 const Question = ({ questionType }) => {
    const dispatch = useDispatch();
-   const intl = useIntl();
    const imageRef = useRef(null);
    const formErrorRef = useRef(null);
    const apiErrorRef = useRef(null);
    const standardCode = useSelector(selectStandardCode);
    const creatingAnswer = useSelector(selectAnswerStatus);
    const initialFormState = useSelector(selectFormState);
-   console.log(standardCode);
 
    const [formState, setFormState] = useState({
       ...initialFormState,
       question_type: questionType,
    });
-   console.log(formState);
+   console.log(questionType);
+
    const [answer, setAnswer] = useState({});
 
    const [imageButtonText, setImageButtonText] = useState("Add Image");
@@ -64,7 +73,6 @@ const Question = ({ questionType }) => {
       if (Object.keys(errors).length === 0 && submitted) {
          submit();
       } else if (Object.keys(errors).length >= 1) {
-         console.log(errors);
          formErrorRef.current.scrollIntoView({ behavior: "smooth" });
       }
    }, [errors]);
@@ -92,8 +100,9 @@ const Question = ({ questionType }) => {
    }, [mcOptions]);
 
    const handleSelectChange = (name) => (e) => {
+      console.log(e);
       if (name === "dok") e = parseInt(e);
-      if (name === "mills_difficulty_level") e = parseInt(e.slice(-1));
+
       if (name === "standard_set") {
          setFormState((formState) => {
             return (
@@ -118,7 +127,6 @@ const Question = ({ questionType }) => {
    };
    const handleChange = (e) => {
       const { name, value } = e.target;
-      console.log(value);
 
       if (name === "summative_status" || name === "state_model") {
          const { checked } = e.target;
@@ -137,7 +145,6 @@ const Question = ({ questionType }) => {
    };
 
    const handleSubmit = (e) => {
-      console.log(answer);
       e.preventDefault();
       setErrors(validateCreateQuestion(formState));
       setSubmitted(true);
@@ -149,7 +156,7 @@ const Question = ({ questionType }) => {
 
    const handleImage = (e) => {
       let image = e.target.files[0];
-      console.log(image);
+
       setImageButtonText("Image added");
       setImage(image);
    };
@@ -167,12 +174,10 @@ const Question = ({ questionType }) => {
       if (e.target) {
          checked = e.target.checked;
          value = e.target.value;
-         console.log(value);
       }
       if (questionType === "sa" || questionType === "la") {
          setAnswer({ value: e.trim() });
       } else if (questionType === "t/f") {
-         console.log(value);
          if (name === "true") {
             setAnswer({
                true: !!checked,
@@ -196,9 +201,7 @@ const Question = ({ questionType }) => {
    };
 
    const handleMcOption = (named) => (e) => {
-      console.log(named);
       setMcOptions((prevMcOption) => {
-         console.log(prevMcOption[named]);
          return {
             ...prevMcOption,
             [named]: !prevMcOption[named],
@@ -208,7 +211,6 @@ const Question = ({ questionType }) => {
    };
 
    const submit = () => {
-      console.log(answer);
       let formData = new FormData();
       const formDataArray = Object.entries(formState);
 
@@ -245,7 +247,13 @@ const Question = ({ questionType }) => {
       content_source,
       mills_difficulty_level,
       author_memo,
+      author_name,
+      reviewer_name,
+      created,
+      reviewer_date,
    } = formState;
+
+   const isReview = localUser.userObj.reviewQuestions;
 
    return (
       <React.Fragment>
@@ -276,15 +284,21 @@ const Question = ({ questionType }) => {
             } `}
             ref={formErrorRef}
          >
+            {localUser.userObj.reviewQuestions && (
+               <AuthorDetails
+                  author_name={author_name}
+                  reviewer_name={reviewer_name}
+                  created={created}
+                  reviewer_date={reviewer_date}
+               />
+            )}
             <Form.Row className="mb-3">
                <Form.Group as={Col} md="3">
                   <SingleSelect
+                     defaultValue={millsDiffLevel[0]}
                      value={mills_difficulty_level}
                      placeholder="Mills Difficulty Level"
-                     options={millsDiffLevel.map(
-                        (level) => `Mills Difficulty Level:${level}`
-                     )}
-                     name="mills_difficulty_level"
+                     options={millsDiffLevel}
                      onChange={handleSelectChange("mills_difficulty_level")}
                   />
                   {submitted && errors.mills_difficulty_level && (
@@ -297,7 +311,6 @@ const Question = ({ questionType }) => {
                   <SingleSelect
                      value={dok}
                      placeholder="DOK"
-                     name="dok"
                      options={DOK.map((level) => `${level}`)}
                      onChange={handleSelectChange("dok")}
                   />
@@ -630,6 +643,7 @@ const Question = ({ questionType }) => {
                </React.Fragment>
             )}
          </div>
+         {localUser.userObj.reviewQuestions && <ReviewInput />}
          <div className="my-4 d-flex justify-content-end bottom-btn-grp">
             <Button className="mr-4 cancel-btn" onClick={handleCancel}>
                <FormattedMessage
