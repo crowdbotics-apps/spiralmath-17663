@@ -24,7 +24,7 @@ class QuestionViewSet(
 
     queryset = Question.objects.all()
     serializer_class = QuestionBase
-    filterset_fields = ("creator",)
+    filterset_fields = ("creator", "reviewer_name", )
 
     def get_queryset(self: 'QuestionViewSet'):
         """Allows only those who can create/review questions."""
