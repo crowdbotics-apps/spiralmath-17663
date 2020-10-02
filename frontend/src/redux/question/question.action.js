@@ -41,10 +41,10 @@ const createAnswer = () => {
    };
 };
 
-const getUserQuestions = () => {
+const getUserQuestions = (queryString) => {
    return (dispatch) => {
       dispatch({ type: questionTypes.GET_USERQUESTION_REQUEST });
-      questionService.getUserQuestions().then(
+      questionService.getUserQuestions(queryString).then(
          (data) => {
             dispatch({ type: questionTypes.GET_USERQUESTION_SUCCESS, data });
          },

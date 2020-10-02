@@ -30,12 +30,14 @@ const createAnswer = (data) => {
    return fetch("api/v1/answer/", requestOptions).then(handleResponse);
 };
 
-const getUserQuestions = () => {
+const getUserQuestions = (queryString) => {
    const requestOptions = {
       method: "GET",
       headers: authHeader(),
    };
-   return fetch(`api/v1/question/`, requestOptions).then(handleResponse);
+   return fetch(`api/v1/question?${queryString}`, requestOptions).then(
+      handleResponse
+   );
 };
 
 const getAllQuestions = () => {

@@ -64,3 +64,28 @@ export const generateUserTypeDescription = (
       });
    }
 };
+
+export const approvedStyle = (status) => {
+   switch (status) {
+      case 10:
+         return "circle-approved";
+      case 20:
+         return "circle-pending";
+      case 30:
+         return "circle-rejected";
+      default:
+         return "circle-pending";
+   }
+};
+export const approvedText = (status) => {
+   switch (status) {
+      case 10:
+         return "Approved";
+      case 20:
+         return "Pending";
+      case 30:
+         return "Rejected";
+      default:
+         return "Pending";
+   }
+};

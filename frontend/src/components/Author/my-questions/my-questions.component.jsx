@@ -8,7 +8,6 @@ import DeleteModal from "../../ui/delete-modal/delete-modal.component";
 import Pagination from "./../../Common/pagination/pagination.component";
 
 // selectors
-import { selectDeleteState } from "../../../redux/question/question.select";
 import { selectUserQuestions } from "../../../redux/question/question.select";
 import { selectUserQuestionsCount } from "../../../redux/question/question.select";
 import { selectUpdatingQuestion } from "./../../../redux/question/question.select";
@@ -19,41 +18,6 @@ import questionActions from "../../../redux/question/question.action";
 import { setQuestionType } from "../../../redux/local/local.actions";
 import { questionFormStateEdit } from "./../../../redux/questioFormState/questionFormState.action";
 
-const myQuestions = [
-   {
-      id: "00001",
-      value: "How many leaves on the tree?",
-      grade_level: "PK",
-      approved_status: 10,
-      feedback: "-/-",
-      question_type: "mc",
-   },
-   {
-      id: "00002",
-      value: "How many leaves on the tree?",
-      grade_level: "PK",
-      approved_status: 20,
-      feedback: "Hello Hi I am approved You",
-      question_type: "t/f",
-   },
-   {
-      id: "00003",
-      value: "How many leaves on the tree?",
-      grade_level: "PK",
-      approved_status: 30,
-      feedback: "Hello Hi I am approved You",
-      question_type: "la",
-   },
-   {
-      id: "00004",
-      value: "How many leaves on the tree?",
-      grade_level: "PK",
-      approved_status: 10,
-      feedback: "-/-",
-      question_type: "sa",
-   },
-];
-
 const MyQuestions = () => {
    const dispatch = useDispatch();
    //localUser
@@ -61,7 +25,10 @@ const MyQuestions = () => {
       localStorage.getItem("user") !== "undefined"
          ? JSON.parse(localStorage.getItem("user"))
          : undefined;
-   const userId = localUser && localUser.userObj && localUser.userObj.id;
+   const userName =
+      localUser &&
+      localUser.userObj &&
+      localUser.userObj.first_name + " " + localUser.userObj.last_name;
    //pagination
    const [currentPage, setCurrentPage] = useState(1);
    const [questionsPerPage] = useState(10);
@@ -73,7 +40,8 @@ const MyQuestions = () => {
    const deletingQuestion = useSelector(selectDeletingQuestion);
 
    useEffect(() => {
-      if (!deletingQuestion) dispatch(questionActions.getUserQuestions());
+      if (!deletingQuestion)
+         dispatch(questionActions.getUserQuestions(`creator="${userName}"`));
    }, [deletingQuestion]);
 
    const indexOfLastQuestion = currentPage * questionsPerPage;
