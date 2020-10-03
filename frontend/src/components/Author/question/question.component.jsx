@@ -33,8 +33,16 @@ const millsDiffLevel = [
    { value: 4, label: "Mills Difficulty : 4" },
    { value: 5, label: "Mills Difficulty : 5" },
 ];
-const DOK = [1, 2, 3, 4];
-const questionStyles = ["Numeric", "Word"];
+const DOK = [
+   { value: 1, label: "Level : 1" },
+   { value: 2, label: "Level : 2" },
+   { value: 3, label: "Level : 3" },
+   { value: 4, label: "Level : 4" },
+];
+const questionStyles = [
+   { value: "Numeric", label: "Numeric" },
+   { value: "Word", label: "Word" },
+];
 
 const Question = ({ questionType }) => {
    const dispatch = useDispatch();
@@ -66,10 +74,12 @@ const Question = ({ questionType }) => {
    const [errors, setErrors] = useState({});
 
    useEffect(() => {
+      console.log("stacode");
       dispatch(questionActions.getStandardCode());
    }, []);
 
    useEffect(() => {
+      console.log("Errors", errors);
       if (Object.keys(errors).length === 0 && submitted) {
          submit();
       } else if (Object.keys(errors).length >= 1) {
@@ -78,6 +88,7 @@ const Question = ({ questionType }) => {
    }, [errors]);
 
    useEffect(() => {
+      console.log("Creating Answer", creatingAnswer);
       if (apiErrorRef) {
          if (apiErrorRef.current) {
             apiErrorRef.current.scrollIntoView({ behavior: "smooth" });
@@ -86,6 +97,7 @@ const Question = ({ questionType }) => {
    }, [creatingAnswer]);
 
    useEffect(() => {
+      console.log("Mc options", mcOptions);
       if (mcOptions["name"]) {
          setAnswer((answer) => {
             return {
@@ -101,8 +113,6 @@ const Question = ({ questionType }) => {
 
    const handleSelectChange = (name) => (e) => {
       console.log(e);
-      if (name === "dok") e = parseInt(e);
-
       if (name === "standard_set") {
          setFormState((formState) => {
             return (
@@ -295,7 +305,6 @@ const Question = ({ questionType }) => {
             <Form.Row className="mb-3">
                <Form.Group as={Col} md="3">
                   <SingleSelect
-                     defaultValue={millsDiffLevel[0]}
                      value={mills_difficulty_level}
                      placeholder="Mills Difficulty Level"
                      options={millsDiffLevel}
@@ -311,7 +320,7 @@ const Question = ({ questionType }) => {
                   <SingleSelect
                      value={dok}
                      placeholder="DOK"
-                     options={DOK.map((level) => `${level}`)}
+                     options={DOK}
                      onChange={handleSelectChange("dok")}
                   />
                   {submitted && errors.dok && (
@@ -324,7 +333,7 @@ const Question = ({ questionType }) => {
                   <SingleSelect
                      value={question_style}
                      placeholder="Question Style"
-                     options={questionStyles.map((style) => `${style}`)}
+                     options={questionStyles}
                      onChange={handleSelectChange(question_style)}
                   />
                </Form.Group>
