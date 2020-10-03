@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FormattedMessage, useIntl, FormattedDate } from "react-intl";
 import { SingleSelect } from "react-select-material-ui";
-import { Row, Col, Table, Form, Button, Modal } from "react-bootstrap";
+import { Col, Form, Button } from "react-bootstrap";
 
 import { setQuestionType } from "../../../redux/local/local.actions";
 import questionActions from "../../../redux//question/question.action";
@@ -14,11 +14,12 @@ import { validateCreateQuestion } from "./../../../helpers/validation/validation
 import { ReactComponent as A } from "../../../assets/img/A.svg";
 import { ReactComponent as B } from "../../../assets/img/B.svg";
 import { ReactComponent as C } from "../../../assets/img/C.svg";
-import { ReactComponent as Cross } from "../../../assets/img/cross.svg";
 import { ReactComponent as Tick } from "../../../assets/img/tick.svg";
 import "./question.styles.css";
 import { selectAnswerStatus } from "./../../../redux/question/question.select";
-import { selectFormState } from "./../../../redux/questioFormState/questionFormState.select";
+import { selectQuestionFormState } from "./../../../redux/questioFormState/questionFormState.select";
+import { selectAnswerContent } from "./../../../redux/question/question.select";
+
 import AuthorDetails from "../../Reviewer/author-details/author-details.component";
 
 const localUser =
@@ -51,15 +52,15 @@ const Question = ({ questionType }) => {
    const apiErrorRef = useRef(null);
    const standardCode = useSelector(selectStandardCode);
    const creatingAnswer = useSelector(selectAnswerStatus);
-   const initialFormState = useSelector(selectFormState);
+   const initialFormState = useSelector(selectQuestionFormState);
+   const initialAnswer = useSelector(selectAnswerContent);
 
    const [formState, setFormState] = useState({
       ...initialFormState,
       question_type: questionType,
    });
-   console.log(questionType);
 
-   const [answer, setAnswer] = useState({});
+   const [answer, setAnswer] = useState(initialAnswer);
 
    const [imageButtonText, setImageButtonText] = useState("Add Image");
    const [standardIndex, setStandardIndex] = useState("");
@@ -74,12 +75,10 @@ const Question = ({ questionType }) => {
    const [errors, setErrors] = useState({});
 
    useEffect(() => {
-      console.log("stacode");
       dispatch(questionActions.getStandardCode());
    }, []);
 
    useEffect(() => {
-      console.log("Errors", errors);
       if (Object.keys(errors).length === 0 && submitted) {
          submit();
       } else if (Object.keys(errors).length >= 1) {
@@ -88,7 +87,6 @@ const Question = ({ questionType }) => {
    }, [errors]);
 
    useEffect(() => {
-      console.log("Creating Answer", creatingAnswer);
       if (apiErrorRef) {
          if (apiErrorRef.current) {
             apiErrorRef.current.scrollIntoView({ behavior: "smooth" });
@@ -97,7 +95,6 @@ const Question = ({ questionType }) => {
    }, [creatingAnswer]);
 
    useEffect(() => {
-      console.log("Mc options", mcOptions);
       if (mcOptions["name"]) {
          setAnswer((answer) => {
             return {
@@ -112,23 +109,17 @@ const Question = ({ questionType }) => {
    }, [mcOptions]);
 
    const handleSelectChange = (name) => (e) => {
-      console.log(e);
       if (name === "standard_set") {
-         setFormState((formState) => {
-            return (
-               standardIndex &&
-               standardCode &&
-               setFormState((prevFormState) => ({
-                  ...prevFormState,
-                  standard_code:
-                     standardCode &&
-                     standardCode["Standard Code"][standardIndex],
-                  grade_level:
-                     standardCode && standardCode["Grade"][standardIndex],
-                  [name]: e,
-               }))
-            );
-         });
+         standardIndex &&
+            standardCode &&
+            setFormState((prevFormState) => ({
+               ...prevFormState,
+               standard_code:
+                  standardCode && standardCode["Standard Code"][standardIndex],
+               grade_level:
+                  standardCode && standardCode["Grade"][standardIndex],
+               [name]: e,
+            }));
       } else {
          setFormState((prevFormState) => ({ ...prevFormState, [name]: e }));
       }

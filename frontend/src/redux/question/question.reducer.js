@@ -3,6 +3,7 @@ import questionTypes from "./question.type";
 const initialState = {
    userQuestions: {},
    allQuestions: {},
+   answer: {},
    deletingQuestion: false,
    updatingQuestion: false,
    creatingQuestion: false,
@@ -72,6 +73,11 @@ export default (state = initialState, action) => {
          return {
             ...state,
             deletingQuestion: false,
+         };
+      case questionTypes.GET_ANSWER_SUCCESS:
+         return {
+            ...state,
+            answer: { ...state.answer, ...action.data },
          };
       case questionTypes.QUESTION_STATE_CHANGER:
          return { ...state, creatingQuestion: false, creatingAnswer: false };
