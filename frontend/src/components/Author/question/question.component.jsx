@@ -19,6 +19,7 @@ import "./question.styles.css";
 import { selectAnswerStatus } from "./../../../redux/question/question.select";
 import { selectQuestionFormState } from "./../../../redux/questioFormState/questionFormState.select";
 import { selectAnswerContent } from "./../../../redux/question/question.select";
+import { selectUpdatingQuestion } from "./../../../redux/question/question.select";
 
 import AuthorDetails from "../../Reviewer/author-details/author-details.component";
 
@@ -54,6 +55,7 @@ const Question = ({ questionType }) => {
    const creatingAnswer = useSelector(selectAnswerStatus);
    const initialFormState = useSelector(selectQuestionFormState);
    const initialAnswer = useSelector(selectAnswerContent);
+   const updatingQuestion = useSelector(selectUpdatingQuestion);
 
    const [formState, setFormState] = useState({
       ...initialFormState,
@@ -63,7 +65,6 @@ const Question = ({ questionType }) => {
    const [answer, setAnswer] = useState(initialAnswer);
 
    const [imageButtonText, setImageButtonText] = useState("Add Image");
-   const [standardIndex, setStandardIndex] = useState("");
    const [image, setImage] = useState("");
    const [submitted, setSubmitted] = useState(false);
    const [mcOptions, setMcOptions] = useState({
@@ -75,13 +76,29 @@ const Question = ({ questionType }) => {
    const [errors, setErrors] = useState({});
 
    useEffect(() => {
-      dispatch(questionActions.getStandardCode());
+       if(questionType === "mc"){
+         setAnswer({
+            A:{
+               answer:false,
+               reason:""
+            },
+            B:{
+               answer:false,
+               reason:""
+            },
+            C:{
+               answer:false,
+               reason:""
+            }
+         })
+      }
+      // dispatch(questionActions.getStandardCode());
    }, []);
 
    useEffect(() => {
       if (Object.keys(errors).length === 0 && submitted) {
          submit();
-      } else if (Object.keys(errors).length >= 1) {
+      } else if (Object.keys(errors).length >= 1 && !errors.question) {
          formErrorRef.current.scrollIntoView({ behavior: "smooth" });
       }
    }, [errors]);
@@ -95,8 +112,10 @@ const Question = ({ questionType }) => {
    }, [creatingAnswer]);
 
    useEffect(() => {
+     
       if (mcOptions["name"]) {
          setAnswer((answer) => {
+            console.log(answer)
             return {
                ...answer,
                [mcOptions.name]: {
@@ -109,16 +128,16 @@ const Question = ({ questionType }) => {
    }, [mcOptions]);
 
    const handleSelectChange = (name) => (e) => {
+
       if (name === "standard_set") {
-         standardIndex &&
             standardCode &&
             setFormState((prevFormState) => ({
                ...prevFormState,
                standard_code:
-                  standardCode && standardCode["Standard Code"][standardIndex],
+                  standardCode && standardCode["Standard Code"][e.i],
                grade_level:
-                  standardCode && standardCode["Grade"][standardIndex],
-               [name]: e,
+                  standardCode && standardCode["Grade"][e.i],
+               [name]: e.set,
             }));
       } else {
          setFormState((prevFormState) => ({ ...prevFormState, [name]: e }));
@@ -142,7 +161,7 @@ const Question = ({ questionType }) => {
    };
 
    const handleQuestionChange = (e) => {
-      setFormState((prev) => ({ ...prev, value: e }));
+      setFormState((prev) => ({ ...prev, value: e.trim() }));
    };
 
    const handleSubmit = (e) => {
@@ -214,17 +233,19 @@ const Question = ({ questionType }) => {
    const submit = () => {
       let formData = new FormData();
       const formDataArray = Object.entries(formState);
-
       for (const [key, value] of formDataArray) {
          if (!(key === "edit") && !(key === "id")) formData.append(key, value);
       }
       if (image) {
          formData.append("image", image);
       }
+
       if (formState.edit) {
          dispatch(questionActions.updateQuestion(formState.id, formData));
          dispatch(questionActions.updateAnswer(formState.id, formData));
+         dispatch(questionActions.resetAnswerState());
       } else {
+
          dispatch(questionActions.createQuestion(formData));
          dispatch(questionActions.createAnswer(answer));
       }
@@ -234,7 +255,10 @@ const Question = ({ questionType }) => {
       dispatch(questionActions.questionStateChanger());
    };
 
+  
+
    const {
+      value,
       standard_code,
       standard_set,
       dok,
@@ -253,6 +277,8 @@ const Question = ({ questionType }) => {
       created,
       reviewer_date,
    } = formState;
+
+
 
    const isReview = localUser.userObj.reviewQuestions;
 
@@ -355,13 +381,16 @@ const Question = ({ questionType }) => {
             <Form.Row className="mb-3">
                <Form.Group as={Col} md="4">
                   <SingleSelect
-                     value={standard_set}
+                     // value={standard_set}
                      placeholder="Standard Set"
                      options={
                         standardCode &&
                         standardCode["Standard Set"].map((set, i) => {
-                           setStandardIndex(i);
-                           return `${set}`;
+                             return {
+                                value:{set,i},
+                                label:set,
+                                index:i
+                             }
                         })
                      }
                      onChange={handleSelectChange("standard_set")}
@@ -372,6 +401,7 @@ const Question = ({ questionType }) => {
                      </p>
                   )}
                </Form.Group>
+
                <Form.Group as={Col} md="4">
                   <Form.Control
                      type="text"
@@ -391,7 +421,7 @@ const Question = ({ questionType }) => {
                      name="grade_level"
                      onChange={handleChange}
                      className={`border-top-0 border-left-0 border-right-0 rounded-0 ${
-                        grade_level.length && "label-up"
+                        grade_level && "label-up"
                      }`}
                   />
                   <span className="floating-label">Grade level</span>
@@ -517,7 +547,7 @@ const Question = ({ questionType }) => {
                            type="text"
                            placeholder="Add Option 1"
                            onChange={handleAnswerChange("A")}
-                           value={answer && answer["A"] && answer["A"].reason}
+                           value={answer && answer["A"] && answer["A"].reason || ""}
                            className=" border-top-0 border-left-0 border-right-0 rounded-0"
                         />
                      </Form.Group>
@@ -543,7 +573,7 @@ const Question = ({ questionType }) => {
                            type="text"
                            placeholder="Add Option 2"
                            onChange={handleAnswerChange("B")}
-                           value={answer && answer["B"] && answer["B"].reason}
+                           value={answer && answer["B"] && answer["B"].reason  || ""}
                            className=" border-top-0 border-left-0 border-right-0 rounded-0"
                         />
                      </Form.Group>
@@ -569,7 +599,7 @@ const Question = ({ questionType }) => {
                            type="text"
                            placeholder="Add Option 3"
                            onChange={handleAnswerChange("C")}
-                           value={answer && answer["C"] && answer["C"].reason}
+                           value={answer && answer["C"] && answer["C"].reason || ""}
                            className=" border-top-0 border-left-0 border-right-0 rounded-0"
                         />
                      </Form.Group>
@@ -652,7 +682,7 @@ const Question = ({ questionType }) => {
                />
             </Button>
             <Button className="save-btn" onClick={handleSubmit}>
-               {creatingAnswer && (
+               {(creatingAnswer || updatingQuestion) && (
                   <span className="spinner-border spinner-border-sm mr-1"></span>
                )}
                Save & Send

@@ -35,9 +35,16 @@ const getUserQuestions = (queryString) => {
       method: "GET",
       headers: authHeader(),
    };
-   return fetch(`api/v1/question?${queryString}`, requestOptions).then(
+   if(queryString){
+ return fetch(`api/v1/question?${queryString}`, requestOptions).then(
       handleResponse
    );
+   }else{
+       return fetch(`api/v1/question/`, requestOptions).then(
+      handleResponse
+   );
+   }
+  
 };
 
 const getAllQuestions = () => {
@@ -53,7 +60,9 @@ const getAnswer = (id) => {
       method: "GET",
       headers: authHeader(),
    };
-   return fetch(`api/v1/answer/${id}`, requestOptions).then(handleResponse);
+   return fetch(`api/v1/question/${id}/answers/`, requestOptions).then(
+      handleResponse
+   );
 };
 
 const deleteQuestion = (id) => {

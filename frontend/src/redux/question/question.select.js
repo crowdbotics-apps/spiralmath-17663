@@ -47,5 +47,5 @@ export const selectDeletingQuestion = createSelector(
 export const selectAnswerContent = createSelector(
    [selectQuestion],
    (question) =>
-      question.answer && question.answer.content && question.answer.content
+      question.answer && question.answer.content ? question.answer.content :question.answer
 );

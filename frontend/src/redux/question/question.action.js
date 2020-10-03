@@ -124,11 +124,18 @@ const getAnswer = (id) => {
    };
 };
 
+const resetAnswerState = () => {
+   return {
+      type: questionTypes.RESET_ANSWER_STATE,
+   };
+};
+
 const questionStateChanger = () => ({
    type: questionTypes.QUESTION_STATE_CHANGER,
 });
 
 export default {
+   resetAnswerState,
    getStandardCode,
    getUserQuestions,
    getAllQuestions,

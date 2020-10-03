@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Col } from "react-bootstrap";
 
 const ReviewInput = ({ handleChange, reviewer_feedback }) => {
+   // const [review,setReview] = setReview({approved_status:"",reviewer_feedback:""})
+
    return (
       <Form.Row className="mt-3 ml-5">
          <Form.Check
