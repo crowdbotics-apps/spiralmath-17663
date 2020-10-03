@@ -41,7 +41,7 @@ const MyQuestions = () => {
 
    useEffect(() => {
       if (!deletingQuestion)
-         dispatch(questionActions.getUserQuestions(`creator="${userName}"`));
+         dispatch(questionActions.getUserQuestions());
    }, [deletingQuestion]);
 
    const indexOfLastQuestion = currentPage * questionsPerPage;
@@ -61,6 +61,7 @@ const MyQuestions = () => {
    const handleEditForm = (data) => {
       dispatch(setQuestionType(data.question_type));
       dispatch(questionFormStateEdit(data));
+      dispatch(questionActions.getAnswer(data.id));
    };
 
    const handleDelete = (id) => {

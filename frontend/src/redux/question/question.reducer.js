@@ -10,6 +10,7 @@ const initialState = {
    creatingAnswer: false,
    loadingUserQuestions: false,
    loadingAllUserQuestions: false,
+   
 };
 
 export default (state = initialState, action) => {
@@ -77,10 +78,12 @@ export default (state = initialState, action) => {
       case questionTypes.GET_ANSWER_SUCCESS:
          return {
             ...state,
-            answer: { ...state.answer, ...action.data },
+            answer: { ...state.answer, ...action.data.details[0] },
          };
       case questionTypes.QUESTION_STATE_CHANGER:
          return { ...state, creatingQuestion: false, creatingAnswer: false };
+      case questionTypes.RESET_ANSWER_STATE:
+         return { ...state, answer: {} };
       default:
          return state;
    }
