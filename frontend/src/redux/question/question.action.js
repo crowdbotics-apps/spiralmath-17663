@@ -96,6 +96,34 @@ const updateQuestion = (id, data) => {
    };
 };
 
+const updateAnswer = (id, data) => {
+   return (dispatch) => {
+      dispatch({ type: questionTypes.UPDATE_ANSWER_REQUEST });
+      questionService.updateAnswer(id, data).then(
+         (data) => {
+            dispatch({ type: questionTypes.UPDATE_ANSWER_SUCCESS });
+         },
+         (error) => {
+            dispatch({ type: questionTypes.UPDATE_ANSWER_FAILURE });
+         }
+      );
+   };
+};
+
+const getAnswer = (id) => {
+   return (dispatch) => {
+      dispatch({ type: questionTypes.GET_ANSWER_REQUEST });
+      questionService.getAnswer(id).then(
+         (data) => {
+            dispatch({ type: questionTypes.GET_ANSWER_SUCCESS, data });
+         },
+         (error) => {
+            dispatch({ type: questionTypes.GET_ANSWER_FAILURE });
+         }
+      );
+   };
+};
+
 const questionStateChanger = () => ({
    type: questionTypes.QUESTION_STATE_CHANGER,
 });
@@ -104,9 +132,11 @@ export default {
    getStandardCode,
    getUserQuestions,
    getAllQuestions,
+   getAnswer,
    createQuestion,
    createAnswer,
    deleteQuestion,
    updateQuestion,
+   updateAnswer,
    questionStateChanger,
 };

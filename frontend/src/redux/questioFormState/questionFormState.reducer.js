@@ -21,7 +21,7 @@ const standard_set =
       ? JSON.parse(localStorage.getItem("standard_set"))
       : "";
 
-const initialState = {
+const initialStateQuestion = {
    value: "",
    author_name: author,
    question_type: "",
@@ -42,12 +42,15 @@ const initialState = {
    id: "",
 };
 
-export default (state = initialState, action) => {
+export const questionFormStateReducer = (
+   state = initialStateQuestion,
+   action
+) => {
    switch (action.type) {
       case formStateTypes.EDIT_QUESTION_TRUE:
-         return { ...initialState, ...action.data, edit: true };
+         return { ...initialStateQuestion, ...action.data, edit: true };
       case formStateTypes.EDIT_QUESTION_FALSE:
-         return { ...initialState, edit: false };
+         return { ...initialStateQuestion, edit: false };
       default:
          return state;
    }

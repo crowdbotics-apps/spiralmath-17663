@@ -19,7 +19,8 @@ import messageReducer from "./message/message.reducer";
 import mainSettings from "./setting/setting.reducer";
 import localReducer from "./local/local.reducer";
 import questionReducer from "./question/question.reducer";
-import questionFormStateReducer from "./questioFormState/questionFormState.reducer";
+import { questionFormStateReducer } from "./questioFormState/questionFormState.reducer";
+import { answerFormStateReducer } from "./questioFormState/questionFormState.reducer";
 
 const persistConfig = {
    key: "root",

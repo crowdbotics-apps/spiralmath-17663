@@ -1,8 +1,8 @@
 import { createSelector } from "reselect";
 
-const selectQuestionFormState = (state) => state;
+const selectState = (state) => state;
 
-export const selectFormState = createSelector(
-   [selectQuestionFormState],
+export const selectQuestionFormState = createSelector(
+   [selectState],
    (state) => state.questionFormStateReducer
 );

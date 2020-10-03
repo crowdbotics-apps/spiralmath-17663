@@ -48,6 +48,14 @@ const getAllQuestions = () => {
    return fetch("api/v1/question/", requestOptions).then(handleResponse);
 };
 
+const getAnswer = (id) => {
+   const requestOptions = {
+      method: "GET",
+      headers: authHeader(),
+   };
+   return fetch(`api/v1/answer/${id}`, requestOptions).then(handleResponse);
+};
+
 const deleteQuestion = (id) => {
    const requestOptions = {
       method: "DELETE",
@@ -66,12 +74,23 @@ const updateQuestion = (id, data) => {
    return fetch(`api/v1/question/${id}/`, requestOptions).then(handleResponse);
 };
 
+const updateAnswer = (id, data) => {
+   const requestOptions = {
+      method: "PATCH",
+      body: JSON.stringify(data),
+   };
+
+   return fetch(`api/v1/answer/${id}/`, requestOptions).then(handleResponse);
+};
+
 export default {
    updateQuestion,
+   updateAnswer,
    deleteQuestion,
    getUserQuestions,
    getAllQuestions,
    getStandardCode,
+   getAnswer,
    createQuestion,
    createAnswer,
 };
