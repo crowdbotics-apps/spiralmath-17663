@@ -652,6 +652,9 @@ const Question = ({ questionType }) => {
                />
             </Button>
             <Button className="save-btn" onClick={handleSubmit}>
+               {creatingAnswer && (
+                  <span className="spinner-border spinner-border-sm mr-1"></span>
+               )}
                Save & Send
             </Button>
          </div>

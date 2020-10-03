@@ -8,7 +8,7 @@ import { ReactComponent as UpArrowIcon } from "../../../assets/img/up-arrow-icon
 import { approvedStyle, approvedText } from "../../../helpers/utils";
 import { ReactComponent as EditSvg } from "../../../assets/img/edit-svg.svg";
 
-const ReviewerQuestionsTable = ({ questions, handleReviewForm }) => {
+const ReviewerQuestionsTable = ({ questions, handleReviewForm, all }) => {
    return (
       <Row>
          <Col className="mt-3">
@@ -98,16 +98,18 @@ const ReviewerQuestionsTable = ({ questions, handleReviewForm }) => {
                                        ? question.reviewer_feedback
                                        : "-/-"}
                                  </td>
-                                 <td className="border-left-0">
-                                    <div
-                                       className="pointerType"
-                                       onClick={() =>
-                                          handleReviewForm(question)
-                                       }
-                                    >
-                                       <EditSvg />
-                                    </div>
-                                 </td>
+                                 {!all && (
+                                    <td className="border-left-0">
+                                       <div
+                                          className="pointerType"
+                                          onClick={() =>
+                                             handleReviewForm(question)
+                                          }
+                                       >
+                                          <EditSvg />
+                                       </div>
+                                    </td>
+                                 )}
                               </tr>
                            );
                         })}
