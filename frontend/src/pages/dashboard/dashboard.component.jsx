@@ -70,6 +70,8 @@ const Dashboard = () => {
          ? JSON.parse(localStorage.getItem("user"))
          : undefined;
 
+   const isReview = localUser.userObj.reviewQuestions;
+
    useEffect(() => {
       if (!localUser) {
          history.push("/");
@@ -342,10 +344,17 @@ const Dashboard = () => {
                         <Tab
                            className="py-0 border-0 ml-5 single-tab"
                            eventKey="questions"
-                           title={intl.formatMessage({
-                              id: "pageQuestionsQuestionsTab",
-                              defaultMessage: "Questions",
-                           })}
+                           title={
+                              isReview
+                                 ? intl.formatMessage({
+                                      id: "pageQuestionsReviewsTab",
+                                      defaultMessage: "Reviews",
+                                   })
+                                 : intl.formatMessage({
+                                      id: "pageQuestionsQuestionsTab",
+                                      defaultMessage: "Questions",
+                                   })
+                           }
                         ></Tab>
                      </Tabs>
                   )}

@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Form, Col } from "react-bootstrap";
 
-const ReviewInput = ({ handleChange, reviewer_feedback }) => {
-   // const [review,setReview] = setReview({approved_status:"",reviewer_feedback:""})
-
+const ReviewInput = ({
+   handleChange,
+   reviewer_feedback,
+   approved_status,
+   handleRadioChange,
+}) => {
    return (
       <Form.Row className="mt-3 ml-5">
          <Form.Check
@@ -11,8 +14,21 @@ const ReviewInput = ({ handleChange, reviewer_feedback }) => {
             label="Approved"
             type="radio"
             className="radio-check"
+            name="approved_status"
+            value={10}
+            onChange={handleRadioChange}
+            checked={approved_status === 10}
          />
-         <Form.Check inline label="Reject" type="radio" className="ml-3" />
+         <Form.Check
+            inline
+            label="Reject"
+            type="radio"
+            className="ml-3"
+            name="approved_status"
+            value={30}
+            onChange={handleRadioChange}
+            checked={approved_status === 30}
+         />
 
          <Form.Group as={Col} md="9" className="ml-3 mr-4">
             <Form.Control

@@ -60,6 +60,7 @@ export default {
    pageQuestionsMyQuestionsTab: "My Questions",
    pageQuestionsAllQuestionsTab: "All Questions",
    pageQuestionsQuestionsTab: "Questions",
+   pageQuestionsReviewsTab: "Reviews",
    pageQuestionsLogout: "Logout",
 
    pageResetLink: "Reset Password",

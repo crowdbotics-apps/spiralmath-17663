@@ -25,10 +25,7 @@ const MyQuestions = () => {
       localStorage.getItem("user") !== "undefined"
          ? JSON.parse(localStorage.getItem("user"))
          : undefined;
-   const userName =
-      localUser &&
-      localUser.userObj &&
-      localUser.userObj.first_name + " " + localUser.userObj.last_name;
+   const userId = localUser && localUser.userObj && localUser.userObj.userId;
    //pagination
    const [currentPage, setCurrentPage] = useState(1);
    const [questionsPerPage] = useState(10);
@@ -41,7 +38,7 @@ const MyQuestions = () => {
 
    useEffect(() => {
       if (!deletingQuestion)
-         dispatch(questionActions.getUserQuestions());
+         dispatch(questionActions.getUserQuestions(`creator=${userId}`));
    }, [deletingQuestion]);
 
    const indexOfLastQuestion = currentPage * questionsPerPage;
