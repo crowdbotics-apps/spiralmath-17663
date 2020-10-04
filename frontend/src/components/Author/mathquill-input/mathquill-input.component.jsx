@@ -5,7 +5,12 @@ import katex from "katex";
 import "katex/dist/katex.min.css";
 import "./mathquill-input.styles.css";
 
-const MathquillInput = ({ name, handleAnswerChange, handleQuestionChange }) => {
+const MathquillInput = ({
+   name,
+   handleAnswerChange,
+   handleQuestionChange,
+   isReview,
+}) => {
    return (
       <React.Fragment>
          <SunEditor
@@ -14,6 +19,7 @@ const MathquillInput = ({ name, handleAnswerChange, handleQuestionChange }) => {
             onChange={
                handleAnswerChange ? handleAnswerChange : handleQuestionChange
             }
+            disable={isReview}
          />
       </React.Fragment>
    );

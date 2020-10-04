@@ -25,13 +25,13 @@ export const selectUserQuestionsCount = createSelector(
 
 export const selectAllQuestions = createSelector(
    [selectQuestion],
-   (question) => question.allQuestions && question.allQuestions.questionCount
+   (question) => question.allQuestions && question.allQuestions.questions
 );
 
 export const selectAllQuestionsCount = createSelector(
    [selectQuestion],
    (question) =>
-      question.allQuestions.questions && question.allQuestions.questions
+      question.allQuestions.questions && question.allQuestions.questionCout
 );
 
 export const selectUpdatingQuestion = createSelector(
@@ -47,5 +47,7 @@ export const selectDeletingQuestion = createSelector(
 export const selectAnswerContent = createSelector(
    [selectQuestion],
    (question) =>
-      question.answer && question.answer.content ? question.answer.content :question.answer
+      question.answer && question.answer.content
+         ? question.answer.content
+         : question.answer
 );

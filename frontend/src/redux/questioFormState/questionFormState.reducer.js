@@ -40,6 +40,8 @@ const initialStateQuestion = {
    standard_set: standard_set,
    edit: false,
    id: "",
+   approved_status: "",
+   reviewer_feedback: "",
 };
 
 export const questionFormStateReducer = (

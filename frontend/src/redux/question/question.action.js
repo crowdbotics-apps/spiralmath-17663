@@ -71,6 +71,7 @@ const getAllQuestions = () => {
 
 const deleteQuestion = (id) => {
    return (dispatch) => {
+      console.log(questionTypes);
       dispatch({ type: questionTypes.DELETE_QUESTION_REQUEST });
       questionService.deleteQuestion(id).then(
          (data) => {

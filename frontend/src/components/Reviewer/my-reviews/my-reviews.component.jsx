@@ -22,62 +22,17 @@ const MyReviews = () => {
       localStorage.getItem("user") !== "undefined"
          ? JSON.parse(localStorage.getItem("user"))
          : undefined;
-   const userName =
-      localUser &&
-      localUser.userObj &&
-      localUser.userObj.first_name + " " + localUser.userObj.last_name;
+   const userId = localUser && localUser.userObj && localUser.userObj.id;
    //pagination
    const [currentPage, setCurrentPage] = useState(1);
    const [questionsPerPage] = useState(10);
    // delete modal
 
-   const userQuestions = [
-      {
-         id: 1,
-         value: "How many leaves are there in the tree?",
-         author_name: "Cameron Williamson",
-         approved_status: 10,
-         reviewer_feedback: "Nice work",
-         question_type: "mc",
-      },
-      {
-         id: 2,
-         value: "How many leaves are there in the tree?",
-         author_name: "Theresa Webb",
-         approved_status: 10,
-         reviewer_feedback: "Nice work",
-         question_type: "la",
-      },
-      {
-         id: 3,
-         value: "How many leaves are there in the tree?",
-         author_name: "Darrell Steward",
-         approved_status: 10,
-         reviewer_feedback: "Nice work",
-         question_type: "sa",
-      },
-      {
-         id: 4,
-         value: "How many leaves are there in the tree?",
-         author_name: "Guy Hawkins",
-         approved_status: 10,
-         reviewer_feedback: "Nice work",
-         question_type: "t/f",
-      },
-      {
-         id: 5,
-         value: "How many leaves are there in the tree?",
-         author_name: "Wade Warren",
-         approved_status: 10,
-         reviewer_feedback: "Nice work",
-         question_type: "mc",
-      },
-   ]; //useSelector(selectUserQuestions);
+   const userQuestions = useSelector(selectUserQuestions);
    const userQuestionsCount = useSelector(selectUserQuestionsCount);
-   const updatingQuestion = useSelector(selectUpdatingQuestion);
 
    useEffect(() => {
-      dispatch(questionActions.getUserQuestions(`reviewer_name="${userName}"`));
+      dispatch(questionActions.getUserQuestions(`reviewer_name=${userId}`));
    }, []);
 
    const indexOfLastQuestion = currentPage * questionsPerPage;
@@ -89,6 +44,7 @@ const MyReviews = () => {
    const handleReviewForm = (data) => {
       dispatch(setQuestionType(data.question_type));
       dispatch(questionFormStateEdit(data));
+      dispatch(questionActions.getAnswer(data.id));
    };
 
    const paginate = (pageNumber) => setCurrentPage(pageNumber);

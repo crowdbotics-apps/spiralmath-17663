@@ -35,16 +35,10 @@ const getUserQuestions = (queryString) => {
       method: "GET",
       headers: authHeader(),
    };
-   if(queryString){
- return fetch(`api/v1/question?${queryString}`, requestOptions).then(
+
+   return fetch(`api/v1/question?${queryString}`, requestOptions).then(
       handleResponse
    );
-   }else{
-       return fetch(`api/v1/question/`, requestOptions).then(
-      handleResponse
-   );
-   }
-  
 };
 
 const getAllQuestions = () => {
