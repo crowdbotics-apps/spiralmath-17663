@@ -28,10 +28,10 @@ const createQuestion = (formData, answer) => {
    };
 };
 
-const createAnswer = () => {
+const createAnswer = (data) => {
    return (dispatch) => {
       dispatch({ type: questionTypes.CREATE_ANSWER_REQUEST });
-      questionService.createAnswer().then(
+      questionService.createAnswer(data).then(
          (data) => {
             dispatch({ type: questionTypes.CREATE_ANSWER_SUCCESS });
          },
