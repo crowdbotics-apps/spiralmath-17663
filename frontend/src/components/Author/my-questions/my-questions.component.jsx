@@ -25,7 +25,7 @@ const MyQuestions = () => {
       localStorage.getItem("user") !== "undefined"
          ? JSON.parse(localStorage.getItem("user"))
          : undefined;
-   const userId = localUser && localUser.userObj && localUser.userObj.userId;
+   const userId = localUser && localUser.userObj && localUser.userObj.id;
    //pagination
    const [currentPage, setCurrentPage] = useState(1);
    const [questionsPerPage] = useState(10);

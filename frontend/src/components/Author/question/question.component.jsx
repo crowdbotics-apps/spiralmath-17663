@@ -78,17 +78,19 @@ const Question = ({ questionType }) => {
    useEffect(() => {
       if (questionType === "mc") {
          setAnswer({
-            A: {
-               answer: false,
-               reason: "",
-            },
-            B: {
-               answer: false,
-               reason: "",
-            },
-            C: {
-               answer: false,
-               reason: "",
+            content: {
+               A: {
+                  answer: false,
+                  reason: "",
+               },
+               B: {
+                  answer: false,
+                  reason: "",
+               },
+               C: {
+                  answer: false,
+                  reason: "",
+               },
             },
          });
       }
@@ -117,9 +119,11 @@ const Question = ({ questionType }) => {
             console.log(answer);
             return {
                ...answer,
-               [mcOptions.name]: {
-                  ...answer[mcOptions.name],
-                  answer: mcOptions[mcOptions.name],
+               content: {
+                  [mcOptions.name]: {
+                     ...answer["content"][mcOptions.name],
+                     answer: mcOptions[mcOptions.name],
+                  },
                },
             };
          });
@@ -201,25 +205,31 @@ const Question = ({ questionType }) => {
          value = e.target.value;
       }
       if (questionType === "sa" || questionType === "la") {
-         setAnswer({ value: e.trim() });
+         setAnswer({ content: e.trim() });
       } else if (questionType === "t/f") {
          if (name === "true") {
             setAnswer({
-               true: !!checked,
-               false: !checked,
+               content: {
+                  true: !!checked,
+                  false: !checked,
+               },
             });
          } else {
             setAnswer({
-               true: !checked,
-               false: !!checked,
+               content: {
+                  true: !checked,
+                  false: !!checked,
+               },
             });
          }
       } else {
          setAnswer((prevAnswer) => ({
             ...prevAnswer,
-            [name]: {
-               answer: mcOptions[name],
-               reason: value,
+            content: {
+               [name]: {
+                  answer: mcOptions[name],
+                  reason: value,
+               },
             },
          }));
       }
@@ -250,8 +260,7 @@ const Question = ({ questionType }) => {
          dispatch(questionActions.updateAnswer(formState.id, formData));
          dispatch(questionActions.resetAnswerState());
       } else {
-         dispatch(questionActions.createQuestion(formData));
-         dispatch(questionActions.createAnswer(answer));
+         dispatch(questionActions.createQuestion(formData, answer));
       }
    };
 
@@ -281,6 +290,7 @@ const Question = ({ questionType }) => {
       reviewer_feedback,
       approved_status,
    } = formState;
+   console.log(value);
 
    const isReview = localUser.userObj.reviewQuestions;
 
@@ -333,7 +343,7 @@ const Question = ({ questionType }) => {
             } `}
             ref={formErrorRef}
          >
-            {localUser.userObj.reviewQuestions && (
+            {isReview && (
                <AuthorDetails
                   author_name={author_name}
                   reviewer_name={reviewer_name}
@@ -553,6 +563,7 @@ const Question = ({ questionType }) => {
                      name="value"
                      handleQuestionChange={handleQuestionChange}
                      isReview={isReview}
+                     value={value}
                   />
                   {submitted && errors.value && (
                      <p className="text-danger form-text-danger">
@@ -725,7 +736,7 @@ const Question = ({ questionType }) => {
                </React.Fragment>
             )}
          </div>
-         {localUser.userObj.reviewQuestions && (
+         {isReview && (
             <ReviewInput
                handleChange={handleChange}
                handleRadioChange={handleRadioChange}

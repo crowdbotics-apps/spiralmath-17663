@@ -10,6 +10,7 @@ const MathquillInput = ({
    handleAnswerChange,
    handleQuestionChange,
    isReview,
+   value,
 }) => {
    return (
       <React.Fragment>
@@ -20,6 +21,7 @@ const MathquillInput = ({
                handleAnswerChange ? handleAnswerChange : handleQuestionChange
             }
             disable={isReview}
+            setContents={value}
          />
       </React.Fragment>
    );
