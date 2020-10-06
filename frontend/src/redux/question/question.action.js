@@ -13,12 +13,13 @@ const getStandardCode = () => {
    };
 };
 
-const createQuestion = () => {
+const createQuestion = (formData, answer) => {
    return (dispatch) => {
       dispatch({ type: questionTypes.CREATE_QUESTION_REQUEST });
-      questionService.createQuestion().then(
+      questionService.createQuestion(formData).then(
          (data) => {
             dispatch({ type: questionTypes.CREATE_QUESTION_SUCCESS });
+            dispatch(createAnswer({ ...answer, question: data.id }));
          },
          (error) => {
             dispatch({ type: questionTypes.CREATE_QUESTION_FAILURE });
