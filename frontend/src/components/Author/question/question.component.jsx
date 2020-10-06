@@ -597,7 +597,10 @@ const Question = ({ questionType }) => {
                            placeholder="Add Option 1"
                            onChange={handleAnswerChange("A")}
                            value={
-                              (answer && answer["A"] && answer["A"].reason) ||
+                              (answer &&
+                                 answer.content &&
+                                 answer.content["A"] &&
+                                 answer.content["A"].reason) ||
                               ""
                            }
                            className=" border-top-0 border-left-0 border-right-0 rounded-0"
@@ -627,7 +630,10 @@ const Question = ({ questionType }) => {
                            placeholder="Add Option 2"
                            onChange={handleAnswerChange("B")}
                            value={
-                              (answer && answer["B"] && answer["B"].reason) ||
+                              (answer &&
+                                 answer.content &&
+                                 answer.content["B"] &&
+                                 answer.content["B"].reason) ||
                               ""
                            }
                            className=" border-top-0 border-left-0 border-right-0 rounded-0"
@@ -657,7 +663,10 @@ const Question = ({ questionType }) => {
                            placeholder="Add Option 3"
                            onChange={handleAnswerChange("C")}
                            value={
-                              (answer && answer["C"] && answer["C"].reason) ||
+                              (answer &&
+                                 answer.content &&
+                                 answer.content["C"] &&
+                                 answer.content["C"].reason) ||
                               ""
                            }
                            className=" border-top-0 border-left-0 border-right-0 rounded-0"
