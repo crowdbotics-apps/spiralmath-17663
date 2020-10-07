@@ -146,7 +146,7 @@ const Question = ({ questionType }) => {
                standard_code:
                   standardCode && standardCode["Standard Code"][e.i],
                grade_level: standardCode && standardCode["Grade"][e.i],
-               [name]: e.set,
+               [name]: JSON.stringify({ standard_set: e.set }),
             }));
       } else {
          setFormState((prevFormState) => ({ ...prevFormState, [name]: e }));
@@ -418,7 +418,7 @@ const Question = ({ questionType }) => {
             <Form.Row className="mb-3">
                <Form.Group as={Col} md="4">
                   <SingleSelect
-                     value={standard_set}
+                     value={JSON.parse(formState.standard_set).standard_set}
                      placeholder="Standard Set"
                      options={
                         standardCode &&
