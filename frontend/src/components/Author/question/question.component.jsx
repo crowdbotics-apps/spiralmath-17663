@@ -116,10 +116,10 @@ const Question = ({ questionType }) => {
    useEffect(() => {
       if (mcOptions["name"]) {
          setAnswer((answer) => {
-            console.log(answer);
             return {
                ...answer,
                content: {
+                  ...answer.content,
                   [mcOptions.name]: {
                      ...answer["content"][mcOptions.name],
                      answer: mcOptions[mcOptions.name],
@@ -226,6 +226,7 @@ const Question = ({ questionType }) => {
          setAnswer((prevAnswer) => ({
             ...prevAnswer,
             content: {
+               ...prevAnswer.content,
                [name]: {
                   answer: mcOptions[name],
                   reason: value,
@@ -290,7 +291,6 @@ const Question = ({ questionType }) => {
       reviewer_feedback,
       approved_status,
    } = formState;
-   console.log(value);
 
    const isReview = localUser.userObj.reviewQuestions;
 
