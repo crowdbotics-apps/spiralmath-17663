@@ -37,7 +37,7 @@ const initialStateQuestion = {
    author_memo: "",
    creator: "",
    standard_code: standard_code,
-   standard_set: standard_set,
+   standard_set: JSON.stringify({ standard_set: standard_set }),
    edit: false,
    id: "",
    approved_status: "",
