@@ -385,7 +385,7 @@ const Question = ({ questionType }) => {
                      value={question_style}
                      placeholder="Question Style"
                      options={questionStyles}
-                     onChange={handleSelectChange(question_style)}
+                     onChange={handleSelectChange("question_style")}
                      disabled={isReview}
                   />
                </Form.Group>

@@ -42,6 +42,7 @@ const initialStateQuestion = {
    id: "",
    approved_status: "",
    reviewer_feedback: "",
+   question_style: "",
 };
 
 export const questionFormStateReducer = (
