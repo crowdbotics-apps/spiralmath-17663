@@ -1,18 +1,15 @@
-import json
-
-from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError, PermissionDenied
-from rest_framework.validators import UniqueValidator
 from typing import List
 from home.models import Question, Settings, STANDARD_CODE_PATH
-from rest_framework.response import Response
 from django.conf import settings
 
 
 def validate_grade_level(data_grade_level):
     standard_code = Settings.objects.filter(path=STANDARD_CODE_PATH).first()
-    if int(data_grade_level) not in standard_code.value_json['Grade']:
+    grades = standard_code.value_json['Grade']
+    grades = [str(x) for x in grades]
+    if data_grade_level not in grades:
         return False
     return True
 
@@ -31,6 +28,7 @@ class QuestionBase(serializers.ModelSerializer):
             'question_type',
             'content_source',
             'image_source',
+            'image',
             'alt_text',
             'mills_difficulty_level',
             'dok',
@@ -66,6 +64,8 @@ class QuestionCreate(QuestionBase):
 
     def validate(self, data):
         """Validate create question."""
+        if not data['reviewer_name']:
+            raise ValidationError(detail={'reviewer_name': ['This field may not be blank.']})
         if not data['reviewer_name'].user_type.review_questions:
             raise ValidationError(detail={'reviewer_name': ['This user cannot review questions.']})
         if not validate_grade_level(data['grade_level']):

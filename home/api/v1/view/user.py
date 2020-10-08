@@ -22,7 +22,8 @@ from home.api.v1.serializer.user import (
     UserEditorUpdate,
     ResetPasswordSerializer,
     InvitationSerializer,
-    ContactUsSerializer
+    ContactUsSerializer,
+    ReviewerShortList,
 )
 from home.api.v1.view.auth import internal_login
 from users.models import User as UserModel
@@ -250,6 +251,21 @@ class UserViewSet(
                 data={
                     'detail': UserShortList(
                         list(UserModel.objects.filter(status=User.STATUS.ACTIVE).all()), many=True
+                    ).data
+                }
+        )
+
+    @action(
+        detail=False,
+        methods=['get'],
+        url_path='reviewers-list',
+    )
+    def reviewers_list(self, request):
+        return Response(
+                data={
+                    'detail': ReviewerShortList(
+                        list(UserModel.objects
+                             .filter(user_type__review_questions=True, status=User.STATUS.ACTIVE).all()), many=True
                     ).data
                 }
         )
