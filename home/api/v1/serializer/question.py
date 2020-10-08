@@ -28,6 +28,7 @@ class QuestionBase(serializers.ModelSerializer):
             'question_type',
             'content_source',
             'image_source',
+            'image',
             'alt_text',
             'mills_difficulty_level',
             'dok',
