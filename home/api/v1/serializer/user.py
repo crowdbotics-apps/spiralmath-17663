@@ -66,6 +66,10 @@ class UserShortList(serializers.ModelSerializer):
         fields = ['id', 'fullname']
 
 
+class ReviewerShortList(UserSerializerBase):
+    """List users with user_type.review_questions = True ."""
+
+
 class UserCreate(UserSerializerBase):
     """Create a user Serializer."""
 
