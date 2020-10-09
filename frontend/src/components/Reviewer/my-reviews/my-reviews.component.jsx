@@ -42,6 +42,7 @@ const MyReviews = () => {
       userQuestions.slice(indexOfFirstQuestion, indexOfLastQuestion);
 
    const handleReviewForm = (data) => {
+      console.log(data);
       dispatch(setQuestionType(data.question_type));
       dispatch(questionFormStateEdit(data));
       dispatch(questionActions.getAnswer(data.id));

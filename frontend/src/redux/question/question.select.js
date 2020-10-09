@@ -6,10 +6,19 @@ export const selectAnswerStatus = createSelector(
    [selectQuestion],
    (question) => question.creatingAnswer
 );
+export const selectCreatingQuestion = createSelector(
+   [selectQuestion],
+   (question) => question.creatingQuestion
+);
 
 export const selectStandardCode = createSelector(
    [selectQuestion],
    (question) => question.standardCode && question.standardCode
+);
+
+export const selectReviewers = createSelector(
+   [selectQuestion],
+   (question) => question.reviewers && question.reviewers
 );
 
 export const selectUserQuestions = createSelector(

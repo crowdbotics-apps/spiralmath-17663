@@ -4,9 +4,20 @@ import questionService from "./question.service";
 const getStandardCode = () => {
    return (dispatch) => {
       questionService.getStandardCode().then((data) => {
-         console.log(data);
          dispatch({
             type: questionTypes.GETSTANDARDCODE_SUCCESS,
+            payload: data.detail,
+         });
+      });
+   };
+};
+
+const getReviewers = () => {
+   return (dispatch) => {
+      questionService.getReviewers().then((data) => {
+         console.log(data);
+         dispatch({
+            type: questionTypes.GET_REVIEWERS_SUCCESS,
             payload: data.detail,
          });
       });
@@ -139,6 +150,7 @@ const questionStateChanger = () => ({
 export default {
    resetAnswerState,
    getStandardCode,
+   getReviewers,
    getUserQuestions,
    getAllQuestions,
    getAnswer,

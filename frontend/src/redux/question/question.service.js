@@ -12,6 +12,16 @@ const getStandardCode = () => {
    );
 };
 
+const getReviewers = () => {
+   const requestOptions = {
+      method: "GET",
+      headers: authHeader(),
+   };
+   return fetch(`api/v1/user/reviewers-list/`, requestOptions).then(
+      handleResponse
+   );
+};
+
 const createQuestion = (formData) => {
    const requestOptions = {
       method: "POST",
@@ -93,6 +103,7 @@ export default {
    getUserQuestions,
    getAllQuestions,
    getStandardCode,
+   getReviewers,
    getAnswer,
    createQuestion,
    createAnswer,
