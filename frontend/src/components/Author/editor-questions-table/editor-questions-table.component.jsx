@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Row, Col, Table, OverlayTrigger } from "react-bootstrap";
+import parse from "html-react-parser";
 import { FormattedMessage } from "react-intl";
 
 //components
@@ -102,7 +103,7 @@ const EditorQuestionsTable = ({ questions, renderDeleteEdit, all }) => {
                                     {question.id && question.id}
                                  </td>
                                  <td className="border-right-0 border-left-0">
-                                    {question.value && question.value}
+                                    {question.value && parse(question.value)}
                                  </td>
                                  <td className="border-right-0 border-left-0">
                                     {question.grade_level &&

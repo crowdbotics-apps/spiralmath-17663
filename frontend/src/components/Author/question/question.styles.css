@@ -15,3 +15,27 @@
 .svg-color-green {
    stroke: green !important;
 }
+
+.css-2b097c-container,
+.css-14jk2my-container {
+   border-bottom: 1px solid #ced4da !important;
+}
+
+.css-11hpcgx-control,
+.css-1hivdsp-control,
+.css-hr4vws-control {
+   border: none !important;
+}
+.css-1okebmr-indicatorSeparator,
+.css-109onse-indicatorSeparator {
+   display: none !important;
+}
+
+.css-6q0nyr-Svg {
+   color: black;
+   height: 16px;
+}
+
+.css-1gi1mx2-ValueContainer {
+   padding-left: 12px !important;
+}

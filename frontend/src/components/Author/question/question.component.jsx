@@ -20,6 +20,8 @@ import { selectAnswerStatus } from "./../../../redux/question/question.select";
 import { selectQuestionFormState } from "./../../../redux/questioFormState/questionFormState.select";
 import { selectAnswerContent } from "./../../../redux/question/question.select";
 import { selectUpdatingQuestion } from "./../../../redux/question/question.select";
+import { selectCreatingQuestion } from "./../../../redux/question/question.select";
+import { selectReviewers } from "./../../../redux/question/question.select";
 
 import AuthorDetails from "../../Reviewer/author-details/author-details.component";
 
@@ -52,10 +54,12 @@ const Question = ({ questionType }) => {
    const formErrorRef = useRef(null);
    const apiErrorRef = useRef(null);
    const standardCode = useSelector(selectStandardCode);
+   const reviewers = useSelector(selectReviewers);
    const creatingAnswer = useSelector(selectAnswerStatus);
    const initialFormState = useSelector(selectQuestionFormState);
    const initialAnswer = useSelector(selectAnswerContent);
    const updatingQuestion = useSelector(selectUpdatingQuestion);
+   const creatingQuestion = useSelector(selectCreatingQuestion);
 
    const [formState, setFormState] = useState({
       ...initialFormState,
@@ -95,6 +99,7 @@ const Question = ({ questionType }) => {
          });
       }
       dispatch(questionActions.getStandardCode());
+      dispatch(questionActions.getReviewers());
    }, []);
 
    useEffect(() => {
@@ -418,7 +423,10 @@ const Question = ({ questionType }) => {
             <Form.Row className="mb-3">
                <Form.Group as={Col} md="4">
                   <SingleSelect
-                     value={JSON.parse(formState.standard_set).standard_set}
+                     value={
+                        standardCode &&
+                        JSON.parse(formState.standard_set).standard_set
+                     }
                      placeholder="Standard Set"
                      options={
                         standardCode &&
@@ -552,6 +560,31 @@ const Question = ({ questionType }) => {
                   >
                      {imageButtonText}
                   </Button>
+               </Form.Group>
+            </Form.Row>
+            <Form.Row className="mb-3">
+               <Form.Group as={Col} md="4">
+                  <SingleSelect
+                     value={formState.reviewer_name}
+                     placeholder="Reviewer"
+                     options={
+                        reviewers &&
+                        reviewers.map((reviewer) => {
+                           return {
+                              value: reviewer.id,
+                              label:
+                                 reviewer.first_name + " " + reviewer.last_name,
+                           };
+                        })
+                     }
+                     disabled={isReview}
+                     onChange={handleSelectChange("reviewer_name")}
+                  />
+                  {submitted && errors.reviewer_name && (
+                     <p className="text-danger form-text-danger">
+                        {errors.reviewer_name}
+                     </p>
+                  )}
                </Form.Group>
             </Form.Row>
             <Form.Row>
@@ -761,7 +794,9 @@ const Question = ({ questionType }) => {
                />
             </Button>
             <Button className="save-btn" onClick={handleSubmit}>
-               {(creatingAnswer === true || updatingQuestion === true) && (
+               {(creatingAnswer === true ||
+                  updatingQuestion === true ||
+                  creatingQuestion === true) && (
                   <span className="spinner-border spinner-border-sm mr-1"></span>
                )}
                Save & Send

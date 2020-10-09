@@ -5,6 +5,7 @@ const author =
    user && user !== "undefined"
       ? user.userObj.first_name + " " + user.userObj.last_name
       : "";
+const creator = user && user !== "undefined" ? user.userObj.id : "";
 const grade_level =
    localStorage.getItem("grade_level") &&
    localStorage.getItem("grade_level") !== "undefined"
@@ -35,7 +36,7 @@ const initialStateQuestion = {
    summative_status: false,
    state_model: false,
    author_memo: "",
-   creator: "",
+   creator: creator,
    standard_code: standard_code,
    standard_set: JSON.stringify({ standard_set: standard_set }),
    edit: false,

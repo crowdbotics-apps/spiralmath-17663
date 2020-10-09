@@ -403,10 +403,6 @@ const Dashboard = () => {
       );
    };
 
-   console.log("Role : ", localUser.userObj.role);
-   console.log("Key : ", keyQuestionsManagement);
-   console.log("QuestionType : ", questionType);
-
    return (
       <React.Fragment>
          {navbar()}
