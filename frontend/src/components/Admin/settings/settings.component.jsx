@@ -6,25 +6,21 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ReactQuill from "react-quill";
 
 import settingActions from "../../../redux/setting/setting.actions";
+import MessageBar from "../../ui/message-bar/message-bar.component";
 import { emailsValidation } from "../../../helpers/validation/settingsValidation";
+import { creatorValidation } from "../../../helpers/validation/settingsValidation";
+import { selectCreatingCreator } from "../../../redux/setting/setting.select";
 import { ReactComponent as EditIcon } from "../../../assets/img/edit-icon.svg";
 import "./settings.styles.css";
 
 const Settings = () => {
    const dispatch = useDispatch();
+   const intl = useIntl();
+
    const inputRef = useRef(null);
    const editorRef = useRef(null);
    const emailsRef = useRef(null);
-   const [errors, setErrors] = useState({});
-   const [error, setError] = useState("");
-   const [emailsEditMode, setEmailsEditMode] = useState(false);
-   const [termsEditMode, setTermsEditMode] = useState(false);
-   const [file, setFile] = useState("");
-   const [terms, setTerms] = useState("");
-   const [emails, setEmails] = useState({
-      registered: "",
-      non_registered: "",
-   });
+
    const uploadingFile = useSelector(
       (state) => state.mainSettings.uploadingFile
    );
@@ -33,8 +29,24 @@ const Settings = () => {
    const uploadingTerms = useSelector(
       (state) => state.mainSettings.uploadingTerms
    );
-
    const settings = useSelector((state) => state.mainSettings.settings);
+   const creatingCreator = useSelector(selectCreatingCreator);
+
+   const [errors, setErrors] = useState({});
+   const [error, setError] = useState("");
+   const [creatorError, setCreatorError] = useState({});
+   const [emailsEditMode, setEmailsEditMode] = useState(false);
+   const [termsEditMode, setTermsEditMode] = useState(false);
+   const [file, setFile] = useState("");
+   const [terms, setTerms] = useState("");
+   const [emails, setEmails] = useState({
+      registered: "",
+      non_registered: "",
+   });
+   const [creatorState, setCreatorState] = useState({
+      first_name: "",
+      last_name: "",
+   });
 
    useEffect(() => {
       let dispSet = {};
@@ -96,6 +108,14 @@ const Settings = () => {
       }
    }, [errors]);
 
+   useEffect(() => {
+      if (Object.keys(creatorError).length === 0) {
+         if (creatorState.first_name && creatorState.last_name)
+            dispatch(settingActions.createCreator(creatorState));
+         setCreatorState({ first_name: "", last_name: "" });
+      }
+   }, [creatorError]);
+
    const handleEmailsEditMode = () => {
       setEmailsEditMode(!emailsEditMode);
    };
@@ -118,6 +138,21 @@ const Settings = () => {
    const emailsSubmit = (e) => {
       e.preventDefault();
       setErrors(emailsValidation(emails));
+   };
+
+   const handleCreatorChange = (name) => (e) => {
+      const { value } = e.target;
+      setCreatorState({ ...creatorState, [name]: value });
+      setCreatorError({ ...errors, [name]: "" });
+   };
+
+   const submitCreators = (e) => {
+      e.preventDefault();
+      setCreatorError(creatorValidation(creatorState));
+   };
+
+   const handleClearMessage = () => {
+      dispatch(settingActions.settingStatusChanger());
    };
 
    const renderContactUsEmailForm = () => {
@@ -195,7 +230,10 @@ const Settings = () => {
             <div className="my-4 d-flex justify-content-end bottom-btn-grp">
                {emailsEditMode ? (
                   <React.Fragment>
-                     <Button className="mr-4 cancel-btn">
+                     <Button
+                        className="mr-4 cancel-btn"
+                        onClick={() => setEmailsEditMode(!emailsEditMode)}
+                     >
                         <FormattedMessage
                            defaultMessage="Cancel"
                            id="componentUsersTabCancelButton"
@@ -212,6 +250,77 @@ const Settings = () => {
                      </Button>
                   </React.Fragment>
                ) : null}
+            </div>
+         </Form>
+      );
+   };
+   const renderCreatorForm = () => {
+      return (
+         <Form noValidate onSubmit={submitCreators}>
+            <div className="px-4 py-4 border form-border border-color position-relative ">
+               <Form.Row>
+                  <Form.Group as={Col} md="2" className="align-self">
+                     <h5 className="contact-us-email-text">
+                        <FormattedMessage
+                           defaultMessage="Add Creator"
+                           id="addCreatorLabel"
+                        />
+                     </h5>
+                  </Form.Group>
+
+                  <Form.Group as={Col} md="3" controlId="creatorFirstName">
+                     <Form.Label className="label-color">
+                        <FormattedMessage
+                           defaultMessage="First Name"
+                           id="creatorFirstNameLabel"
+                        />
+                     </Form.Label>
+                     <Form.Control
+                        type="email"
+                        value={creatorState.first_name}
+                        onChange={handleCreatorChange("first_name")}
+                        required
+                        className="setting-input-style border-top-0 border-left-0 border-right-0 rounded-0"
+                        maxLength="50"
+                     />
+                     {creatorError.first_name && (
+                        <div className="text-danger">
+                           {creatorError.first_name}
+                        </div>
+                     )}
+                  </Form.Group>
+                  <Form.Group as={Col} md="3" controlId="creatotLastName">
+                     <Form.Label className="label-color">
+                        <FormattedMessage
+                           defaultMessage="Last Name"
+                           id="creatorLastNameLabel"
+                        />
+                     </Form.Label>
+                     <Form.Control
+                        type="email"
+                        value={creatorState.last_name}
+                        onChange={handleCreatorChange("last_name")}
+                        className="setting-input-style border-top-0 border-left-0 border-right-0 rounded-0"
+                        maxLength="50"
+                     />
+                     {creatorError.last_name && (
+                        <div className="text-danger">
+                           {creatorError.last_name}
+                        </div>
+                     )}
+                  </Form.Group>
+               </Form.Row>
+            </div>
+            <div className="my-4 d-flex justify-content-end bottom-btn-grp">
+               <Button type="submit" className="save-btn">
+                  {creatingCreator === true && (
+                     <span className="spinner-border spinner-border-sm mr-1 text-primary"></span>
+                  )}
+                  <FormattedMessage
+                     defaultMessage="Save"
+                     id="componentUsersTabSaveButton"
+                  />
+               </Button>
             </div>
          </Form>
       );
@@ -249,7 +358,10 @@ const Settings = () => {
                {error && <div className="text-danger">{error}</div>}
                {termsEditMode ? (
                   <React.Fragment>
-                     <Button className="mr-4 cancel-btn">
+                     <Button
+                        className="mr-4 cancel-btn"
+                        onClick={() => setTermsEditMode(!termsEditMode)}
+                     >
                         <FormattedMessage
                            defaultMessage="Cancel"
                            id="componentUsersTabCancelButton"
@@ -313,6 +425,26 @@ const Settings = () => {
       <React.Fragment>
          {renderSettingsEditor()}
          {renderContactUsEmailForm()}
+         {creatingCreator === "success" && (
+            <React.Fragment>
+               <MessageBar
+                  messageType="SUCCESS"
+                  message={"Creator created successfully"}
+                  handleClearMessage={handleClearMessage}
+               />
+            </React.Fragment>
+         )}
+         {console.log(creatingCreator)}
+         {creatingCreator === "fail" && (
+            <React.Fragment>
+               <MessageBar
+                  messageType="ERROR"
+                  message={"Creator created failed"}
+                  handleClearMessage={handleClearMessage}
+               />
+            </React.Fragment>
+         )}
+         {renderCreatorForm()}
          {renderUploadExcel()}
       </React.Fragment>
    );

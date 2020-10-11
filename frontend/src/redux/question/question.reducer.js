@@ -18,6 +18,8 @@ export default (state = initialState, action) => {
          return { ...state, standardCode: action.payload };
       case questionTypes.GET_REVIEWERS_SUCCESS:
          return { ...state, reviewers: action.payload };
+      case questionTypes.GET_CREATOR_SUCCESS:
+         return { ...state, creators: action.payload };
       case questionTypes.CREATE_QUESTION_REQUEST:
          return { ...state, creatingQuestion: true };
       case questionTypes.CREATE_QUESTION_SUCCESS:
