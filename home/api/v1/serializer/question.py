@@ -98,13 +98,37 @@ class QuestionUpdate(QuestionBase):
         request = self.context.get('request', None)
         request_user_type = request.user.user_type
         updating_attributes = list(dict.keys(data))
+        creator_accessible_fields = {
+            'value',
+            'author_name',
+            'reviewer_name',
+            'grade_level',
+            'question_type',
+            'content_source',
+            'image_source',
+            'image',
+            'alt_text',
+            'mills_difficulty_level',
+            'dok',
+            'copyright_status',
+            'question_style',
+            'summative_status',
+            'state_model',
+            'author_memo',
+            'creator',
+            'standard_code',
+            'standard_set',
+            'created',
+            'deleted',
+        }
         if not request_user_type.create_questions:
-            if len(updating_attributes) > 3 or\
-                    (len(updating_attributes) == 3
-                     and ('approved_status' not in updating_attributes
-                          and 'reviewer_feedback' not in updating_attributes
-                          and 'deleted_status' not in updating_attributes)):
+            if len(updating_attributes) > 3:
                 raise PermissionDenied
+            else:
+                for updating_attribute in updating_attributes:
+                    if updating_attribute in creator_accessible_fields:
+                        raise PermissionDenied
+
         if not request_user_type.review_questions and \
                 ('approved_status' in updating_attributes
                  or 'reviewer_feedback' in updating_attributes or 'deleted_status' in updating_attributes):
