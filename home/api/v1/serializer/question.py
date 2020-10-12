@@ -44,6 +44,8 @@ class QuestionBase(serializers.ModelSerializer):
             'standard_set',
             'created',
             'reviewer_date',
+            'deleted_status',
+            'deleted',
             'modified',
         ]
         read_only_fields: List[str] = ['created', 'modified']
@@ -53,7 +55,7 @@ class QuestionList(QuestionBase):
     """List any questions Serializer."""
 
     class Meta(QuestionBase.Meta):
-        fields = ['id', 'value', 'approved_status', 'creator', 'grade_level']
+        fields = ['id', 'value', 'approved_status', 'creator', 'grade_level', 'deleted_status', 'deleted']
 
 
 class QuestionCreate(QuestionBase):
@@ -96,14 +98,48 @@ class QuestionUpdate(QuestionBase):
         request = self.context.get('request', None)
         request_user_type = request.user.user_type
         updating_attributes = list(dict.keys(data))
+        creator_accessible_fields = {
+            'value',
+            'author_name',
+            'reviewer_name',
+            'grade_level',
+            'question_type',
+            'content_source',
+            'image_source',
+            'image',
+            'alt_text',
+            'mills_difficulty_level',
+            'dok',
+            'copyright_status',
+            'question_style',
+            'summative_status',
+            'state_model',
+            'author_memo',
+            'creator',
+            'standard_code',
+            'standard_set',
+            'created',
+            'deleted',
+        }
         if not request_user_type.create_questions:
-            if len(updating_attributes) > 2 or\
-                    (len(updating_attributes) == 2
-                     and ('approved_status' not in updating_attributes and 'reviewer_feedback' not in updating_attributes)):
+            if len(updating_attributes) > 3:
                 raise PermissionDenied
+            else:
+                for updating_attribute in updating_attributes:
+                    if updating_attribute in creator_accessible_fields:
+                        raise PermissionDenied
+
         if not request_user_type.review_questions and \
-                ('approved_status' in updating_attributes or 'reviewer_feedback' in updating_attributes):
+                ('approved_status' in updating_attributes
+                 or 'reviewer_feedback' in updating_attributes or 'deleted_status' in updating_attributes):
             raise PermissionDenied
+
+        if request_user_type.create_questions and self.instance.approved_status is Question.ASTATUS.APPROVED:
+            raise PermissionDenied(detail='This question has been approved already.')
+
+        if request_user_type.create_questions and self.instance.deleted is True \
+                and self.instance.deleted_status is True:
+            raise PermissionDenied(detail='This question has been deleted and cannot be modified.')
 
         if 'reviewer_name' in updating_attributes and not data['reviewer_name'].user_type.review_questions:
             raise ValidationError(detail={'reviewer_name': ['This user cannot review questions.']})
@@ -111,6 +147,6 @@ class QuestionUpdate(QuestionBase):
             raise ValidationError(detail={'grade_level': ['This Grade Level is not available.']})
         lang_codes = [c for (c, name) in settings.LANGUAGES]
         if 'language' in updating_attributes and data['language'] not in lang_codes:
-            raise ValidationError(detail={'grade_level': ['This language is not available.']})
+            raise ValidationError(detail={'language': ['This language is not available.']})
         return data
 

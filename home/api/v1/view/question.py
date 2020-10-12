@@ -24,7 +24,7 @@ class QuestionViewSet(
 
     queryset = Question.objects.all()
     serializer_class = QuestionBase
-    filterset_fields = ("creator", "reviewer_name", )
+    filterset_fields = ("creator", "reviewer_name", "deleted", "deleted_status" )
 
     def get_queryset(self: 'QuestionViewSet'):
         """Allows only those who can create/review questions."""
@@ -78,3 +78,16 @@ class QuestionViewSet(
     def load(self, request, pk):
         answers = Answer.objects.filter(question=pk).all()
         return Response({"details": AnswerSerializer(answers, many=True).data})
+
+    def destroy(self, request, *args, **kwargs):
+        question = self.get_object()
+        if question:
+            if question.deleted is True and question.deleted_status is True:
+                return Response({"details": "The question was already deleted."})
+            if request.user.user_type.create_questions and question.approved_status in\
+                    [Question.ASTATUS.PENDING, Question.ASTATUS.REJECTED]:
+                question.deleted = True
+                question.save()
+                return Response({"details": "The question was marked to deleted."})
+        else:
+            raise PermissionDenied

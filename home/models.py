@@ -145,6 +145,8 @@ class Question(models.Model):
     standard_set = JSONField(_("Standard set"), blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     reviewer_date = models.DateTimeField(auto_now=True)
+    deleted = models.BooleanField(_("Deleted"), default=False)
+    deleted_status = models.BooleanField(_("Deleted Status"), default=False)
     modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
