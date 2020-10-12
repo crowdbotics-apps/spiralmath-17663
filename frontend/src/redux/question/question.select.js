@@ -21,6 +21,11 @@ export const selectReviewers = createSelector(
    (question) => question.reviewers && question.reviewers
 );
 
+export const selectCreators = createSelector(
+   [selectQuestion],
+   (question) => question.creators && question.creators
+);
+
 export const selectUserQuestions = createSelector(
    [selectQuestion],
    (question) =>

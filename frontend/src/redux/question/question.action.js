@@ -25,15 +25,15 @@ const getReviewers = () => {
 };
 
 const getCreators = () => {
-    return (dispatch) => {
-       questionService.getCreators().then((data) => {
-          dispatch({
-             type: questionTypes.GET_CREATORS_SUCCESS,
-             payload: data.detail,
-          });
-       });
-    };
-}
+   return (dispatch) => {
+      questionService.getCreators().then((data) => {
+         dispatch({
+            type: questionTypes.GET_CREATORS_SUCCESS,
+            payload: data.detail,
+         });
+      });
+   };
+};
 
 const createQuestion = (formData, answer) => {
    return (dispatch) => {
@@ -162,6 +162,7 @@ export default {
    resetAnswerState,
    getStandardCode,
    getReviewers,
+   getCreators,
    getUserQuestions,
    getAllQuestions,
    getAnswer,

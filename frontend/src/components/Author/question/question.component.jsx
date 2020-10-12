@@ -22,6 +22,7 @@ import { selectAnswerContent } from "./../../../redux/question/question.select";
 import { selectUpdatingQuestion } from "./../../../redux/question/question.select";
 import { selectCreatingQuestion } from "./../../../redux/question/question.select";
 import { selectReviewers } from "./../../../redux/question/question.select";
+import { selectCreators } from "./../../../redux/question/question.select";
 
 import AuthorDetails from "../../Reviewer/author-details/author-details.component";
 
@@ -55,6 +56,7 @@ const Question = ({ questionType }) => {
    const apiErrorRef = useRef(null);
    const standardCode = useSelector(selectStandardCode);
    const reviewers = useSelector(selectReviewers);
+   const creators = useSelector(selectCreators);
    const creatingAnswer = useSelector(selectAnswerStatus);
    const initialFormState = useSelector(selectQuestionFormState);
    const initialAnswer = useSelector(selectAnswerContent);
@@ -583,6 +585,29 @@ const Question = ({ questionType }) => {
                   {submitted && errors.reviewer_name && (
                      <p className="text-danger form-text-danger">
                         {errors.reviewer_name}
+                     </p>
+                  )}
+               </Form.Group>
+               <Form.Group as={Col} md="4">
+                  <SingleSelect
+                     value={formState.creator}
+                     placeholder="Creator"
+                     options={
+                        creators &&
+                        creators.map((creator) => {
+                           return {
+                              value: creator.id,
+                              label:
+                                 creator.first_name + " " + creator.last_name,
+                           };
+                        })
+                     }
+                     disabled={isReview}
+                     onChange={handleSelectChange("reviewer_name")}
+                  />
+                  {submitted && errors.creator && (
+                     <p className="text-danger form-text-danger">
+                        {errors.creator}
                      </p>
                   )}
                </Form.Group>
