@@ -11,7 +11,6 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-   console.log(action);
    switch (action.type) {
       case settingTypes.FILE_UPLOAD_REQUEST:
          return { ...state, uploadingFile: true };

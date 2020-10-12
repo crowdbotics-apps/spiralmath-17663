@@ -29,7 +29,7 @@ const getCreators = () => {
       questionService.getCreators().then((data) => {
          dispatch({
             type: questionTypes.GET_CREATORS_SUCCESS,
-            payload: data.detail,
+            payload: data.results,
          });
       });
    };

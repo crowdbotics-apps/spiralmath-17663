@@ -102,6 +102,7 @@ const Question = ({ questionType }) => {
       }
       dispatch(questionActions.getStandardCode());
       dispatch(questionActions.getReviewers());
+      dispatch(questionActions.getCreators());
    }, []);
 
    useEffect(() => {
@@ -178,6 +179,7 @@ const Question = ({ questionType }) => {
 
    const handleQuestionChange = (e) => {
       setFormState((prev) => ({ ...prev, value: e.trim() }));
+      setErrors({ ...errors, value: "" });
    };
 
    const handleSubmit = (e) => {
@@ -603,7 +605,7 @@ const Question = ({ questionType }) => {
                         })
                      }
                      disabled={isReview}
-                     onChange={handleSelectChange("reviewer_name")}
+                     onChange={handleSelectChange("creator")}
                   />
                   {submitted && errors.creator && (
                      <p className="text-danger form-text-danger">
