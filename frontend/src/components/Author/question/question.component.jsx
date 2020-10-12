@@ -62,6 +62,7 @@ const Question = ({ questionType }) => {
    const initialAnswer = useSelector(selectAnswerContent);
    const updatingQuestion = useSelector(selectUpdatingQuestion);
    const creatingQuestion = useSelector(selectCreatingQuestion);
+   console.log("from com", creators);
 
    const [formState, setFormState] = useState({
       ...initialFormState,

@@ -13,6 +13,7 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
+   console.log(action);
    switch (action.type) {
       case questionTypes.GETSTANDARDCODE_SUCCESS:
          return { ...state, standardCode: action.payload };
