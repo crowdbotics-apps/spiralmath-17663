@@ -22,6 +22,14 @@ const getReviewers = () => {
    );
 };
 
+const getCreators = () => {
+   const requestOptions = {
+      method: "GET",
+      headers: authHeader(),
+   };
+   return fetch(`api/v1/creator/`, requestOptions).then(handleResponse);
+};
+
 const createQuestion = (formData) => {
    const requestOptions = {
       method: "POST",
@@ -104,6 +112,7 @@ export default {
    getAllQuestions,
    getStandardCode,
    getReviewers,
+   getCreators,
    getAnswer,
    createQuestion,
    createAnswer,

@@ -61,10 +61,20 @@ const get_settings = () => {
    return fetch("api/v1/settings/", requestOptions).then(handleResponse);
 };
 
+const createCreator = (data) => {
+   const requestOptions = {
+      method: "POST",
+      headers: authHeader(),
+      body: JSON.stringify(data),
+   };
+   return fetch("api/v1/creator/", requestOptions).then(handleResponse);
+};
+
 export default {
    upload_file,
    upload_non_registered,
    upload_registered,
    upload_terms,
+   createCreator,
    get_settings,
 };

@@ -126,6 +126,8 @@ export default {
    componentDeleteModalDeleteModalHeader: "Are You Sure?",
    questionDeleteMessage: "Question will be deleted",
    reviewsTab: "My Reviews",
-
    requiredFieldError: "This field is required",
+   addCreatorLabel: "Add Creator",
+   creatorFirstNameLabel: "First Name",
+   creatorLastNameLabel: "Last Name",
 };
