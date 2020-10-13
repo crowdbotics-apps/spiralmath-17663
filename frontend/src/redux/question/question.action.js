@@ -1,5 +1,7 @@
 import questionTypes from "./question.type";
 import questionService from "./question.service";
+import { questionFormStateEdit } from "../questioFormState/questionFormState.action";
+import { setQuestionType } from "../local/local.actions";
 
 const getStandardCode = () => {
    return (dispatch) => {
@@ -94,7 +96,6 @@ const getAllQuestions = () => {
 
 const deleteQuestion = (id) => {
    return (dispatch) => {
-      console.log(questionTypes);
       dispatch({ type: questionTypes.DELETE_QUESTION_REQUEST });
       questionService.deleteQuestion(id).then(
          (data) => {
@@ -158,6 +159,21 @@ const questionStateChanger = () => ({
    type: questionTypes.QUESTION_STATE_CHANGER,
 });
 
+const getSingleQuestion = (id) => {
+   return (dispatch) => {
+      dispatch({ type: questionTypes.GET_SINGLE_QUESTION_REQUEST });
+      questionService.getSingleQuestion(id).then(
+         (data) => {
+            dispatch(questionFormStateEdit(data));
+            dispatch(setQuestionType(data.question_type));
+         },
+         (error) => {
+            dispatch({ type: questionTypes.GET_SINGLE_QUESTION_FAILURE });
+         }
+      );
+   };
+};
+
 export default {
    resetAnswerState,
    getStandardCode,
@@ -172,4 +188,5 @@ export default {
    updateQuestion,
    updateAnswer,
    questionStateChanger,
+   getSingleQuestion,
 };

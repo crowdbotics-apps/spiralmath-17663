@@ -6,3 +6,8 @@ export const questionFormStateEdit = (data) => {
       data,
    };
 };
+export const questionFormStateEditFalse = (data) => {
+   return {
+      type: formStateTypes.EDIT_QUESTION_FALSE,
+   };
+};

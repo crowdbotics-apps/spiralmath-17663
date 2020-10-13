@@ -15,8 +15,6 @@ import { selectDeletingQuestion } from "./../../../redux/question/question.selec
 
 //actions
 import questionActions from "../../../redux/question/question.action";
-import { setQuestionType } from "../../../redux/local/local.actions";
-import { questionFormStateEdit } from "./../../../redux/questioFormState/questionFormState.action";
 
 const MyQuestions = () => {
    const dispatch = useDispatch();
@@ -56,8 +54,7 @@ const MyQuestions = () => {
    };
 
    const handleEditForm = (data) => {
-      dispatch(setQuestionType(data.question_type));
-      dispatch(questionFormStateEdit(data));
+      dispatch(questionActions.getSingleQuestion(data.id));
       dispatch(questionActions.getAnswer(data.id));
    };
 

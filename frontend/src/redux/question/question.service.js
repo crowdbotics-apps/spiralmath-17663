@@ -77,6 +77,14 @@ const getAnswer = (id) => {
    );
 };
 
+const getSingleQuestion = (id) => {
+   const requestOptions = {
+      method: "GET",
+      headers: authHeader(),
+   };
+   return fetch(`api/v1/question/${id}/`, requestOptions).then(handleResponse);
+};
+
 const deleteQuestion = (id) => {
    const requestOptions = {
       method: "DELETE",
@@ -115,5 +123,6 @@ export default {
    getCreators,
    getAnswer,
    createQuestion,
+   getSingleQuestion,
    createAnswer,
 };

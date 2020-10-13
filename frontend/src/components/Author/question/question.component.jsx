@@ -26,11 +26,6 @@ import { selectCreators } from "./../../../redux/question/question.select";
 
 import AuthorDetails from "../../Reviewer/author-details/author-details.component";
 
-const localUser =
-   localStorage.getItem("user") && localStorage.getItem("user") !== "undefined"
-      ? JSON.parse(localStorage.getItem("user"))
-      : undefined;
-
 const millsDiffLevel = [
    { value: 1, label: "Mills Difficulty : 1" },
    { value: 2, label: "Mills Difficulty : 2" },
@@ -52,7 +47,6 @@ const questionStyles = [
 const Question = ({ questionType }) => {
    const dispatch = useDispatch();
    const imageRef = useRef(null);
-   const formErrorRef = useRef(null);
    const apiErrorRef = useRef(null);
    const standardCode = useSelector(selectStandardCode);
    const reviewers = useSelector(selectReviewers);
@@ -62,7 +56,11 @@ const Question = ({ questionType }) => {
    const initialAnswer = useSelector(selectAnswerContent);
    const updatingQuestion = useSelector(selectUpdatingQuestion);
    const creatingQuestion = useSelector(selectCreatingQuestion);
-   console.log("from com", creators);
+   const localUser =
+      localStorage.getItem("user") &&
+      localStorage.getItem("user") !== "undefined"
+         ? JSON.parse(localStorage.getItem("user"))
+         : undefined;
 
    const [formState, setFormState] = useState({
       ...initialFormState,
@@ -109,8 +107,6 @@ const Question = ({ questionType }) => {
    useEffect(() => {
       if (Object.keys(errors).length === 0 && submitted) {
          submit();
-      } else if (Object.keys(errors).length >= 1 && !errors.question) {
-         formErrorRef.current.scrollIntoView({ behavior: "smooth" });
       }
    }, [errors]);
 
@@ -351,7 +347,6 @@ const Question = ({ questionType }) => {
             className={`px-4 py-4 border form-border border-color ${
                creatingAnswer || (updatingQuestion && "mt-4")
             } `}
-            ref={formErrorRef}
          >
             {isReview && (
                <AuthorDetails
