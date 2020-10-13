@@ -434,10 +434,11 @@ const Dashboard = () => {
          ) : (
             ""
          )}
+         {console.log(localUser, keyQuestionsManagement, questionType)}
          {localUser &&
          localUser.userObj &&
          localUser.userObj.role === "Editor" &&
-         keyQuestionsManagement === "my-questions" &&
+         keyQuestionsManagement === "all-questions" &&
          questionType !== false ? (
             <Question questionType={questionType} />
          ) : (
