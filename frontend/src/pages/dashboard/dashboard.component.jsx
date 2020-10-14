@@ -438,7 +438,8 @@ const Dashboard = () => {
          {localUser &&
          localUser.userObj &&
          localUser.userObj.role === "Editor" &&
-         keyQuestionsManagement === "all-questions" &&
+         (keyQuestionsManagement === "all-questions" ||
+            keyQuestionsManagement === "my-questions") &&
          questionType !== false ? (
             <Question questionType={questionType} />
          ) : (
