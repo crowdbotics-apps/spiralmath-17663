@@ -24,40 +24,7 @@ const AllQuestions = () => {
       showModal: false,
    });
 
-   const questions = [
-      {
-         id: "00001",
-         value: "How many leaves on the tree?",
-         grade_level: "PK",
-         approved_status: 10,
-         feedback: "-/-",
-         question_type: "mc",
-      },
-      {
-         id: "00002",
-         value: "How many leaves on the tree?",
-         grade_level: "PK",
-         approved_status: 20,
-         feedback: "Hello Hi I am approved You",
-         question_type: "t/f",
-      },
-      {
-         id: "00003",
-         value: "How many leaves on the tree?",
-         grade_level: "PK",
-         approved_status: 30,
-         feedback: "Hello Hi I am approved You",
-         question_type: "la",
-      },
-      {
-         id: "00004",
-         value: "How many leaves on the tree?",
-         grade_level: "PK",
-         approved_status: 10,
-         feedback: "-/-",
-         question_type: "sa",
-      },
-   ]; //useSelector(selectAllQuestions);
+   const questions = useSelector(selectAllQuestions);
    const questionsCount = useSelector(selectAllQuestionsCount);
    const deletingQuestion = useSelector(selectDeletingQuestion);
 

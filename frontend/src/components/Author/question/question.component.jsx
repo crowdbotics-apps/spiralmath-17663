@@ -425,6 +425,8 @@ const Question = ({ questionType }) => {
                   <SingleSelect
                      value={
                         standardCode &&
+                        JSON.parse(formState.standard_set) &&
+                        JSON.parse(formState.standard_set).standard_set &&
                         JSON.parse(formState.standard_set).standard_set
                      }
                      placeholder="Standard Set"
