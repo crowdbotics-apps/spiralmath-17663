@@ -13,7 +13,7 @@ import { selectUpdatingQuestion } from "./../../../redux/question/question.selec
 //actions
 import questionActions from "../../../redux/question/question.action";
 import { setQuestionType } from "../../../redux/local/local.actions";
-import { questionFormStateEdit } from "./../../../redux/questioFormState/questionFormState.action";
+import { questionFormStateEdit } from "./../../../redux/questionFormState/questionFormState.action";
 
 const MyReviews = () => {
    const dispatch = useDispatch();

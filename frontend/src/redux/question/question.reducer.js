@@ -3,7 +3,6 @@ import questionTypes from "./question.type";
 const initialState = {
    userQuestions: {},
    allQuestions: {},
-   answer: {},
    deletingQuestion: false,
    updatingQuestion: false,
    creatingQuestion: false,
@@ -19,7 +18,7 @@ export default (state = initialState, action) => {
          return { ...state, standardCode: action.payload };
       case questionTypes.GET_REVIEWERS_SUCCESS:
          return { ...state, reviewers: action.payload };
-      case questionTypes.GET_CREATOR_SUCCESS:
+      case questionTypes.GET_CREATORS_SUCCESS:
          return { ...state, creators: action.payload };
       case questionTypes.CREATE_QUESTION_REQUEST:
          return { ...state, creatingQuestion: true };
@@ -78,11 +77,6 @@ export default (state = initialState, action) => {
          return {
             ...state,
             deletingQuestion: false,
-         };
-      case questionTypes.GET_ANSWER_SUCCESS:
-         return {
-            ...state,
-            answer: { ...state.answer, ...action.data.details[0] },
          };
       case questionTypes.QUESTION_STATE_CHANGER:
          return {

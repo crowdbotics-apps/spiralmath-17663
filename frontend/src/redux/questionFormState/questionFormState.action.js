@@ -11,3 +11,10 @@ export const questionFormStateEditFalse = (data) => {
       type: formStateTypes.EDIT_QUESTION_FALSE,
    };
 };
+
+export const answerFormStateEdit = (data) => {
+   return {
+      type: formStateTypes.EDIT_ANSWER_TRUE,
+      data,
+   };
+};

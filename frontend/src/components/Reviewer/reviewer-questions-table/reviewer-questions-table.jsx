@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Row, Col, Table, OverlayTrigger, Popover } from "react-bootstrap";
+import { Row, Col, Table } from "react-bootstrap";
+import parse from "html-react-parser";
 import { FormattedMessage } from "react-intl";
 
 //components
@@ -71,7 +72,7 @@ const ReviewerQuestionsTable = ({ questions, handleReviewForm, all }) => {
                                     {question.id && question.id}
                                  </td>
                                  <td className="border-right-0 border-left-0">
-                                    {question.value && question.value}
+                                    {question.value && parse(question.value)}
                                  </td>
                                  <td className="border-right-0 border-left-0">
                                     {question.author_name &&

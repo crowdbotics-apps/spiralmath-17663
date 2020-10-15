@@ -1,6 +1,7 @@
 import questionTypes from "./question.type";
+import questionFormStateTypes from "../questionFormState/questionFormState.type";
 import questionService from "./question.service";
-import { questionFormStateEdit } from "../questioFormState/questionFormState.action";
+import { questionFormStateEdit } from "../questionFormState/questionFormState.action";
 import { setQuestionType } from "../local/local.actions";
 
 const getStandardCode = () => {
@@ -107,10 +108,10 @@ const deleteQuestion = (id) => {
       );
    };
 };
-const updateQuestion = (id, data) => {
+const updateQuestion = (id, data, isReview = false) => {
    return (dispatch) => {
       dispatch({ type: questionTypes.UPDATE_QUESTION_REQUEST });
-      questionService.updateQuestion(id, data).then(
+      questionService.updateQuestion(id, data, isReview).then(
          (data) => {
             dispatch({ type: questionTypes.UPDATE_QUESTION_SUCCESS });
          },
@@ -140,7 +141,7 @@ const getAnswer = (id) => {
       dispatch({ type: questionTypes.GET_ANSWER_REQUEST });
       questionService.getAnswer(id).then(
          (data) => {
-            dispatch({ type: questionTypes.GET_ANSWER_SUCCESS, data });
+            dispatch({ type: questionFormStateTypes.EDIT_ANSWER_TRUE, data });
          },
          (error) => {
             dispatch({ type: questionTypes.GET_ANSWER_FAILURE });

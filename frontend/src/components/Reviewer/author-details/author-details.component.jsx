@@ -14,7 +14,8 @@ const AuthorDetails = ({
                type="text"
                value={author_name}
                className={`border-top-0 border-left-0 border-right-0 rounded-0 ${
-                  author_name && author_name.length && "label-up"
+                  (author_name && author_name.length) ||
+                  (author_name && "label-up")
                }`}
                readOnly
             />
