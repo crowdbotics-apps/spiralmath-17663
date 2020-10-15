@@ -93,11 +93,11 @@ const deleteQuestion = (id) => {
    return fetch(`api/v1/question/${id}/`, requestOptions).then(handleResponse);
 };
 
-const updateQuestion = (id, data) => {
+const updateQuestion = (id, data, isReview = false) => {
    const requestOptions = {
       method: "PATCH",
       headers: uploadHeader(),
-      body: data,
+      body: isReview ? JSON.stringify(data) : data,
    };
 
    return fetch(`api/v1/question/${id}/`, requestOptions).then(handleResponse);

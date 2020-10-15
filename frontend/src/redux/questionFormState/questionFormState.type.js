@@ -1,7 +1,7 @@
 const formStateTypes = {
    EDIT_QUESTION_TRUE: "EDIT_QUESTION_TRUE",
    EDIT_QUESTION_FALSE: "EDIT_QUESTION_FALSE",
-   EDIT_ANSWER: "EDIT_ANSWER",
+   EDIT_ANSWER_TRUE: "EDIT_ANSWER_TRUE",
 };
 
 export default formStateTypes;

@@ -17,8 +17,8 @@ import { ReactComponent as C } from "../../../assets/img/C.svg";
 import { ReactComponent as Tick } from "../../../assets/img/tick.svg";
 import "./question.styles.css";
 import { selectAnswerStatus } from "./../../../redux/question/question.select";
-import { selectQuestionFormState } from "./../../../redux/questioFormState/questionFormState.select";
-import { selectAnswerContent } from "./../../../redux/question/question.select";
+import { selectQuestionFormState } from "../../../redux/questionFormState/questionFormState.select";
+import { selectAnswerFormState } from "./../../../redux/questionFormState/questionFormState.select";
 import { selectUpdatingQuestion } from "./../../../redux/question/question.select";
 import { selectCreatingQuestion } from "./../../../redux/question/question.select";
 import { selectReviewers } from "./../../../redux/question/question.select";
@@ -53,7 +53,7 @@ const Question = ({ questionType }) => {
    const creators = useSelector(selectCreators);
    const creatingAnswer = useSelector(selectAnswerStatus);
    const initialFormState = useSelector(selectQuestionFormState);
-   const initialAnswer = useSelector(selectAnswerContent);
+   const initialAnswer = useSelector(selectAnswerFormState);
    const updatingQuestion = useSelector(selectUpdatingQuestion);
    const creatingQuestion = useSelector(selectCreatingQuestion);
    const localUser =
@@ -61,6 +61,7 @@ const Question = ({ questionType }) => {
       localStorage.getItem("user") !== "undefined"
          ? JSON.parse(localStorage.getItem("user"))
          : undefined;
+   const isReview = localUser.userObj.reviewQuestions;
 
    const [formState, setFormState] = useState({
       ...initialFormState,
@@ -82,22 +83,24 @@ const Question = ({ questionType }) => {
 
    useEffect(() => {
       if (questionType === "mc") {
-         setAnswer({
-            content: {
-               A: {
-                  answer: false,
-                  reason: "",
+         if (!answer.content) {
+            setAnswer({
+               content: {
+                  A: {
+                     answer: false,
+                     reason: "",
+                  },
+                  B: {
+                     answer: false,
+                     reason: "",
+                  },
+                  C: {
+                     answer: false,
+                     reason: "",
+                  },
                },
-               B: {
-                  answer: false,
-                  reason: "",
-               },
-               C: {
-                  answer: false,
-                  reason: "",
-               },
-            },
-         });
+            });
+         }
       }
       dispatch(questionActions.getStandardCode());
       dispatch(questionActions.getReviewers());
@@ -151,7 +154,7 @@ const Question = ({ questionType }) => {
                standard_code:
                   standardCode && standardCode["Standard Code"][e.i],
                grade_level: standardCode && standardCode["Grade"][e.i],
-               [name]: JSON.stringify({ standard_set: e.set }),
+               [name]: { standard_set: e.set },
             }));
       } else {
          setFormState((prevFormState) => ({ ...prevFormState, [name]: e }));
@@ -191,7 +194,7 @@ const Question = ({ questionType }) => {
 
    const handleImage = (e) => {
       let image = e.target.files[0];
-
+      console.log("Typeof image file", typeof image);
       setImageButtonText("Image added");
       setImage(image);
    };
@@ -256,15 +259,33 @@ const Question = ({ questionType }) => {
       let formData = new FormData();
       const formDataArray = Object.entries(formState);
       for (const [key, value] of formDataArray) {
-         if (!(key === "edit") && !(key === "id")) formData.append(key, value);
+         if (!(key === "edit") && !(key === "id")) {
+            if (key === "standard_set") {
+               formData.append(key, JSON.stringify(value));
+            } else {
+               formData.append(key, value);
+            }
+         }
       }
-      if (image) {
+      console.log("Typeof image file", typeof image);
+      if (!(typeof image === "string")) {
          formData.append("image", image);
       }
 
-      if (formState.edit) {
-         dispatch(questionActions.updateQuestion(formState.id, formData));
-         dispatch(questionActions.updateAnswer(formState.id, formData));
+      if (formState.edit && isReview) {
+         dispatch(
+            questionActions.updateQuestion(
+               formState.id,
+               {
+                  approved_status: formState.approved_status,
+                  reviewer_feedback: formState.reviewer_feedback,
+               },
+               true
+            )
+         );
+      } else if (formState.edit) {
+         questionActions.updateQuestion(formState.id, formData);
+         dispatch(questionActions.updateAnswer(formState.id, answer));
          dispatch(questionActions.resetAnswerState());
       } else {
          dispatch(questionActions.createQuestion(formData, answer));
@@ -296,9 +317,8 @@ const Question = ({ questionType }) => {
       reviewer_date,
       reviewer_feedback,
       approved_status,
+      creator,
    } = formState;
-
-   const isReview = localUser.userObj.reviewQuestions;
 
    return (
       <React.Fragment>
@@ -425,9 +445,9 @@ const Question = ({ questionType }) => {
                   <SingleSelect
                      value={
                         standardCode &&
-                        JSON.parse(formState.standard_set) &&
-                        JSON.parse(formState.standard_set).standard_set &&
-                        JSON.parse(formState.standard_set).standard_set
+                        standard_set &&
+                        standard_set.standard_set &&
+                        standard_set.standard_set
                      }
                      placeholder="Standard Set"
                      options={
