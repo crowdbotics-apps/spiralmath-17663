@@ -194,7 +194,6 @@ const Question = ({ questionType }) => {
 
    const handleImage = (e) => {
       let image = e.target.files[0];
-      console.log("Typeof image file", typeof image);
       setImageButtonText("Image added");
       setImage(image);
    };
@@ -610,7 +609,7 @@ const Question = ({ questionType }) => {
                </Form.Group>
                <Form.Group as={Col} md="4">
                   <SingleSelect
-                     value={formState.creator}
+                     value={creator}
                      placeholder="Creator"
                      options={
                         creators &&
@@ -839,7 +838,7 @@ const Question = ({ questionType }) => {
                />
             </Button>
             <Button className="save-btn" onClick={handleSubmit}>
-            {console.log(updatingQuestion);}
+               {console.log(updatingQuestion)}
                {(creatingAnswer === true ||
                   updatingQuestion === true ||
                   creatingQuestion === true) && (

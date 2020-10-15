@@ -43,6 +43,7 @@ const initialStateQuestion = {
    approved_status: "",
    reviewer_feedback: "",
    question_style: "",
+   reviewer_name: "",
 };
 
 const initialStateAnswer = {};

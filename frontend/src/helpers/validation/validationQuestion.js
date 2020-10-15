@@ -12,8 +12,11 @@ export const validateCreateQuestion = (values) => {
    if (!values.dok) {
       errors.dok = requiredFieldError;
    }
-   if (!JSON.parse(values.standard_set).standard_set) {
+   if (!values.standard_set.standard_set) {
       errors.standard_set = requiredFieldError;
+   }
+   if (!values.reviewer_name) {
+      errors.reviewer_name = requiredFieldError;
    }
 
    // if (!values.creator) {
