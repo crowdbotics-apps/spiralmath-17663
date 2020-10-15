@@ -839,6 +839,7 @@ const Question = ({ questionType }) => {
                />
             </Button>
             <Button className="save-btn" onClick={handleSubmit}>
+            {console.log(updatingQuestion);}
                {(creatingAnswer === true ||
                   updatingQuestion === true ||
                   creatingQuestion === true) && (
