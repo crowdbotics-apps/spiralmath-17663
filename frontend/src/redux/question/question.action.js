@@ -141,7 +141,7 @@ const getAnswer = (id) => {
       dispatch({ type: questionTypes.GET_ANSWER_REQUEST });
       questionService.getAnswer(id).then(
          (data) => {
-            dispatch({ type: questionFormStateTypes.EDIT_ANSWER_TRUE, data });
+            dispatch({ type: questionFormStateTypes.EDIT_ANSWER_TRUE, data:data.detail[0] });
          },
          (error) => {
             dispatch({ type: questionTypes.GET_ANSWER_FAILURE });
@@ -150,11 +150,6 @@ const getAnswer = (id) => {
    };
 };
 
-const resetAnswerState = () => {
-   return {
-      type: questionTypes.RESET_ANSWER_STATE,
-   };
-};
 
 const questionStateChanger = () => ({
    type: questionTypes.QUESTION_STATE_CHANGER,
@@ -176,7 +171,6 @@ const getSingleQuestion = (id) => {
 };
 
 export default {
-   resetAnswerState,
    getStandardCode,
    getReviewers,
    getCreators,
