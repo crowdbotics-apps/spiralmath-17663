@@ -96,7 +96,9 @@ const deleteQuestion = (id) => {
 const updateQuestion = (id, data, isReview = false) => {
    const requestOptions = {
       method: "PATCH",
-      headers: uploadHeader(),
+      headers: isReview
+         ? { ...uploadHeader(), "Content-Type": "application/json" }
+         : uploadHeader(),
       body: isReview ? JSON.stringify(data) : data,
    };
 
@@ -106,6 +108,7 @@ const updateQuestion = (id, data, isReview = false) => {
 const updateAnswer = (id, data) => {
    const requestOptions = {
       method: "PATCH",
+      headers: authHeader(),
       body: JSON.stringify(data),
    };
 

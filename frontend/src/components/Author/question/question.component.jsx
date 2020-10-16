@@ -6,7 +6,7 @@ import { Col, Form, Button } from "react-bootstrap";
 
 import { setQuestionType } from "../../../redux/local/local.actions";
 import questionActions from "../../../redux//question/question.action";
-import {resetAnswerState} from "../../../redux/questionFormState/questionFormState.action"
+import { resetAnswerState } from "../../../redux/questionFormState/questionFormState.action";
 import { selectStandardCode } from "../../../redux/question/question.select";
 import MathquillInput from "../mathquill-input/mathquill-input.component";
 import ReviewInput from "../../Reviewer/review-input/review-input.component";
@@ -85,7 +85,7 @@ const Question = ({ questionType }) => {
 
    useEffect(() => {
       if (questionType === "mc") {
-         if (!answer.content) {
+         if (!answer.id) {
             setAnswer({
                content: {
                   A: {
@@ -216,22 +216,24 @@ const Question = ({ questionType }) => {
          value = e.target.value;
       }
       if (questionType === "sa" || questionType === "la") {
-         setAnswer({ content: e.trim() });
+         setAnswer((prevAnswer) => ({ ...prevAnswer, content: e.trim() }));
       } else if (questionType === "t/f") {
          if (name === "true") {
-            setAnswer({
+            setAnswer((prevAnswer) => ({
+               ...prevAnswer,
                content: {
                   true: !!checked,
                   false: !checked,
                },
-            });
+            }));
          } else {
-            setAnswer({
+            setAnswer((prevAnswer) => ({
+               ...prevAnswer,
                content: {
                   true: !checked,
                   false: !!checked,
                },
-            });
+            }));
          }
       } else {
          setAnswer((prevAnswer) => ({
@@ -269,7 +271,6 @@ const Question = ({ questionType }) => {
             }
          }
       }
-      console.log("Typeof image file", typeof image);
       if (!(typeof image === "string")) {
          formData.append("image", image);
       }
@@ -286,8 +287,9 @@ const Question = ({ questionType }) => {
             )
          );
       } else if (formState.edit) {
-         questionActions.updateQuestion(formState.id, formData);
-         dispatch(questionActions.updateAnswer(formState.id, answer));
+         console.log("editing...");
+         dispatch(questionActions.updateQuestion(formState.id, formData));
+         dispatch(questionActions.updateAnswer(answer.id, answer));
          dispatch(resetAnswerState());
       } else {
          dispatch(questionActions.createQuestion(formData, answer));
@@ -445,12 +447,7 @@ const Question = ({ questionType }) => {
             <Form.Row className="mb-3">
                <Form.Group as={Col} md="4">
                   <SingleSelect
-                     value={
-                        standardCode &&
-                        standard_set &&
-                        standard_set.standard_set &&
-                        standard_set.standard_set
-                     }
+                     value={standard_set && standard_set.standard_set}
                      placeholder="Standard Set"
                      options={
                         standardCode &&
@@ -661,6 +658,7 @@ const Question = ({ questionType }) => {
                      <MathquillInput
                         handleAnswerChange={handleAnswerChange("value")}
                         isReview={isReview}
+                        value={answer.content}
                      />
                   </Form.Group>
                </Form.Row>
@@ -791,7 +789,7 @@ const Question = ({ questionType }) => {
                            type="switch"
                            id="custom-switch1"
                            onChange={handleAnswerChange("true")}
-                           checked={answer.true}
+                           checked={answer.content.true}
                            readOnly={isReview}
                         />
                      </Form.Group>
@@ -817,7 +815,7 @@ const Question = ({ questionType }) => {
                            type="switch"
                            id="custom-switch2"
                            onChange={handleAnswerChange("false")}
-                           checked={answer.false}
+                           checked={answer.content.false}
                            readOnly={isReview}
                         />
                      </Form.Group>
