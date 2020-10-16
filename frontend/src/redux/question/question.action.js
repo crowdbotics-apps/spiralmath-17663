@@ -141,7 +141,10 @@ const getAnswer = (id) => {
       dispatch({ type: questionTypes.GET_ANSWER_REQUEST });
       questionService.getAnswer(id).then(
          (data) => {
-            dispatch({ type: questionFormStateTypes.EDIT_ANSWER_TRUE, data:data.detail[0] });
+            dispatch({
+               type: questionFormStateTypes.EDIT_ANSWER_TRUE,
+               data: data.details[0],
+            });
          },
          (error) => {
             dispatch({ type: questionTypes.GET_ANSWER_FAILURE });
@@ -149,7 +152,6 @@ const getAnswer = (id) => {
       );
    };
 };
-
 
 const questionStateChanger = () => ({
    type: questionTypes.QUESTION_STATE_CHANGER,

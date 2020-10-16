@@ -57,10 +57,6 @@ export const questionFormStateReducer = (
          return {
             ...initialStateQuestion,
             ...action.data,
-            standard_set: {
-               standard_set:
-                  action.data.standard_set && action.data.standard_set,
-            },
             edit: true,
          };
       case formStateTypes.EDIT_QUESTION_FALSE:
@@ -73,9 +69,9 @@ export const questionFormStateReducer = (
 export const answerFormStateReducer = (state = initialStateAnswer, action) => {
    switch (action.type) {
       case formStateTypes.EDIT_ANSWER_TRUE:
-         return { ...state,  ...action.data };
+         return { ...state, ...action.data };
       case formStateTypes.RESET_ANSWER_STATE:
-         return {...initialStateAnswer}
+         return { ...initialStateAnswer };
       default:
          return state;
    }
