@@ -6,6 +6,7 @@ import { Col, Form, Button } from "react-bootstrap";
 
 import { setQuestionType } from "../../../redux/local/local.actions";
 import questionActions from "../../../redux//question/question.action";
+import {resetAnswerState} from "../../../redux/questionFormState/questionFormState.action"
 import { selectStandardCode } from "../../../redux/question/question.select";
 import MathquillInput from "../mathquill-input/mathquill-input.component";
 import ReviewInput from "../../Reviewer/review-input/review-input.component";
@@ -25,6 +26,7 @@ import { selectReviewers } from "./../../../redux/question/question.select";
 import { selectCreators } from "./../../../redux/question/question.select";
 
 import AuthorDetails from "../../Reviewer/author-details/author-details.component";
+import { questionFormStateEditFalse } from "../../../redux/questionFormState/questionFormState.action";
 
 const millsDiffLevel = [
    { value: 1, label: "Mills Difficulty : 1" },
@@ -190,6 +192,7 @@ const Question = ({ questionType }) => {
 
    const handleCancel = () => {
       dispatch(setQuestionType(false));
+      dispatch(questionFormStateEditFalse());
    };
 
    const handleImage = (e) => {
@@ -285,7 +288,7 @@ const Question = ({ questionType }) => {
       } else if (formState.edit) {
          questionActions.updateQuestion(formState.id, formData);
          dispatch(questionActions.updateAnswer(formState.id, answer));
-         dispatch(questionActions.resetAnswerState());
+         dispatch(resetAnswerState());
       } else {
          dispatch(questionActions.createQuestion(formData, answer));
       }

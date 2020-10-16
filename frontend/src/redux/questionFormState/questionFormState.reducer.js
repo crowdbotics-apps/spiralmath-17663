@@ -73,7 +73,9 @@ export const questionFormStateReducer = (
 export const answerFormStateReducer = (state = initialStateAnswer, action) => {
    switch (action.type) {
       case formStateTypes.EDIT_ANSWER_TRUE:
-         return { ...state, ...action.data };
+         return { ...state,  ...action.data };
+      case formStateTypes.RESET_ANSWER_STATE:
+         return {...initialStateAnswer}
       default:
          return state;
    }

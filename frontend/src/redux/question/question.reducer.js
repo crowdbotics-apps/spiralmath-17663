@@ -85,8 +85,7 @@ export default (state = initialState, action) => {
             creatingAnswer: false,
             updatingQuestion: false,
          };
-      case questionTypes.RESET_ANSWER_STATE:
-         return { ...state, answer: {} };
+    
       default:
          return state;
    }
