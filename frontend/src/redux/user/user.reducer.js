@@ -254,7 +254,6 @@ export const users = (state = initialUsersState, action) => {
 export const settings = (state = {}, action) => {
    switch (action.type) {
       case userTypes.GET_SETTINGS:
-         console.log(action.settings.results);
          return { settings: action.settings };
       default:
          return {};

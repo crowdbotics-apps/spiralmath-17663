@@ -52,7 +52,6 @@ const Settings = () => {
       let dispSet = {};
 
       if (settings.length > 0) {
-         console.log(settings);
          settings.map((el) => {
             if (
                el.path === "terms-condition" ||
@@ -63,7 +62,6 @@ const Settings = () => {
             }
          });
 
-         console.log(dispSet);
          setTerms(dispSet["terms-condition"]);
          setEmails({
             non_registered: dispSet["non-registered-email"],
@@ -434,7 +432,6 @@ const Settings = () => {
                />
             </React.Fragment>
          )}
-         {console.log(creatingCreator)}
          {creatingCreator === "fail" && (
             <React.Fragment>
                <MessageBar

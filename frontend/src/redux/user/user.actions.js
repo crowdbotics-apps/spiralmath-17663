@@ -35,7 +35,6 @@ const login = (email, password) => {
          })
          .catch((error) => {
             dispatch(failure(error.detail));
-            console.log(error);
             dispatch(alertActions.error(error.detail));
          });
    };
@@ -66,15 +65,12 @@ const register = (user) => {
 
       userService.register(user).then(
          (user) => {
-            console.log("User", user);
             dispatch(success());
             dispatch(alertActions.success("Registration successful"));
          },
          (error) => {
-            console.log("Error1:", error);
             const key = Object.keys(error)[0];
             error = { key, message: error[key][0] };
-            console.log("Error2", error);
             dispatch(failure(error));
             dispatch(alertActions.error(error.detail));
          }
@@ -402,7 +398,8 @@ const sendInvitation = (id) => {
                   "Invitation instructions have been sent to the user"
                )
             ),
-         (error) => dispatch(alertActions.error("Sending Invitation Failed ! Retry"))
+         (error) =>
+            dispatch(alertActions.error("Sending Invitation Failed ! Retry"))
       );
    };
 };

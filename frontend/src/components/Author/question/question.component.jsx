@@ -71,7 +71,6 @@ const Question = ({ questionType }) => {
    });
 
    const [answer, setAnswer] = useState(initialAnswer);
-
    const [imageButtonText, setImageButtonText] = useState("Add Image");
    const [image, setImage] = useState("");
    const [submitted, setSubmitted] = useState(false);
@@ -82,6 +81,10 @@ const Question = ({ questionType }) => {
       name: "",
    });
    const [errors, setErrors] = useState({});
+
+   useEffect(() => {
+      setAnswer(initialAnswer);
+   }, [initialAnswer]);
 
    useEffect(() => {
       if (questionType === "mc") {
@@ -156,7 +159,7 @@ const Question = ({ questionType }) => {
                standard_code:
                   standardCode && standardCode["Standard Code"][e.i],
                grade_level: standardCode && standardCode["Grade"][e.i],
-               [name]: { standard_set: e.set },
+               [name]: { standard_set: e.set, index: e.i },
             }));
       } else {
          setFormState((prevFormState) => ({ ...prevFormState, [name]: e }));
@@ -266,13 +269,12 @@ const Question = ({ questionType }) => {
          if (!(key === "edit") && !(key === "id")) {
             if (key === "standard_set") {
                formData.append(key, JSON.stringify(value));
+            } else if (key === "image" && !(typeof value === "string")) {
+               formData.append(key, value);
             } else {
                formData.append(key, value);
             }
          }
-      }
-      if (!(typeof image === "string")) {
-         formData.append("image", image);
       }
 
       if (formState.edit && isReview) {
@@ -287,7 +289,6 @@ const Question = ({ questionType }) => {
             )
          );
       } else if (formState.edit) {
-         console.log("editing...");
          dispatch(questionActions.updateQuestion(formState.id, formData));
          dispatch(questionActions.updateAnswer(answer.id, answer));
          dispatch(resetAnswerState());
@@ -447,7 +448,12 @@ const Question = ({ questionType }) => {
             <Form.Row className="mb-3">
                <Form.Group as={Col} md="4">
                   <SingleSelect
-                     value={standard_set && standard_set.standard_set}
+                     value={
+                        standard_set && {
+                           set: standard_set.standard_set,
+                           i: standard_set.index,
+                        }
+                     }
                      placeholder="Standard Set"
                      options={
                         standardCode &&
@@ -455,7 +461,6 @@ const Question = ({ questionType }) => {
                            return {
                               value: { set, i },
                               label: set,
-                              index: i,
                            };
                         })
                      }
@@ -839,7 +844,6 @@ const Question = ({ questionType }) => {
                />
             </Button>
             <Button className="save-btn" onClick={handleSubmit}>
-               {console.log(updatingQuestion)}
                {(creatingAnswer === true ||
                   updatingQuestion === true ||
                   creatingQuestion === true) && (

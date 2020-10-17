@@ -30,7 +30,6 @@ export const addUnreadCount = (userList, messageList) => {
 
 export const uploadHeader = () => {
    const csrftoken = Cookies.get("csrftoken");
-   console.log(csrftoken);
 
    const userLang = navigator.language || navigator.userLanguage;
 

@@ -78,7 +78,6 @@ const SignUp = ({ show, toggleShow }) => {
       e.preventDefault();
 
       setErrors(validateSignup(user));
-      console.log(errors);
       setSubmitted(true);
    };
 
@@ -89,9 +88,7 @@ const SignUp = ({ show, toggleShow }) => {
    }, [errors]);
 
    const submit = () => {
-      console.log("called", user);
       if (user.password && user.passwordConfirm && user.token) {
-         console.log("call");
          const data = {
             newPassword: user.password,
             confirmPassword: user.passwordConfirm,

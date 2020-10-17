@@ -434,7 +434,6 @@ const Dashboard = () => {
          ) : (
             ""
          )}
-         {console.log(localUser, keyQuestionsManagement, questionType)}
          {localUser &&
          localUser.userObj &&
          localUser.userObj.role === "Editor" &&
