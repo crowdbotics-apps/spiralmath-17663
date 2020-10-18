@@ -64,7 +64,6 @@ const ConfirmEmail = ({ show, toggleShow }) => {
       e.preventDefault();
 
       setErrors(validateReset(user));
-      console.log(errors);
       setSubmitted(true);
    };
 

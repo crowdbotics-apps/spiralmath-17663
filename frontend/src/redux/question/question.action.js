@@ -18,7 +18,6 @@ const getStandardCode = () => {
 const getReviewers = () => {
    return (dispatch) => {
       questionService.getReviewers().then((data) => {
-         console.log(data);
          dispatch({
             type: questionTypes.GET_REVIEWERS_SUCCESS,
             payload: data.detail,

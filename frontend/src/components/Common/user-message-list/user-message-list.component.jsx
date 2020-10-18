@@ -38,7 +38,6 @@ const UserMessageList = ({ userId, messageId, setMessageIdProp }) => {
          if (!message) {
             return;
          } else {
-            console.log(e.keyCode);
             dispatch(
                messageActions.send_message({
                   userTo: userId,
