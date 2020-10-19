@@ -152,14 +152,18 @@ const Question = ({ questionType }) => {
    };
 
    const handleSelectChange = (name) => (e) => {
+      if (e.set) {
+         var { set, i } = e;
+      }
       if (name === "standard_set") {
+         console.log("hello");
          standardCode &&
             setFormState((prevFormState) => ({
                ...prevFormState,
                standard_code:
                   standardCode && standardCode["Standard Code"][e.i],
                grade_level: standardCode && standardCode["Grade"][e.i],
-               [name]: { standard_set: e.set, index: e.i },
+               standard_set: { standard_set: set, index: i },
             }));
       } else {
          setFormState((prevFormState) => ({ ...prevFormState, [name]: e }));
@@ -264,17 +268,20 @@ const Question = ({ questionType }) => {
 
    const submit = () => {
       let formData = new FormData();
+
       const formDataArray = Object.entries(formState);
       for (const [key, value] of formDataArray) {
          if (!(key === "edit") && !(key === "id")) {
             if (key === "standard_set") {
                formData.append(key, JSON.stringify(value));
-            } else if (key === "image" && !(typeof value === "string")) {
-               formData.append(key, value);
-            } else {
+            } else if (!(key === "image")) {
                formData.append(key, value);
             }
          }
+      }
+
+      if (image) {
+         formData.append("image", image);
       }
 
       if (formState.edit && isReview) {
@@ -449,9 +456,10 @@ const Question = ({ questionType }) => {
                <Form.Group as={Col} md="4">
                   <SingleSelect
                      value={
-                        standard_set && {
-                           set: standard_set.standard_set,
-                           i: standard_set.index,
+                        // standard_set &&
+                        {
+                           set: "ehhl", //standard_set.standard_set,
+                           i: 1, //standard_set.index,
                         }
                      }
                      placeholder="Standard Set"
@@ -794,7 +802,7 @@ const Question = ({ questionType }) => {
                            type="switch"
                            id="custom-switch1"
                            onChange={handleAnswerChange("true")}
-                           checked={answer.content.true}
+                           checked={answer.content && answer.content.true}
                            readOnly={isReview}
                         />
                      </Form.Group>
@@ -820,7 +828,7 @@ const Question = ({ questionType }) => {
                            type="switch"
                            id="custom-switch2"
                            onChange={handleAnswerChange("false")}
-                           checked={answer.content.false}
+                           checked={answer.content && answer.content.false}
                            readOnly={isReview}
                         />
                      </Form.Group>
