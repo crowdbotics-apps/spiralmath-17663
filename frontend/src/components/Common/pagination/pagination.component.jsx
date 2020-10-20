@@ -3,6 +3,8 @@ import React from "react";
 const Pagination = ({ usersPerPage, totalUsers, paginate, currentPage }) => {
    const pageNumbers = [];
 
+   console.log(usersPerPage, totalUsers, paginate, currentPage);
+
    for (let i = 1; i <= Math.ceil(totalUsers / usersPerPage); i++) {
       pageNumbers.push(i);
    }
