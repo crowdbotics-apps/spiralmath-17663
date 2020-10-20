@@ -711,7 +711,8 @@ const Question = ({ questionType }) => {
                            onClick={handleMcOption("A")}
                            className={`${
                               (mcOptions.A ||
-                                 (answer.content.A &&
+                                 (answer.content &&
+                                    answer.content.A &&
                                     answer.content.A.answer)) &&
                               "svg-color-green"
                            }`}
@@ -749,7 +750,8 @@ const Question = ({ questionType }) => {
                            onClick={handleMcOption("B")}
                            className={`${
                               (mcOptions.B ||
-                                 (answer.content.B &&
+                                 (answer.content &&
+                                    answer.content.B &&
                                     answer.content.B.answer)) &&
                               "svg-color-green"
                            }`}
@@ -787,7 +789,8 @@ const Question = ({ questionType }) => {
                            onClick={handleMcOption("C")}
                            className={`${
                               (mcOptions.C ||
-                                 (answer.content.C &&
+                                 (answer.content &&
+                                    answer.content.C &&
                                     answer.content.C.answer)) &&
                               "svg-color-green"
                            }`}
