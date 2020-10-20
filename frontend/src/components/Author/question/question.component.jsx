@@ -274,8 +274,8 @@ const Question = ({ questionType }) => {
          if (
             !(key === "edit") &&
             !(key === "id") &&
-            !(key === "delete") &&
-            !(key === "delete_status")
+            !(key === "deleted") &&
+            !(key === "deleted_status")
          ) {
             if (key === "standard_set") {
                formData.append(key, JSON.stringify(value));

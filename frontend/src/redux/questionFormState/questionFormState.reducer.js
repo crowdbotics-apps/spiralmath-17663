@@ -71,7 +71,7 @@ export const answerFormStateReducer = (state = initialStateAnswer, action) => {
       case formStateTypes.EDIT_ANSWER_TRUE:
          return { ...state, ...action.data };
       case formStateTypes.RESET_ANSWER_STATE:
-         return { ...initialStateAnswer };
+         return {};
       default:
          return state;
    }
