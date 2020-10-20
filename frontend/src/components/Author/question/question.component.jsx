@@ -271,7 +271,12 @@ const Question = ({ questionType }) => {
 
       const formDataArray = Object.entries(formState);
       for (const [key, value] of formDataArray) {
-         if (!(key === "edit") && !(key === "id")) {
+         if (
+            !(key === "edit") &&
+            !(key === "id") &&
+            !(key === "delete") &&
+            !(key === "delete_status")
+         ) {
             if (key === "standard_set") {
                formData.append(key, JSON.stringify(value));
             } else if (!(key === "image")) {
@@ -456,10 +461,9 @@ const Question = ({ questionType }) => {
                <Form.Group as={Col} md="4">
                   <SingleSelect
                      value={
-                        // standard_set &&
-                        {
-                           set: "ehhl", //standard_set.standard_set,
-                           i: 1, //standard_set.index,
+                        standard_set && {
+                           set: standard_set.standard_set,
+                           i: standard_set.index,
                         }
                      }
                      placeholder="Standard Set"
@@ -705,7 +709,12 @@ const Question = ({ questionType }) => {
                      >
                         <span
                            onClick={handleMcOption("A")}
-                           className={`${mcOptions.A && "svg-color-green"}`}
+                           className={`${
+                              (mcOptions.A ||
+                                 (answer.content.A &&
+                                    answer.content.A.answer)) &&
+                              "svg-color-green"
+                           }`}
                         >
                            <Tick />
                         </span>
@@ -738,7 +747,12 @@ const Question = ({ questionType }) => {
                      >
                         <span
                            onClick={handleMcOption("B")}
-                           className={`${mcOptions.B && "svg-color-green"}`}
+                           className={`${
+                              (mcOptions.B ||
+                                 (answer.content.B &&
+                                    answer.content.B.answer)) &&
+                              "svg-color-green"
+                           }`}
                         >
                            <Tick />
                         </span>
@@ -771,7 +785,12 @@ const Question = ({ questionType }) => {
                      >
                         <span
                            onClick={handleMcOption("C")}
-                           className={`${mcOptions.C && "svg-color-green"}`}
+                           className={`${
+                              (mcOptions.C ||
+                                 (answer.content.C &&
+                                    answer.content.C.answer)) &&
+                              "svg-color-green"
+                           }`}
                         >
                            <Tick />
                         </span>
