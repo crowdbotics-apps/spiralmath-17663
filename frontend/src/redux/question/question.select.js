@@ -45,7 +45,7 @@ export const selectAllQuestions = createSelector(
 export const selectAllQuestionsCount = createSelector(
    [selectQuestion],
    (question) =>
-      question.allQuestions.questions && question.allQuestions.questionCout
+      question.allQuestions.questions && question.allQuestions.questionCount
 );
 
 export const selectUpdatingQuestion = createSelector(
