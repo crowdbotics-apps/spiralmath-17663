@@ -45,9 +45,15 @@ const ConfirmEmail = ({ show, toggleShow }) => {
       });
 
       if (localUser && localUser.userObj.role === "Admin") {
-         history.push("/dashboard");
-      } else if (localUser) {
-         history.push("/dashboard");
+         history.push("/admin/dashboard");
+      } else if (
+         localUser &&
+         localUser.userObj &&
+         localUser.userObj.createQuestions
+      ) {
+         history.push("/my-questions");
+      } else {
+         history.push("/my-reviews");
       }
    }, [localUser]);
 

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 //components
 import ReviewerQuestionsTable from "./../reviewer-questions-table/reviewer-questions-table";
 import Pagination from "./../../Common/pagination/pagination.component";
+import Layout from "../../ui/layout/layout.component";
 
 // selectors
 import { selectUserQuestions } from "../../../redux/question/question.select";
@@ -50,16 +51,18 @@ const MyReviews = () => {
 
    return (
       <>
-         <ReviewerQuestionsTable
-            questions={currentQuestions}
-            handleReviewForm={handleReviewForm}
-         />
-         <Pagination
-            usersPerPage={questionsPerPage}
-            totalUsers={userQuestionsCount}
-            paginate={paginate}
-            currentPage={currentPage}
-         />
+         <Layout>
+            <ReviewerQuestionsTable
+               questions={currentQuestions}
+               handleReviewForm={handleReviewForm}
+            />
+            <Pagination
+               usersPerPage={questionsPerPage}
+               totalUsers={userQuestionsCount}
+               paginate={paginate}
+               currentPage={currentPage}
+            />
+         </Layout>
       </>
    );
 };

@@ -7,6 +7,7 @@ import ReactQuill from "react-quill";
 
 import settingActions from "../../../redux/setting/setting.actions";
 import MessageBar from "../../ui/message-bar/message-bar.component";
+import Layout from "../../ui/layout/layout.component.jsx";
 import { emailsValidation } from "../../../helpers/validation/settingsValidation";
 import { creatorValidation } from "../../../helpers/validation/settingsValidation";
 import { selectCreatingCreator } from "../../../redux/setting/setting.select";
@@ -421,28 +422,30 @@ const Settings = () => {
 
    return (
       <React.Fragment>
-         {renderSettingsEditor()}
-         {renderContactUsEmailForm()}
-         {creatingCreator === "success" && (
-            <React.Fragment>
-               <MessageBar
-                  messageType="SUCCESS"
-                  message={"Creator created successfully"}
-                  handleClearMessage={handleClearMessage}
-               />
-            </React.Fragment>
-         )}
-         {creatingCreator === "fail" && (
-            <React.Fragment>
-               <MessageBar
-                  messageType="ERROR"
-                  message={"Creator created failed"}
-                  handleClearMessage={handleClearMessage}
-               />
-            </React.Fragment>
-         )}
-         {renderCreatorForm()}
-         {renderUploadExcel()}
+         <Layout>
+            {renderSettingsEditor()}
+            {renderContactUsEmailForm()}
+            {creatingCreator === "success" && (
+               <React.Fragment>
+                  <MessageBar
+                     messageType="SUCCESS"
+                     message={"Creator created successfully"}
+                     handleClearMessage={handleClearMessage}
+                  />
+               </React.Fragment>
+            )}
+            {creatingCreator === "fail" && (
+               <React.Fragment>
+                  <MessageBar
+                     messageType="ERROR"
+                     message={"Creator created failed"}
+                     handleClearMessage={handleClearMessage}
+                  />
+               </React.Fragment>
+            )}
+            {renderCreatorForm()}
+            {renderUploadExcel()}
+         </Layout>
       </React.Fragment>
    );
 };

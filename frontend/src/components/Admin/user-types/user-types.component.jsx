@@ -6,6 +6,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import Pagination from "../../Common//pagination/pagination.component";
 import DeleteModal from "../../ui/delete-modal/delete-modal.component";
 import MessageBar from "../../ui/message-bar/message-bar.component";
+import Layout from "../../ui/layout/layout.component.jsx";
 import DeleteEditGroup from "../../ui/delete-edit-group/delete-edit-group.component";
 import { generateUserTypeDescription } from "../../../helpers/utils";
 import { userActions, alertActions } from "../../../redux/user/user.actions";
@@ -378,27 +379,29 @@ const UserTypes = () => {
 
    return (
       <React.Fragment>
-         {closeForm ? createUserTypeForm() : ""}
-         {message && (
-            <MessageBar
-               messageType={messageType}
-               message={message}
-               handleClearMessage={handleClearMessage}
-            />
-         )}
-         {show ? (
-            <DeleteModal
-               id={show.id}
-               showModal={show.showModal}
-               deleting={deletingUserType}
-               handleClose={handleClose}
-               handleDelete={handleDeleteUserType}
-               message="UserType will be deleted"
-               messageId="componentUserTypesDeleteModalWarning"
-            />
-         ) : null}
+         <Layout>
+            {closeForm ? createUserTypeForm() : ""}
+            {message && (
+               <MessageBar
+                  messageType={messageType}
+                  message={message}
+                  handleClearMessage={handleClearMessage}
+               />
+            )}
+            {show ? (
+               <DeleteModal
+                  id={show.id}
+                  showModal={show.showModal}
+                  deleting={deletingUserType}
+                  handleClose={handleClose}
+                  handleDelete={handleDeleteUserType}
+                  message="UserType will be deleted"
+                  messageId="componentUserTypesDeleteModalWarning"
+               />
+            ) : null}
 
-         {userTypesTable()}
+            {userTypesTable()}
+         </Layout>
       </React.Fragment>
    );
 };

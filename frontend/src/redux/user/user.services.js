@@ -35,7 +35,7 @@ const logout = () => {
       .then(() => {
          localStorage.removeItem("user");
          Cookies.remove("csrftoken");
-         history.push("/");
+         history.push("/login");
       });
 };
 
@@ -77,7 +77,7 @@ const confirmUser = (user) => {
       return handleResponse(res, false).then((user) => {
          // store user details and jwt token in local storage to keep user logged in between page refreshes
          localStorage.setItem("user", JSON.stringify(user));
-         history.push("/dashboard");
+         history.push("/admin/dashboard");
          return Promise.resolve(user);
       });
    });
