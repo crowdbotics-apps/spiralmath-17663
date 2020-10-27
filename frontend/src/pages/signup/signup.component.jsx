@@ -53,9 +53,9 @@ const SignUp = ({ show, toggleShow }) => {
       });
 
       if (localUser && localUser.userObj.role === "Admin") {
-         history.push("/dashboard");
+         history.push("/admin/dashboard");
       } else if (localUser) {
-         history.push("/dashboard");
+         history.push("/admin/dashboard");
       }
    }, [localUser]);
 

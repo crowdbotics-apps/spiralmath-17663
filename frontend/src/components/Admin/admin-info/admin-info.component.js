@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 
 import DashboardBox from "../../ui//dashboard-box/dashboardBox.component";
+import Layout from "../../ui/layout/layout.component.jsx";
 
 const AdminInfo = () => {
    const questions = [
@@ -18,39 +19,41 @@ const AdminInfo = () => {
 
    return (
       <React.Fragment>
-         <h3 className="mt-5 text-muted dashboard-heading">Questions</h3>
-         <div className="item-list-view">
-            <Row className="mt-3">
-               {questions.map((el) => (
-                  <Col
-                     key={el.action}
-                     md="3"
-                     className={`dashbaord-title ${el.action}`}
-                  >
-                     <DashboardBox
-                        action={el.action}
-                        number={el.number}
-                        className={el.action}
-                     />
-                  </Col>
-               ))}
-            </Row>
-         </div>
+         <Layout>
+            <h3 className="mt-5 text-muted dashboard-heading">Questions</h3>
+            <div className="item-list-view">
+               <Row className="mt-3">
+                  {questions.map((el) => (
+                     <Col
+                        key={el.action}
+                        md="3"
+                        className={`dashbaord-title ${el.action}`}
+                     >
+                        <DashboardBox
+                           action={el.action}
+                           number={el.number}
+                           className={el.action}
+                        />
+                     </Col>
+                  ))}
+               </Row>
+            </div>
 
-         <h3 className="mt-5  text-muted dashboard-heading">Users</h3>
-         <div className="item-list-view">
-            <Row className="mt-3">
-               {users.map((el) => (
-                  <Col
-                     key={el.action}
-                     md="3"
-                     className={`dashbaord-title ${el.action}`}
-                  >
-                     <DashboardBox action={el.action} number={el.number} />
-                  </Col>
-               ))}
-            </Row>
-         </div>
+            <h3 className="mt-5  text-muted dashboard-heading">Users</h3>
+            <div className="item-list-view">
+               <Row className="mt-3">
+                  {users.map((el) => (
+                     <Col
+                        key={el.action}
+                        md="3"
+                        className={`dashbaord-title ${el.action}`}
+                     >
+                        <DashboardBox action={el.action} number={el.number} />
+                     </Col>
+                  ))}
+               </Row>
+            </div>
+         </Layout>
       </React.Fragment>
    );
 };

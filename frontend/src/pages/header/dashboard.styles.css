@@ -171,3 +171,11 @@ table tbody td {
    background-color: #3c7ebf;
    color: #ffffff;
 }
+
+.admin-links-container {
+   display: flex;
+   flex-direction: row;
+   flex-grow: 1;
+   flex-shrink: 1;
+   justify-content: space-evenly;
+}

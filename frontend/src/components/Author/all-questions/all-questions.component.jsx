@@ -6,6 +6,7 @@ import EditorQuestionsTable from "../editor-questions-table/editor-questions-tab
 import Pagination from "./../../Common/pagination/pagination.component";
 import DeleteEditGroup from "../../ui/delete-edit-group/delete-edit-group.component";
 import DeleteModal from "../../ui/delete-modal/delete-modal.component";
+import Layout from "../../ui/layout/layout.component";
 
 // selectors
 import { selectAllQuestions } from "../../../redux/question/question.select";
@@ -74,26 +75,28 @@ const AllQuestions = () => {
 
    return (
       <>
-         <EditorQuestionsTable
-            questions={currentQuestions}
-            all={true}
-            renderDeleteEdit={renderDeleteEdit}
-         />
-         <Pagination
-            usersPerPage={questionsPerPage}
-            totalUsers={questionsCount}
-            paginate={paginate}
-            currentPage={currentPage}
-         />
-         <DeleteModal
-            id={showDeleteModal.id}
-            showModal={showDeleteModal.showModal}
-            deleting={deletingQuestion}
-            handleClose={handleClose}
-            handleDelete={handleDelete}
-            message="Question will be deleted"
-            messageId="questionDeleteMessage"
-         />
+         <Layout>
+            <EditorQuestionsTable
+               questions={currentQuestions}
+               all={true}
+               renderDeleteEdit={renderDeleteEdit}
+            />
+            <Pagination
+               usersPerPage={questionsPerPage}
+               totalUsers={questionsCount}
+               paginate={paginate}
+               currentPage={currentPage}
+            />
+            <DeleteModal
+               id={showDeleteModal.id}
+               showModal={showDeleteModal.showModal}
+               deleting={deletingQuestion}
+               handleClose={handleClose}
+               handleDelete={handleDelete}
+               message="Question will be deleted"
+               messageId="questionDeleteMessage"
+            />
+         </Layout>
       </>
    );
 };

@@ -6,6 +6,7 @@ import EditorQuestionsTable from "../editor-questions-table/editor-questions-tab
 import DeleteEditGroup from "../../ui/delete-edit-group/delete-edit-group.component";
 import DeleteModal from "../../ui/delete-modal/delete-modal.component";
 import Pagination from "./../../Common/pagination/pagination.component";
+import Layout from "../../ui/layout/layout.component";
 
 // selectors
 import { selectUserQuestions } from "../../../redux/question/question.select";
@@ -77,25 +78,27 @@ const MyQuestions = () => {
 
    return (
       <>
-         <EditorQuestionsTable
-            questions={currentQuestions}
-            renderDeleteEdit={renderDeleteEdit}
-         />
-         <Pagination
-            usersPerPage={questionsPerPage}
-            totalUsers={userQuestionsCount}
-            paginate={paginate}
-            currentPage={currentPage}
-         />
-         <DeleteModal
-            id={showDeleteModal.id}
-            showModal={showDeleteModal.showModal}
-            deleting={deletingQuestion}
-            handleClose={handleClose}
-            handleDelete={handleDelete}
-            message="Question will be deleted"
-            messageId="questionDeleteMessage"
-         />
+         <Layout>
+            <EditorQuestionsTable
+               questions={currentQuestions}
+               renderDeleteEdit={renderDeleteEdit}
+            />
+            <Pagination
+               usersPerPage={questionsPerPage}
+               totalUsers={userQuestionsCount}
+               paginate={paginate}
+               currentPage={currentPage}
+            />
+            <DeleteModal
+               id={showDeleteModal.id}
+               showModal={showDeleteModal.showModal}
+               deleting={deletingQuestion}
+               handleClose={handleClose}
+               handleDelete={handleDelete}
+               message="Question will be deleted"
+               messageId="questionDeleteMessage"
+            />
+         </Layout>
       </>
    );
 };

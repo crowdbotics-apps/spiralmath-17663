@@ -38,7 +38,7 @@ const Login = () => {
       });
 
       if (localUser) {
-         history.push("/dashboard");
+         history.push("/admin/dashboard");
       }
    }, [localUser]);
 

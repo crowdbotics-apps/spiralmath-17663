@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FormattedMessage, useIntl, FormattedDate } from "react-intl";
 import { SingleSelect } from "react-select-material-ui";
 import { Col, Form, Button } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 
 import { setQuestionType } from "../../../redux/local/local.actions";
 import questionActions from "../../../redux//question/question.action";
@@ -26,6 +27,7 @@ import { selectReviewers } from "./../../../redux/question/question.select";
 import { selectCreators } from "./../../../redux/question/question.select";
 
 import AuthorDetails from "../../Reviewer/author-details/author-details.component";
+import Layout from "../../ui/layout/layout.component";
 import { questionFormStateEditFalse } from "../../../redux/questionFormState/questionFormState.action";
 
 const millsDiffLevel = [
@@ -47,6 +49,8 @@ const questionStyles = [
 ];
 
 const Question = ({ questionType }) => {
+   console.log(questionType);
+   const history = useHistory();
    const dispatch = useDispatch();
    const imageRef = useRef(null);
    const apiErrorRef = useRef(null);
@@ -200,6 +204,7 @@ const Question = ({ questionType }) => {
    const handleCancel = () => {
       dispatch(setQuestionType(false));
       dispatch(questionFormStateEditFalse());
+      isReview ? history.push("/my-reviews") : history.push("/my-questions");
    };
 
    const handleImage = (e) => {
@@ -339,549 +344,575 @@ const Question = ({ questionType }) => {
 
    return (
       <React.Fragment>
-         {creatingAnswer === "success" && (
-            <React.Fragment>
-               <div ref={apiErrorRef}></div>
-               <MessageBar
-                  messageType="SUCCESS"
-                  message={"Question created successfully"}
-                  handleClearMessage={handleClearMessage}
-               />
-            </React.Fragment>
-         )}
-         {creatingAnswer === "fail" && (
-            <React.Fragment>
-               <div ref={apiErrorRef}></div>
-               <MessageBar
-                  messageType="ERROR"
-                  message={"Question creation failed. Try again"}
-                  handleClearMessage={handleClearMessage}
-               />
-            </React.Fragment>
-         )}
-         {updatingQuestion === "success" && (
-            <React.Fragment>
-               <div ref={apiErrorRef}></div>
-               <MessageBar
-                  messageType="SUCCESS"
-                  message={"Updated Successfully"}
-                  handleClearMessage={handleClearMessage}
-               />
-            </React.Fragment>
-         )}
-         {updatingQuestion === "fail" && (
-            <React.Fragment>
-               <div ref={apiErrorRef}></div>
-               <MessageBar
-                  messageType="ERROR"
-                  message={"Update Fail. Try again."}
-                  handleClearMessage={handleClearMessage}
-               />
-            </React.Fragment>
-         )}
-
-         <div
-            className={`px-4 py-4 border form-border border-color ${
-               creatingAnswer || (updatingQuestion && "mt-4")
-            } `}
-         >
-            {isReview && (
-               <AuthorDetails
-                  author_name={author_name}
-                  reviewer_name={reviewer_name}
-                  created={created}
-                  reviewer_date={reviewer_date}
-               />
+         <Layout>
+            {creatingAnswer === "success" && (
+               <React.Fragment>
+                  <div ref={apiErrorRef}></div>
+                  <MessageBar
+                     messageType="SUCCESS"
+                     message={"Question created successfully"}
+                     handleClearMessage={handleClearMessage}
+                  />
+               </React.Fragment>
             )}
-            <Form.Row className="mb-3">
-               <Form.Group as={Col} md="3">
-                  <SingleSelect
-                     value={mills_difficulty_level}
-                     placeholder="Mills Difficulty Level"
-                     options={millsDiffLevel}
-                     onChange={handleSelectChange("mills_difficulty_level")}
-                     disabled={isReview}
+            {creatingAnswer === "fail" && (
+               <React.Fragment>
+                  <div ref={apiErrorRef}></div>
+                  <MessageBar
+                     messageType="ERROR"
+                     message={"Question creation failed. Try again"}
+                     handleClearMessage={handleClearMessage}
                   />
-                  {submitted && errors.mills_difficulty_level && (
-                     <p className="text-danger form-text-danger">
-                        {errors.mills_difficulty_level}
-                     </p>
-                  )}
-               </Form.Group>
-               <Form.Group as={Col} md="2">
-                  <SingleSelect
-                     value={dok}
-                     placeholder="DOK"
-                     options={DOK}
-                     onChange={handleSelectChange("dok")}
-                     disabled={isReview}
+               </React.Fragment>
+            )}
+            {updatingQuestion === "success" && (
+               <React.Fragment>
+                  <div ref={apiErrorRef}></div>
+                  <MessageBar
+                     messageType="SUCCESS"
+                     message={"Updated Successfully"}
+                     handleClearMessage={handleClearMessage}
                   />
-                  {submitted && errors.dok && (
-                     <p className="text-danger form-text-danger">
-                        {errors.dok}
-                     </p>
-                  )}
-               </Form.Group>
-               <Form.Group as={Col} md="2">
-                  <SingleSelect
-                     value={question_style}
-                     placeholder="Question Style"
-                     options={questionStyles}
-                     onChange={handleSelectChange("question_style")}
-                     disabled={isReview}
+               </React.Fragment>
+            )}
+            {updatingQuestion === "fail" && (
+               <React.Fragment>
+                  <div ref={apiErrorRef}></div>
+                  <MessageBar
+                     messageType="ERROR"
+                     message={"Update Fail. Try again."}
+                     handleClearMessage={handleClearMessage}
                   />
-               </Form.Group>
+               </React.Fragment>
+            )}
 
-               <Form.Group as={Col} md="2" className="mt-2 ml-5">
-                  <Form.Check
-                     type="switch"
-                     id="ss"
-                     label="Summative Status"
-                     name="summative_status"
-                     onChange={handleChange}
-                     checked={summative_status}
-                     value={summative_status}
-                     readOnly={isReview}
+            <div
+               className={`px-4 py-4 border form-border border-color ${
+                  creatingAnswer || (updatingQuestion && "mt-4")
+               } `}
+            >
+               {isReview && (
+                  <AuthorDetails
+                     author_name={author_name}
+                     reviewer_name={reviewer_name}
+                     created={created}
+                     reviewer_date={reviewer_date}
                   />
-               </Form.Group>
-               <Form.Group as={Col} md="2" className="mt-2 ml-4">
-                  <Form.Check
-                     type="switch"
-                     id="sm"
-                     label="State Model"
-                     name="state_model"
-                     onChange={handleChange}
-                     checked={state_model}
-                     value={state_model}
-                     readOnly={isReview}
-                  />
-               </Form.Group>
-            </Form.Row>
-            <Form.Row className="mb-3">
-               <Form.Group as={Col} md="4">
-                  <SingleSelect
-                     value={
-                        standard_set && {
-                           set: standard_set.standard_set,
-                           i: standard_set.index,
-                        }
-                     }
-                     placeholder="Standard Set"
-                     options={
-                        standardCode &&
-                        standardCode["Standard Set"].map((set, i) => {
-                           return {
-                              value: { set, i },
-                              label: set,
-                           };
-                        })
-                     }
-                     onChange={handleSelectChange("standard_set")}
-                     disabled={isReview}
-                  />
-                  {submitted && errors.standard_set && (
-                     <p className="text-danger form-text-danger">
-                        {errors.standard_set}
-                     </p>
-                  )}
-               </Form.Group>
+               )}
+               <Form.Row className="mb-3">
+                  <Form.Group as={Col} md="3">
+                     <SingleSelect
+                        value={mills_difficulty_level}
+                        placeholder="Mills Difficulty Level"
+                        options={millsDiffLevel}
+                        onChange={handleSelectChange("mills_difficulty_level")}
+                        disabled={isReview}
+                     />
+                     {submitted && errors.mills_difficulty_level && (
+                        <p className="text-danger form-text-danger">
+                           {errors.mills_difficulty_level}
+                        </p>
+                     )}
+                  </Form.Group>
+                  <Form.Group as={Col} md="2">
+                     <SingleSelect
+                        value={dok}
+                        placeholder="DOK"
+                        options={DOK}
+                        onChange={handleSelectChange("dok")}
+                        disabled={isReview}
+                     />
+                     {submitted && errors.dok && (
+                        <p className="text-danger form-text-danger">
+                           {errors.dok}
+                        </p>
+                     )}
+                  </Form.Group>
+                  <Form.Group as={Col} md="2">
+                     <SingleSelect
+                        value={question_style}
+                        placeholder="Question Style"
+                        options={questionStyles}
+                        onChange={handleSelectChange("question_style")}
+                        disabled={isReview}
+                     />
+                  </Form.Group>
 
-               <Form.Group as={Col} md="4">
-                  <Form.Control
-                     type="text"
-                     value={standard_code}
-                     name="standard_code"
-                     className={`border-top-0 border-left-0 border-right-0 rounded-0 ${
-                        standard_code.length && "label-up"
-                     }`}
-                     onChange={handleChange}
-                     readOnly={isReview}
-                  />
-                  <span className="floating-label">Standard code</span>
-               </Form.Group>
-               <Form.Group as={Col} md="4">
-                  <Form.Control
-                     type="text"
-                     value={grade_level}
-                     name="grade_level"
-                     onChange={handleChange}
-                     className={`border-top-0 border-left-0 border-right-0 rounded-0 ${
-                        grade_level && "label-up"
-                     }`}
-                     readOnly={isReview}
-                  />
-                  <span className="floating-label">Grade level</span>
-               </Form.Group>
-            </Form.Row>
-            <Form.Row className="mb-3">
-               <Form.Group as={Col} md="4">
-                  <Form.Control
-                     type="text"
-                     name="copyright_status"
-                     value={copyright_status}
-                     onChange={handleChange}
-                     className={`border-top-0 border-left-0 border-right-0 rounded-0 ${
-                        copyright_status.length && "label-up"
-                     }`}
-                     readOnly={isReview}
-                  />
-                  <span className="floating-label">Copyright status</span>
-               </Form.Group>
-               <Form.Group as={Col} md="4">
-                  <Form.Control
-                     type="text"
-                     name="content_source"
-                     onChange={handleChange}
-                     value={content_source}
-                     className={`border-top-0 border-left-0 border-right-0 rounded-0 ${
-                        content_source.length && "label-up"
-                     }`}
-                     readOnly={isReview}
-                  />
-                  <span className="floating-label">Content source</span>
-               </Form.Group>
-               <Form.Group as={Col} md="4">
-                  <Form.Control
-                     type="text"
-                     name="author_memo"
-                     onChange={handleChange}
-                     value={author_memo}
-                     className={`border-top-0 border-left-0 border-right-0 rounded-0 ${
-                        author_memo.length && "label-up"
-                     }`}
-                     readOnly={isReview}
-                  />
-                  <span className="floating-label">Memo</span>
-               </Form.Group>
-            </Form.Row>
-            <Form.Row className="mb-3">
-               <Form.Group as={Col} md="6">
-                  <Form.Control
-                     type="text"
-                     name="image_source"
-                     value={image_source}
-                     onChange={handleChange}
-                     className={`border-top-0 border-left-0 border-right-0 rounded-0 ${
-                        image_source.length && "label-up"
-                     }`}
-                     readOnly={isReview}
-                  />
-                  <span className="floating-label">Image source</span>
-               </Form.Group>
-               <Form.Group as={Col} md="3">
-                  <Form.Control
-                     type="text"
-                     name="alt_text"
-                     value={alt_text}
-                     onChange={handleChange}
-                     className={`border-top-0 border-left-0 border-right-0 rounded-0 ${
-                        alt_text.length && "label-up"
-                     }`}
-                     readOnly={isReview}
-                  />
-                  <span className="floating-label">Alt text</span>
-               </Form.Group>
-               <Form.Group as={Col} md="3" className="alignment ">
-                  <input
-                     style={{ display: "none" }}
-                     type="file"
-                     name="file"
-                     ref={imageRef}
-                     onChange={handleImage}
-                     disabled={isReview}
-                  />
-                  <Button
-                     variant="outline-primary"
-                     className="upload-excel"
-                     onClick={handleImageClick}
-                     disabled={image}
-                  >
-                     {imageButtonText}
-                  </Button>
-               </Form.Group>
-            </Form.Row>
-            <Form.Row className="mb-3">
-               <Form.Group as={Col} md="4">
-                  <SingleSelect
-                     value={formState.reviewer_name}
-                     placeholder="Reviewer"
-                     options={
-                        reviewers &&
-                        reviewers.map((reviewer) => {
-                           return {
-                              value: reviewer.id,
-                              label:
-                                 reviewer.first_name + " " + reviewer.last_name,
-                           };
-                        })
-                     }
-                     disabled={isReview}
-                     onChange={handleSelectChange("reviewer_name")}
-                  />
-                  {submitted && errors.reviewer_name && (
-                     <p className="text-danger form-text-danger">
-                        {errors.reviewer_name}
-                     </p>
-                  )}
-               </Form.Group>
-               <Form.Group as={Col} md="4">
-                  <SingleSelect
-                     value={creator}
-                     placeholder="Creator"
-                     options={
-                        creators &&
-                        creators.map((creator) => {
-                           return {
-                              value: creator.id,
-                              label:
-                                 creator.first_name + " " + creator.last_name,
-                           };
-                        })
-                     }
-                     disabled={isReview}
-                     onChange={handleSelectChange("creator")}
-                  />
-                  {submitted && errors.creator && (
-                     <p className="text-danger form-text-danger">
-                        {errors.creator}
-                     </p>
-                  )}
-               </Form.Group>
-            </Form.Row>
-            <Form.Row>
-               <Form.Group as={Col} md="8">
-                  <Form.Label className="question-label">
-                     Enter question
-                  </Form.Label>
-                  <MathquillInput
-                     name="value"
-                     handleQuestionChange={handleQuestionChange}
-                     isReview={isReview}
-                     value={value}
-                  />
-                  {submitted && errors.value && (
-                     <p className="text-danger form-text-danger">
-                        {errors.value}
-                     </p>
-                  )}
-               </Form.Group>
-            </Form.Row>
-            {(questionType === "sa" || questionType === "la") && (
-               <Form.Row>
-                  <Form.Group as={Col} md="8">
-                     <Form.Label className="question-label">
-                        Enter Answer
-                     </Form.Label>
-                     <MathquillInput
-                        handleAnswerChange={handleAnswerChange("value")}
-                        isReview={isReview}
-                        value={answer.content}
+                  <Form.Group as={Col} md="2" className="mt-2 ml-5">
+                     <Form.Check
+                        type="switch"
+                        id="ss"
+                        label="Summative Status"
+                        name="summative_status"
+                        onChange={handleChange}
+                        checked={summative_status}
+                        value={summative_status}
+                        readOnly={isReview}
+                     />
+                  </Form.Group>
+                  <Form.Group as={Col} md="2" className="mt-2 ml-4">
+                     <Form.Check
+                        type="switch"
+                        id="sm"
+                        label="State Model"
+                        name="state_model"
+                        onChange={handleChange}
+                        checked={state_model}
+                        value={state_model}
+                        readOnly={isReview}
                      />
                   </Form.Group>
                </Form.Row>
-            )}
-            {questionType === "mc" && (
-               <React.Fragment>
-                  <Form.Row className="d-flex">
-                     <Form.Group as={Col} md="0" className="align-self-center">
-                        <A />
-                     </Form.Group>
-                     <Form.Group as={Col} md="8" className="mr-5">
-                        <Form.Control
-                           type="text"
-                           placeholder="Add Option 1"
-                           onChange={handleAnswerChange("A")}
-                           value={
-                              (answer &&
-                                 answer.content &&
-                                 answer.content["A"] &&
-                                 answer.content["A"].reason) ||
-                              ""
+               <Form.Row className="mb-3">
+                  <Form.Group as={Col} md="4">
+                     <SingleSelect
+                        value={
+                           standard_set && {
+                              set: standard_set.standard_set,
+                              i: standard_set.index,
                            }
-                           className=" border-top-0 border-left-0 border-right-0 rounded-0"
-                           readOnly={isReview}
-                        />
-                     </Form.Group>
-                     <Form.Group
-                        as={Col}
-                        md="1"
-                        className="d-flex justify-content-between align-items-center"
+                        }
+                        placeholder="Standard Set"
+                        options={
+                           standardCode &&
+                           standardCode["Standard Set"].map((set, i) => {
+                              return {
+                                 value: { set, i },
+                                 label: set,
+                              };
+                           })
+                        }
+                        onChange={handleSelectChange("standard_set")}
+                        disabled={isReview}
+                     />
+                     {submitted && errors.standard_set && (
+                        <p className="text-danger form-text-danger">
+                           {errors.standard_set}
+                        </p>
+                     )}
+                  </Form.Group>
+
+                  <Form.Group as={Col} md="4">
+                     <Form.Control
+                        type="text"
+                        value={standard_code}
+                        name="standard_code"
+                        className={`border-top-0 border-left-0 border-right-0 rounded-0 ${
+                           standard_code.length && "label-up"
+                        }`}
+                        onChange={handleChange}
+                        readOnly={isReview}
+                     />
+                     <span className="floating-label">Standard code</span>
+                  </Form.Group>
+                  <Form.Group as={Col} md="4">
+                     <Form.Control
+                        type="text"
+                        value={grade_level}
+                        name="grade_level"
+                        onChange={handleChange}
+                        className={`border-top-0 border-left-0 border-right-0 rounded-0 ${
+                           grade_level && "label-up"
+                        }`}
+                        readOnly={isReview}
+                     />
+                     <span className="floating-label">Grade level</span>
+                  </Form.Group>
+               </Form.Row>
+               <Form.Row className="mb-3">
+                  <Form.Group as={Col} md="4">
+                     <Form.Control
+                        type="text"
+                        name="copyright_status"
+                        value={copyright_status}
+                        onChange={handleChange}
+                        className={`border-top-0 border-left-0 border-right-0 rounded-0 ${
+                           copyright_status.length && "label-up"
+                        }`}
+                        readOnly={isReview}
+                     />
+                     <span className="floating-label">Copyright status</span>
+                  </Form.Group>
+                  <Form.Group as={Col} md="4">
+                     <Form.Control
+                        type="text"
+                        name="content_source"
+                        onChange={handleChange}
+                        value={content_source}
+                        className={`border-top-0 border-left-0 border-right-0 rounded-0 ${
+                           content_source.length && "label-up"
+                        }`}
+                        readOnly={isReview}
+                     />
+                     <span className="floating-label">Content source</span>
+                  </Form.Group>
+                  <Form.Group as={Col} md="4">
+                     <Form.Control
+                        type="text"
+                        name="author_memo"
+                        onChange={handleChange}
+                        value={author_memo}
+                        className={`border-top-0 border-left-0 border-right-0 rounded-0 ${
+                           author_memo.length && "label-up"
+                        }`}
+                        readOnly={isReview}
+                     />
+                     <span className="floating-label">Memo</span>
+                  </Form.Group>
+               </Form.Row>
+               <Form.Row className="mb-3">
+                  <Form.Group as={Col} md="6">
+                     <Form.Control
+                        type="text"
+                        name="image_source"
+                        value={image_source}
+                        onChange={handleChange}
+                        className={`border-top-0 border-left-0 border-right-0 rounded-0 ${
+                           image_source.length && "label-up"
+                        }`}
+                        readOnly={isReview}
+                     />
+                     <span className="floating-label">Image source</span>
+                  </Form.Group>
+                  <Form.Group as={Col} md="3">
+                     <Form.Control
+                        type="text"
+                        name="alt_text"
+                        value={alt_text}
+                        onChange={handleChange}
+                        className={`border-top-0 border-left-0 border-right-0 rounded-0 ${
+                           alt_text.length && "label-up"
+                        }`}
+                        readOnly={isReview}
+                     />
+                     <span className="floating-label">Alt text</span>
+                  </Form.Group>
+                  <Form.Group as={Col} md="3" className="alignment ">
+                     <input
+                        style={{ display: "none" }}
+                        type="file"
+                        name="file"
+                        ref={imageRef}
+                        onChange={handleImage}
+                        disabled={isReview}
+                     />
+                     <Button
+                        variant="outline-primary"
+                        className="upload-excel"
+                        onClick={handleImageClick}
+                        disabled={image}
                      >
-                        <span
-                           onClick={handleMcOption("A")}
-                           className={`${
-                              (mcOptions.A ||
-                                 (answer.content &&
-                                    answer.content.A &&
-                                    answer.content.A.answer)) &&
-                              "svg-color-green"
-                           }`}
-                        >
-                           <Tick />
-                        </span>
+                        {imageButtonText}
+                     </Button>
+                  </Form.Group>
+               </Form.Row>
+               <Form.Row className="mb-3">
+                  <Form.Group as={Col} md="4">
+                     <SingleSelect
+                        value={formState.reviewer_name}
+                        placeholder="Reviewer"
+                        options={
+                           reviewers &&
+                           reviewers.map((reviewer) => {
+                              return {
+                                 value: reviewer.id,
+                                 label:
+                                    reviewer.first_name +
+                                    " " +
+                                    reviewer.last_name,
+                              };
+                           })
+                        }
+                        disabled={isReview}
+                        onChange={handleSelectChange("reviewer_name")}
+                     />
+                     {submitted && errors.reviewer_name && (
+                        <p className="text-danger form-text-danger">
+                           {errors.reviewer_name}
+                        </p>
+                     )}
+                  </Form.Group>
+                  <Form.Group as={Col} md="4">
+                     <SingleSelect
+                        value={creator}
+                        placeholder="Creator"
+                        options={
+                           creators &&
+                           creators.map((creator) => {
+                              return {
+                                 value: creator.id,
+                                 label:
+                                    creator.first_name +
+                                    " " +
+                                    creator.last_name,
+                              };
+                           })
+                        }
+                        disabled={isReview}
+                        onChange={handleSelectChange("creator")}
+                     />
+                     {submitted && errors.creator && (
+                        <p className="text-danger form-text-danger">
+                           {errors.creator}
+                        </p>
+                     )}
+                  </Form.Group>
+               </Form.Row>
+               <Form.Row>
+                  <Form.Group as={Col} md="8">
+                     <Form.Label className="question-label">
+                        Enter question
+                     </Form.Label>
+                     <MathquillInput
+                        name="value"
+                        handleQuestionChange={handleQuestionChange}
+                        isReview={isReview}
+                        value={value}
+                     />
+                     {submitted && errors.value && (
+                        <p className="text-danger form-text-danger">
+                           {errors.value}
+                        </p>
+                     )}
+                  </Form.Group>
+               </Form.Row>
+               {(questionType === "sa" || questionType === "la") && (
+                  <Form.Row>
+                     <Form.Group as={Col} md="8">
+                        <Form.Label className="question-label">
+                           Enter Answer
+                        </Form.Label>
+                        <MathquillInput
+                           handleAnswerChange={handleAnswerChange("value")}
+                           isReview={isReview}
+                           value={answer.content}
+                        />
                      </Form.Group>
                   </Form.Row>
-                  <Form.Row className="d-flex">
-                     <Form.Group as={Col} md="0" className="align-self-center">
-                        <B />
-                     </Form.Group>
-                     <Form.Group as={Col} md="8" className="mr-5">
-                        <Form.Control
-                           type="text"
-                           placeholder="Add Option 2"
-                           onChange={handleAnswerChange("B")}
-                           value={
-                              (answer &&
-                                 answer.content &&
-                                 answer.content["B"] &&
-                                 answer.content["B"].reason) ||
-                              ""
-                           }
-                           className=" border-top-0 border-left-0 border-right-0 rounded-0"
-                           readOnly={isReview}
-                        />
-                     </Form.Group>
-                     <Form.Group
-                        as={Col}
-                        md="1"
-                        className="d-flex justify-content-between align-items-center"
-                     >
-                        <span
-                           onClick={handleMcOption("B")}
-                           className={`${
-                              (mcOptions.B ||
-                                 (answer.content &&
-                                    answer.content.B &&
-                                    answer.content.B.answer)) &&
-                              "svg-color-green"
-                           }`}
-                        >
-                           <Tick />
-                        </span>
-                     </Form.Group>
-                  </Form.Row>
-                  <Form.Row className="d-flex">
-                     <Form.Group as={Col} md="0" className="align-self-center">
-                        <C />
-                     </Form.Group>
-                     <Form.Group as={Col} md="8" className="mr-5">
-                        <Form.Control
-                           type="text"
-                           placeholder="Add Option 3"
-                           onChange={handleAnswerChange("C")}
-                           value={
-                              (answer &&
-                                 answer.content &&
-                                 answer.content["C"] &&
-                                 answer.content["C"].reason) ||
-                              ""
-                           }
-                           className=" border-top-0 border-left-0 border-right-0 rounded-0"
-                           readOnly={isReview}
-                        />
-                     </Form.Group>
-                     <Form.Group
-                        as={Col}
-                        md="1"
-                        className="d-flex justify-content-between align-items-center"
-                     >
-                        <span
-                           onClick={handleMcOption("C")}
-                           className={`${
-                              (mcOptions.C ||
-                                 (answer.content &&
-                                    answer.content.C &&
-                                    answer.content.C.answer)) &&
-                              "svg-color-green"
-                           }`}
-                        >
-                           <Tick />
-                        </span>
-                     </Form.Group>
-                  </Form.Row>
-               </React.Fragment>
-            )}
-            {questionType === "t/f" && (
-               <React.Fragment>
-                  <Form.Row className="d-flex z-negative">
-                     <Form.Group as={Col} md="0" className="align-self-center">
-                        <A />
-                     </Form.Group>
-                     <Form.Group as={Col} md="8" className="mr-5 z-negative">
-                        <Form.Control
-                           type="text"
-                           value="True"
-                           className=" border-top-0 border-left-0 border-right-0 rounded-0 z-negative"
-                        />
-                     </Form.Group>
-                     <Form.Group
-                        as={Col}
-                        md="1"
-                        className="d-flex justify-content-between align-items-center"
-                     >
-                        <Form.Check
-                           label=""
-                           type="switch"
-                           id="custom-switch1"
-                           onChange={handleAnswerChange("true")}
-                           checked={answer.content && answer.content.true}
-                           readOnly={isReview}
-                        />
-                     </Form.Group>
-                  </Form.Row>
-                  <Form.Row className="d-flex">
-                     <Form.Group as={Col} md="0" className="align-self-center">
-                        <B />
-                     </Form.Group>
-                     <Form.Group as={Col} md="8" className="mr-5 z-negative">
-                        <Form.Control
-                           type="text"
-                           value="False"
-                           className=" border-top-0 border-left-0 border-right-0 rounded-0 "
-                        />
-                     </Form.Group>
-                     <Form.Group
-                        as={Col}
-                        md="1"
-                        className="d-flex justify-content-between align-items-center"
-                     >
-                        <Form.Check
-                           label=""
-                           type="switch"
-                           id="custom-switch2"
-                           onChange={handleAnswerChange("false")}
-                           checked={answer.content && answer.content.false}
-                           readOnly={isReview}
-                        />
-                     </Form.Group>
-                  </Form.Row>
-               </React.Fragment>
-            )}
-         </div>
-         {isReview && (
-            <ReviewInput
-               handleChange={handleChange}
-               handleRadioChange={handleRadioChange}
-               reviewer_feedback={reviewer_feedback}
-               approved_status={approved_status}
-            />
-         )}
-         <div className="my-4 d-flex justify-content-end bottom-btn-grp">
-            <Button className="mr-4 cancel-btn" onClick={handleCancel}>
-               <FormattedMessage
-                  defaultMessage="Cancel"
-                  id="componentUsersTabCancelButton"
-               />
-            </Button>
-            <Button className="save-btn" onClick={handleSubmit}>
-               {(creatingAnswer === true ||
-                  updatingQuestion === true ||
-                  creatingQuestion === true) && (
-                  <span className="spinner-border spinner-border-sm mr-1"></span>
                )}
-               Save & Send
-            </Button>
-         </div>
+               {questionType === "mc" && (
+                  <React.Fragment>
+                     <Form.Row className="d-flex">
+                        <Form.Group
+                           as={Col}
+                           md="0"
+                           className="align-self-center"
+                        >
+                           <A />
+                        </Form.Group>
+                        <Form.Group as={Col} md="8" className="mr-5">
+                           <Form.Control
+                              type="text"
+                              placeholder="Add Option 1"
+                              onChange={handleAnswerChange("A")}
+                              value={
+                                 (answer &&
+                                    answer.content &&
+                                    answer.content["A"] &&
+                                    answer.content["A"].reason) ||
+                                 ""
+                              }
+                              className=" border-top-0 border-left-0 border-right-0 rounded-0"
+                              readOnly={isReview}
+                           />
+                        </Form.Group>
+                        <Form.Group
+                           as={Col}
+                           md="1"
+                           className="d-flex justify-content-between align-items-center"
+                        >
+                           <span
+                              onClick={handleMcOption("A")}
+                              className={`${
+                                 (mcOptions.A ||
+                                    (answer.content &&
+                                       answer.content.A &&
+                                       answer.content.A.answer)) &&
+                                 "svg-color-green"
+                              }`}
+                           >
+                              <Tick />
+                           </span>
+                        </Form.Group>
+                     </Form.Row>
+                     <Form.Row className="d-flex">
+                        <Form.Group
+                           as={Col}
+                           md="0"
+                           className="align-self-center"
+                        >
+                           <B />
+                        </Form.Group>
+                        <Form.Group as={Col} md="8" className="mr-5">
+                           <Form.Control
+                              type="text"
+                              placeholder="Add Option 2"
+                              onChange={handleAnswerChange("B")}
+                              value={
+                                 (answer &&
+                                    answer.content &&
+                                    answer.content["B"] &&
+                                    answer.content["B"].reason) ||
+                                 ""
+                              }
+                              className=" border-top-0 border-left-0 border-right-0 rounded-0"
+                              readOnly={isReview}
+                           />
+                        </Form.Group>
+                        <Form.Group
+                           as={Col}
+                           md="1"
+                           className="d-flex justify-content-between align-items-center"
+                        >
+                           <span
+                              onClick={handleMcOption("B")}
+                              className={`${
+                                 (mcOptions.B ||
+                                    (answer.content &&
+                                       answer.content.B &&
+                                       answer.content.B.answer)) &&
+                                 "svg-color-green"
+                              }`}
+                           >
+                              <Tick />
+                           </span>
+                        </Form.Group>
+                     </Form.Row>
+                     <Form.Row className="d-flex">
+                        <Form.Group
+                           as={Col}
+                           md="0"
+                           className="align-self-center"
+                        >
+                           <C />
+                        </Form.Group>
+                        <Form.Group as={Col} md="8" className="mr-5">
+                           <Form.Control
+                              type="text"
+                              placeholder="Add Option 3"
+                              onChange={handleAnswerChange("C")}
+                              value={
+                                 (answer &&
+                                    answer.content &&
+                                    answer.content["C"] &&
+                                    answer.content["C"].reason) ||
+                                 ""
+                              }
+                              className=" border-top-0 border-left-0 border-right-0 rounded-0"
+                              readOnly={isReview}
+                           />
+                        </Form.Group>
+                        <Form.Group
+                           as={Col}
+                           md="1"
+                           className="d-flex justify-content-between align-items-center"
+                        >
+                           <span
+                              onClick={handleMcOption("C")}
+                              className={`${
+                                 (mcOptions.C ||
+                                    (answer.content &&
+                                       answer.content.C &&
+                                       answer.content.C.answer)) &&
+                                 "svg-color-green"
+                              }`}
+                           >
+                              <Tick />
+                           </span>
+                        </Form.Group>
+                     </Form.Row>
+                  </React.Fragment>
+               )}
+               {questionType === "t/f" && (
+                  <React.Fragment>
+                     <Form.Row className="d-flex z-negative">
+                        <Form.Group
+                           as={Col}
+                           md="0"
+                           className="align-self-center"
+                        >
+                           <A />
+                        </Form.Group>
+                        <Form.Group as={Col} md="8" className="mr-5 z-negative">
+                           <Form.Control
+                              type="text"
+                              value="True"
+                              className=" border-top-0 border-left-0 border-right-0 rounded-0 z-negative"
+                           />
+                        </Form.Group>
+                        <Form.Group
+                           as={Col}
+                           md="1"
+                           className="d-flex justify-content-between align-items-center"
+                        >
+                           <Form.Check
+                              label=""
+                              type="switch"
+                              id="custom-switch1"
+                              onChange={handleAnswerChange("true")}
+                              checked={answer.content && answer.content.true}
+                              readOnly={isReview}
+                           />
+                        </Form.Group>
+                     </Form.Row>
+                     <Form.Row className="d-flex">
+                        <Form.Group
+                           as={Col}
+                           md="0"
+                           className="align-self-center"
+                        >
+                           <B />
+                        </Form.Group>
+                        <Form.Group as={Col} md="8" className="mr-5 z-negative">
+                           <Form.Control
+                              type="text"
+                              value="False"
+                              className=" border-top-0 border-left-0 border-right-0 rounded-0 "
+                           />
+                        </Form.Group>
+                        <Form.Group
+                           as={Col}
+                           md="1"
+                           className="d-flex justify-content-between align-items-center"
+                        >
+                           <Form.Check
+                              label=""
+                              type="switch"
+                              id="custom-switch2"
+                              onChange={handleAnswerChange("false")}
+                              checked={answer.content && answer.content.false}
+                              readOnly={isReview}
+                           />
+                        </Form.Group>
+                     </Form.Row>
+                  </React.Fragment>
+               )}
+            </div>
+            {isReview && (
+               <ReviewInput
+                  handleChange={handleChange}
+                  handleRadioChange={handleRadioChange}
+                  reviewer_feedback={reviewer_feedback}
+                  approved_status={approved_status}
+               />
+            )}
+            <div className="my-4 d-flex justify-content-end bottom-btn-grp">
+               <Button className="mr-4 cancel-btn" onClick={handleCancel}>
+                  <FormattedMessage
+                     defaultMessage="Cancel"
+                     id="componentUsersTabCancelButton"
+                  />
+               </Button>
+               <Button className="save-btn" onClick={handleSubmit}>
+                  {(creatingAnswer === true ||
+                     updatingQuestion === true ||
+                     creatingQuestion === true) && (
+                     <span className="spinner-border spinner-border-sm mr-1"></span>
+                  )}
+                  Save & Send
+               </Button>
+            </div>
+         </Layout>
       </React.Fragment>
    );
 };
