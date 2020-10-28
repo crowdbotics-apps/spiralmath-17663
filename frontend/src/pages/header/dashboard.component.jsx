@@ -235,12 +235,16 @@ const Dashboard = () => {
                         </LinkContainer>
                      </>
                   )}
-                  {questionType !== false && !isReview && (
-                     <Nav.Link>Question</Nav.Link>
-                  )}
-                  {questionType !== false && isReview && (
-                     <Nav.Link>Review</Nav.Link>
-                  )}
+                  {questionType !== false &&
+                     !isReview &&
+                     window.location.hash === "#/create-question" && (
+                        <Nav.Link>Question</Nav.Link>
+                     )}
+                  {questionType !== false &&
+                     isReview &&
+                     window.location.hash === "#/review-question" && (
+                        <Nav.Link>Review</Nav.Link>
+                     )}
                </div>
                <div className="d-flex justify-content-around pr-1 align-top pr-md-2">
                   <OverlayTrigger

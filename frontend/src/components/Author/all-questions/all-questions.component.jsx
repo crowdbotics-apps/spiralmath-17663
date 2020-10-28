@@ -25,7 +25,80 @@ const AllQuestions = () => {
       showModal: false,
    });
 
-   const questions = useSelector(selectAllQuestions);
+   const questions = [
+      {
+         id: 1,
+         value: "Hello",
+         grade_level: 1,
+         status: 10,
+         feddback: "Hello",
+         question_type: "mc",
+      },
+      {
+         id: 2,
+         value: "Hello",
+         grade_level: 1,
+         status: 10,
+         feddback: "Hello",
+         question_type: "sa",
+      },
+      {
+         id: 3,
+         value: "Hello",
+         grade_level: 1,
+         status: 10,
+         feddback: "Hello",
+         question_type: "la",
+      },
+      {
+         id: 4,
+         value: "Hello",
+         grade_level: 1,
+         status: 10,
+         feddback: "Hello",
+         question_type: "t/f",
+      },
+      {
+         id: 5,
+         value: "Hello",
+         grade_level: 1,
+         status: 10,
+         feddback: "Hello",
+         question_type: "mc",
+      },
+      {
+         id: 6,
+         value: "Hello",
+         grade_level: 1,
+         status: 10,
+         feddback: "Hello",
+         question_type: "mc",
+      },
+      {
+         id: 7,
+         value: "Hello",
+         grade_level: 1,
+         status: 10,
+         feddback: "Hello",
+         question_type: "mc",
+      },
+      {
+         id: 8,
+         value: "Hello",
+         grade_level: 1,
+         status: 10,
+         feddback: "Hello",
+         question_type: "mc",
+      },
+      {
+         id: 9,
+         value: "Hello",
+         grade_level: 1,
+         status: 10,
+         feddback: "Hello",
+         question_type: "mc",
+      },
+   ]; //useSelector(selectAllQuestions);//useSelector(selectAllQuestions);
    const questionsCount = useSelector(selectAllQuestionsCount);
    const deletingQuestion = useSelector(selectDeletingQuestion);
 
