@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Row, Col, Table } from "react-bootstrap";
 import parse from "html-react-parser";
 import { FormattedMessage } from "react-intl";
@@ -94,7 +95,11 @@ const ReviewerQuestionsTable = ({ questions, handleReviewForm, all }) => {
                                        </div>
                                     </div>
                                  </td>
-                                 <td className={`border-left-0 border-right-0`}>
+                                 <td
+                                    className={`border-left-0 ${
+                                       !all && "border-right-0"
+                                    }`}
+                                 >
                                     {question.reviewer_feedback
                                        ? question.reviewer_feedback
                                        : "-/-"}
@@ -107,7 +112,9 @@ const ReviewerQuestionsTable = ({ questions, handleReviewForm, all }) => {
                                              handleReviewForm(question)
                                           }
                                        >
-                                          <EditSvg />
+                                          <Link to="/create-question">
+                                             <EditSvg />
+                                          </Link>
                                        </div>
                                     </td>
                                  )}
