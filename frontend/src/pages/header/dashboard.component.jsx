@@ -28,6 +28,7 @@ import { ReactComponent as NotificationIcon } from "../../assets/img/notificatio
 import { ReactComponent as BackIcon } from "../../assets/img/back-icon.svg";
 import { ReactComponent as Logo } from "../../assets/img/logo.svg";
 import "./dashboard.styles.css";
+import { setQuestionType } from "../../redux/local/local.actions";
 
 const Dashboard = () => {
    const intl = useIntl();
@@ -60,6 +61,12 @@ const Dashboard = () => {
    useEffect(() => {
       dispatch(messageActions.get_message_user_list());
    }, []);
+
+   useEffect(() => {
+      if (window.location.hash !== "#/create-question") {
+         dispatch(setQuestionType(false));
+      }
+   }, [window.location.hash]);
 
    useEffect(() => {
       if (!localUser) {

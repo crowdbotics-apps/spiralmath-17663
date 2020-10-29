@@ -19,17 +19,7 @@ const AllQuestionsReviews = () => {
    const [currentPage, setCurrentPage] = useState(1);
    const [questionsPerPage] = useState(10);
 
-   const questions = [
-      { id: 1, value: "Hello", grade_level: 1, status: 10, feddback: "Hello" },
-      { id: 2, value: "Hello", grade_level: 1, status: 10, feddback: "Hello" },
-      { id: 3, value: "Hello", grade_level: 1, status: 10, feddback: "Hello" },
-      { id: 4, value: "Hello", grade_level: 1, status: 10, feddback: "Hello" },
-      { id: 5, value: "Hello", grade_level: 1, status: 10, feddback: "Hello" },
-      { id: 6, value: "Hello", grade_level: 1, status: 10, feddback: "Hello" },
-      { id: 7, value: "Hello", grade_level: 1, status: 10, feddback: "Hello" },
-      { id: 8, value: "Hello", grade_level: 1, status: 10, feddback: "Hello" },
-      { id: 9, value: "Hello", grade_level: 1, status: 10, feddback: "Hello" },
-   ]; //useSelector(selectAllQuestions);
+   const questions = useSelector(selectAllQuestions);
    const questionsCount = 7; //useSelector(selectAllQuestionsCount);
 
    useEffect(() => {
