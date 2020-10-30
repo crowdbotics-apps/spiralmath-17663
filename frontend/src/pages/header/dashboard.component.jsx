@@ -249,7 +249,7 @@ const Dashboard = () => {
                      )}
                   {questionType !== false &&
                      isReview &&
-                     window.location.hash === "#/review-question" && (
+                     window.location.hash === "#/create-question" && (
                         <Nav.Link>Review</Nav.Link>
                      )}
                </div>

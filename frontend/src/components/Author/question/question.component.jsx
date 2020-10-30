@@ -74,15 +74,6 @@ const Question = ({ questionType }) => {
       question_type: questionType,
    });
 
-   useEffect(() => {
-      if (
-         window.location.hash === "#/create-question" &&
-         questionType === false
-      ) {
-         isReview ? history.push("/my-reviews") : history.push("/my-questions");
-      }
-   }, [window.location.hash]);
-
    const [answer, setAnswer] = useState(initialAnswer);
    const [imageButtonText, setImageButtonText] = useState("Add Image");
    const [image, setImage] = useState("");
