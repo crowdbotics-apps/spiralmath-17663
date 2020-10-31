@@ -88,7 +88,8 @@ const Question = ({ questionType }) => {
 
    useEffect(() => {
       setAnswer(initialAnswer);
-   }, [initialAnswer]);
+      setFormState((prevState) => ({ ...prevState, ...initialFormState }));
+   }, [initialAnswer, initialFormState]);
 
    useEffect(() => {
       if (questionType === "mc") {
