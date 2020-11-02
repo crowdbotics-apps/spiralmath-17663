@@ -23,7 +23,7 @@ const DeleteEditGroup = ({
                className="cursor-pointer ml-4"
                onClick={() => handleEditForm(handleEditFormParam)}
             >
-               <Link to="/create-question">
+               <Link>
                   <EditIcon />
                </Link>
             </div>

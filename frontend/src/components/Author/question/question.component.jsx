@@ -68,7 +68,6 @@ const Question = ({ questionType }) => {
          ? JSON.parse(localStorage.getItem("user"))
          : undefined;
    const isReview = localUser.userObj.reviewQuestions;
-
    const [formState, setFormState] = useState({
       ...initialFormState,
       question_type: questionType,
@@ -161,7 +160,6 @@ const Question = ({ questionType }) => {
          var { set, i } = e;
       }
       if (name === "standard_set") {
-         console.log("hello");
          standardCode &&
             setFormState((prevFormState) => ({
                ...prevFormState,
@@ -308,8 +306,11 @@ const Question = ({ questionType }) => {
          );
       } else if (formState.edit) {
          dispatch(questionActions.updateQuestion(formState.id, formData));
+         console.log("question update");
          dispatch(questionActions.updateAnswer(answer.id, answer));
+         console.log("answer update")
          dispatch(resetAnswerState());
+          console.log("reset answer")
       } else {
          dispatch(questionActions.createQuestion(formData, answer));
       }
