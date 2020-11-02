@@ -63,10 +63,10 @@ const Dashboard = () => {
    }, []);
 
    useEffect(() => {
-      if (window.location.hash !== "#/create-question") {
-         dispatch(setQuestionType(false));
+      if (questionType) {
+         history.push("/create-question");
       }
-   }, [window.location.hash]);
+   }, [questionType]);
 
    useEffect(() => {
       if (!localUser) {

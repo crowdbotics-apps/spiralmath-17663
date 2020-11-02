@@ -25,7 +25,15 @@ const AllQuestions = () => {
       showModal: false,
    });
 
-   const questions = useSelector(selectAllQuestions); //useSelector(selectAllQuestions);
+   const questions = [
+      {
+         id: "001",
+         grade_level: 2,
+         approved_status: 10,
+         value: "Helo I am a question",
+         reviewer_feedback: "Nice question",
+      },
+   ]; //useSelector(selectAllQuestions); //useSelector(selectAllQuestions);
    const questionsCount = useSelector(selectAllQuestionsCount);
    const deletingQuestion = useSelector(selectDeletingQuestion);
 

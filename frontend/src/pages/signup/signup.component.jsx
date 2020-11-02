@@ -54,8 +54,10 @@ const SignUp = ({ show, toggleShow }) => {
 
       if (localUser && localUser.userObj.role === "Admin") {
          history.push("/admin/dashboard");
-      } else if (localUser) {
-         history.push("/admin/dashboard");
+      } else if (localUser.userObj && localUser.userObj.createQuestion) {
+         history.push("/my-questions");
+      } else if (localUser.userObj && localUser.userObj.createQuestion) {
+         history.push("/my-reviews");
       }
    }, [localUser]);
 
