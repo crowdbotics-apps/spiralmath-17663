@@ -52,11 +52,21 @@ const SignUp = ({ show, toggleShow }) => {
          dispatch(alertActions.clear());
       });
 
+      console.log(localUser);
+
       if (localUser && localUser.userObj.role === "Admin") {
          history.push("/admin/dashboard");
-      } else if (localUser.userObj && localUser.userObj.createQuestion) {
+      } else if (
+         localUser &&
+         localUser.userObj &&
+         localUser.userObj.createQuestion
+      ) {
          history.push("/my-questions");
-      } else if (localUser.userObj && localUser.userObj.createQuestion) {
+      } else if (
+         localUser &&
+         localUser.userObj &&
+         localUser.userObj.createQuestion
+      ) {
          history.push("/my-reviews");
       }
    }, [localUser]);
