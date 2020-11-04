@@ -312,8 +312,7 @@ const Question = ({ questionType }) => {
          console.log("question update");
          dispatch(questionActions.updateAnswer(answer.id, answer));
          console.log("answer update");
-         dispatch(resetAnswerState());
-         console.log("reset answer");
+        
       } else {
          dispatch(questionActions.createQuestion(formData, answer));
       }

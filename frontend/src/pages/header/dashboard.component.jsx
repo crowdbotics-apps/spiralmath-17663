@@ -195,7 +195,7 @@ const Dashboard = () => {
          >
             <LinkContainer to={`${rootUrl}`}>
                <Navbar.Brand
-                  className="logo"
+                  className="brand-logo"
                   oClick={() => dispatch(setQuestionType(false))}
                >
                   <Logo />
