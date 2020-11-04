@@ -57,6 +57,14 @@ const Dashboard = () => {
          : undefined;
    const localUserObj = localUser && localUser.userObj;
    const isReview = localUser.userObj.reviewQuestions;
+   let rootUrl;
+   if (isReview) {
+      rootUrl = "/my-reviews";
+   } else if (localUserObj.role === "Admin") {
+      rootUrl = "/admin/dashboard";
+   } else {
+      rootUrl = "/my-questions";
+   }
 
    useEffect(() => {
       dispatch(messageActions.get_message_user_list());
@@ -185,9 +193,14 @@ const Dashboard = () => {
             expand="lg"
             className="px-4 py-0 px-md-0 py-md-0 nav-border border-0 mb-4 mob-padding"
          >
-            <Navbar.Brand href="#">
-               <Logo />
-            </Navbar.Brand>
+            <LinkContainer to={`${rootUrl}`}>
+               <Navbar.Brand
+                  className="logo"
+                  oClick={() => dispatch(setQuestionType(false))}
+               >
+                  <Logo />
+               </Navbar.Brand>
+            </LinkContainer>
 
             <Nav className="flex-grow-1 d-flex align-items-center">
                <Nav.Link className="py-0 user-manag font-style">
@@ -245,12 +258,22 @@ const Dashboard = () => {
                   {questionType !== false &&
                      !isReview &&
                      window.location.hash === "#/create-question" && (
-                        <Nav.Link>Question</Nav.Link>
+                        <LinkContainer
+                           to="/my-questions"
+                           onClick={() => dispatch(setQuestionType(false))}
+                        >
+                           <Nav.Link>Question</Nav.Link>
+                        </LinkContainer>
                      )}
                   {questionType !== false &&
                      isReview &&
                      window.location.hash === "#/create-question" && (
-                        <Nav.Link>Review</Nav.Link>
+                        <LinkContainer
+                           to="/my-reviews"
+                           onClick={() => dispatch(setQuestionType(false))}
+                        >
+                           <Nav.Link>Review</Nav.Link>
+                        </LinkContainer>
                      )}
                </div>
                <div className="d-flex justify-content-around pr-1 align-top pr-md-2">

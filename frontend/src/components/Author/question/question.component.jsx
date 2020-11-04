@@ -86,6 +86,7 @@ const Question = ({ questionType }) => {
    const [errors, setErrors] = useState({});
 
    useEffect(() => {
+      console.log("What changes");
       setAnswer(initialAnswer);
       setFormState((prevState) => ({ ...prevState, ...initialFormState }));
    }, [initialAnswer, initialFormState]);
@@ -279,7 +280,9 @@ const Question = ({ questionType }) => {
             !(key === "edit") &&
             !(key === "id") &&
             !(key === "deleted") &&
-            !(key === "deleted_status")
+            !(key === "deleted_status") &&
+            !(key === "approved_status") &&
+            !(key === "reviewer_feedback")
          ) {
             if (key === "standard_set") {
                formData.append(key, JSON.stringify(value));
@@ -308,9 +311,9 @@ const Question = ({ questionType }) => {
          dispatch(questionActions.updateQuestion(formState.id, formData));
          console.log("question update");
          dispatch(questionActions.updateAnswer(answer.id, answer));
-         console.log("answer update")
+         console.log("answer update");
          dispatch(resetAnswerState());
-          console.log("reset answer")
+         console.log("reset answer");
       } else {
          dispatch(questionActions.createQuestion(formData, answer));
       }
@@ -405,7 +408,7 @@ const Question = ({ questionType }) => {
                   <Form.Group as={Col} md="3">
                      <SingleSelect
                         value={mills_difficulty_level}
-                        placeholder="Mills Difficulty Level"
+                        label="Mills Difficulty Level"
                         options={millsDiffLevel}
                         onChange={handleSelectChange("mills_difficulty_level")}
                         disabled={isReview}
@@ -419,7 +422,7 @@ const Question = ({ questionType }) => {
                   <Form.Group as={Col} md="2">
                      <SingleSelect
                         value={dok}
-                        placeholder="DOK"
+                        label="DOK"
                         options={DOK}
                         onChange={handleSelectChange("dok")}
                         disabled={isReview}
@@ -433,14 +436,18 @@ const Question = ({ questionType }) => {
                   <Form.Group as={Col} md="2">
                      <SingleSelect
                         value={question_style}
-                        placeholder="Question Style"
+                        label="Question Style"
                         options={questionStyles}
                         onChange={handleSelectChange("question_style")}
                         disabled={isReview}
                      />
                   </Form.Group>
 
-                  <Form.Group as={Col} md="2" className="mt-2 ml-5">
+                  <Form.Group
+                     as={Col}
+                     md="2"
+                     className="mt-2 ml-5 d-flex align-items-end"
+                  >
                      <Form.Check
                         type="switch"
                         id="ss"
@@ -452,7 +459,11 @@ const Question = ({ questionType }) => {
                         readOnly={isReview}
                      />
                   </Form.Group>
-                  <Form.Group as={Col} md="2" className="mt-2 ml-4">
+                  <Form.Group
+                     as={Col}
+                     md="2"
+                     className="mt-2 ml-4 d-flex align-items-end"
+                  >
                      <Form.Check
                         type="switch"
                         id="sm"
@@ -474,7 +485,7 @@ const Question = ({ questionType }) => {
                               i: standard_set.index,
                            }
                         }
-                        placeholder="Standard Set"
+                        label="Standard Set"
                         options={
                            standardCode &&
                            standardCode["Standard Set"].map((set, i) => {
@@ -494,7 +505,11 @@ const Question = ({ questionType }) => {
                      )}
                   </Form.Group>
 
-                  <Form.Group as={Col} md="4">
+                  <Form.Group
+                     as={Col}
+                     md="4"
+                     className="d-flex align-items-end"
+                  >
                      <Form.Control
                         type="text"
                         value={standard_code}
@@ -507,7 +522,11 @@ const Question = ({ questionType }) => {
                      />
                      <span className="floating-label">Standard code</span>
                   </Form.Group>
-                  <Form.Group as={Col} md="4">
+                  <Form.Group
+                     as={Col}
+                     md="4"
+                     className="d-flex align-items-end"
+                  >
                      <Form.Control
                         type="text"
                         value={grade_level}
@@ -612,7 +631,7 @@ const Question = ({ questionType }) => {
                   <Form.Group as={Col} md="4">
                      <SingleSelect
                         value={formState.reviewer_name}
-                        placeholder="Reviewer"
+                        label="Reviewer"
                         options={
                            reviewers &&
                            reviewers.map((reviewer) => {
@@ -637,7 +656,7 @@ const Question = ({ questionType }) => {
                   <Form.Group as={Col} md="4">
                      <SingleSelect
                         value={creator}
-                        placeholder="Creator"
+                        label="Creator"
                         options={
                            creators &&
                            creators.map((creator) => {
