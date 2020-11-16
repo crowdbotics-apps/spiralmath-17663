@@ -3,7 +3,7 @@ import { Form, Col } from 'react-bootstrap';
 
 import { ReactComponent as Tick } from '../../../assets/img/tick.svg';
 
-const McOptionSerial = ({ serial, placeholder, value, isChecked, handleMcOptionChange }) => {
+const McOptionSerial = ({ serial, placeholder, value, isChecked, handleMcOptionChange, isReview }) => {
 	return (
 		<Form.Row className="d-flex">
 			<Form.Group as={Col} md="0" className="align-self-center">
@@ -21,6 +21,7 @@ const McOptionSerial = ({ serial, placeholder, value, isChecked, handleMcOptionC
 					value={value}
 					onChange={handleMcOptionChange(serial, 'text')}
 					className=" border-top-0 border-left-0 border-right-0 rounded-0"
+					disabled={isReview}
 				/>
 			</Form.Group>
 			<Form.Group as={Col} md="1" className="d-flex justify-content-between align-items-center">
