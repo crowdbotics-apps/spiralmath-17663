@@ -298,24 +298,28 @@ const Question = ({ questionType }) => {
 	};
 
 	const addNewOption = () => {
-		setMcOptionField([
-			...mcOptionField,
-			{
-				serial: mcOptionField[mcOptionField.length - 1].serial + 1,
-				placeholder: `Add Option ${mcOptionField[mcOptionField.length - 1].serial + 2}`,
-				value: '',
-				isChecked: false,
-			},
-		]);
-		setAnswer({
-			...answer,
-			[mcOptionField[mcOptionField.length - 1].serial + 1]: {
-				serial: mcOptionField[mcOptionField.length - 1].serial + 1,
-				placeholder: `Add Option ${mcOptionField[mcOptionField.length - 1].serial + 1}`,
-				value: '',
-				isChecked: false,
-			},
-		});
+		if (!isReview) {
+			setMcOptionField([
+				...mcOptionField,
+				{
+					serial: mcOptionField[mcOptionField.length - 1].serial + 1,
+					placeholder: `Add Option ${mcOptionField[mcOptionField.length - 1].serial + 2}`,
+					value: '',
+					isChecked: false,
+				},
+			]);
+			setAnswer({
+				...answer,
+				[mcOptionField[mcOptionField.length - 1].serial + 1]: {
+					serial: mcOptionField[mcOptionField.length - 1].serial + 1,
+					placeholder: `Add Option ${mcOptionField[mcOptionField.length - 1].serial + 1}`,
+					value: '',
+					isChecked: false,
+				},
+			});
+		} else {
+			return;
+		}
 	};
 
 	const {
@@ -675,6 +679,7 @@ const Question = ({ questionType }) => {
 									value={el.value}
 									isChecked={el.isChecked}
 									handleMcOptionChange={handleMcOptionChange}
+									isReview={isReview}
 								/>
 							))}
 							<Form.Row>
