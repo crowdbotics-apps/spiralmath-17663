@@ -38,10 +38,12 @@ const ReviewerQuestionsTable = ({ questions, handleReviewForm, all }) => {
 								</th>
 
 								<th scope="col" className=" border-0 font-style thead create-user pointerType">
-									<FormattedMessage
-										defaultMessage="Review Question"
-										id="componentReviewerQuestionsTableReview"
-									/>
+									{!all && (
+										<FormattedMessage
+											defaultMessage="Review Question"
+											id="componentReviewerQuestionsTableReview"
+										/>
+									)}
 								</th>
 							</tr>
 						</thead>

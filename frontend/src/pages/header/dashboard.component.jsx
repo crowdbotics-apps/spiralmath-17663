@@ -63,11 +63,11 @@ const Dashboard = () => {
 		}
 	}, [questionType]);
 
-	// useEffect(() => {
-	// 	if (!localUser) {
-	// 		history.push('/');
-	// 	}
-	// }, [localUser]);
+	useEffect(() => {
+		if (!localUser) {
+			history.push('/');
+		}
+	}, [localUser]);
 
 	useEffect(() => {
 		if (localUser && localUser.userObj.role === 'Admin') {

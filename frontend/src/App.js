@@ -51,7 +51,7 @@ function App() {
 					<AdminRoute path="/admin/settings" exact component={Settings} />
 					<PrivateRoute path="/my-questions" exact component={MyQuestions} />
 					<PrivateRoute path="/all-questions" exact component={AllQuestions} />
-					<Route path="/create-question" exact component={CreateQuestion} questionType={questionType} />
+					<PrivateRoute path="/create-question" exact component={CreateQuestion} questionType={questionType} />
 					<PrivateRoute path="/review-question" exact component={ReviewQuestion} />
 					<PrivateRoute path="/my-reviews" exact component={MyReviews} />
 					<PrivateRoute path="/all-reviews" exact component={AllReviews} />
