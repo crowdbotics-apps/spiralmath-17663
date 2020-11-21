@@ -3,6 +3,18 @@ import { Form, Col } from 'react-bootstrap';
 
 import { ReactComponent as Tick } from '../../../assets/img/tick.svg';
 
+function numToSSColumn(num) {
+	var s = '',
+		t;
+
+	while (num > 0) {
+		t = (num - 1) % 26;
+		s = String.fromCharCode(65 + t) + s;
+		num = ((num - t) / 26) | 0;
+	}
+	return s || undefined;
+}
+
 const McOptionSerial = ({ serial, placeholder, value, isChecked, handleMcOptionChange, isReview }) => {
 	return (
 		<Form.Row className="d-flex">
@@ -10,7 +22,7 @@ const McOptionSerial = ({ serial, placeholder, value, isChecked, handleMcOptionC
 				<svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<circle cx="9" cy="9.5" r="8.63636" stroke="#979797" />
 					<text x="47%" y="53%" textAnchor="middle" fill="#979797" dy=".3em">
-						{serial + 1}
+						{numToSSColumn(serial + 1)}
 					</text>
 				</svg>
 			</Form.Group>
