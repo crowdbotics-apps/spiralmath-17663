@@ -162,6 +162,7 @@ const Dashboard = () => {
 			</div>
 		</Popover>
 	);
+	//</Nav.Link>//<Nav.Link className="py-0 user-manag font-style">
 
 	const navbar = () => {
 		return (
@@ -173,13 +174,14 @@ const Dashboard = () => {
 				</LinkContainer>
 
 				<Nav className="flex-grow-1 d-flex align-items-center">
-					<Nav.Link className="py-0 user-manag font-style">
+					<span className="py-0 user-manag font-style">
 						{localUser && localUser.userObj && localUser.userObj.role === 'Admin' ? (
 							<FormattedMessage defaultMessage="Users Management" id="pageUsersManagementHeader" />
 						) : (
 							<FormattedMessage defaultMessage="Questions Management" id="pageQuestionsHeader" />
 						)}
-					</Nav.Link>
+					</span>
+
 					<div className="admin-links-container">
 						{localUserObj && localUserObj.role === 'Admin' && !questionType && (
 							<>

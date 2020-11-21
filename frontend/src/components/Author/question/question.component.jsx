@@ -15,6 +15,7 @@ import { validateCreateQuestion } from './../../../helpers/validation/validation
 import { ReactComponent as A } from '../../../assets/img/A.svg';
 import { ReactComponent as B } from '../../../assets/img/B.svg';
 import { ReactComponent as CreateUserIcon } from '../../../assets/img/create-user-icon.svg';
+import { ReactComponent as MinusCircle } from '../../../assets/img/minus-circle.svg';
 import McOptionSerial from '../mc-option-serial/mc-option-serial.component';
 
 import './question.styles.css';
@@ -59,6 +60,7 @@ const Question = ({ questionType }) => {
 	const creatingAnswer = useSelector(selectAnswerStatus);
 	const initialFormState = useSelector(selectQuestionFormState);
 	const initialAnswer = useSelector(selectAnswerFormState);
+
 	const updatingQuestion = useSelector(selectUpdatingQuestion);
 	const creatingQuestion = useSelector(selectCreatingQuestion);
 	const localUser =
@@ -73,7 +75,7 @@ const Question = ({ questionType }) => {
 
 	const [answer, setAnswer] = useState(initialAnswer);
 	const [mcOptionField, setMcOptionField] = useState([
-		{ serial: 0, placeholder: 'Add Option 1', value: 'My First Option', isChecked: true },
+		{ serial: 0, placeholder: 'Add Option 1', value: '', isChecked: false },
 	]);
 	const [imageButtonText, setImageButtonText] = useState('Add Image');
 	const [image, setImage] = useState({ file: '', url: '' });
@@ -81,10 +83,19 @@ const Question = ({ questionType }) => {
 	const [errors, setErrors] = useState({});
 
 	useEffect(() => {
-		if (questionType === 'mc' && Object.keys(initialAnswer).length === 0) {
-			setAnswer(
-				mcOptionField.reduce((obj, curValue, curIndex) => ({ ...obj, [curIndex]: { ...curValue } }), answer)
-			);
+		if (questionType === 'mc') {
+			if (Object.keys(initialAnswer).length === 0) {
+				setAnswer({
+					content: mcOptionField.reduce(
+						(obj, curValue, curIndex) => ({ ...obj, [curIndex]: { ...curValue } }),
+						answer
+					),
+				});
+			}
+
+			if (initialAnswer.content && Object.keys(initialAnswer.content).length > 0) {
+				setMcOptionField(Object.values(initialAnswer.content));
+			}
 		} else {
 			setAnswer(initialAnswer);
 		}
@@ -112,8 +123,17 @@ const Question = ({ questionType }) => {
 	}, [creatingAnswer]);
 
 	useEffect(() => {
-		isReview && setImageButtonText('Image Added');
+		if (isReview) {
+			setImageButtonText('Image Added');
+			setImage({ file: '', url: formState.image });
+		}
 	}, [isReview]);
+
+	useEffect(() => {
+     if(formState.edit){
+		   setImage({ file: '', url: formState.image });
+	  }
+	},[formState.edit])
 
 	const handleRadioChange = (e) => {
 		const { value } = e.target;
@@ -217,19 +237,19 @@ const Question = ({ questionType }) => {
 	};
 
 	const handleMcOptionChange = (serial, input) => (e) => {
-		console.log('serial', serial);
 		if (input === 'text') {
 			const { value } = e.target;
 			const newMcOptionField = [...mcOptionField];
 			newMcOptionField[serial].value = value;
 			setMcOptionField(newMcOptionField);
 			setAnswer((answer) => {
-				console.log('answer', answer[serial]);
 				return {
-					...answer,
-					[serial]: {
-						...answer[serial],
-						value,
+					content: {
+						...answer.content,
+						[serial]: {
+							...answer.content[serial],
+							value,
+						},
 					},
 				};
 			});
@@ -238,10 +258,12 @@ const Question = ({ questionType }) => {
 			newMcOptionField[serial].isChecked = !newMcOptionField[serial].isChecked;
 			setMcOptionField(newMcOptionField);
 			setAnswer({
-				...answer,
-				[serial]: {
-					...answer[serial],
-					isChecked: !answer[serial].isChecked,
+				content: {
+					...answer.content,
+					[serial]: {
+						...answer.content[serial],
+						isChecked: !answer.content[serial].isChecked,
+					},
 				},
 			});
 		}
@@ -285,9 +307,8 @@ const Question = ({ questionType }) => {
 			);
 		} else if (formState.edit) {
 			dispatch(questionActions.updateQuestion(formState.id, formData));
-			console.log('question update');
+
 			dispatch(questionActions.updateAnswer(answer.id, answer));
-			console.log('answer update');
 		} else {
 			dispatch(questionActions.createQuestion(formData, answer));
 		}
@@ -309,17 +330,23 @@ const Question = ({ questionType }) => {
 				},
 			]);
 			setAnswer({
-				...answer,
-				[mcOptionField[mcOptionField.length - 1].serial + 1]: {
-					serial: mcOptionField[mcOptionField.length - 1].serial + 1,
-					placeholder: `Add Option ${mcOptionField[mcOptionField.length - 1].serial + 1}`,
-					value: '',
-					isChecked: false,
+				content: {
+					...answer.content,
+					[mcOptionField[mcOptionField.length - 1].serial + 1]: {
+						serial: mcOptionField[mcOptionField.length - 1].serial + 1,
+						placeholder: `Add Option ${mcOptionField[mcOptionField.length - 1].serial + 1}`,
+						value: '',
+						isChecked: false,
+					},
 				},
 			});
 		} else {
 			return;
 		}
+	};
+
+	const removeMcOption = () => {
+		if (mcOptionField.length > 1) setMcOptionField(mcOptionField.slice(0, mcOptionField.length - 1));
 	};
 
 	const {
@@ -683,6 +710,14 @@ const Question = ({ questionType }) => {
 								/>
 							))}
 							<Form.Row>
+								<Form.Group
+									as={Col}
+									md="0"
+									className="align-self-center cursor-pointer"
+									onClick={removeMcOption}
+								>
+									<MinusCircle />
+								</Form.Group>
 								<Form.Group as={Col} md="0" className="align-self-center cursor-pointer" onClick={addNewOption}>
 									<span className="create-user-icon ipad-create-user-icon">
 										<CreateUserIcon />

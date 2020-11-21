@@ -1,178 +1,163 @@
 .pointerType {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 html body .navbar-style a {
-  border-top: 0 !important;
-  border-left: 0 !important;
-  border-right: 0 !important;
-  border-bottom: 5px solid transparent !important;
-  background-color: inherit !important;
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 20px;
-  color: #8d8d8d;
+	border-top: 0 !important;
+	border-left: 0 !important;
+	border-right: 0 !important;
+	border-bottom: 5px solid transparent !important;
+	background-color: inherit !important;
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 15px;
+	line-height: 20px;
+	color: #8d8d8d;
 }
 
 html body .navbar-style a.active {
-  border-bottom: 2px solid #3c7ebf !important;
-  border-radius: 1px;
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 20px;
-  color: #333333;
+	border-bottom: 2px solid #3c7ebf !important;
+	border-radius: 1px;
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 15px;
+	line-height: 20px;
+	color: #333333;
 }
 
 a:focus {
-  outline: 0;
+	outline: 0;
 }
 
 body .nav-border {
-  border-bottom: 1px solid rgba(151, 151, 151, 0.3) !important;
+	border-bottom: 1px solid rgba(151, 151, 151, 0.3) !important;
 }
 
 .font-style {
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 16px;
-}
-
-.user-manag {
-  color: #8d8d8d;
-  position: relative;
-}
-
-.user-manag:before {
-  content: " ";
-  position: absolute;
-  left: -5px;
-  width: 1px;
-  height: 30px;
-  top: -5px;
-  background-color: rgba(151, 151, 151, 0.5);
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 12px;
+	line-height: 16px;
 }
 
 .notification-icon {
-  position: relative;
+	position: relative;
 }
 
 .notification-icon:after {
-  position: absolute;
-  content: " ";
-  right: 0px;
-  width: 1px;
-  height: 30px;
-  top: 1px;
-  background-color: rgba(151, 151, 151, 0.5);
+	position: absolute;
+	content: ' ';
+	right: 0px;
+	width: 1px;
+	height: 30px;
+	top: 1px;
+	background-color: rgba(151, 151, 151, 0.5);
 }
 
 .thead {
-  color: #878787;
+	color: #878787;
 }
 
 .status-color {
-  color: #333333 !important;
+	color: #333333 !important;
 }
 
 .create-user {
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 14.4929px;
-  line-height: 20px;
-  color: #333333;
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 14.4929px;
+	line-height: 20px;
+	color: #333333;
 }
 
 .create-user-icon {
-  background: #f1a139;
-  border-radius: 12.697px;
-  height: 26px;
-  width: 26px;
-  display: flex;
-  padding-left: 7px;
-  padding-top: 7px;
-  margin-right: 10px;
+	background: #f1a139;
+	border-radius: 12.697px;
+	height: 26px;
+	width: 26px;
+	display: flex;
+	padding-left: 7px;
+	padding-top: 7px;
+	margin-right: 10px;
 }
 
 table tbody td {
-  border-color: #e5e2e2 !important;
-  background-color: #fff;
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 19px;
-  color: #333333;
+	border-color: #e5e2e2 !important;
+	background-color: #fff;
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 19px;
+	color: #333333;
 }
 
 .align-equal {
-  justify-content: space-evenly;
+	justify-content: space-evenly;
 }
 
 .custom-switch .custom-control-label::before {
-  background-color: #c6c4c4;
-  border-color: #c6c4c4;
+	background-color: #c6c4c4;
+	border-color: #c6c4c4;
 }
 
 .custom-switch .custom-control-label::after {
-  background-color: #fff !important;
+	background-color: #fff !important;
 }
 
 .custom-switch input:focus ~ .custom-control-label::before {
-  box-shadow: inherit !important;
+	box-shadow: inherit !important;
 }
 
 .custom-switch input:checked ~ .custom-control-label::before {
-  background-color: #3c7ebf;
+	background-color: #3c7ebf;
 }
 
 .bottom-btn-grp .cancel-btn {
-  background-color: transparent;
-  border: none;
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14.4px;
-  line-height: 20px;
-  text-align: center;
-  color: rgba(0, 0, 0, 0.6);
+	background-color: transparent;
+	border: none;
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14.4px;
+	line-height: 20px;
+	text-align: center;
+	color: rgba(0, 0, 0, 0.6);
 }
 
 .bottom-btn-grp .save-btn {
-  background-color: transparent;
-  border: none;
-  border-radius: 1.6px;
-  border: 0.8px solid #e5e2e2;
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 14.4px;
-  line-height: 20px;
-  text-align: center;
-  color: rgba(141, 141, 141, 0.6);
-  width: 168px;
-  padding: 10px 0px;
+	background-color: transparent;
+	border: none;
+	border-radius: 1.6px;
+	border: 0.8px solid #e5e2e2;
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 14.4px;
+	line-height: 20px;
+	text-align: center;
+	color: rgba(141, 141, 141, 0.6);
+	width: 168px;
+	padding: 10px 0px;
 }
 
 .form-border {
-  border: 1px solid #d6d6d6 !important;
+	border: 1px solid #d6d6d6 !important;
 }
 
 .bottom-btn-grp .save-btn:hover {
-  background-color: #3c7ebf;
-  color: #ffffff;
+	background-color: #3c7ebf;
+	color: #ffffff;
 }
 
 .resend-btn {
-  background: #f1a139 !important;
-  border-radius: 11px !important;
-  padding: 0 8px !important;
-  color: #fff !important;
-  line-height: normal !important;
+	background: #f1a139 !important;
+	border-radius: 11px !important;
+	padding: 0 8px !important;
+	color: #fff !important;
+	line-height: normal !important;
 }

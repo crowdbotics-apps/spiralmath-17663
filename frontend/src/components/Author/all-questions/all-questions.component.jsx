@@ -25,7 +25,7 @@ const AllQuestions = () => {
 		showModal: false,
 	});
 
-	const questions = useSelector(selectAllQuestions); //useSelector(selectAllQuestions);
+	let questions = useSelector(selectAllQuestions);
 	const questionsCount = useSelector(selectAllQuestionsCount);
 	const deletingQuestion = useSelector(selectDeletingQuestion);
 
