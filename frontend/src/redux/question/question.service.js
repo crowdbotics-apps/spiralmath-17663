@@ -50,7 +50,7 @@ const getUserQuestions = (queryString) => {
 		headers: authHeader(),
 	};
 
-	return fetch(`api/v1/question?${queryString}`, requestOptions).then(handleResponse);
+	return fetch(`api/v1/question?${queryString}&deleted=false`, requestOptions).then(handleResponse);
 };
 
 const getAllQuestions = () => {

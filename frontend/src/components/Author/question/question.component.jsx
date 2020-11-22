@@ -130,10 +130,10 @@ const Question = ({ questionType }) => {
 	}, [isReview]);
 
 	useEffect(() => {
-     if(formState.edit){
-		   setImage({ file: '', url: formState.image });
-	  }
-	},[formState.edit])
+		if (formState.edit) {
+			setImage({ file: '', url: formState.image });
+		}
+	}, [formState.edit]);
 
 	const handleRadioChange = (e) => {
 		const { value } = e.target;
@@ -619,7 +619,7 @@ const Question = ({ questionType }) => {
 							/>
 							<Button
 								variant="outline-primary"
-								className="upload-excel"
+								className={`upload-excel ${isReview ? 'set-hover-false' : 'set-hover-true'}`}
 								onClick={handleImageClick}
 								disabled={image.file}
 							>
