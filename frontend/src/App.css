@@ -912,8 +912,13 @@ body .alignment .upload-excel {
 	padding: 10px 80px;
 }
 
-body .alignment .upload-excel:hover {
+body .alignment .set-hover-true:hover {
 	color: #fff;
+	background-color: #3c7ebf;
+}
+body .alignment .set-hover-false:hover {
+	color: #3c7ebf;
+	background-color: #fff;
 }
 
 @media screen and (max-width: 991px) {
