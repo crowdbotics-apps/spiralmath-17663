@@ -1,13 +1,13 @@
-from rest_framework import exceptions, mixins, viewsets, status
-from django.contrib.auth import get_user_model
+from rest_framework import exceptions, mixins, viewsets
 
-from rest_framework.exceptions import PermissionDenied
+from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from rest_framework.exceptions import ValidationError, PermissionDenied, NotFound
+from rest_framework.exceptions import PermissionDenied
 from home.models import Question, Answer
-from users.models import User, AUTHOR_TYPE
+
 from home.api.v1.serializer.question import QuestionBase, QuestionCreate, QuestionList, QuestionUpdate
 from home.api.v1.serializer.answer import AnswerSerializer
 
@@ -24,7 +24,9 @@ class QuestionViewSet(
 
     queryset = Question.objects.all()
     serializer_class = QuestionBase
+    filter_backends = [filters.OrderingFilter, DjangoFilterBackend]
     filterset_fields = ("creator", "reviewer_name", "deleted", "deleted_status" )
+    ordering_fields = ["created"]
 
     def get_queryset(self: 'QuestionViewSet'):
         """Allows only those who can create/review questions."""
