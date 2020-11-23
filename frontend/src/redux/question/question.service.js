@@ -50,7 +50,9 @@ const getUserQuestions = (queryString) => {
 		headers: authHeader(),
 	};
 
-	return fetch(`api/v1/question?${queryString}&deleted=false`, requestOptions).then(handleResponse);
+	return fetch(`api/v1/question?${queryString}&deleted=false&ordering=descending`, requestOptions).then(
+		handleResponse
+	);
 };
 
 const getAllQuestions = () => {
@@ -58,7 +60,7 @@ const getAllQuestions = () => {
 		method: 'GET',
 		headers: authHeader(),
 	};
-	return fetch('api/v1/question?deleted=false', requestOptions).then(handleResponse);
+	return fetch('api/v1/question?deleted=false&ordering=descending', requestOptions).then(handleResponse);
 };
 
 const getAnswer = (id) => {
