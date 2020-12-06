@@ -32,17 +32,17 @@ import Layout from '../../ui/layout/layout.component';
 import { questionFormStateEditFalse } from '../../../redux/questionFormState/questionFormState.action';
 
 const millsDiffLevel = [
-	{ value: 1, label: 'Mills Difficulty : 1' },
-	{ value: 2, label: 'Mills Difficulty : 2' },
-	{ value: 3, label: 'Mills Difficulty : 3' },
-	{ value: 4, label: 'Mills Difficulty : 4' },
-	{ value: 5, label: 'Mills Difficulty : 5' },
+	{ value: 1, label: '1' },
+	{ value: 2, label: '2' },
+	{ value: 3, label: '3' },
+	{ value: 4, label: '4' },
+	{ value: 5, label: '5' },
 ];
 const DOK = [
-	{ value: 1, label: 'Level : 1' },
-	{ value: 2, label: 'Level : 2' },
-	{ value: 3, label: 'Level : 3' },
-	{ value: 4, label: 'Level : 4' },
+	{ value: 1, label: '1' },
+	{ value: 2, label: '2' },
+	{ value: 3, label: '3' },
+	{ value: 4, label: '4' },
 ];
 const questionStyles = [
 	{ value: 'Numeric', label: 'Numeric' },
@@ -109,6 +109,7 @@ const Question = ({ questionType }) => {
 	}, []);
 
 	useEffect(() => {
+		console.log(questionType);
 		if (Object.keys(errors).length === 0 && submitted) {
 			submit();
 		}
@@ -271,6 +272,7 @@ const Question = ({ questionType }) => {
 
 	const submit = () => {
 		let formData = new FormData();
+		console.log(questionType);
 
 		const formDataArray = Object.entries(formState);
 		for (const [key, value] of formDataArray) {
@@ -284,6 +286,8 @@ const Question = ({ questionType }) => {
 			) {
 				if (key === 'standard_set') {
 					formData.append(key, JSON.stringify(value));
+				} else if (key === 'question_type') {
+					formData.append(key, questionType);
 				} else if (!(key === 'image')) {
 					formData.append(key, value);
 				}
