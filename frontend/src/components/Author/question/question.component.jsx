@@ -109,7 +109,6 @@ const Question = ({ questionType }) => {
 	}, []);
 
 	useEffect(() => {
-		console.log(questionType);
 		if (Object.keys(errors).length === 0 && submitted) {
 			submit();
 		}
@@ -184,7 +183,8 @@ const Question = ({ questionType }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		!isReview ? setErrors(validateCreateQuestion(formState)) : setErrors({});
+		setErrors({});
+		// !isReview ? setErrors(validateCreateQuestion(formState)) : setErrors({});
 		setSubmitted(true);
 	};
 
@@ -271,11 +271,13 @@ const Question = ({ questionType }) => {
 	};
 
 	const submit = () => {
+		console.log('helllllllllll', formState);
 		let formData = new FormData();
 		console.log(questionType);
 
 		const formDataArray = Object.entries(formState);
 		for (const [key, value] of formDataArray) {
+			console.log(key, value);
 			if (
 				!(key === 'edit') &&
 				!(key === 'id') &&

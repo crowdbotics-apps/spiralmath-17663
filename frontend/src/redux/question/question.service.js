@@ -2,6 +2,9 @@ import handleResponse from '../../helpers/handleResponse';
 import authHeader from '../../helpers/authHeader';
 import { uploadHeader } from './../../helpers/utils';
 
+const user = JSON.parse(localStorage.getItem('user'));
+const author = user && user !== 'undefined' ? user.userObj.id : '';
+
 const getStandardCode = () => {
 	const requestOptions = {
 		method: 'GET',
@@ -50,7 +53,7 @@ const getUserQuestions = (queryString) => {
 		headers: authHeader(),
 	};
 
-	return fetch(`api/v1/question?${queryString}&deleted=false&ordering=descending`, requestOptions).then(
+	return fetch(`api/v1/question?user=${author && author}&deleted=false&ordering=descending`, requestOptions).then(
 		handleResponse
 	);
 };
