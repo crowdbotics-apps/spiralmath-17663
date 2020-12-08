@@ -55,7 +55,7 @@ class QuestionList(QuestionBase):
     """List any questions Serializer."""
 
     class Meta(QuestionBase.Meta):
-        fields = ['id', 'value', 'approved_status', 'creator', 'grade_level', 'deleted_status', 'deleted']
+        fields = ['id', 'user', 'value', 'approved_status', 'creator', 'grade_level', 'deleted_status', 'deleted']
 
 
 class QuestionCreate(QuestionBase):
@@ -76,6 +76,8 @@ class QuestionCreate(QuestionBase):
 
     def create(self, validated_data):
         """Create question."""
+        request = self.context.get('request', None)
+        validated_data.update({'user': request.user})
         new_question = super().create(validated_data)
         return new_question
 

@@ -116,6 +116,7 @@ class Question(models.Model):
             (APPROVED, 'Approved'),
             (REJECTED, 'Rejected'),
         )
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='question_user')
     value = models.TextField(_("Value"))
     author_name = models.CharField(_("Author Name"), max_length=200)
     reviewer_name = models.ForeignKey('users.User', on_delete=models.SET_NULL, null=True)
