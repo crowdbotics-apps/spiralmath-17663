@@ -25,7 +25,7 @@ class QuestionViewSet(
     queryset = Question.objects.all()
     serializer_class = QuestionBase
     filter_backends = [filters.OrderingFilter, DjangoFilterBackend]
-    filterset_fields = ("creator", "reviewer_name", "deleted", "deleted_status" )
+    filterset_fields = ("creator", "reviewer_name", "deleted", "deleted_status", "user")
     ordering_fields = ["created"]
 
     def get_queryset(self: 'QuestionViewSet'):
