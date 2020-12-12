@@ -183,8 +183,7 @@ const Question = ({ questionType }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		setErrors({});
-		// !isReview ? setErrors(validateCreateQuestion(formState)) : setErrors({});
+		!isReview ? setErrors(validateCreateQuestion(formState)) : setErrors({});
 		setSubmitted(true);
 	};
 
@@ -271,7 +270,7 @@ const Question = ({ questionType }) => {
 	};
 
 	const submit = () => {
-		console.log('helllllllllll', formState);
+
 		let formData = new FormData();
 		console.log(questionType);
 
