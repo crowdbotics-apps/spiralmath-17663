@@ -47,7 +47,7 @@ const createAnswer = (data) => {
 	return fetch('api/v1/answer/', requestOptions).then(handleResponse);
 };
 
-const getUserQuestions = (queryString) => {
+const getUserQuestions = () => {
 	const requestOptions = {
 		method: 'GET',
 		headers: authHeader(),
