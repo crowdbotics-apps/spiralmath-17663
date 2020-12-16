@@ -9,10 +9,6 @@ export const validateCreateQuestion = (values) => {
    if (!values.mills_difficulty_level) {
       errors.mills_difficulty_level = requiredFieldError;
    }
-   if (!values.dok) {
-      errors.dok = requiredFieldError;
-   }
-   console.log("vali", values);
    if (!(values.standard_set && values.standard_set.standard_set)) {
       errors.standard_set = requiredFieldError;
    }

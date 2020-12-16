@@ -35,7 +35,7 @@ const MyQuestions = () => {
 
 	useEffect(() => {
 		if (!deletingQuestion) {
-			dispatch(questionActions.getUserQuestions());
+			dispatch(questionActions.getUserQuestions(`user=${userId}`));
 			setShowDeleteModal(false);
 		}
 	}, [deletingQuestion]);
