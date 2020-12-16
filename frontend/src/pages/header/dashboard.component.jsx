@@ -22,6 +22,7 @@ import { ReactComponent as BackIcon } from '../../assets/img/back-icon.svg';
 import { ReactComponent as Logo } from '../../assets/img/logo.svg';
 import './dashboard.styles.css';
 import { setQuestionType } from '../../redux/local/local.actions';
+import { questionFormStateEditFalse,resetAnswerState } from '../../redux/questionFormState/questionFormState.action';
 
 const Dashboard = () => {
 	const intl = useIntl();
@@ -220,7 +221,12 @@ const Dashboard = () => {
 							</>
 						)}
 						{questionType !== false && !isReview && window.location.hash === '#/create-question' && (
-							<LinkContainer to="/my-questions" onClick={() => dispatch(setQuestionType(false))}>
+							<LinkContainer to="/my-questions" onClick={() => {
+								dispatch(setQuestionType(false))
+								dispatch(questionFormStateEditFalse());
+								dispatch(resetAnswerState())
+							}
+							}>
 								<Nav.Link> My Questions</Nav.Link>
 							</LinkContainer>
 						)}

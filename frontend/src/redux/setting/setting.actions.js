@@ -64,6 +64,7 @@ const get_settings = () => {
 };
 
 const createCreator = (data) => {
+   console.log("jhvc")
    return (dispatch) => {
       dispatch({ type: settingTypes.CREATE_CREATOR_REQUEST });
       settingService.createCreator(data).then(

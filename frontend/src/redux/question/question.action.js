@@ -4,6 +4,9 @@ import questionService from './question.service';
 import { questionFormStateEdit } from '../questionFormState/questionFormState.action';
 import { setQuestionType } from '../local/local.actions';
 
+
+
+
 const getStandardCode = () => {
 	return (dispatch) => {
 		questionService.getStandardCode().then((data) => {
@@ -66,10 +69,10 @@ const createAnswer = (data) => {
 	};
 };
 
-const getUserQuestions = () => {
+const getUserQuestions = (queryString) => {
 	return (dispatch) => {
 		dispatch({ type: questionTypes.GET_USERQUESTION_REQUEST });
-		questionService.getUserQuestions().then(
+		questionService.getUserQuestions(queryString).then(
 			(data) => {
 				dispatch({ type: questionTypes.GET_USERQUESTION_SUCCESS, data });
 			},
