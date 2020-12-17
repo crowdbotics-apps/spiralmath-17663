@@ -133,7 +133,7 @@ class Question(models.Model):
         _("Mills difficulty level"),
         validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
-    dok = models.IntegerField(_("Depth of Knowledge"), validators=[MinValueValidator(1), MaxValueValidator(4)])
+    dok = models.IntegerField(_("Depth of Knowledge"), validators=[MinValueValidator(1), MaxValueValidator(4)], null=True)
     copyright_status = models.TextField(_("Copyright status"), null=True, blank=True)
     question_style = models.CharField(_("Question Style"), choices=QSTYLE.choices, default=QSTYLE.WORD, max_length=100)
     summative_status = models.BooleanField(_("Summative status"), default=False)
