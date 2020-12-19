@@ -4,9 +4,6 @@ import questionService from './question.service';
 import { questionFormStateEdit } from '../questionFormState/questionFormState.action';
 import { setQuestionType } from '../local/local.actions';
 
-
-
-
 const getStandardCode = () => {
 	return (dispatch) => {
 		questionService.getStandardCode().then((data) => {
