@@ -29,9 +29,12 @@ import { selectCreators } from './../../../redux/question/question.select';
 
 import AuthorDetails from '../../Reviewer/author-details/author-details.component';
 import Layout from '../../ui/layout/layout.component';
-import { questionFormStateEditFalse,resetAnswerState } from '../../../redux/questionFormState/questionFormState.action';
-import settingActions from "../../../redux/setting/setting.actions"
-import {selectCreatingCreator} from "../../../redux/setting/setting.select"
+import {
+	questionFormStateEditFalse,
+	resetAnswerState,
+} from '../../../redux/questionFormState/questionFormState.action';
+import settingActions from '../../../redux/setting/setting.actions';
+import { selectCreatingCreator } from '../../../redux/setting/setting.select';
 
 const millsDiffLevel = [
 	{ value: 1, label: '1' },
@@ -84,8 +87,8 @@ const Question = ({ questionType }) => {
 	const [image, setImage] = useState({ file: '', url: '' });
 	const [submitted, setSubmitted] = useState(false);
 	const [errors, setErrors] = useState({});
-	const [creatorValue,setCreatorValue] = useState("")
-	const [creatorError,setCreatorError] = useState("")
+	const [creatorValue, setCreatorValue] = useState('');
+	const [creatorError, setCreatorError] = useState('');
 
 	useEffect(() => {
 		if (questionType === 'mc') {
@@ -114,11 +117,10 @@ const Question = ({ questionType }) => {
 	}, []);
 
 	useEffect(() => {
-		if(creatingCreator === "success"){
+		if (creatingCreator === 'success') {
 			dispatch(questionActions.getCreators());
 		}
-		
-	},[creatingCreator])
+	}, [creatingCreator]);
 
 	useEffect(() => {
 		if (Object.keys(errors).length === 0 && submitted) {
@@ -185,10 +187,10 @@ const Question = ({ questionType }) => {
 		} else {
 			setFormState((prevFormState) => ({ ...prevFormState, [name]: value }));
 		}
-		if(name === "add_creator"){
-			setCreatorValue(value)
+		if (name === 'add_creator') {
+			setCreatorValue(value);
 		}
-		setCreatorError("")
+		setCreatorError('');
 		setErrors({ ...errors, [name]: '' });
 	};
 
@@ -206,7 +208,7 @@ const Question = ({ questionType }) => {
 	const handleCancel = () => {
 		dispatch(setQuestionType(false));
 		dispatch(questionFormStateEditFalse());
-		dispatch(resetAnswerState())
+		dispatch(resetAnswerState());
 		isReview ? history.push('/my-reviews') : history.push('/my-questions');
 	};
 
@@ -287,7 +289,6 @@ const Question = ({ questionType }) => {
 	};
 
 	const submit = () => {
-
 		let formData = new FormData();
 		console.log(questionType);
 
@@ -372,17 +373,17 @@ const Question = ({ questionType }) => {
 	};
 
 	const addCreator = () => {
-           if(!creatorValue){
-			   setCreatorError("This field is required")
-			   return ;
-		   }
-		   const creatorReqBody ={
-			   first_name:creatorValue.split(" ")[0],
-			   last_name:creatorValue.split(" ")[1]
-		   }
-		   settingActions.createCreator(creatorReqBody)
-
-	}
+		if (!creatorValue) {
+			setCreatorError('This field is required');
+			return;
+		}
+		const creatorReqBody = {
+			first_name: creatorValue.split(' ')[0],
+			last_name: creatorValue.split(' ')[1],
+		};
+		dispatch(settingActions.createCreator(creatorReqBody));
+		setCreatorValue('');
+	};
 
 	const {
 		value,
@@ -569,7 +570,9 @@ const Question = ({ questionType }) => {
 								value={grade_level}
 								name="grade_level"
 								onChange={handleChange}
-								className={`border-top-0 border-left-0 border-right-0 rounded-0 ${grade_level && 'label-up'}`}
+								className={`border-top-0 border-left-0 border-right-0 rounded-0 ${
+									grade_level && 'label-up'
+								}`}
 								readOnly={isReview}
 							/>
 							<span className="floating-label">Grade level</span>
@@ -704,29 +707,38 @@ const Question = ({ questionType }) => {
 								disabled={isReview}
 								onChange={handleSelectChange('creator')}
 							/>
-							{submitted && errors.creator && <p className="text-danger form-text-danger">{errors.creator}</p>}
+							{submitted && errors.creator && (
+								<p className="text-danger form-text-danger">{errors.creator}</p>
+							)}
 						</Form.Group>
-						{!isReview &&
+						{!isReview && (
 							<>
-							<Form.Group as={Col} md="3" className="d-flex align-items-end">
-							<Form.Control
-								type="text"
-								value={creatorValue}
-								name="add_creator"
-								onChange={handleChange}
-								className={`border-top-0 border-left-0 border-right-0 rounded-0 ${creatorValue && 'label-up'}`}
-								readOnly={isReview}
-							/>
-							<span className="floating-label">Add Creator</span>
-							{creatorError && <p className="text-danger form-text-danger">{creatorError}</p>}
-						</Form.Group>
-						<Form.Group as={Col} md="0" className="align-self-center cursor-pointer" onClick={addCreator}>
+								<Form.Group as={Col} md="3" className="d-flex align-items-end">
+									<Form.Control
+										type="text"
+										value={creatorValue}
+										name="add_creator"
+										onChange={handleChange}
+										className={`border-top-0 border-left-0 border-right-0 rounded-0 ${
+											creatorValue && 'label-up'
+										}`}
+										readOnly={isReview}
+									/>
+									<span className="floating-label">Add Creator</span>
+									{creatorError && <p className="text-danger form-text-danger">{creatorError}</p>}
+								</Form.Group>
+								<Form.Group
+									as={Col}
+									md="0"
+									className="align-self-center cursor-pointer"
+									onClick={addCreator}
+								>
 									<span className="create-user-icon ipad-create-user-icon">
 										<CreateUserIcon />
 									</span>
 								</Form.Group>
-						</>
-					}
+							</>
+						)}
 					</Form.Row>
 					<Form.Row>
 						<Form.Group as={Col} md="8">
@@ -737,7 +749,9 @@ const Question = ({ questionType }) => {
 								isReview={isReview}
 								value={value}
 							/>
-							{submitted && errors.value && <p className="text-danger form-text-danger">{errors.value}</p>}
+							{submitted && errors.value && (
+								<p className="text-danger form-text-danger">{errors.value}</p>
+							)}
 						</Form.Group>
 					</Form.Row>
 					{(questionType === 'sa' || questionType === 'la') && (
@@ -774,7 +788,12 @@ const Question = ({ questionType }) => {
 								>
 									<MinusCircle />
 								</Form.Group>
-								<Form.Group as={Col} md="0" className="align-self-center cursor-pointer" onClick={addNewOption}>
+								<Form.Group
+									as={Col}
+									md="0"
+									className="align-self-center cursor-pointer"
+									onClick={addNewOption}
+								>
 									<span className="create-user-icon ipad-create-user-icon">
 										<CreateUserIcon />
 									</span>
@@ -798,7 +817,11 @@ const Question = ({ questionType }) => {
 										className=" border-top-0 border-left-0 border-right-0 rounded-0 z-negative"
 									/>
 								</Form.Group>
-								<Form.Group as={Col} md="1" className="d-flex justify-content-between align-items-center">
+								<Form.Group
+									as={Col}
+									md="1"
+									className="d-flex justify-content-between align-items-center"
+								>
 									<Form.Check
 										label=""
 										type="switch"
@@ -820,7 +843,11 @@ const Question = ({ questionType }) => {
 										className=" border-top-0 border-left-0 border-right-0 rounded-0 "
 									/>
 								</Form.Group>
-								<Form.Group as={Col} md="1" className="d-flex justify-content-between align-items-center">
+								<Form.Group
+									as={Col}
+									md="1"
+									className="d-flex justify-content-between align-items-center"
+								>
 									<Form.Check
 										label=""
 										type="switch"
