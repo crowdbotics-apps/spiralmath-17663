@@ -165,8 +165,8 @@ const Question = ({ questionType }) => {
 			standardCode &&
 				setFormState((prevFormState) => ({
 					...prevFormState,
-					standard_code: standardCode && standardCode['Standard Code'][e.i],
-					grade_level: standardCode && standardCode['Grade'][e.i],
+					// standard_code: standardCode && standardCode['Standard Code'][e.i],
+					// grade_level: standardCode && standardCode['Grade'][e.i],
 					standard_set: { standard_set: set, index: i },
 				}));
 		} else {
@@ -536,7 +536,7 @@ const Question = ({ questionType }) => {
 								label="Standard Set"
 								options={
 									standardCode &&
-									standardCode['Standard Set'].map((set, i) => {
+									standardCode.map((set, i) => {
 										return {
 											value: { set, i },
 											label: set,
@@ -711,7 +711,7 @@ const Question = ({ questionType }) => {
 								<p className="text-danger form-text-danger">{errors.creator}</p>
 							)}
 						</Form.Group>
-						{!isReview && (
+						{/* {!isReview && (
 							<>
 								<Form.Group as={Col} md="3" className="d-flex align-items-end">
 									<Form.Control
@@ -738,7 +738,7 @@ const Question = ({ questionType }) => {
 									</span>
 								</Form.Group>
 							</>
-						)}
+						)} */}
 					</Form.Row>
 					<Form.Row>
 						<Form.Group as={Col} md="8">
