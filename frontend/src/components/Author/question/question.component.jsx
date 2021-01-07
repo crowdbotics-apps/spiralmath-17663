@@ -90,7 +90,12 @@ const Question = ({ questionType }) => {
 	const [creatorValue, setCreatorValue] = useState('');
 	const [creatorError, setCreatorError] = useState('');
 
+	console.log("initailAnswer",initialAnswer)
+		console.log("answer",answer)
+
 	useEffect(() => {
+		console.log("initailAnswer inside" ,initialAnswer)
+		console.log("answer inside" ,answer)
 		if (questionType === 'mc') {
 			if (Object.keys(initialAnswer).length === 0) {
 				setAnswer({
@@ -290,11 +295,11 @@ const Question = ({ questionType }) => {
 
 	const submit = () => {
 		let formData = new FormData();
-		console.log(questionType);
+
 
 		const formDataArray = Object.entries(formState);
 		for (const [key, value] of formDataArray) {
-			console.log(key, value);
+
 			if (
 				!(key === 'edit') &&
 				!(key === 'id') &&
