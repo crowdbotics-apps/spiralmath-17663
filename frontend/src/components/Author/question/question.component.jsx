@@ -90,12 +90,11 @@ const Question = ({ questionType }) => {
 	const [creatorValue, setCreatorValue] = useState('');
 	const [creatorError, setCreatorError] = useState('');
 
-	console.log("initailAnswer",initialAnswer)
-		console.log("answer",answer)
+	console.log("mcoption out",mcOptionField)
+		
 
 	useEffect(() => {
-		console.log("initailAnswer inside" ,initialAnswer)
-		console.log("answer inside" ,answer)
+		
 		if (questionType === 'mc') {
 			if (Object.keys(initialAnswer).length === 0) {
 				setAnswer({
@@ -108,6 +107,7 @@ const Question = ({ questionType }) => {
 
 			if (initialAnswer.content && Object.keys(initialAnswer.content).length > 0) {
 				setMcOptionField(Object.values(initialAnswer.content));
+				console.log(mcOptionField,"inside")
 			}
 		} else {
 			setAnswer(initialAnswer);
