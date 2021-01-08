@@ -105,7 +105,10 @@ const Question = ({ questionType }) => {
 				});
 			}
 
+			console.log("current",initialAnswer.content,Object.keys(initialAnswer.content).length)
+
 			if (initialAnswer.content && Object.keys(initialAnswer.content).length > 0) {
+				
 				setMcOptionField(Object.values(initialAnswer.content));
 				console.log(mcOptionField,"inside")
 			}
