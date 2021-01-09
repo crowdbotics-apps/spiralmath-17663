@@ -116,7 +116,7 @@ const Question = ({ questionType }) => {
 			setAnswer(initialAnswer);
 		}
 		setFormState((prevState) => ({ ...prevState, ...initialFormState }));
-	}, [initialAnswer, initialFormState]);
+	}, [initialAnswer, initialFormState,questionType]);
 
 	useEffect(() => {
 		dispatch(questionActions.getStandardCode());

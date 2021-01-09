@@ -161,7 +161,7 @@ const getSingleQuestion = (id) => {
 		dispatch({ type: questionTypes.GET_SINGLE_QUESTION_REQUEST });
 		questionService.getSingleQuestion(id).then(
 			(data) => {
-				console.log(data);
+
 				dispatch(questionFormStateEdit(data));
 				dispatch(setQuestionType(data.question_type));
 			},
