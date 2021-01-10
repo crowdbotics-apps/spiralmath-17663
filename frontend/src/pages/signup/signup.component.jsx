@@ -52,7 +52,7 @@ const SignUp = ({ show, toggleShow }) => {
          dispatch(alertActions.clear());
       });
 
-      console.log(localUser);
+
 
       if (localUser && localUser.userObj.role === "Admin") {
          history.push("/admin/dashboard");
