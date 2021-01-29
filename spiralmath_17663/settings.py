@@ -29,14 +29,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env.str("SECRET_KEY")
 
-# ALLOWED_HOSTS = env.list("HOST", default=["*"])
-# TODO for Natali removed below
-ALLOWED_HOSTS = [
-    "*",
-    'localhost',
-    '127.0.0.1',
-    '[::1]',
-]
+ALLOWED_HOSTS = env.list("HOST", default=["*"])
 SITE_ID = 1
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
@@ -248,3 +241,16 @@ CSRF_COOKIE_SECURE = False
 if DEBUG:
     # output email to console instead of sending
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+else:
+    import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
+
+    sentry_sdk.init(
+        dsn="https://74812167d018485aba73299578204fb5@o500601.ingest.sentry.io/5614872",
+        integrations=[DjangoIntegration()],
+        traces_sample_rate=1.0,
+
+        # If you wish to associate users to errors (assuming you are using
+        # django.contrib.auth) you may enable sending PII data.
+        send_default_pii=True
+    )
