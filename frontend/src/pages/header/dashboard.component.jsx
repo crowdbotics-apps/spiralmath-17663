@@ -208,6 +208,9 @@ const Dashboard = () => {
 								<LinkContainer to="/all-questions">
 									<Nav.Link>All Questions</Nav.Link>
 								</LinkContainer>
+								<LinkContainer to="/quizzes">
+									<Nav.Link>Quizzes</Nav.Link>
+								</LinkContainer>
 							</>
 						)}
 						{localUserObj && localUserObj.reviewQuestions && !questionType && (
