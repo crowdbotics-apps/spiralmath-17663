@@ -881,7 +881,7 @@ const Question = ({ questionType }) => {
 					<Button className="mr-4 cancel-btn" onClick={handleCancel}>
 						<FormattedMessage defaultMessage="Cancel" id="componentUsersTabCancelButton" />
 					</Button>
-					<Button className="save-btn" onClick={handleSubmit}>
+					<Button className="transparent-btn" onClick={handleSubmit}>
 						{(creatingAnswer === true || updatingQuestion === true || creatingQuestion === true) && (
 							<span className="spinner-border spinner-border-sm mr-1"></span>
 						)}

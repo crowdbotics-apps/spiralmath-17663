@@ -197,7 +197,7 @@ const Settings = () => {
 							<Button className="mr-4 cancel-btn" onClick={() => setEmailsEditMode(!emailsEditMode)}>
 								<FormattedMessage defaultMessage="Cancel" id="componentUsersTabCancelButton" />
 							</Button>
-							<Button type="submit" className="save-btn">
+							<Button type="submit" className="transparent-btn">
 								{uploadingNon && uploadingR && (
 									<span className="spinner-border spinner-border-sm mr-1 text-primary"></span>
 								)}
@@ -250,7 +250,7 @@ const Settings = () => {
 					</Form.Row>
 				</div>
 				<div className="my-4 d-flex justify-content-end bottom-btn-grp">
-					<Button type="submit" className="save-btn">
+					<Button type="submit" className="transparent-btn">
 						{creatingCreator === true && (
 							<span className="spinner-border spinner-border-sm mr-1 text-primary"></span>
 						)}
@@ -296,7 +296,7 @@ const Settings = () => {
 							<Button className="mr-4 cancel-btn" onClick={() => setTermsEditMode(!termsEditMode)}>
 								<FormattedMessage defaultMessage="Cancel" id="componentUsersTabCancelButton" />
 							</Button>
-							<Button className="save-btn" onClick={handleTermsSubmit}>
+							<Button className="transparent-btn" onClick={handleTermsSubmit}>
 								{uploadingTerms && <span className="spinner-border spinner-border-sm mr-1 text-primary"></span>}
 								<FormattedMessage defaultMessage="Save" id="componentUsersTabSaveButton" />
 							</Button>

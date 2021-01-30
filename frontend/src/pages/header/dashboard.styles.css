@@ -148,18 +148,18 @@ table tbody td {
   color: rgba(0, 0, 0, 0.6);
 }
 
-.bottom-btn-grp .save-btn {
-  background-color: transparent;
+.transparent-btn {
+  background-color: transparent !important;
   border: none;
   border-radius: 1.6px;
-  border: 0.8px solid #e5e2e2;
+  border: 0.8px solid #e5e2e2 !important;
   font-family: Open Sans;
   font-style: normal;
   font-weight: bold;
   font-size: 14.4px;
   line-height: 20px;
   text-align: center;
-  color: rgba(141, 141, 141, 0.6);
+  color: rgba(141, 141, 141, 0.6) !important;
   width: 168px;
   padding: 10px 0px;
 }

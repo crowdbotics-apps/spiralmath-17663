@@ -236,7 +236,7 @@ const UserTypes = () => {
                         defaultMessage="Cancel"
                      />
                   </Button>
-                  <Button type="submit" className="save-btn">
+                  <Button type="submit" className="transparent-btn">
                      {(userTypeCreating || updatingUserType) && (
                         <span className="spinner-border spinner-border-sm mr-1"></span>
                      )}
