@@ -58,11 +58,11 @@ const QuizFinalList = () => {
       return;
     }
 
-    const tempQuestionState = Array.from(questions);
+    const tempQuestionState = Object.assign([], questions);
 
-    const removedElement = tempQuestionState.splice(source.index, 1);
-    console.log("rem", removedElement);
-    tempQuestionState.splice(destination.index, 0, removedElement[0]);
+    const sourceQuestion = questions[source.index];
+    tempQuestionState.splice(source.index, 1);
+    tempQuestionState.splice(destination.index, 0, sourceQuestion);
     console.log("temp", tempQuestionState);
     setQuestions(tempQuestionState);
   };
@@ -71,63 +71,70 @@ const QuizFinalList = () => {
     <Row>
       <Col className="mt-3">
         <div>
-          <Table bordered className="border-top-0 border-left-0 border-right-0">
-            <thead>
-              <tr>
-                <th scope="col" className="border-0 font-style thead"></th>
-                <th scope="col" className="border-0 font-style thead">
-                  <FormattedMessage
-                    defaultMessage="Grade"
-                    id="QuizFinalQuestionGrade"
-                  />
-                </th>
+          <DragDropContext onDragEnd={dragEndCall}>
+            <Table
+              bordered
+              className="border-top-0 border-left-0 border-right-0"
+            >
+              <thead>
+                <tr>
+                  <th scope="col" className="border-0 font-style thead"></th>
+                  <th scope="col" className="border-0 font-style thead">
+                    <FormattedMessage
+                      defaultMessage="Grade"
+                      id="QuizFinalQuestionGrade"
+                    />
+                  </th>
 
-                <th scope="col" className="border-0 font-style thead">
-                  <FormattedMessage
-                    defaultMessage="Standard"
-                    id="QuizFinalQuestionStandard"
-                  />
-                </th>
-                <th scope="col" className="border-0 font-style thead">
-                  <FormattedMessage
-                    defaultMessage="Mills Diff"
-                    id="QuizFinalQuestionMillsDiff"
-                  />
-                </th>
-                <th scope="col" className="border-0 font-style thead">
-                  <FormattedMessage
-                    defaultMessage="DOK"
-                    id="QuizFinalQuestionDOK"
-                  />
-                </th>
-                <th scope="col" className="border-0 font-style thead">
-                  <FormattedMessage
-                    defaultMessage="Question"
-                    id="QuizFinalQuestionQuestion"
-                  />
-                </th>
-                <th scope="col" className="border-0 font-style thead"></th>
-              </tr>
-            </thead>
-            <DragDropContext onDragEnd={dragEndCall}>
+                  <th scope="col" className="border-0 font-style thead">
+                    <FormattedMessage
+                      defaultMessage="Standard"
+                      id="QuizFinalQuestionStandard"
+                    />
+                  </th>
+                  <th scope="col" className="border-0 font-style thead">
+                    <FormattedMessage
+                      defaultMessage="Mills Diff"
+                      id="QuizFinalQuestionMillsDiff"
+                    />
+                  </th>
+                  <th scope="col" className="border-0 font-style thead">
+                    <FormattedMessage
+                      defaultMessage="DOK"
+                      id="QuizFinalQuestionDOK"
+                    />
+                  </th>
+                  <th scope="col" className="border-0 font-style thead">
+                    <FormattedMessage
+                      defaultMessage="Question"
+                      id="QuizFinalQuestionQuestion"
+                    />
+                  </th>
+                  <th scope="col" className="border-0 font-style thead"></th>
+                </tr>
+              </thead>
+
               <Droppable droppableId={"1"}>
                 {(provided) => {
                   return (
-                    <tbody ref={provided.innerRef}>
+                    <tbody ref={provided.innerRef} {...provided.droppableProps}>
                       {questions &&
                         questions.map((question, index) => {
                           return (
                             <Draggable
-                              draggableId={question.serialNo}
+                              draggableId={question.serialNo.toString()}
                               index={index}
+                              key={question.index}
                             >
-                              {(provided) => {
+                              {(provided, snapshot) => {
                                 return (
                                   <tr
-                                    key={question.id}
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
                                     ref={provided.innerRef}
+                                    className={
+                                      snapshot.isDragging ? "dragged" : ""
+                                    }
                                   >
                                     <td className="border-right-0">
                                       {question.serialNo}
@@ -160,8 +167,8 @@ const QuizFinalList = () => {
                   );
                 }}
               </Droppable>
-            </DragDropContext>
-          </Table>
+            </Table>
+          </DragDropContext>
         </div>
       </Col>
     </Row>
