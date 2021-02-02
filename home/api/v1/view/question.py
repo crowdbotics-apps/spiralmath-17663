@@ -12,7 +12,19 @@ from home.api.v1.serializer.question import QuestionBase, QuestionCreate, Questi
 from home.api.v1.serializer.answer import AnswerSerializer
 
 
+class UserTypePermissionMixin:
+
+    def has_permission(self, request):
+        if request.user.is_authenticated and request.user.user_type:
+            can_create = request.user.user_type.create_questions
+            can_review = request.user.user_type.review_questions
+            return can_create or can_review
+
+        return False
+
+
 class QuestionViewSet(
+    UserTypePermissionMixin,
     mixins.CreateModelMixin,
     mixins.RetrieveModelMixin,
     mixins.UpdateModelMixin,
@@ -31,11 +43,7 @@ class QuestionViewSet(
     def get_queryset(self: 'QuestionViewSet'):
         """Allows only those who can create/review questions."""
         queryset = super().get_queryset()
-        can_create = self.request.user.user_type.create_questions
-        can_review = self.request.user.user_type.review_questions
-        if can_create or can_review:
-            pass
-        else:
+        if not self.has_permission(self.request):
             raise PermissionDenied
         return queryset
 
