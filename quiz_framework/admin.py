@@ -15,6 +15,5 @@ class QuizFrameworksAdmin(SortableAdminMixin, admin.ModelAdmin):
     search_fields = ['title', 'description', 'footer']
     list_filter = ['grade', 'created']
     inlines = [QuizQuestionsInline]
-    # fields = ['author', 'grade', 'title']
 
 

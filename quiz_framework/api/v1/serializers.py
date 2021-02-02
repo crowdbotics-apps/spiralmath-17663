@@ -11,6 +11,7 @@ class QuizQuestionsSerializer(serializers.ModelSerializer):
 
 
 class QuizFrameworksSerializer(serializers.ModelSerializer):
+    author = serializers.HiddenField(default=serializers.CurrentUserDefault())
     questions = QuizQuestionsSerializer(read_only=True, many=True)
 
     class Meta:
