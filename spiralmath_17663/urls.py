@@ -26,6 +26,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("", include("home.urls")),
     path("api/v1/", include("home.api.v1.urls")),
+    path("api/v1/", include("quiz_framework.api.v1.urls"))
 ]
 
 urlpatterns += i18n_patterns(

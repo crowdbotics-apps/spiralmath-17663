@@ -120,7 +120,7 @@ class Question(models.Model):
     value = models.TextField(_("Value"))
     author_name = models.CharField(_("Author Name"), max_length=200)
     reviewer_name = models.ForeignKey('users.User', on_delete=models.SET_NULL, null=True)
-    grade_level = models.CharField(_("Grade Level"), max_length=3)
+    grade_level = models.CharField(_("Grade Level"), max_length=3, db_index=True)
     language = models.TextField(_("Language"), default='en')
     question_type = models.CharField(
         _("Question type"), choices=QTYPE.choices, default=QTYPE.SHORT_ANSWER, max_length=100

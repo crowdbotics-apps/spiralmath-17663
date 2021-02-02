@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from home.models import Settings
+from home.models import Settings, Question, Creator
 # Register your models here.
 
 
@@ -10,3 +10,7 @@ class Settings(admin.ModelAdmin):
 
     list_display = ('id', 'path', 'value', 'is_deletable', 'created', 'modified')
     list_filter = ('id',)
+
+
+admin.site.register(Question, admin.ModelAdmin)
+admin.site.register(Creator, admin.ModelAdmin)
