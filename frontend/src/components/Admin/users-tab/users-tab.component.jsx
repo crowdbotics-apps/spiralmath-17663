@@ -89,7 +89,7 @@ const UsersTab = () => {
 
    useEffect(() => {
       if (!updatingUser && !registering && !deletingUser) {
-         dispatch(userActions.getAllUsers((currentPage - 1) * 10));
+         dispatch(userActions.getAllUsers((currentPage - 1) * usersPerPage));
       }
    }, [updatingUser, registering, currentPage, deletingUser]);
 
@@ -542,8 +542,8 @@ const UsersTab = () => {
                      </tbody>
                   </Table>
                   <Pagination
-                     usersPerPage={usersPerPage}
-                     totalUsers={usersCount}
+                     perPage={usersPerPage}
+                     total={usersCount}
                      paginate={paginate}
                      currentPage={currentPage}
                   />

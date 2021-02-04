@@ -79,8 +79,8 @@ const MyQuestions = () => {
 			<Layout>
 				<EditorQuestionsTable questions={currentQuestions} renderDeleteEdit={renderDeleteEdit} />
 				<Pagination
-					usersPerPage={questionsPerPage}
-					totalUsers={userQuestionsCount}
+					perPage={questionsPerPage}
+					total={userQuestionsCount}
 					paginate={paginate}
 					currentPage={currentPage}
 				/>

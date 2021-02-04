@@ -1,42 +1,46 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Row, Col, Table } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
 import DeleteEditGroup from "../../ui/delete-edit-group/delete-edit-group.component";
+import Pagination from "../../Common/pagination/pagination.component";
+import { selectQuizCount } from "../../../redux/quiz/quiz.select";
 
-const quizzes = [
-  {
-    id: 1,
-    title: "Quiz 1",
-    description: "quiz 1 is associzted with mcq and short answers",
-    sequence: 1,
-  },
-  {
-    id: 2,
-    title: "Quiz 1",
-    description: "quiz 1 is associzted with mcq and short answers",
-    sequence: 1,
-  },
-  {
-    id: 3,
-    title: "Quiz 1",
-    description: "quiz 1 is associzted with mcq and short answers",
-    sequence: 1,
-  },
-  {
-    id: 4,
-    title: "Quiz 1",
-    description: "quiz 1 is associzted with mcq and short answers",
-    sequence: 1,
-  },
-  {
-    id: 5,
-    title: "Quiz 1",
-    description: "quiz 1 is associzted with mcq and short answers",
-    sequence: 1,
-  },
-];
+// const quizzes = [
+//   {
+//     id: 1,
+//     title: "Quiz 1",
+//     description: "quiz 1 is associzted with mcq and short answers",
+//     sequence: 1,
+//   },
+//   {
+//     id: 2,
+//     title: "Quiz 1",
+//     description: "quiz 1 is associzted with mcq and short answers",
+//     sequence: 1,
+//   },
+//   {
+//     id: 3,
+//     title: "Quiz 1",
+//     description: "quiz 1 is associzted with mcq and short answers",
+//     sequence: 1,
+//   },
+//   {
+//     id: 4,
+//     title: "Quiz 1",
+//     description: "quiz 1 is associzted with mcq and short answers",
+//     sequence: 1,
+//   },
+//   {
+//     id: 5,
+//     title: "Quiz 1",
+//     description: "quiz 1 is associzted with mcq and short answers",
+//     sequence: 1,
+//   },
+// ];
 
-const QuizList = () => {
+const QuizList = ({ quizzes, quizPerPage, paginate, currentPage }) => {
+  const quizCount = useSelector(selectQuizCount);
   return (
     <Row>
       <Col className="mt-3">
@@ -99,6 +103,12 @@ const QuizList = () => {
                 })}
             </tbody>
           </Table>
+          <Pagination
+            perPage={quizPerPage}
+            total={quizCount}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
         </div>
       </Col>
     </Row>

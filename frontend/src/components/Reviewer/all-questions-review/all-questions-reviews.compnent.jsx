@@ -37,8 +37,8 @@ const AllQuestionsReviews = () => {
 			<Layout>
 				<ReviewerQuestionsTable questions={currentQuestions} all={true} />
 				<Pagination
-					usersPerPage={questionsPerPage}
-					totalUsers={questionsCount}
+					perPage={questionsPerPage}
+					total={questionsCount}
 					paginate={paginate}
 					currentPage={currentPage}
 				/>
