@@ -1,30 +1,23 @@
 from rest_framework import viewsets
 from rest_framework import mixins
-from rest_framework.exceptions import PermissionDenied
+from rest_framework import permissions
 
-from home.api.v1.view.question import UserTypePermissionMixin
+from home.api.v1.permissions import CreateQuestionPermission
 from quiz_framework.models import QuizFrameworks, QuizQuestions
 from .serializers import QuizFrameworksSerializer, QuizQuestionsSerializer
 
 
-class QuizViewSet(UserTypePermissionMixin,
-                  viewsets.ModelViewSet):
+class QuizViewSet(viewsets.ModelViewSet):
     serializer_class = QuizFrameworksSerializer
-
-    def get_queryset(self):
-        if not self.has_permission(self.request):
-            raise PermissionDenied
-        return QuizFrameworks.objects.all()
+    permission_classes = [permissions.IsAuthenticated, CreateQuestionPermission]
+    filterset_fields = ['grade']
+    queryset = QuizFrameworks.objects.all()
 
 
-class QuizQuestionViewSet(UserTypePermissionMixin,
-                          mixins.CreateModelMixin,
+class QuizQuestionViewSet(mixins.CreateModelMixin,
                           mixins.UpdateModelMixin,
                           mixins.DestroyModelMixin,
                           viewsets.GenericViewSet):
     serializer_class = QuizQuestionsSerializer
-
-    def get_queryset(self):
-        if not self.has_permission(self.request):
-            raise PermissionDenied
-        return QuizQuestions.objects.all()
+    permission_classes = [permissions.IsAuthenticated, CreateQuestionPermission]
+    queryset = QuizQuestions.objects.all()
