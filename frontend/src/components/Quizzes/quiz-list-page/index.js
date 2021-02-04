@@ -1,17 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Select from "react-select";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import Layout from "../../ui/layout/layout.component";
 import QuizList from "./quiz-list";
 import { SectionHead } from "../styles";
+import { grades } from "../../../content/";
+import { selectAllQuizzes } from "../../../redux/quiz/quiz.select";
+import quizActions from "../../../redux/quiz/quiz.actions";
 
-const options = [
-  { value: 1, label: "1" },
-  { value: 2, label: "2" },
-  { value: 3, label: "3" },
-];
+const gradeOptions = grades.map((value) => ({ value, label: value }));
+
+const selectStyles = {
+  valueContainer: (provided, state) => ({
+    ...provided,
+    width: "33px",
+  }),
+};
 
 const Header = styled.div`
   display: flex;
@@ -27,6 +34,18 @@ const SelectBox = styled.div`
 `;
 
 const QuizListPage = () => {
+  const dispatch = useDispatch();
+  const quizzes = useSelector(selectAllQuizzes);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [quizPerPage] = useState(10);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  useEffect(() => {
+    dispatch(quizActions.getAllQuizzes((currentPage - 1) * quizPerPage));
+  }, [quizzes]);
+
   return (
     <Layout>
       <SectionHead>Quizzes</SectionHead>
@@ -38,10 +57,19 @@ const QuizListPage = () => {
       <GradeFilter>
         <Form.Label className="question-label">Grade</Form.Label>
         <SelectBox>
-          <Select options={options} defaultValue={options[1]} />
+          <Select
+            styles={selectStyles}
+            options={gradeOptions}
+            defaultValue={gradeOptions[1]}
+          />
         </SelectBox>
       </GradeFilter>
-      <QuizList />
+      <QuizList
+        quizzes={quizzes}
+        paginate={paginate}
+        quizPerPage={quizPerPage}
+        currentPage={currentPage}
+      />
     </Layout>
   );
 };

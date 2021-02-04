@@ -57,8 +57,8 @@ const MyReviews = () => {
                handleReviewForm={handleReviewForm}
             />
             <Pagination
-               usersPerPage={questionsPerPage}
-               totalUsers={userQuestionsCount}
+               perPage={questionsPerPage}
+               total={userQuestionsCount}
                paginate={paginate}
                currentPage={currentPage}
             />

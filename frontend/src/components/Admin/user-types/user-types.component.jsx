@@ -342,8 +342,8 @@ const UserTypes = () => {
                   </tbody>
                </Table>
                <Pagination
-                  usersPerPage={userTypePerPage}
-                  totalUsers={userTypeArray ? userTypeArray.length : 0}
+                  perPage={userTypePerPage}
+                  total={userTypeArray ? userTypeArray.length : 0}
                   paginate={paginate}
                />
             </Col>
