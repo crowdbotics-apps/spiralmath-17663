@@ -239,6 +239,9 @@ SESSION_COOKIE_AGE = 3600 * 24 * 60  # cookies age 60 days.
 CSRF_COOKIE_SAMESITE = None
 CSRF_COOKIE_SECURE = False
 
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
 
 if DEBUG:
     # output email to console instead of sending
