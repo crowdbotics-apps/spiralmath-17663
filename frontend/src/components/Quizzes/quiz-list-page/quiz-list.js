@@ -1,46 +1,72 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Row, Col, Table } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
 import DeleteEditGroup from "../../ui/delete-edit-group/delete-edit-group.component";
+import DeleteModal from "../../ui/delete-modal/delete-modal.component";
 import Pagination from "../../Common/pagination/pagination.component";
-import { selectQuizCount } from "../../../redux/quiz/quiz.select";
+import {
+  selectQuizCount,
+  selectDeletingQuiz,
+} from "../../../redux/quiz/quiz.select";
 
-// const quizzes = [
-//   {
-//     id: 1,
-//     title: "Quiz 1",
-//     description: "quiz 1 is associzted with mcq and short answers",
-//     sequence: 1,
-//   },
-//   {
-//     id: 2,
-//     title: "Quiz 1",
-//     description: "quiz 1 is associzted with mcq and short answers",
-//     sequence: 1,
-//   },
-//   {
-//     id: 3,
-//     title: "Quiz 1",
-//     description: "quiz 1 is associzted with mcq and short answers",
-//     sequence: 1,
-//   },
-//   {
-//     id: 4,
-//     title: "Quiz 1",
-//     description: "quiz 1 is associzted with mcq and short answers",
-//     sequence: 1,
-//   },
-//   {
-//     id: 5,
-//     title: "Quiz 1",
-//     description: "quiz 1 is associzted with mcq and short answers",
-//     sequence: 1,
-//   },
-// ];
+import quizActions from "../../../redux/quiz/quiz.actions";
 
-const QuizList = ({ quizzes, quizPerPage, paginate, currentPage }) => {
+const quizzes = [
+  {
+    id: 1,
+    title: "Quiz 1",
+    description: "quiz 1 is associzted with mcq and short answers",
+    sequence: 1,
+  },
+  {
+    id: 2,
+    title: "Quiz 1",
+    description: "quiz 1 is associzted with mcq and short answers",
+    sequence: 1,
+  },
+  {
+    id: 3,
+    title: "Quiz 1",
+    description: "quiz 1 is associzted with mcq and short answers",
+    sequence: 1,
+  },
+  {
+    id: 4,
+    title: "Quiz 1",
+    description: "quiz 1 is associzted with mcq and short answers",
+    sequence: 1,
+  },
+  {
+    id: 5,
+    title: "Quiz 1",
+    description: "quiz 1 is associzted with mcq and short answers",
+    sequence: 1,
+  },
+];
+
+const QuizList = ({ quizPerPage, paginate, currentPage }) => {
+  const dispatch = useDispatch();
   const quizCount = useSelector(selectQuizCount);
+  const deletingQuiz = useSelector(selectDeletingQuiz);
+  const [deleteModalState, setDeleteModalState] = useState({
+    show: false,
+    id: null,
+  });
+
+  useEffect(() => {
+    if (!deletingQuiz) {
+      handleClose();
+    }
+  }, [deletingQuiz]);
+
+  const handleClose = () => {
+    setDeleteModalState({ ...deleteModalState, show: false });
+  };
+
+  const handleDeleteQuiz = (id) => {
+    dispatch(quizActions.deleteQuiz(id));
+  };
   return (
     <Row>
       <Col className="mt-3">
@@ -49,10 +75,11 @@ const QuizList = ({ quizzes, quizPerPage, paginate, currentPage }) => {
             <thead>
               <tr>
                 <th scope="col" className="border-0 font-style thead">
-                  <FormattedMessage
+                  {deleteModalState.show.toString()}
+                  {/* <FormattedMessage
                     defaultMessage="Quiz ID"
                     id="QuizListHeadId"
-                  />
+                  /> */}
                 </th>
                 <th scope="col" className="border-0 font-style thead">
                   <FormattedMessage
@@ -92,7 +119,13 @@ const QuizList = ({ quizzes, quizPerPage, paginate, currentPage }) => {
                       </td>
                       <td className="border-left-0">
                         <DeleteEditGroup
-                          handleShow={() => {}}
+                          handleShow={() => {
+                            setDeleteModalState({
+                              ...deleteModalState,
+                              show: true,
+                              id: quiz.id,
+                            });
+                          }}
                           handleEditForm={() => {}}
                           handleShowParam={1}
                           handleEditFormParam={{}}
@@ -110,6 +143,17 @@ const QuizList = ({ quizzes, quizPerPage, paginate, currentPage }) => {
             currentPage={currentPage}
           />
         </div>
+        {deleteModalState.show ? (
+          <DeleteModal
+            id={deleteModalState.id}
+            showModal={deleteModalState.show}
+            deleting={deletingQuiz}
+            handleClose={handleClose}
+            handleDelete={handleDeleteQuiz}
+            message="User will be deleted"
+            messageId="componentUsersTabDeleteModalWarning"
+          />
+        ) : null}
       </Col>
     </Row>
   );

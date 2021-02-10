@@ -8,7 +8,10 @@ import Layout from "../../ui/layout/layout.component";
 import QuizList from "./quiz-list";
 import { SectionHead } from "../styles";
 import { grades } from "../../../content/";
-import { selectAllQuizzes } from "../../../redux/quiz/quiz.select";
+import {
+  selectAllQuizzes,
+  selectDeletingQuiz,
+} from "../../../redux/quiz/quiz.select";
 import quizActions from "../../../redux/quiz/quiz.actions";
 
 const gradeOptions = grades.map((value) => ({ value, label: value }));
@@ -36,6 +39,7 @@ const SelectBox = styled.div`
 const QuizListPage = () => {
   const dispatch = useDispatch();
   const quizzes = useSelector(selectAllQuizzes);
+  const deletingQuiz = useSelector(selectDeletingQuiz);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [quizPerPage] = useState(10);
@@ -44,7 +48,7 @@ const QuizListPage = () => {
 
   useEffect(() => {
     dispatch(quizActions.getAllQuizzes((currentPage - 1) * quizPerPage));
-  }, [quizzes]);
+  }, [currentPage, deletingQuiz]);
 
   return (
     <Layout>
