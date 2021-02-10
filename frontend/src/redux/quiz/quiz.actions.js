@@ -1,10 +1,10 @@
 import quizTypes from "./quiz.types";
-import quizService from "./quiz.services";
+import quizServices from "./quiz.services";
 
-export const getAllQuizzes = (pageNumber) => {
+const getAllQuizzes = (pageNumber) => {
   return (dispatch) => {
     dispatch({ type: quizTypes.GETALL_QUIZ_REQUEST });
-    quizService.getAllQuizzes(pageNumber).then(
+    quizServices.getAllQuizzes(pageNumber).then(
       (res) =>
         dispatch({
           type: quizTypes.GETALL_QUIZ_SUCCESS,
@@ -15,6 +15,36 @@ export const getAllQuizzes = (pageNumber) => {
   };
 };
 
+const deleteQuiz = (id) => {
+  return (dispatch) => {
+    dispatch({ type: quizTypes.DELETE_QUIZ_REQUEST });
+    quizServices.deleteQuiz(id).then(
+      (res) => {
+        dispatch({ type: quizTypes.DELETE_QUIZ_SUCCESS });
+      },
+      (err) => {
+        dispatch({ type: quizTypes.DELETE_QUIZ_FAILURE });
+      }
+    );
+  };
+};
+
+const editQuiz = (id, data) => {
+  return (dispatch) => {
+    dispatch({ type: quizTypes.EDIT_QUIZ_REQUEST });
+    quizServices.editQuiz(id, data).then(
+      (res) => {
+        dispatch({ type: quizTypes.EDIT_QUIZ_SUCCESS });
+      },
+      (err) => {
+        dispatch({ type: quizTypes.EDIT_QUIZ_FAILURE });
+      }
+    );
+  };
+};
+
 export default {
   getAllQuizzes,
+  deleteQuiz,
+  editQuiz,
 };

@@ -1,7 +1,9 @@
 import quizTypes from "./quiz.types";
 
 const initialState = {
-  loading: false,
+  deleteLoading: false,
+  editLoading: false,
+  getLoading: false,
   error: "",
   quizzes: null,
   quizCount: 0,
@@ -16,16 +18,28 @@ export default (state = initialState, action) => {
         ...state,
         quizzes: action.payload.quizzes,
         quizCount: action.payload.quizCount,
-        loading: false,
+        getLoading: false,
       };
     case quizTypes.GETALL_QUIZ_FAILURE:
       return {
         ...state,
         quizzes: null,
         quizCount: 0,
-        loading: false,
+        getLoading: false,
         error: "Failed to load quizzes",
       };
+    case quizTypes.DELETE_QUIZ_REQUEST:
+      return { ...state, deleteLoading: true };
+    case quizTypes.DELETE_QUIZ_SUCCESS:
+      return { ...state, deleteLoading: false };
+    case quizTypes.DELETE_QUIZ_FAILURE:
+      return { ...state, deleteLoading: false };
+    case quizTypes.EDIT_QUIZ_REQUEST:
+      return { ...state, editLoading: true };
+    case quizTypes.EDIT_QUIZ_SUCCESS:
+      return { ...state, editLoading: false };
+    case quizTypes.EDIT_QUIZ_FAILURE:
+      return { ...state, editLoading: false };
     default:
       return state;
   }

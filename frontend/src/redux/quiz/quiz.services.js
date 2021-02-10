@@ -12,6 +12,25 @@ const getAllQuizzes = (pageNumber) => {
   ).then(handleResponse);
 };
 
+const deleteQuiz = (id) => {
+  const requestOptions = {
+    method: "DELETE",
+    headers: authHeader(),
+  };
+  return fetch(`api/v1/quiz/${id}/`, requestOptions).then(handleResponse);
+};
+
+const editQuiz = (id, data) => {
+  const requestOptions = {
+    method: "PATCH",
+    headers: authHeader(),
+    body: data,
+  };
+  return fetch(`api/v1/quiz/${id}`, requestOptions).then(handleResponse);
+};
+
 export default {
   getAllQuizzes,
+  deleteQuiz,
+  editQuiz,
 };
