@@ -58,7 +58,7 @@ const getUserQuestions = (queryString) => {
   };
 
   return fetch(
-    `api/v1/question/?${queryString}&deleted=false&ordering=-created`,
+    `https://spiralmath-17663.botics.co/api/v1/question/?${queryString}&deleted=false&ordering=-created`,
     requestOptions
   ).then(handleResponse);
 };

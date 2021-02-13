@@ -12,40 +12,40 @@ import {
 
 import quizActions from "../../../redux/quiz/quiz.actions";
 
-const quizzes = [
-  {
-    id: 1,
-    title: "Quiz 1",
-    description: "quiz 1 is associzted with mcq and short answers",
-    sequence: 1,
-  },
-  {
-    id: 2,
-    title: "Quiz 1",
-    description: "quiz 1 is associzted with mcq and short answers",
-    sequence: 1,
-  },
-  {
-    id: 3,
-    title: "Quiz 1",
-    description: "quiz 1 is associzted with mcq and short answers",
-    sequence: 1,
-  },
-  {
-    id: 4,
-    title: "Quiz 1",
-    description: "quiz 1 is associzted with mcq and short answers",
-    sequence: 1,
-  },
-  {
-    id: 5,
-    title: "Quiz 1",
-    description: "quiz 1 is associzted with mcq and short answers",
-    sequence: 1,
-  },
-];
+// const quizzes = [
+//   {
+//     id: 1,
+//     title: "Quiz 1",
+//     description: "quiz 1 is associzted with mcq and short answers",
+//     sequence: 1,
+//   },
+//   {
+//     id: 2,
+//     title: "Quiz 1",
+//     description: "quiz 1 is associzted with mcq and short answers",
+//     sequence: 1,
+//   },
+//   {
+//     id: 3,
+//     title: "Quiz 1",
+//     description: "quiz 1 is associzted with mcq and short answers",
+//     sequence: 1,
+//   },
+//   {
+//     id: 4,
+//     title: "Quiz 1",
+//     description: "quiz 1 is associzted with mcq and short answers",
+//     sequence: 1,
+//   },
+//   {
+//     id: 5,
+//     title: "Quiz 1",
+//     description: "quiz 1 is associzted with mcq and short answers",
+//     sequence: 1,
+//   },
+// ];
 
-const QuizList = ({ quizPerPage, paginate, currentPage }) => {
+const QuizList = ({ quizzes, quizPerPage, paginate, currentPage }) => {
   const dispatch = useDispatch();
   const quizCount = useSelector(selectQuizCount);
   const deletingQuiz = useSelector(selectDeletingQuiz);
