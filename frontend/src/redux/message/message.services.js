@@ -6,7 +6,10 @@ const get_message_user_list = () => {
       method: "GET",
       headers: authHeader(),
    };
-   return fetch("api/v1/user/short-list/", requestOptions).then(handleResponse);
+   return fetch(
+     "https://spiralmath-17663.botics.co/api/v1/user/short-list/",
+     requestOptions
+   ).then(handleResponse);
 };
 
 const get_messages_id = () => {
@@ -14,7 +17,10 @@ const get_messages_id = () => {
       method: "GET",
       headers: authHeader(),
    };
-   return fetch("api/v1/messages/", requestOptions).then(handleResponse);
+   return fetch(
+     "https://spiralmath-17663.botics.co/api/v1/messages/",
+     requestOptions
+   ).then(handleResponse);
 };
 
 const send_message = (data) => {
