@@ -8,7 +8,7 @@ class CreateQuestionPermission(permissions.BasePermission):
             return True
 
         if request.user.is_authenticated and request.user.user_type:
-            return request.user.user_type.create_question
+            return request.user.user_type.create_questions
 
         return False
 
@@ -20,6 +20,6 @@ class ReviewQuestionPermission(permissions.BasePermission):
             return True
 
         if request.user.is_authenticated and request.user.user_type:
-            return request.user.user_type.review_question
+            return request.user.user_type.review_questions
 
         return False
