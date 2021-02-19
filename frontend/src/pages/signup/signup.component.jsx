@@ -59,13 +59,13 @@ const SignUp = ({ show, toggleShow }) => {
       } else if (
          localUser &&
          localUser.userObj &&
-         localUser.userObj.createQuestion
+         localUser.userObj.createQuestions
       ) {
          history.push("/my-questions");
       } else if (
          localUser &&
          localUser.userObj &&
-         localUser.userObj.createQuestion
+         localUser.userObj.reviewQuestions
       ) {
          history.push("/my-reviews");
       }
