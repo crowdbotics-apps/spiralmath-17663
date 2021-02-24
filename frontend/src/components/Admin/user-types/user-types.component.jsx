@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Row, Col, Table, Form, Button, Modal } from "react-bootstrap";
+import { Row, Col, Table, Form, Button } from "react-bootstrap";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import Pagination from "../../Common//pagination/pagination.component";
@@ -11,8 +11,8 @@ import DeleteEditGroup from "../../ui/delete-edit-group/delete-edit-group.compon
 import { generateUserTypeDescription } from "../../../helpers/utils";
 import { userActions, alertActions } from "../../../redux/user/user.actions";
 import { validateCreateUserTypes } from "../../../helpers/validation/validateCreateUser";
-import { ReactComponent as DeleteIcon } from "../../../assets/img/delete-icon.svg";
-import { ReactComponent as EditIcon } from "../../../assets/img/edit-icon.svg";
+// import { ReactComponent as DeleteIcon } from "../../../assets/img/delete-icon.svg";
+// import { ReactComponent as EditIcon } from "../../../assets/img/edit-icon.svg";
 import { ReactComponent as CreateUserIcon } from "../../../assets/img/create-user-icon.svg";
 
 const UserTypes = () => {
@@ -137,6 +137,7 @@ const UserTypes = () => {
       if (Object.keys(errors).length === 0 && submitted) {
          submit();
       }
+   // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [errors]);
 
    const [closeForm, setCloseForm] = useState(true);
@@ -156,10 +157,12 @@ const UserTypes = () => {
 
    useEffect(() => {
       if (!updatingUserType) handleCloseForm();
+   // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [updatingUserType]);
 
    useEffect(() => {
       if (!userTypeCreating) handleCloseForm();
+   // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [userTypeCreating]);
 
    const createUserTypeForm = () => {

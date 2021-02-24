@@ -8,7 +8,7 @@ import Layout from '../../ui/layout/layout.component';
 
 // selectors
 import { selectAllQuestions } from '../../../redux/question/question.select';
-import { selectAllQuestionsCount } from '../../../redux/question/question.select';
+// import { selectAllQuestionsCount } from '../../../redux/question/question.select';
 
 //actions
 import questionActions from '../../../redux/question/question.action';
@@ -24,6 +24,7 @@ const AllQuestionsReviews = () => {
 
 	useEffect(() => {
 		dispatch(questionActions.getAllQuestions());
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const indexOfLastQuestion = currentPage * questionsPerPage;

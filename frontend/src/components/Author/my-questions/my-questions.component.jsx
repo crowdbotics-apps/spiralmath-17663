@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -11,7 +12,7 @@ import Layout from '../../ui/layout/layout.component';
 // selectors
 import { selectUserQuestions } from '../../../redux/question/question.select';
 import { selectUserQuestionsCount } from '../../../redux/question/question.select';
-import { selectUpdatingQuestion } from './../../../redux/question/question.select';
+// import { selectUpdatingQuestion } from './../../../redux/question/question.select';
 import { selectDeletingQuestion } from './../../../redux/question/question.select';
 
 //actions
@@ -30,7 +31,7 @@ const MyQuestions = () => {
 	const [showDeleteModal, setShowDeleteModal] = useState({ showModal: false });
 	const userQuestions = useSelector(selectUserQuestions);
 	const userQuestionsCount = useSelector(selectUserQuestionsCount);
-	const updatingQuestion = useSelector(selectUpdatingQuestion);
+	// const updatingQuestion = useSelector(selectUpdatingQuestion);
 	const deletingQuestion = useSelector(selectDeletingQuestion);
 
 	useEffect(() => {

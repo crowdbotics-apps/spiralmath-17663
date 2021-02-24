@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Form, Button, Row, Col, Modal } from "react-bootstrap";

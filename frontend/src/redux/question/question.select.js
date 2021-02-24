@@ -16,7 +16,7 @@ export const selectStandardCode = createSelector(
   (question) =>
     question.standardCode &&
     question.standardCode["Standard Set"].filter(function (item, pos) {
-      return question.standardCode["Standard Set"].indexOf(item) == pos;
+      return question.standardCode["Standard Set"].indexOf(item) === pos;
     })
 );
 

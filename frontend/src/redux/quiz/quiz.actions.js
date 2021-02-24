@@ -43,7 +43,27 @@ const editQuiz = (id, data) => {
   };
 };
 
+const createQuiz = (data) => {
+  return (dispatch) => {
+    dispatch({ type: quizTypes.CREATE_QUIZ_REQUEST });
+    quizServices.createQuiz(data).then(
+      (res) => {
+        dispatch({ type: quizTypes.CREATE_QUIZ_SUCCESS });
+      },
+      (err) => {
+        dispatch({ type: quizTypes.CREATE_QUIZ_FAILURE });
+      }
+    );
+  };
+};
+
+const resetLoadings = () => {
+  return { type: quizTypes.RESET_LOADINGS };
+};
+
 export default {
+  resetLoadings,
+  createQuiz,
   getAllQuizzes,
   deleteQuiz,
   editQuiz,

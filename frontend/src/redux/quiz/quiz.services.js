@@ -24,13 +24,23 @@ const editQuiz = (id, data) => {
   const requestOptions = {
     method: "PATCH",
     headers: authHeader(),
-    body: data,
+    body: JSON.stringify(data),
   };
   return fetch(`api/v1/quiz/${id}`, requestOptions).then(handleResponse);
 };
 
+const createQuiz = (data) => {
+  const requestOptions = {
+    method: "POST",
+    headers: authHeader(),
+    body: JSON.stringify(data),
+  };
+  return fetch(`api/v1/quiz/`, requestOptions).then(handleResponse);
+};
+
 export default {
   getAllQuizzes,
+  createQuiz,
   deleteQuiz,
   editQuiz,
 };
