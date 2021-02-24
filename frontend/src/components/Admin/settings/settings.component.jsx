@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useRef, useEffect } from 'react';
 import { Button, Form, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, } from 'react-intl';
 
 import ReactQuill from 'react-quill';
 
@@ -16,7 +17,7 @@ import './settings.styles.css';
 
 const Settings = () => {
 	const dispatch = useDispatch();
-	const intl = useIntl();
+	// const intl = useIntl();
 
 	const inputRef = useRef(null);
 	const editorRef = useRef(null);
@@ -53,6 +54,7 @@ const Settings = () => {
 				if (el.path === 'terms-condition' || el.path === 'non-registered-email' || el.path === 'registered-email') {
 					dispSet[el.path] = el.value;
 				}
+				return 0;
 			});
 
 			setTerms(dispSet['terms-condition']);
@@ -67,6 +69,7 @@ const Settings = () => {
 		if (!uploadingTerms || !uploadingNon || !uploadingR) {
 			dispatch(settingActions.get_settings());
 		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [uploadingNon, uploadingR, uploadingTerms]);
 
 	useEffect(() => {

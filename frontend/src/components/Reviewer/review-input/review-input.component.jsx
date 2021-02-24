@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Col } from 'react-bootstrap';
 
 const ReviewInput = ({ handleChange, reviewer_feedback, approved_status, handleRadioChange }) => {

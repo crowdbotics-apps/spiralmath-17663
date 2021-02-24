@@ -40,6 +40,7 @@ const logout = () => {
 };
 
 const register = (user) => {
+  // eslint-disable-next-line eqeqeq
   if (user["role"] != "10") {
     user["role"] = "Editor";
   } else {

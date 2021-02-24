@@ -4,6 +4,7 @@ const initialState = {
   deleteLoading: false,
   editLoading: false,
   getLoading: false,
+  createLoading: false,
   error: "",
   quizzes: null,
   quizCount: 0,
@@ -40,6 +41,20 @@ export default (state = initialState, action) => {
       return { ...state, editLoading: false };
     case quizTypes.EDIT_QUIZ_FAILURE:
       return { ...state, editLoading: false };
+    case quizTypes.CREATE_QUIZ_REQUEST:
+      return { ...state, createLoading: true };
+    case quizTypes.CREATE_QUIZ_SUCCESS:
+      return { ...state, createLoading: "success" };
+    case quizTypes.CREATE_QUIZ_FAILURE:
+      return { ...state, createLoading: "fail" };
+    case quizTypes.RESET_LOADINGS:
+      return {
+        ...state,
+        createLoading: false,
+        editLoading: false,
+        deleteLoading: false,
+        getLoading: false,
+      };
     default:
       return state;
   }

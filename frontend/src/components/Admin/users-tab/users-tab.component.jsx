@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Row, Col, Table, Form, Button, Modal } from "react-bootstrap";
+import { Row, Col, Table, Form, Button} from "react-bootstrap";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import Pagination from "../../Common/pagination/pagination.component";
@@ -10,8 +10,8 @@ import Layout from "../../ui/layout/layout.component.jsx";
 import DeleteEditGroup from "../../ui/delete-edit-group/delete-edit-group.component";
 import { userActions, alertActions } from "../../../redux/user/user.actions";
 import { validateCreateUser } from "../../../helpers/validation/validateCreateUser";
-import { ReactComponent as DeleteIcon } from "../../../assets/img/delete-icon.svg";
-import { ReactComponent as EditIcon } from "../../../assets/img/edit-icon.svg";
+// import { ReactComponent as DeleteIcon } from "../../../assets/img/delete-icon.svg";
+// import { ReactComponent as EditIcon } from "../../../assets/img/edit-icon.svg";
 import { ReactComponent as CreateUserIcon } from "../../../assets/img/create-user-icon.svg";
 import { ReactComponent as UpArrowIcon } from "../../../assets/img/up-arrow-icon.svg";
 import "./users-tab.styles.css";
@@ -77,6 +77,7 @@ const UsersTab = () => {
          };
       }, initialValue);
       setUpdateStatus(allUsersStatus);
+   // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [users]);
 
    const [currentPage, setCurrentPage] = useState(1);
@@ -91,6 +92,7 @@ const UsersTab = () => {
       if (!updatingUser && !registering && !deletingUser) {
          dispatch(userActions.getAllUsers((currentPage - 1) * usersPerPage));
       }
+   // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [updatingUser, registering, currentPage, deletingUser]);
 
    const [userForm, setUserForm] = useState({
@@ -130,6 +132,7 @@ const UsersTab = () => {
       if (Object.keys(errors).length === 0 && submitted) {
          submit();
       }
+   // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [errors]);
 
    const submit = () => {
@@ -178,10 +181,12 @@ const UsersTab = () => {
 
    useEffect(() => {
       if (!updatingUser && !errorKey) handleCloseForm();
+   // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [updatingUser]);
 
    useEffect(() => {
       if (!registering && !errorKey) handleCloseForm();
+   // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [registering]);
 
    const [closeForm, setCloseForm] = useState(true);

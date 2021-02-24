@@ -2,8 +2,8 @@ import handleResponse from "../../helpers/handleResponse";
 import authHeader from "../../helpers/authHeader";
 import { uploadHeader } from "./../../helpers/utils";
 
-const user = JSON.parse(localStorage.getItem("user"));
-const author = user && user !== "undefined" ? user.userObj.id : "";
+// const user = JSON.parse(localStorage.getItem("user"));
+// const author = user && user !== "undefined" ? user.userObj.id : "";
 
 const getStandardCode = () => {
   const requestOptions = {
@@ -58,7 +58,7 @@ const getUserQuestions = (queryString) => {
   };
 
   return fetch(
-    `https://spiralmath-17663.botics.co/api/v1/question/?${queryString}&deleted=false&ordering=-created`,
+    `api/v1/question/?${queryString}&deleted=false&ordering=-created`,
     requestOptions
   ).then(handleResponse);
 };

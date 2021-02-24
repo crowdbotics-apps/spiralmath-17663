@@ -9,12 +9,12 @@ import Layout from "../../ui/layout/layout.component";
 // selectors
 import { selectUserQuestions } from "../../../redux/question/question.select";
 import { selectUserQuestionsCount } from "../../../redux/question/question.select";
-import { selectUpdatingQuestion } from "./../../../redux/question/question.select";
+// import { selectUpdatingQuestion } from "./../../../redux/question/question.select";
 
 //actions
 import questionActions from "../../../redux/question/question.action";
-import { setQuestionType } from "../../../redux/local/local.actions";
-import { questionFormStateEdit } from "./../../../redux/questionFormState/questionFormState.action";
+// import { setQuestionType } from "../../../redux/local/local.actions";
+// import { questionFormStateEdit } from "./../../../redux/questionFormState/questionFormState.action";
 
 const MyReviews = () => {
    const dispatch = useDispatch();
@@ -34,6 +34,7 @@ const MyReviews = () => {
 
    useEffect(() => {
       dispatch(questionActions.getUserQuestions(`reviewer_name=${userId}`));
+   // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
    const indexOfLastQuestion = currentPage * questionsPerPage;

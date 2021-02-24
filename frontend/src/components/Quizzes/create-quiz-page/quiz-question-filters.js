@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Col, Button } from "react-bootstrap";
 import styled from "styled-components";
+import { grades } from "../../../content";
 
 const FilterInputsContainer = styled.div``;
 
@@ -11,7 +12,9 @@ const QuizQuestionFilters = () => {
         <Form.Group className="d-flex flex-column align-items-center">
           <Form.Label className="question-label">Grade</Form.Label>
           <Form.Control as="select">
-            <option>1</option>
+            {grades.map((grade) => (
+              <option key={grade}>{grade}</option>
+            ))}
           </Form.Control>
         </Form.Group>
         <Form.Group className="d-flex flex-column align-items-center">

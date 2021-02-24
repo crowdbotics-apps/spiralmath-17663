@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FormattedMessage, useIntl, FormattedDate } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { SingleSelect } from 'react-select-material-ui';
 import { Col, Form, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
@@ -33,7 +34,7 @@ import {
 	questionFormStateEditFalse,
 	resetAnswerState,
 } from '../../../redux/questionFormState/questionFormState.action';
-import settingActions from '../../../redux/setting/setting.actions';
+// import settingActions from '../../../redux/setting/setting.actions';
 import { selectCreatingCreator } from '../../../redux/setting/setting.select';
 
 const millsDiffLevel = [
@@ -87,8 +88,8 @@ const Question = ({ questionType }) => {
 	const [image, setImage] = useState({ file: '', url: '' });
 	const [submitted, setSubmitted] = useState(false);
 	const [errors, setErrors] = useState({});
-	const [creatorValue, setCreatorValue] = useState('');
-	const [creatorError, setCreatorError] = useState('');
+	// const [creatorValue, setCreatorValue] = useState('');
+	// const [creatorError, setCreatorError] = useState('');
 
 	console.log("mcoption out",mcOptionField)
 		
@@ -196,9 +197,9 @@ const Question = ({ questionType }) => {
 			setFormState((prevFormState) => ({ ...prevFormState, [name]: value }));
 		}
 		if (name === 'add_creator') {
-			setCreatorValue(value);
+			// setCreatorValue(value);
 		}
-		setCreatorError('');
+		// setCreatorError('');
 		setErrors({ ...errors, [name]: '' });
 	};
 
@@ -234,11 +235,11 @@ const Question = ({ questionType }) => {
 	};
 
 	const handleAnswerChange = (name) => (e) => {
-		let value;
+		// let value;
 		let checked;
 		if (e.target) {
 			checked = e.target.checked;
-			value = e.target.value;
+			// value = e.target.value;
 		}
 		if (questionType === 'sa' || questionType === 'la') {
 			setAnswer((prevAnswer) => ({ ...prevAnswer, content: e.trim() }));
@@ -380,18 +381,18 @@ const Question = ({ questionType }) => {
 		if (mcOptionField.length > 1) setMcOptionField(mcOptionField.slice(0, mcOptionField.length - 1));
 	};
 
-	const addCreator = () => {
-		if (!creatorValue) {
-			setCreatorError('This field is required');
-			return;
-		}
-		const creatorReqBody = {
-			first_name: creatorValue.split(' ')[0],
-			last_name: creatorValue.split(' ')[1],
-		};
-		dispatch(settingActions.createCreator(creatorReqBody));
-		setCreatorValue('');
-	};
+	// const addCreator = () => {
+	// 	if (!creatorValue) {
+	// 		setCreatorError('This field is required');
+	// 		return;
+	// 	}
+	// 	const creatorReqBody = {
+	// 		first_name: creatorValue.split(' ')[0],
+	// 		last_name: creatorValue.split(' ')[1],
+	// 	};
+	// 	dispatch(settingActions.createCreator(creatorReqBody));
+	// 	setCreatorValue('');
+	// };
 
 	const {
 		value,
@@ -674,7 +675,7 @@ const Question = ({ questionType }) => {
 						</Form.Group>
 						{image.url && (
 							<Form.Group as={Col} md="2">
-								<img src={image.url} className="roundimage" />
+								<img src={image.url} className="roundimage" alt="question related"/>
 							</Form.Group>
 						)}
 					</Form.Row>

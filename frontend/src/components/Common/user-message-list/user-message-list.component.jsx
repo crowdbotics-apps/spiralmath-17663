@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { InputGroup, FormControl } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";

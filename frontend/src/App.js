@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import katex from "katex";
 import { Route, Switch, useHistory } from "react-router-dom";
@@ -33,6 +34,12 @@ import "./App.css";
 
 const messages = { en, hindi };
 const intlValue = generateIntl({ locale: "en", messages: messages["en"] });
+
+const NotFound = () => {
+  const history = useHistory();
+  history.push("/login");
+  return null;
+};
 
 function App() {
   const history = useHistory();
@@ -71,6 +78,7 @@ function App() {
           <Route path="/reset-password" exact component={SignUp} />
           <Route path="/forgot-password" exact component={ForgotPassword} />
           <Route path="/confirm-email" exact component={ConfirmEmail} />
+          <Route component={NotFound} />
         </Switch>
         <Footer />
       </Container>
