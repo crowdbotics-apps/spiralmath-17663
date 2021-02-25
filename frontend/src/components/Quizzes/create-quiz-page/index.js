@@ -107,7 +107,12 @@ const CreateQuiz = () => {
   };
 
   const handleSave = () => {
-    dispatch(quizActions.createQuiz());
+    let tempQuestions = quizData.questions.map((question) => ({
+      question: question.id,
+      order: question.order,
+    }));
+    const data = { ...quizData, question: tempQuestions };
+    dispatch(quizActions.createQuiz(data));
   };
 
   const handleClearMessage = () => {
