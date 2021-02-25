@@ -8,7 +8,7 @@ const FrameworkBox = styled.div``;
 
 const FieldBox = styled.div``;
 
-const QuizFramework = ({ handleChange, quizData }) => {
+const QuizFramework = ({ handleChange, quizData, errors }) => {
   return (
     <FrameworkBox>
       <SectionHead>Quiz Framework</SectionHead>
@@ -30,6 +30,9 @@ const QuizFramework = ({ handleChange, quizData }) => {
                 <option>{grade}</option>
               ))}
             </Form.Control>
+            {errors.grade && (
+              <p className="text-danger form-text-danger">{errors.grade}</p>
+            )}
           </Form.Group>
           <Form.Group
             as={Col}
@@ -43,7 +46,13 @@ const QuizFramework = ({ handleChange, quizData }) => {
               value={quizData.title}
               onChange={handleChange}
             ></Form.Control>
+            {errors.title && (
+              <p className="text-danger form-text-danger text-nowrap">
+                {"Required"}
+              </p>
+            )}
           </Form.Group>
+
           <Form.Group
             as={Col}
             md="4"
@@ -56,17 +65,27 @@ const QuizFramework = ({ handleChange, quizData }) => {
               value={quizData.footer}
               onChange={handleChange}
             ></Form.Control>
+            {errors.footer && (
+              <p className="text-danger form-text-danger">{errors.footer}</p>
+            )}
           </Form.Group>
           <Form.Group
             as={Col}
             md="3"
             className="d-flex flex-column align-items-center"
-            name="description"
-            value={quizData.description}
-            onChange={handleChange}
           >
             <Form.Label className="question-label">Description</Form.Label>
-            <Form.Control as="input"></Form.Control>
+            <Form.Control
+              as="input"
+              name="description"
+              value={quizData.description}
+              onChange={handleChange}
+            ></Form.Control>
+            {errors.description && (
+              <p className="text-danger form-text-danger">
+                {errors.description}
+              </p>
+            )}
           </Form.Group>
           <Form.Group
             as={Col}
@@ -78,9 +97,12 @@ const QuizFramework = ({ handleChange, quizData }) => {
               as="input"
               style={{ width: "50%" }}
               name="sequence"
-              value={quizData.value}
+              value={quizData.sequence}
               onChange={handleChange}
             ></Form.Control>
+            {errors.sequence && (
+              <p className="text-danger form-text-danger">{errors.sequence}</p>
+            )}
           </Form.Group>
         </Form.Row>
       </FieldBox>
