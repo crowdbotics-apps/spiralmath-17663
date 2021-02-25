@@ -10,6 +10,7 @@ import RightButtonContainer from "../../styled/RightButtonContainer";
 import quizActions from "../../../redux/quiz/quiz.actions";
 import { selectCreatingQuiz } from "../../../redux/quiz/quiz.select";
 import MessageBar from "../../ui/message-bar/message-bar.component";
+import { validateCreateQuiz } from "../../../helpers/validation/validationQuiz";
 
 const CreateQuiz = () => {
   const dispatch = useDispatch();
@@ -61,14 +62,19 @@ const CreateQuiz = () => {
     ],
   });
   const [formErrors, setFormErrors] = useState({});
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    console.log("quiz Data", quizData);
-  }, [quizData]);
+    if (Object.keys(formErrors).length === 0 && submitted) {
+      submit();
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formErrors]);
 
   const handleChange = (e) => {
-    const { name, value, checked } = e.target;
-    console.log(checked);
+    const { name, value } = e.target;
+
     setQuizData((quizData) => ({ ...quizData, [name]: value }));
     setFormErrors({ ...formErrors, [name]: "" });
   };
@@ -106,8 +112,18 @@ const CreateQuiz = () => {
     });
   };
 
+  const submit = () => {
+    let tempQuestions = quizData.questions.map((question) => ({
+      question: question.id,
+      order: question.order,
+    }));
+    const data = { ...quizData, question: tempQuestions };
+    dispatch(quizActions.createQuiz(data));
+  };
+
   const handleSave = () => {
-    dispatch(quizActions.createQuiz());
+    setSubmitted(true);
+    setFormErrors(validateCreateQuiz(quizData));
   };
 
   const handleClearMessage = () => {
@@ -137,7 +153,11 @@ const CreateQuiz = () => {
         </React.Fragment>
       )}
 
-      <QuizFramework handleChange={handleChange} quizData={quizData} />
+      <QuizFramework
+        handleChange={handleChange}
+        quizData={quizData}
+        errors={formErrors}
+      />
       <hr />
       <SearchQuizQuestions handleQuestions={handleQuestions} />
       <hr />

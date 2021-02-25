@@ -111,10 +111,10 @@ const QuizQuestionSelectionList = ({ handleChange }) => {
                         //     </td>
                       }
                       <td className="border-right-0">
-                        {userQuestions && userQuestions.grade_level}
+                        {question && question.grade_level}
                       </td>
                       <td className="border-left-0 border-right-0">
-                        {userQuestions && userQuestions.value}
+                        {question && question.value}
                       </td>
                       <td className="border-left-0 ">
                         <Form.Check onChange={handleChange(question)} />
