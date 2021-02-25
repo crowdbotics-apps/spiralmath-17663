@@ -126,7 +126,9 @@ const CreateQuiz = () => {
     setFormErrors(validateCreateQuiz(quizData));
   };
 
-  const handleClearMessage = () => {};
+  const handleClearMessage = () => {
+    dispatch(quizActions.resetLoadings());
+  };
 
   return (
     <Layout>
