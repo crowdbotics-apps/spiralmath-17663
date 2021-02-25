@@ -4,7 +4,6 @@ import { FormattedMessage } from "react-intl";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { ReactComponent as Cross } from "../../../assets/img/cross.svg";
 
-
 const QuizFinalList = ({ questions, dragEndCall }) => {
   return (
     <Row>
@@ -27,29 +26,10 @@ const QuizFinalList = ({ questions, dragEndCall }) => {
 
                   <th scope="col" className="border-0 font-style thead">
                     <FormattedMessage
-                      defaultMessage="Standard"
-                      id="QuizFinalQuestionStandard"
-                    />
-                  </th>
-                  <th scope="col" className="border-0 font-style thead">
-                    <FormattedMessage
-                      defaultMessage="Mills Diff"
-                      id="QuizFinalQuestionMillsDiff"
-                    />
-                  </th>
-                  <th scope="col" className="border-0 font-style thead">
-                    <FormattedMessage
-                      defaultMessage="DOK"
-                      id="QuizFinalQuestionDOK"
-                    />
-                  </th>
-                  <th scope="col" className="border-0 font-style thead">
-                    <FormattedMessage
                       defaultMessage="Question"
                       id="QuizFinalQuestionQuestion"
                     />
                   </th>
-                  <th scope="col" className="border-0 font-style thead"></th>
                 </tr>
               </thead>
 
@@ -79,19 +59,11 @@ const QuizFinalList = ({ questions, dragEndCall }) => {
                                       {question.order}
                                     </td>
                                     <td className="border-right-0 border-left-0">
-                                      {question.grade}
+                                      {question.grade_level}
                                     </td>
-                                    <td className="border-right-0 border-left-0">
-                                      {question.standard}
-                                    </td>
-                                    <td className="border-right-0 border-left-0">
-                                      {question.millsDiff}
-                                    </td>
+
                                     <td className="border-left-0 border-right-0">
-                                      {question.dok}
-                                    </td>
-                                    <td className="border-left-0 border-right-0">
-                                      {question.question}
+                                      {question.value}
                                     </td>
                                     <td className="border-left-0 ">
                                       <Cross />
