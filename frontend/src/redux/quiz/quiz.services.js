@@ -38,9 +38,18 @@ const createQuiz = (data) => {
   return fetch(`api/v1/quiz/`, requestOptions).then(handleResponse);
 };
 
+const getQuiz = (id) => {
+  const requestOptions = {
+    method: "GET",
+    headers: authHeader(),
+  };
+  return fetch(`api/v1/quiz/${id}`, requestOptions).then(handleResponse);
+};
+
 export default {
   getAllQuizzes,
   createQuiz,
   deleteQuiz,
   editQuiz,
+  getQuiz,
 };

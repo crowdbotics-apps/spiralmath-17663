@@ -57,6 +57,20 @@ const createQuiz = (data) => {
   };
 };
 
+const getQuiz = (id) => {
+  return (dispatch) => {
+    dispatch({ type: quizTypes.GET_QUIZ_REQUEST });
+    quizServices.getQuiz(id).then(
+      (res) => {
+        dispatch({ type: quizTypes.GET_QUIZ_SUCCESS, payload: res });
+      },
+      (err) => {
+        dispatch({ type: quizTypes.GET_QUIZ_FAILURE });
+      }
+    );
+  };
+};
+
 const resetLoadings = () => {
   return { type: quizTypes.RESET_LOADINGS };
 };
@@ -67,4 +81,5 @@ export default {
   getAllQuizzes,
   deleteQuiz,
   editQuiz,
+  getQuiz,
 };

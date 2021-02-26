@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { SectionHead } from "../styles";
 import QuizFinalList from "./quiz-final-list";
 
-const QuizOverview = ({ quizData, dragEndCall }) => {
+const QuizOverview = ({ quizData, dragEndCall, handleRemoveQuestion }) => {
   return (
     <OverviewContainer>
       <HeadView>
@@ -16,7 +16,11 @@ const QuizOverview = ({ quizData, dragEndCall }) => {
         <p>Reviews Previous Year</p>
         <p>Quiz Sequence {quizData.sequence}</p>
       </HeadLevel2>
-      <QuizFinalList questions={quizData.questions} dragEndCall={dragEndCall} />
+      <QuizFinalList
+        questions={quizData.questions}
+        dragEndCall={dragEndCall}
+        handleRemoveQuestion={handleRemoveQuestion}
+      />
     </OverviewContainer>
   );
 };

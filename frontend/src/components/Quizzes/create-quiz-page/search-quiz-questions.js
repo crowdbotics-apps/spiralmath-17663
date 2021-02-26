@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Button } from "react-bootstrap";
 import QuizQuestionFilters from "./quiz-question-filters";
@@ -8,8 +8,12 @@ import RightButtonContainer from "../../styled/RightButtonContainer";
 
 const SearchQuizContainer = styled.div``;
 
-const SearchQuizQuestions = ({ handleQuestions }) => {
-  const [selectedQuestions, setSelectedQuestions] = useState([]);
+const SearchQuizQuestions = ({
+  handleQuestions,
+  setQuizData,
+  selectedQuestions,
+  setSelectedQuestions,
+}) => {
   useEffect(() => {
     console.log("selected questions", selectedQuestions);
   }, [selectedQuestions]);

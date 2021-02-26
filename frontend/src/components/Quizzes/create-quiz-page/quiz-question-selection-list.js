@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, Table, Form } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
 import questionActions from "../../../redux/question/question.action";
+import parse from "html-react-parser";
 import { selectUserQuestions } from "../../../redux/question/question.select";
 
 const QuizQuestionSelectionList = ({ handleChange }) => {
@@ -114,7 +115,7 @@ const QuizQuestionSelectionList = ({ handleChange }) => {
                         {question && question.grade_level}
                       </td>
                       <td className="border-left-0 border-right-0">
-                        {question && question.value}
+                        {question.value && parse(question.value)}
                       </td>
                       <td className="border-left-0 ">
                         <Form.Check onChange={handleChange(question)} />
