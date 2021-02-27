@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Row, Col, Table } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
 import DeleteEditGroup from "../../ui/delete-edit-group/delete-edit-group.component";
@@ -48,6 +49,7 @@ import quizActions from "../../../redux/quiz/quiz.actions";
 
 const QuizList = ({ quizzes, quizPerPage, paginate, currentPage }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const quizCount = useSelector(selectQuizCount);
   const deletingQuiz = useSelector(selectDeletingQuiz);
   const [deleteModalState, setDeleteModalState] = useState({
@@ -127,9 +129,12 @@ const QuizList = ({ quizzes, quizPerPage, paginate, currentPage }) => {
                               id: quiz.id,
                             });
                           }}
-                          handleEditForm={() => {}}
+                          handleEditForm={() => {
+                            history.push("/create-quiz");
+                            dispatch(quizActions.getQuiz(quiz.id));
+                          }}
                           handleShowParam={1}
-                          handleEditFormParam={{}}
+                          handleEditFormParam={quiz.id}
                         />
                       </td>
                     </tr>

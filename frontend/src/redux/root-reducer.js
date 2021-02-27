@@ -20,6 +20,7 @@ import mainSettings from "./setting/setting.reducer";
 import localReducer from "./local/local.reducer";
 import questionReducer from "./question/question.reducer";
 import quizReducer from "./quiz/quiz.reducer";
+import singleQuizReducer from "./quiz/singleQuiz.reducer";
 import { questionFormStateReducer } from "./questionFormState/questionFormState.reducer";
 import { answerFormStateReducer } from "./questionFormState/questionFormState.reducer";
 
@@ -48,6 +49,7 @@ const rootReducer = combineReducers({
   question: questionReducer,
   questionFormStateReducer,
   quiz: quizReducer,
+  singleQuiz: singleQuizReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);
