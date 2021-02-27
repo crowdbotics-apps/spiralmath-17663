@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Button } from "react-bootstrap";
 import QuizQuestionFilters from "./quiz-question-filters";
@@ -10,13 +10,15 @@ const SearchQuizContainer = styled.div``;
 
 const SearchQuizQuestions = ({
   handleQuestions,
-  setQuizData,
   selectedQuestions,
   setSelectedQuestions,
+  filters,
+  setFilters,
+  search,
+  queryStr,
+  setSearch,
+  handleSearch,
 }) => {
-  useEffect(() => {
-    console.log("selected questions", selectedQuestions);
-  }, [selectedQuestions]);
   const handleChange = (question) => (e) => {
     const { checked } = e.target;
     if (checked) {
@@ -33,8 +35,17 @@ const SearchQuizQuestions = ({
   return (
     <SearchQuizContainer>
       <SectionHead>Search Quiz Questions</SectionHead>
-      <QuizQuestionFilters />
-      <QuizQuestionSelectionList handleChange={handleChange} />
+      <QuizQuestionFilters
+        filters={filters}
+        setFilters={setFilters}
+        handleSearch={handleSearch}
+      />
+      <QuizQuestionSelectionList
+        handleChange={handleChange}
+        search={search}
+        queryStr={queryStr}
+        setSearch={setSearch}
+      />
       <RightButtonContainer>
         <Button onClick={handleQuestionAddition(selectedQuestions)}>
           Add to quiz
