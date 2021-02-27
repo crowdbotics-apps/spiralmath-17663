@@ -13,6 +13,7 @@ import { selectCreatingQuiz } from "../../../redux/quiz/quiz.select";
 import MessageBar from "../../ui/message-bar/message-bar.component";
 import { validateCreateQuiz } from "../../../helpers/validation/validationQuiz";
 import { selectSingleQuiz } from "../../../redux/quiz/quiz.select";
+import { buildQueryStr } from "../../../helpers/utils";
 
 const CreateQuiz = () => {
   const dispatch = useDispatch();
@@ -71,6 +72,24 @@ const CreateQuiz = () => {
   const [formErrors, setFormErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [selectedQuestions, setSelectedQuestions] = useState([]);
+  const [search, setSearch] = useState(false);
+  const [queryStr, setQueryStr] = useState("");
+  const [filters, setFilters] = useState({
+    grade_level: "",
+    mills_difficulty_level: "",
+    dok: "",
+    question_style: "",
+    summative_status: "",
+    state_model: "",
+    standard_code: "",
+    content_source: "",
+    author_memo: "",
+  });
+
+  const handleSearch = () => {
+    setSearch(true);
+    setQueryStr(buildQueryStr(filters));
+  };
 
   const handleRemoveQuestion = (id) => () => {
     setSelectedQuestions((prevQuestion) =>
@@ -110,10 +129,6 @@ const CreateQuiz = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formErrors]);
-
-  useEffect(() => {
-    console.log("quizData", quizData.questions);
-  }, [quizData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -205,6 +220,12 @@ const CreateQuiz = () => {
         setQuizData={setQuizData}
         selectedQuestions={selectedQuestions}
         setSelectedQuestions={setSelectedQuestions}
+        filters={filters}
+        setFilters={setFilters}
+        search={search}
+        queryStr={queryStr}
+        setSearch={setSearch}
+        handleSearch={handleSearch}
       />
       <hr />
       <QuizOverview

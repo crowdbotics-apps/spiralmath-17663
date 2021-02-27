@@ -7,7 +7,12 @@ import questionActions from "../../../redux/question/question.action";
 import parse from "html-react-parser";
 import { selectUserQuestions } from "../../../redux/question/question.select";
 
-const QuizQuestionSelectionList = ({ handleChange }) => {
+const QuizQuestionSelectionList = ({
+  handleChange,
+  search,
+  setSearch,
+  queryStr,
+}) => {
   const dispatch = useDispatch();
   const localUser =
     localStorage.getItem("user") !== "undefined"
@@ -16,8 +21,12 @@ const QuizQuestionSelectionList = ({ handleChange }) => {
   const userId = localUser && localUser.userObj && localUser.userObj.id;
   const userQuestions = useSelector(selectUserQuestions);
   useEffect(() => {
-    dispatch(questionActions.getUserQuestions(`user=${userId}`));
-  }, []);
+    if (search) {
+      console.log("queryStr", queryStr);
+      dispatch(questionActions.getUserQuestions(`user=${userId}${queryStr}`));
+      setSearch(false);
+    }
+  }, [search]);
   return (
     <Row>
       <Col className="mt-3">
