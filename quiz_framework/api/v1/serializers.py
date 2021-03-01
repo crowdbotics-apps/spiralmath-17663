@@ -24,7 +24,10 @@ class QuizQuestionsSerializer(serializers.ModelSerializer):
 
 class QuizQuestionNestedSerializer(serializers.ModelSerializer):
     question = QuestionRelatedField(
-        queryset=Question.objects.all()
+        queryset=Question.objects.filter(
+            deleted=False,
+            approved_status=Question.ASTATUS.APPROVED
+        )
     )
 
     class Meta:
