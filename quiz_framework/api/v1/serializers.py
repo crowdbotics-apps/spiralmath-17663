@@ -1,6 +1,18 @@
 from rest_framework import serializers
 
+from home.models import Question
+from home.api.v1.serializer.question import QuestionBase
 from quiz_framework.models import QuizFrameworks, QuizQuestions
+
+
+class QuestionRelatedField(serializers.PrimaryKeyRelatedField):
+
+    def to_representation(self, value):
+        try:
+            question = Question.objects.get(pk=value.pk)
+        except Question.DoesNotExist:
+            return None
+        return QuestionBase(question).data
 
 
 class QuizQuestionsSerializer(serializers.ModelSerializer):
@@ -11,6 +23,12 @@ class QuizQuestionsSerializer(serializers.ModelSerializer):
 
 
 class QuizQuestionNestedSerializer(serializers.ModelSerializer):
+    question = QuestionRelatedField(
+        queryset=Question.objects.filter(
+            deleted=False,
+            approved_status=Question.ASTATUS.APPROVED
+        )
+    )
 
     class Meta:
         model = QuizQuestions
