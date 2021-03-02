@@ -973,3 +973,8 @@ body .alignment .set-hover-false:hover {
   position: static !important;
   color: #f1a139 !important;
 }
+
+.modal-90w {
+  width: 60% !important;
+  max-width: none !important;
+}
