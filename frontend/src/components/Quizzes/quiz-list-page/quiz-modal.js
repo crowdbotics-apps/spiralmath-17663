@@ -33,7 +33,13 @@ const QuizShowModal = ({ show, setShow, quiz, questions }) => {
         <StyledList>
           {questions &&
             questions.map((question) => {
-              return <li>{parse(question.value)}</li>;
+              return (
+                <li>
+                  {parse(
+                    question && question.question && question.question.value
+                  )}
+                </li>
+              );
             })}
         </StyledList>
       </Modal.Body>
