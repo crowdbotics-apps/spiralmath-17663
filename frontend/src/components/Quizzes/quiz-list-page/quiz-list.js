@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Row, Col, Table } from "react-bootstrap";
@@ -11,41 +12,9 @@ import {
   selectQuizCount,
   selectDeletingQuiz,
 } from "../../../redux/quiz/quiz.select";
-
+import QuizShowModal from "./quiz-modal";
+import { selectSingleQuizQuestions } from "../../../redux/quiz/quiz.select";
 import quizActions from "../../../redux/quiz/quiz.actions";
-
-// const quizzes = [
-//   {
-//     id: 1,
-//     title: "Quiz 1",
-//     description: "quiz 1 is associzted with mcq and short answers",
-//     sequence: 1,
-//   },
-//   {
-//     id: 2,
-//     title: "Quiz 1",
-//     description: "quiz 1 is associzted with mcq and short answers",
-//     sequence: 1,
-//   },
-//   {
-//     id: 3,
-//     title: "Quiz 1",
-//     description: "quiz 1 is associzted with mcq and short answers",
-//     sequence: 1,
-//   },
-//   {
-//     id: 4,
-//     title: "Quiz 1",
-//     description: "quiz 1 is associzted with mcq and short answers",
-//     sequence: 1,
-//   },
-//   {
-//     id: 5,
-//     title: "Quiz 1",
-//     description: "quiz 1 is associzted with mcq and short answers",
-//     sequence: 1,
-//   },
-// ];
 
 const QuizList = ({ quizzes, quizPerPage, paginate, currentPage }) => {
   const dispatch = useDispatch();
@@ -56,6 +25,15 @@ const QuizList = ({ quizzes, quizPerPage, paginate, currentPage }) => {
     show: false,
     id: null,
   });
+  const [showQuiz, setShowQuiz] = useState(false);
+  const [currentQuiz, setCurrentQuiz] = useState({});
+  const quizQuestions = useSelector(selectSingleQuizQuestions);
+
+  const handleQuizShow = (quiz) => () => {
+    setCurrentQuiz(quiz);
+    dispatch(quizActions.getQuiz(quiz.id));
+    setShowQuiz(true);
+  };
 
   useEffect(() => {
     if (!deletingQuiz) {
@@ -112,7 +90,9 @@ const QuizList = ({ quizzes, quizPerPage, paginate, currentPage }) => {
                     <tr key={quiz.id}>
                       <td className="border-right-0">{quiz.id}</td>
                       <td className="border-right-0 border-left-0">
-                        {quiz.title}
+                        <LinkColorButton onClick={handleQuizShow(quiz)}>
+                          {quiz.title}
+                        </LinkColorButton>
                       </td>
                       <td className="border-right-0 border-left-0">
                         {quiz.description}
@@ -160,9 +140,24 @@ const QuizList = ({ quizzes, quizPerPage, paginate, currentPage }) => {
             messageId="componentUsersTabDeleteModalWarning"
           />
         ) : null}
+        <QuizShowModal
+          show={showQuiz}
+          setShow={setShowQuiz}
+          questions={quizQuestions}
+          quiz={currentQuiz}
+        />
       </Col>
     </Row>
   );
 };
+
+const LinkColorButton = styled.a`
+  font-size: 14px;
+  border-bottom: 1px solid blue;
+  display: inline-block;
+  color: blue !important;
+  font-family: Open Sans !important;
+  cursor: pointer;
+`;
 
 export default QuizList;
