@@ -978,3 +978,8 @@ body .alignment .set-hover-false:hover {
   width: 60% !important;
   max-width: none !important;
 }
+
+.modal-30w {
+  width: 30% !important;
+  max-width: none !important;
+}

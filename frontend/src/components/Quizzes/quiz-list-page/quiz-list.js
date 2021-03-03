@@ -12,7 +12,7 @@ import {
   selectQuizCount,
   selectDeletingQuiz,
 } from "../../../redux/quiz/quiz.select";
-import QuizShowModal from "./quiz-modal";
+import QuizShowModal from "../quiz-modal";
 import { selectSingleQuizQuestions } from "../../../redux/quiz/quiz.select";
 import quizActions from "../../../redux/quiz/quiz.actions";
 

@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, Table, Form } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
 import questionActions from "../../../redux/question/question.action";
 import parse from "html-react-parser";
 import { selectUserQuestions } from "../../../redux/question/question.select";
+import QuestionModal from "../question-modal";
 
 const QuizQuestionSelectionList = ({
   handleChange,
@@ -20,6 +21,8 @@ const QuizQuestionSelectionList = ({
       : undefined;
   const userId = localUser && localUser.userObj && localUser.userObj.id;
   const userQuestions = useSelector(selectUserQuestions);
+  const [showQuestionModal, setShowQuestionModal] = useState(false);
+  const [currentQuestion, setCurrentQuestion] = useState(null);
   useEffect(() => {
     if (search) {
       console.log("queryStr", queryStr);
@@ -27,6 +30,12 @@ const QuizQuestionSelectionList = ({
       setSearch(false);
     }
   }, [search]);
+
+  const handleQuestionModal = (question) => () => {
+    setCurrentQuestion(question);
+    setShowQuestionModal(true);
+  };
+
   return (
     <Row>
       <Col className="mt-3">
@@ -123,7 +132,10 @@ const QuizQuestionSelectionList = ({
                       <td className="border-right-0">
                         {question && question.grade_level}
                       </td>
-                      <td className="border-left-0 border-right-0">
+                      <td
+                        className="border-left-0 border-right-0 pointerType"
+                        onClick={handleQuestionModal(question)}
+                      >
                         {question.value && parse(question.value)}
                       </td>
                       <td className="border-left-0 ">
@@ -136,6 +148,11 @@ const QuizQuestionSelectionList = ({
           </Table>
         </div>
       </Col>
+      <QuestionModal
+        show={showQuestionModal}
+        setShow={setShowQuestionModal}
+        question={currentQuestion}
+      />
     </Row>
   );
 };
