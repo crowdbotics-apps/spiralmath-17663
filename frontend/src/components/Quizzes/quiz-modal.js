@@ -16,7 +16,7 @@ const StyledList = styled.ol`
   }
 `;
 
-const QuizShowModal = ({ show, setShow, quiz, questions }) => {
+const QuizShowModal = ({ show, setShow, quiz, questions, studentView }) => {
   return (
     <Modal
       show={show}
@@ -35,9 +35,11 @@ const QuizShowModal = ({ show, setShow, quiz, questions }) => {
             questions.map((question) => {
               return (
                 <li>
-                  {parse(
-                    question && question.question && question.question.value
-                  )}
+                  {!studentView
+                    ? parse(
+                        question && question.question && question.question.value
+                      )
+                    : parse(question && question.value)}
                 </li>
               );
             })}
