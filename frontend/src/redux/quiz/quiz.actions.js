@@ -75,6 +75,10 @@ const resetLoadings = () => {
   return { type: quizTypes.RESET_LOADINGS };
 };
 
+const resetQuizData = () => {
+  return { type: quizTypes.RESET_QUIZ_DATA };
+};
+
 export default {
   resetLoadings,
   createQuiz,
@@ -82,4 +86,5 @@ export default {
   deleteQuiz,
   editQuiz,
   getQuiz,
+  resetQuizData,
 };

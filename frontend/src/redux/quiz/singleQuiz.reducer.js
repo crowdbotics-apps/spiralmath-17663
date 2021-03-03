@@ -8,6 +8,8 @@ export default (state = null, action) => {
       return { data: action.payload };
     case quizTypes.GET_QUIZ_FAILURE:
       return state;
+    case quizTypes.RESET_QUIZ_DATA:
+      return null;
     default:
       return state;
   }
