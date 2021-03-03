@@ -51,12 +51,18 @@ const QuizListPage = () => {
     dispatch(quizActions.getAllQuizzes((currentPage - 1) * quizPerPage));
   }, [currentPage, deletingQuiz]);
 
+  const handleResetQuizData = () => {
+    dispatch(quizActions.resetQuizData());
+  };
+
   return (
     <Layout>
       <SectionHead>Quizzes</SectionHead>
       <Header>
         <Link to="/create-quiz">
-          <Button className="transparent-btn">Create Quiz</Button>
+          <Button className="transparent-btn" onClick={handleResetQuizData}>
+            Create Quiz
+          </Button>
         </Link>
       </Header>
       <GradeFilter>
