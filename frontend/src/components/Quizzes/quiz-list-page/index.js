@@ -31,6 +31,7 @@ const Header = styled.div`
 `;
 const GradeFilter = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const SelectBox = styled.div`
