@@ -49,6 +49,7 @@ const createQuiz = (data) => {
     quizServices.createQuiz(data).then(
       (res) => {
         dispatch({ type: quizTypes.CREATE_QUIZ_SUCCESS });
+        window.location.href = "/#/quizzes";
       },
       (err) => {
         dispatch({ type: quizTypes.CREATE_QUIZ_FAILURE });

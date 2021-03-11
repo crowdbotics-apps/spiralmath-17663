@@ -56,11 +56,10 @@ const QuizList = ({ quizzes, quizPerPage, paginate, currentPage }) => {
             <thead>
               <tr>
                 <th scope="col" className="border-0 font-style thead">
-                  {deleteModalState.show.toString()}
-                  {/* <FormattedMessage
+                  <FormattedMessage
                     defaultMessage="Quiz ID"
                     id="QuizListHeadId"
-                  /> */}
+                  />
                 </th>
                 <th scope="col" className="border-0 font-style thead">
                   <FormattedMessage

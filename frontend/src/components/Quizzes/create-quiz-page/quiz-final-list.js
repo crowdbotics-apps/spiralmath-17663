@@ -4,6 +4,7 @@ import { FormattedMessage } from "react-intl";
 import parse from "html-react-parser";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { ReactComponent as Cross } from "../../../assets/img/cross.svg";
+import { ReactComponent as UpAndDown } from "../../../assets/img/up-and-down.svg";
 
 const QuizFinalList = ({ questions, dragEndCall, handleRemoveQuestion }) => {
   return (
@@ -66,12 +67,15 @@ const QuizFinalList = ({ questions, dragEndCall, handleRemoveQuestion }) => {
                                     <td className="border-left-0 border-right-0">
                                       {question.value && parse(question.value)}
                                     </td>
-                                    <td className="border-left-0 ">
+                                    <td className="border-left-0 border-right-0">
                                       <Cross
                                         onClick={handleRemoveQuestion(
                                           question.id
                                         )}
                                       />
+                                    </td>
+                                    <td className="border-left-0 ">
+                                      <UpAndDown />
                                     </td>
                                   </tr>
                                 );
