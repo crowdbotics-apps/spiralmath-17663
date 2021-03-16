@@ -55,7 +55,8 @@ class QuestionList(QuestionBase):
     """List any questions Serializer."""
 
     class Meta(QuestionBase.Meta):
-        fields = ['id', 'user', 'value', 'approved_status', 'creator', 'grade_level', 'deleted_status', 'deleted']
+        fields = ['id', 'user', 'value', 'approved_status', 'creator', 'grade_level', 'deleted_status', 'deleted',
+                  'mills_difficulty_level', 'grade_level', 'standard_code', 'question_style', 'dok', 'content_source']
 
 
 class QuestionCreate(QuestionBase):
