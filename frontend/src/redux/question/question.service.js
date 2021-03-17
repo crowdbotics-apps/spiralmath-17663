@@ -63,13 +63,13 @@ const getUserQuestions = (queryString) => {
   ).then(handleResponse);
 };
 
-const getAllQuestions = () => {
+const getAllQuestions = (pagenumber) => {
   const requestOptions = {
     method: "GET",
     headers: authHeader(),
   };
   return fetch(
-    "api/v1/question?deleted=false&ordering=-created",
+    `api/v1/question?limit=10&offset=${pagenumber}&deleted=false&ordering=-created`,
     requestOptions
   ).then(handleResponse);
 };
