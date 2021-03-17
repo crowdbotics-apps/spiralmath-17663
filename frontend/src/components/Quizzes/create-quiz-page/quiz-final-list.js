@@ -27,6 +27,17 @@ const QuizFinalList = ({ questions, dragEndCall, handleRemoveQuestion }) => {
                   </th>
 
                   <th scope="col" className="border-0 font-style thead">
+                    Standard
+                  </th>
+
+                  <th scope="col" className="border-0 font-style thead">
+                    Mills Diff
+                  </th>
+                  <th scope="col" className="border-0 font-style thead">
+                    DOK
+                  </th>
+
+                  <th scope="col" className="border-0 font-style thead">
                     <FormattedMessage
                       defaultMessage="Question"
                       id="QuizFinalQuestionQuestion"
@@ -62,6 +73,15 @@ const QuizFinalList = ({ questions, dragEndCall, handleRemoveQuestion }) => {
                                     </td>
                                     <td className="border-right-0 border-left-0">
                                       {question.grade_level}
+                                    </td>
+                                    <td className="border-right-0 border-left-0">
+                                      {question.standard_code}
+                                    </td>
+                                    <td className="border-right-0 border-left-0">
+                                      {question.mills_difficulty_level}
+                                    </td>
+                                    <td className="border-right-0 border-left-0">
+                                      {question.dok}
                                     </td>
 
                                     <td className="border-left-0 border-right-0">

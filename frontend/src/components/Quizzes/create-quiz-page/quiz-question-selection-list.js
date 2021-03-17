@@ -93,7 +93,22 @@ const QuizQuestionSelectionList = ({
                   Grade
                 </th>
                 <th scope="col" className="border-0 font-style thead">
+                  Standard
+                </th>
+                <th scope="col" className="border-0 font-style thead">
+                  Style
+                </th>
+                <th scope="col" className="border-0 font-style thead">
+                  Mills Diff
+                </th>
+                <th scope="col" className="border-0 font-style thead">
+                  DOK
+                </th>
+                <th scope="col" className="border-0 font-style thead">
                   Question
+                </th>
+                <th scope="col" className="border-0 font-style thead">
+                  source
                 </th>
                 <th scope="col" className="border-0 font-style thead">
                   <FormattedMessage
@@ -132,11 +147,27 @@ const QuizQuestionSelectionList = ({
                       <td className="border-right-0">
                         {question && question.grade_level}
                       </td>
+                      <td className="border-right-0 border-left-0">
+                        {question && question.standard_code}
+                      </td>
+                      <td className="border-right-0 border-left-0">
+                        {question && question.question_style}
+                      </td>
+                      <td className="border-right-0 border-left-0">
+                        {question && question.mills_difficulty_level}
+                      </td>
+                      <td className="border-right-0 border-left-0">
+                        {question && question.dok}
+                      </td>
+
                       <td
                         className="border-left-0 border-right-0 pointerType"
                         onClick={handleQuestionModal(question)}
                       >
                         {question.value && parse(question.value)}
+                      </td>
+                      <td className="border-right-0 border-left-0">
+                        {question && question.content_source}
                       </td>
                       <td className="border-left-0 ">
                         <Form.Check onChange={handleChange(question)} />

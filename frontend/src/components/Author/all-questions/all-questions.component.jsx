@@ -22,6 +22,7 @@ const AllQuestions = () => {
 	//pagination
 	const [currentPage, setCurrentPage] = useState(1);
 	const [questionsPerPage] = useState(10);
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 	const [showDeleteModal, setShowDeleteModal] = useState({
 		showModal: false,
 	});
@@ -32,7 +33,7 @@ const AllQuestions = () => {
 
 	useEffect(() => {
 		if (!deletingQuestion) {
-			dispatch(questionActions.getAllQuestions());
+			dispatch(questionActions.getAllQuestions((currentPage - 1) * questionsPerPage));
 			handleClose();
 		}
 	}, [deletingQuestion]);
@@ -65,16 +66,13 @@ const AllQuestions = () => {
 		);
 	};
 
-	const indexOfLastQuestion = currentPage * questionsPerPage;
-	const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
-	const currentQuestions = questions && questions.slice(indexOfFirstQuestion, indexOfLastQuestion);
+	
 
-	const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
 	return (
 		<>
 			<Layout>
-				<EditorQuestionsTable questions={currentQuestions} all={true} renderDeleteEdit={renderDeleteEdit} />
+				<EditorQuestionsTable questions={questions} all={true} renderDeleteEdit={renderDeleteEdit} />
 				<Pagination
 					perPage={questionsPerPage}
 					total={questionsCount}
