@@ -36,14 +36,14 @@ const MyQuestions = () => {
 
 	useEffect(() => {
 		if (!deletingQuestion) {
-			dispatch(questionActions.getUserQuestions(`user=${userId}`));
+			dispatch(questionActions.getUserQuestions(`user=${userId}`,(currentPage-1)*questionsPerPage));
 			setShowDeleteModal(false);
 		}
 	}, [deletingQuestion]);
 
-	const indexOfLastQuestion = currentPage * questionsPerPage;
-	const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
-	const currentQuestions = userQuestions && userQuestions.slice(indexOfFirstQuestion, indexOfLastQuestion);
+	// const indexOfLastQuestion = currentPage * questionsPerPage;
+	// const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
+	// const currentQuestions = userQuestions && userQuestions.slice(indexOfFirstQuestion, indexOfLastQuestion);
 
 	const handleOpen = (id) => {
 		setShowDeleteModal({ ...showDeleteModal, showModal: true, id });
@@ -78,7 +78,7 @@ const MyQuestions = () => {
 	return (
 		<>
 			<Layout>
-				<EditorQuestionsTable questions={currentQuestions} renderDeleteEdit={renderDeleteEdit} />
+				<EditorQuestionsTable questions={userQuestions} renderDeleteEdit={renderDeleteEdit} />
 				<Pagination
 					perPage={questionsPerPage}
 					total={userQuestionsCount}

@@ -51,14 +51,14 @@ const createAnswer = (data) => {
   return fetch("api/v1/answer/", requestOptions).then(handleResponse);
 };
 
-const getUserQuestions = (queryString) => {
+const getUserQuestions = (queryString, pagenumber) => {
   const requestOptions = {
     method: "GET",
     headers: authHeader(),
   };
 
   return fetch(
-    `api/v1/question/?${queryString}&deleted=false&ordering=-created`,
+    `api/v1/question/?limit=10&offset=${pagenumber}&${queryString}&deleted=false&ordering=-created`,
     requestOptions
   ).then(handleResponse);
 };
