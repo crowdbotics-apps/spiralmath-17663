@@ -33,15 +33,15 @@ const MyReviews = () => {
    const userQuestionsCount = useSelector(selectUserQuestionsCount);
 
    useEffect(() => {
-      dispatch(questionActions.getUserQuestions(`reviewer_name=${userId}`));
+      dispatch(questionActions.getUserQuestions(`reviewer_name=${userId}`,`limit=${questionsPerPage}&offset=${(currentPage - 1) * questionsPerPage}`));
    // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, []);
+   }, [currentPage]);
 
-   const indexOfLastQuestion = currentPage * questionsPerPage;
-   const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
-   const currentQuestions =
-      userQuestions &&
-      userQuestions.slice(indexOfFirstQuestion, indexOfLastQuestion);
+   // const indexOfLastQuestion = currentPage * questionsPerPage;
+   // const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
+   // const currentQuestions =
+   //    userQuestions &&
+   //    userQuestions.slice(indexOfFirstQuestion, indexOfLastQuestion);
 
    const handleReviewForm = (data) => {
       dispatch(questionActions.getSingleQuestion(data.id));
@@ -54,7 +54,7 @@ const MyReviews = () => {
       <>
          <Layout>
             <ReviewerQuestionsTable
-               questions={currentQuestions}
+               questions={userQuestions}
                handleReviewForm={handleReviewForm}
             />
             <Pagination

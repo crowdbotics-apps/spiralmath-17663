@@ -24,9 +24,9 @@ const AllQuestionsReviews = () => {
 	const questionsCount = useSelector(selectAllQuestionsCount);
 
 	useEffect(() => {
-		dispatch(questionActions.getAllQuestions((currentPage -1) * questionsPerPage));
+		dispatch(questionActions.getAllQuestions(`limit=${questionsPerPage}&offset=${(currentPage - 1) * questionsPerPage}`))
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [currentPage]);
 
 	return (
 		<>

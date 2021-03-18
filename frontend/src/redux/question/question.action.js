@@ -66,10 +66,10 @@ const createAnswer = (data) => {
   };
 };
 
-const getUserQuestions = (queryString, pagenumber) => {
+const getUserQuestions = (queryString, paginationQuery) => {
   return (dispatch) => {
     dispatch({ type: questionTypes.GET_USERQUESTION_REQUEST });
-    questionService.getUserQuestions(queryString, pagenumber).then(
+    questionService.getUserQuestions(queryString, paginationQuery).then(
       (data) => {
         dispatch({ type: questionTypes.GET_USERQUESTION_SUCCESS, data });
       },
@@ -80,10 +80,10 @@ const getUserQuestions = (queryString, pagenumber) => {
   };
 };
 
-const getAllQuestions = (pagenumber) => {
+const getAllQuestions = (paginationQuery) => {
   return (dispatch) => {
     dispatch({ type: questionTypes.GET_QUESTION_REQUEST });
-    questionService.getAllQuestions(pagenumber).then(
+    questionService.getAllQuestions(paginationQuery).then(
       (data) => {
         dispatch({ type: questionTypes.GET_QUESTION_SUCCESS, data });
       },

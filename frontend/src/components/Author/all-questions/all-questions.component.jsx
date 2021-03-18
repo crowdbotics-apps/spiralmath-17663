@@ -33,10 +33,10 @@ const AllQuestions = () => {
 
 	useEffect(() => {
 		if (!deletingQuestion) {
-			dispatch(questionActions.getAllQuestions((currentPage - 1) * questionsPerPage));
+			dispatch(questionActions.getAllQuestions(`limit=${questionsPerPage}&offset=${(currentPage - 1) * questionsPerPage}`));
 			handleClose();
 		}
-	}, [deletingQuestion]);
+	}, [deletingQuestion,currentPage]);
 
 	const handleOpen = (id) => {
 		setShowDeleteModal({ ...showDeleteModal, showModal: true, id });

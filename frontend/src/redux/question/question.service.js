@@ -51,25 +51,25 @@ const createAnswer = (data) => {
   return fetch("api/v1/answer/", requestOptions).then(handleResponse);
 };
 
-const getUserQuestions = (queryString, pagenumber) => {
+const getUserQuestions = (queryString, paginationQuery) => {
   const requestOptions = {
     method: "GET",
     headers: authHeader(),
   };
 
   return fetch(
-    `api/v1/question/?limit=10&offset=${pagenumber}&${queryString}&deleted=false&ordering=-created`,
+    `api/v1/question/?${paginationQuery}&${queryString}&deleted=false&ordering=-created`,
     requestOptions
   ).then(handleResponse);
 };
 
-const getAllQuestions = (pagenumber) => {
+const getAllQuestions = (paginationQuery) => {
   const requestOptions = {
     method: "GET",
     headers: authHeader(),
   };
   return fetch(
-    `api/v1/question?limit=10&offset=${pagenumber}&deleted=false&ordering=-created`,
+    `api/v1/question?${paginationQuery}&deleted=false&ordering=-created`,
     requestOptions
   ).then(handleResponse);
 };
