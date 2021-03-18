@@ -36,10 +36,10 @@ const MyQuestions = () => {
 
 	useEffect(() => {
 		if (!deletingQuestion) {
-			dispatch(questionActions.getUserQuestions(`user=${userId}`,(currentPage-1)*questionsPerPage));
+			dispatch(questionActions.getUserQuestions(`user=${userId}`,`limit=${questionsPerPage}&offset=${(currentPage - 1) * questionsPerPage}`))
 			setShowDeleteModal(false);
 		}
-	}, [deletingQuestion]);
+	}, [deletingQuestion,currentPage]);
 
 	// const indexOfLastQuestion = currentPage * questionsPerPage;
 	// const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
