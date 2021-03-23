@@ -14,10 +14,13 @@ import MessageBar from "../../ui/message-bar/message-bar.component";
 import { validateCreateQuiz } from "../../../helpers/validation/validationQuiz";
 import { selectSingleQuiz } from "../../../redux/quiz/quiz.select";
 import { buildQueryStr } from "../../../helpers/utils";
+import questionActions from "../../../redux/question/question.action";
+import { selectStandardCode } from "../../../redux/question/question.select";
 
 const CreateQuiz = () => {
   const dispatch = useDispatch();
   const editQuizData = useSelector(selectSingleQuiz);
+  const standardCode = useSelector(selectStandardCode);
   const creatingQuiz = useSelector(selectCreatingQuiz);
   const [quizData, setQuizData] = useState({
     grade: grades[0],
@@ -26,48 +29,7 @@ const CreateQuiz = () => {
     description: "",
     footer: "",
     sequence: "",
-    questions: [
-      // {
-      //   serialNo: "1",
-      //   id: 1,
-      //   order: 1,
-      //   grade_level: 1,
-      //   standard: "3.0293.44",
-      //   millsDiff: 1,
-      //   dok: 1,
-      //   value: "What is your name ?",
-      // },
-      // {
-      //   serialNo: "2",
-      //   id: 2,
-      //   order: 2,
-      //   grade_level: 2,
-      //   standard: "4.83.20",
-      //   millsDiff: 3,
-      //   dok: 2,
-      //   value: "What is your name ?",
-      // },
-      // {
-      //   serialNo: "3",
-      //   id: 3,
-      //   order: 3,
-      //   grade_level: 1,
-      //   standard: "823.3452dd.3d",
-      //   millsDiff: 2,
-      //   dok: 4,
-      //   value: "What is your name ?",
-      // },
-      // {
-      //   serialNo: "4",
-      //   id: 4,
-      //   order: 4,
-      //   grade_level: 2,
-      //   standard: "s5h3.3j",
-      //   millsDiff: 2,
-      //   dok: 3,
-      //   value: "What is your name ?",
-      // },
-    ],
+    questions: [],
   });
   const [formErrors, setFormErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
@@ -75,16 +37,20 @@ const CreateQuiz = () => {
   const [search, setSearch] = useState(false);
   const [queryStr, setQueryStr] = useState("");
   const [filters, setFilters] = useState({
-    grade_level: "",
-    mills_difficulty_level: "",
-    dok: "",
-    question_style: "",
-    summative_status: "",
-    state_model: "",
+    grade_level: "PK",
+    mills_difficulty_level: 1,
+    dok: 1,
+    question_style: "word",
+    summative_status: false,
+    state_model: false,
     standard_code: "",
     content_source: "",
     author_memo: "",
   });
+
+  useEffect(() => {
+    dispatch(questionActions.getStandardCode());
+  }, []);
 
   const handleSearch = () => {
     setSearch(true);
@@ -186,6 +152,16 @@ const CreateQuiz = () => {
     dispatch(quizActions.resetLoadings());
   };
 
+  useEffect(() => {
+    let timeout;
+    if (creatingQuiz === "success" || creatingQuiz === "fail") {
+      timeout = setTimeout(() => {
+        handleClearMessage();
+      }, 3000);
+    }
+    return () => clearTimeout(timeout);
+  }, [creatingQuiz]);
+
   return (
     <Layout>
       {creatingQuiz === "success" && (
@@ -238,7 +214,7 @@ const CreateQuiz = () => {
           {creatingQuiz === true && (
             <span className="spinner-border spinner-border-sm mr-1"></span>
           )}
-          Save to quiz
+          Save Quiz
         </Button>
       </RightButtonContainer>
     </Layout>

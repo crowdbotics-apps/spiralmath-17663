@@ -31,6 +31,10 @@ const QuizQuestionSelectionList = ({
     }
   }, [search]);
 
+  useEffect(() => {
+    dispatch(questionActions.getUserQuestions(`user=${userId}`));
+  }, []);
+
   const handleQuestionModal = (question) => () => {
     setCurrentQuestion(question);
     setShowQuestionModal(true);

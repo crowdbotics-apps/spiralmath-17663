@@ -48,7 +48,7 @@ const SearchQuizQuestions = ({
       />
       <RightButtonContainer>
         <Button onClick={handleQuestionAddition(selectedQuestions)}>
-          Add to quiz
+          Add to Quiz
         </Button>
       </RightButtonContainer>
     </SearchQuizContainer>
