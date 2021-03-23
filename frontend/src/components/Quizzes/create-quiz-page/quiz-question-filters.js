@@ -76,7 +76,7 @@ const QuizQuestionFilters = ({ filters, setFilters, handleSearch }) => {
           <Form.Control
             as="select"
             style={{ width: "55px" }}
-            value={filters.mills_difficult_level}
+            value={filters.mills_difficulty_level}
             onChange={handleChange}
             name="mills_difficulty_level"
           >

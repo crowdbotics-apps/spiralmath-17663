@@ -135,7 +135,7 @@ const QuizList = ({ quizzes, quizPerPage, paginate, currentPage }) => {
             deleting={deletingQuiz}
             handleClose={handleClose}
             handleDelete={handleDeleteQuiz}
-            message="User will be deleted"
+            message="Quiz will be deleted"
             messageId="componentUsersTabDeleteModalWarning"
           />
         ) : null}
