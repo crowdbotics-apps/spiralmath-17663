@@ -5,7 +5,12 @@ import { grades } from "../../../content";
 
 const FilterInputsContainer = styled.div``;
 
-const QuizQuestionFilters = ({ filters, setFilters, handleSearch,standardCode }) => {
+const QuizQuestionFilters = ({
+  filters,
+  setFilters,
+  handleSearch,
+  standardCode,
+}) => {
   useEffect(() => {
     console.log("filters", filters);
   }, [filters]);
@@ -29,12 +34,13 @@ const QuizQuestionFilters = ({ filters, setFilters, handleSearch,standardCode })
     });
   };
 
-
-  const iterableStandardCode =  (standardCode && standardCode.detail && standardCode.detail["Standard Code"].filter(
-    (value, index, self) => {
-  return self.indexOf(value) === index;
-}
-)) || []
+  const iterableStandardCode =
+    (standardCode &&
+      standardCode.detail &&
+      standardCode.detail["Standard Code"].filter((value, index, self) => {
+        return self.indexOf(value) === index;
+      })) ||
+    [];
 
   return (
     <FilterInputsContainer>
@@ -61,13 +67,14 @@ const QuizQuestionFilters = ({ filters, setFilters, handleSearch,standardCode })
         <Form.Group className="d-flex flex-column align-items-center">
           <Form.Label className="question-label">Standard Code</Form.Label>
           <Form.Control
+            as="select"
             value={filters.standard_code}
             onChange={handleChange}
             name="standard_code"
           >
-          {
-           iterableStandardCode.map((code) => <option>{code}</option>)
-          }
+            {iterableStandardCode.map((code) => (
+              <option>{code}</option>
+            ))}
           </Form.Control>
         </Form.Group>
         <Form.Group className="d-flex flex-column align-items-center">
