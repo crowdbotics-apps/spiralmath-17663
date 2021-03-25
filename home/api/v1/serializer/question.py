@@ -4,6 +4,8 @@ from typing import List
 from home.models import Question, Settings, STANDARD_CODE_PATH
 from django.conf import settings
 
+from .answer import AnswerSerializer
+
 
 def validate_grade_level(data_grade_level):
     standard_code = Settings.objects.filter(path=STANDARD_CODE_PATH).first()
@@ -16,6 +18,7 @@ def validate_grade_level(data_grade_level):
 
 class QuestionBase(serializers.ModelSerializer):
     """List any question Serializer."""
+    answers = AnswerSerializer(source='answer_set', many=True, read_only=True)
 
     class Meta(object):
         model = Question
@@ -47,16 +50,19 @@ class QuestionBase(serializers.ModelSerializer):
             'deleted_status',
             'deleted',
             'modified',
+            'answers'
         ]
         read_only_fields: List[str] = ['created', 'modified']
 
 
 class QuestionList(QuestionBase):
     """List any questions Serializer."""
+    answers = AnswerSerializer(source='answer_set', many=True, read_only=True)
 
     class Meta(QuestionBase.Meta):
         fields = ['id', 'user', 'value', 'approved_status', 'creator', 'grade_level', 'deleted_status', 'deleted',
-                  'mills_difficulty_level', 'grade_level', 'standard_code', 'question_style', 'dok', 'content_source']
+                  'mills_difficulty_level', 'grade_level', 'standard_code', 'question_style', 'dok', 'content_source',
+                  'answers']
 
 
 class QuestionCreate(QuestionBase):
