@@ -66,7 +66,7 @@ const createAnswer = (data) => {
   };
 };
 
-const getUserQuestions = (queryString, paginationQuery) => {
+const getUserQuestions = (queryString, paginationQuery = "") => {
   return (dispatch) => {
     dispatch({ type: questionTypes.GET_USERQUESTION_REQUEST });
     questionService.getUserQuestions(queryString, paginationQuery).then(
@@ -80,7 +80,7 @@ const getUserQuestions = (queryString, paginationQuery) => {
   };
 };
 
-const getAllQuestions = (paginationQuery) => {
+const getAllQuestions = (paginationQuery="") => {
   return (dispatch) => {
     dispatch({ type: questionTypes.GET_QUESTION_REQUEST });
     questionService.getAllQuestions(paginationQuery).then(
