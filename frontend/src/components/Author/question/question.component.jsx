@@ -88,10 +88,7 @@ const Question = ({ questionType }) => {
 	const [image, setImage] = useState({ file: '', url: '' });
 	const [submitted, setSubmitted] = useState(false);
 	const [errors, setErrors] = useState({});
-	// const [creatorValue, setCreatorValue] = useState('');
-	// const [creatorError, setCreatorError] = useState('');
 
-	console.log("mcoption out",mcOptionField)
 		
 
 	useEffect(() => {

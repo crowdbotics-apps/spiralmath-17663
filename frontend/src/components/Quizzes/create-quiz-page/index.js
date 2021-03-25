@@ -202,6 +202,7 @@ const CreateQuiz = () => {
         queryStr={queryStr}
         setSearch={setSearch}
         handleSearch={handleSearch}
+        standardCode={standardCode}
       />
       <hr />
       <QuizOverview

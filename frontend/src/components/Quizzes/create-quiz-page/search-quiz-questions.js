@@ -18,6 +18,7 @@ const SearchQuizQuestions = ({
   queryStr,
   setSearch,
   handleSearch,
+  standardCode
 }) => {
   const handleChange = (question) => (e) => {
     const { checked } = e.target;
@@ -39,6 +40,7 @@ const SearchQuizQuestions = ({
         filters={filters}
         setFilters={setFilters}
         handleSearch={handleSearch}
+        standardCode={standardCode}
       />
       <QuizQuestionSelectionList
         handleChange={handleChange}

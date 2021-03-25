@@ -51,7 +51,7 @@ const createAnswer = (data) => {
   return fetch("api/v1/answer/", requestOptions).then(handleResponse);
 };
 
-const getUserQuestions = (queryString, paginationQuery) => {
+const getUserQuestions = (queryString, paginationQuery = "") => {
   const requestOptions = {
     method: "GET",
     headers: authHeader(),
@@ -63,7 +63,7 @@ const getUserQuestions = (queryString, paginationQuery) => {
   ).then(handleResponse);
 };
 
-const getAllQuestions = (paginationQuery) => {
+const getAllQuestions = (paginationQuery = "") => {
   const requestOptions = {
     method: "GET",
     headers: authHeader(),
