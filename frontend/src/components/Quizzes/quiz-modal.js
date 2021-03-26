@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Modal } from "react-bootstrap";
 import parse from "html-react-parser";
 
+import { answerFormat } from "./answer-format";
+
 const StyledList = styled.ol`
   list-style: none;
   counter-reset: my-awesome-counter;
@@ -17,6 +19,24 @@ const StyledList = styled.ol`
 `;
 
 const QuizShowModal = ({ show, setShow, quiz, questions, studentView }) => {
+  const questionView = () => {
+    return (
+      questions &&
+      questions.map((question) => {
+        const plainQuestionObj = !studentView
+          ? question && question.question
+          : question;
+
+        return (
+          <li>
+            <p>{parse(plainQuestionObj && plainQuestionObj.value)}</p>
+            {answerFormat(plainQuestionObj)}
+          </li>
+        );
+      })
+    );
+  };
+
   return (
     <Modal
       show={show}
@@ -30,20 +50,7 @@ const QuizShowModal = ({ show, setShow, quiz, questions, studentView }) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <StyledList>
-          {questions &&
-            questions.map((question) => {
-              return (
-                <li>
-                  {!studentView
-                    ? parse(
-                        question && question.question && question.question.value
-                      )
-                    : parse(question && question.value)}
-                </li>
-              );
-            })}
-        </StyledList>
+        <StyledList>{questionView()}</StyledList>
       </Modal.Body>
     </Modal>
   );
