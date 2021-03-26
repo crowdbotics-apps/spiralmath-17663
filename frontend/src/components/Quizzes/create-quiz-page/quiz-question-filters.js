@@ -42,6 +42,8 @@ const QuizQuestionFilters = ({
       })) ||
     [];
 
+  console.log("Itearble Standard code", iterableStandardCode);
+
   return (
     <FilterInputsContainer>
       <Form.Row className="justify-content-around mb-4">
