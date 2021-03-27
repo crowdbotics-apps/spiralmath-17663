@@ -21,7 +21,7 @@ export const answerFormat = (question) => {
       </>
     );
   } else {
-    const options = Object.entries(question.answers[0].content);
+    const options = Object.entries(question && question.answers[0].content);
     return (
       <>
         {options.map((el) => {
