@@ -21,12 +21,13 @@ export const answerFormat = (question) => {
       </>
     );
   } else {
-    const options = Object.entries(question && question.answers[0].content);
+    const options = question && Object.entries(question.answers[0].content);
     return (
       <>
-        {options.map((el) => {
-          return <p>{`${el[0]} ${el[1].value}`} </p>;
-        })}
+        {options &&
+          options.map((el) => {
+            return <p>{`${el[0]} ${el[1].value}`} </p>;
+          })}
       </>
     );
   }
