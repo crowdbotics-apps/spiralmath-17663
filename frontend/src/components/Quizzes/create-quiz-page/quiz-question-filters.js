@@ -64,9 +64,8 @@ const QuizQuestionFilters = ({
             onChange={handleChange}
             name="standard_code"
           >
-            {standardCode.map((code) => (
-              <option>{code}</option>
-            ))}
+            {standardCode &&
+              standardCode.map((code) => <option>{code}</option>)}
           </Form.Control>
         </Form.Group>
         <Form.Group className="d-flex flex-column align-items-center">
