@@ -35,11 +35,16 @@ const QuizQuestionFilters = ({
   };
 
   const iterableStandardCode =
-    standardCode &&
-    standardCode.detail &&
-    standardCode.detail["Standard Code"].filter((value, index, self) => {
-      return self.indexOf(value) === index;
-    });
+    standardCode && standardCode.detail && standardCode.detail["Standard Code"];
+  // .filter((value, index, self) => {
+  //   return self.indexOf(value) === index;
+  // });
+
+  console.log("detail", standardCode && standardCode.detail);
+  console.log(
+    "code arr",
+    standardCode && standardCode.detail && standardCode.detail["Standard Code"]
+  );
 
   console.log("Itearble Standard code", iterableStandardCode);
 
