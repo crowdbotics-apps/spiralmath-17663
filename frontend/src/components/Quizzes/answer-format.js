@@ -26,7 +26,7 @@ export const answerFormat = (question) => {
       <>
         {options &&
           options.map((el) => {
-            return <p>{`${el[0]} ${el[1].value}`} </p>;
+            return <p>{`${el[0] + 1}. ${el[1].value}`} </p>;
           })}
       </>
     );

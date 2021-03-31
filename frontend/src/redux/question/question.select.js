@@ -11,12 +11,20 @@ export const selectCreatingQuestion = createSelector(
   (question) => question.creatingQuestion
 );
 
-export const selectStandardCode = createSelector(
+export const selectStandardSet = createSelector(
   [selectQuestion],
   (question) =>
     question.standardCode &&
     question.standardCode["Standard Set"].filter(function (item, pos) {
       return question.standardCode["Standard Set"].indexOf(item) === pos;
+    })
+);
+export const selectStandardCode = createSelector(
+  [selectQuestion],
+  (question) =>
+    question.standardCode &&
+    question.standardCode["Standard Code"].filter((value, index, self) => {
+      return self.indexOf(value) === index;
     })
 );
 

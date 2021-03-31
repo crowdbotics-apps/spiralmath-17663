@@ -34,15 +34,6 @@ const QuizQuestionFilters = ({
     });
   };
 
-  const iterableStandardCode =
-    standardCode &&
-    standardCode.detail &&
-    standardCode.detail["Standard Code"].filter((value, index, self) => {
-      return self.indexOf(value) === index;
-    });
-
-  console.log("Itearble Standard code", iterableStandardCode);
-
   return (
     <FilterInputsContainer>
       <Form.Row className="justify-content-around mb-4">
@@ -73,8 +64,9 @@ const QuizQuestionFilters = ({
             onChange={handleChange}
             name="standard_code"
           >
-            {iterableStandardCode &&
-              iterableStandardCode.map((code) => <option>{code}</option>)}
+            {standardCode.map((code) => (
+              <option>{code}</option>
+            ))}
           </Form.Control>
         </Form.Group>
         <Form.Group className="d-flex flex-column align-items-center">
