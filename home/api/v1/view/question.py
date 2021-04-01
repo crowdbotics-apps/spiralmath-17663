@@ -41,7 +41,7 @@ class QuestionViewSet(
                         "deleted_status", "user", "grade_level",
                         "standard_code", "question_style", "mills_difficulty_level",
                         "dok", "content_source", "author_memo", "summative_status",
-                        "state_model"]
+                        "state_model", "approved_status"]
     ordering_fields = ["created"]
 
     def get_queryset(self: 'QuestionViewSet'):
