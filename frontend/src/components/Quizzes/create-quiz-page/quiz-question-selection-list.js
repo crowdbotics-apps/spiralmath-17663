@@ -26,7 +26,11 @@ const QuizQuestionSelectionList = ({
   useEffect(() => {
     if (search) {
       console.log("queryStr", queryStr);
-      dispatch(questionActions.getUserQuestions(`user=${userId}${queryStr}`));
+      dispatch(
+        questionActions.getUserQuestions(
+          `user=${userId}&approved_status=20${queryStr}`
+        )
+      );
       setSearch(false);
     }
   }, [search]);
