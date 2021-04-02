@@ -36,7 +36,9 @@ const QuizQuestionSelectionList = ({
   }, [search]);
 
   useEffect(() => {
-    dispatch(questionActions.getUserQuestions(`user=${userId}`));
+    dispatch(
+      questionActions.getUserQuestions(`user=${userId}&approved_status=20`)
+    );
   }, []);
 
   const handleQuestionModal = (question) => () => {
