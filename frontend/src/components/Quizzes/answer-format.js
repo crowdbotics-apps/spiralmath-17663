@@ -11,13 +11,12 @@ export const answerFormat = (question) => {
   } else if (
     question &&
     typeof question.answers[0].content === "object" &&
-    typeof question.answers[0].content.true &&
     typeof question.answers[0].content.true === "boolean"
   ) {
     return (
       <>
-        <p>1. {question.answers[0].content.true} </p>
-        <p>2. {question.answers[0].content.false} </p>
+        <p>1. {`${question.answers[0].content.true}`} </p>
+        <p>2. {`${question.answers[0].content.false}`} </p>
       </>
     );
   } else {
@@ -26,7 +25,7 @@ export const answerFormat = (question) => {
       <>
         {options &&
           options.map((el) => {
-            return <p>{`${el[0] + 1}. ${el[1].value}`} </p>;
+            return <p>{`${parseInt(el[0]) + 1}. ${el[1].value}`} </p>;
           })}
       </>
     );
