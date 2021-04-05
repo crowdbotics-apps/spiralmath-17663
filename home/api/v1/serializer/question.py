@@ -60,9 +60,9 @@ class QuestionList(QuestionBase):
     answers = AnswerSerializer(source='answer_set', many=True, read_only=True)
 
     class Meta(QuestionBase.Meta):
-        fields = ['id', 'user', 'value', 'approved_status', 'creator', 'grade_level', 'deleted_status', 'deleted',
-                  'mills_difficulty_level', 'grade_level', 'standard_code', 'question_style', 'dok', 'content_source',
-                  'answers']
+        fields = ['id', 'user', 'value', 'image', 'image_source', 'approved_status', 'creator', 'grade_level',
+                  'deleted_status', 'deleted', 'mills_difficulty_level', 'grade_level', 'standard_code',
+                  'question_style', 'dok', 'content_source', 'answers']
 
 
 class QuestionCreate(QuestionBase):
