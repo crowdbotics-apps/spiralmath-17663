@@ -52,7 +52,9 @@ const createQuiz = (data) => {
         window.location.href = "/#/quizzes";
       },
       (err) => {
-        dispatch({ type: quizTypes.CREATE_QUIZ_FAILURE });
+        const key = Object.keys(err)[0];
+        err = { key, message: err[key][0] };
+        dispatch({ type: quizTypes.CREATE_QUIZ_FAILURE, error: err });
       }
     );
   };
@@ -80,6 +82,10 @@ const resetQuizData = () => {
   return { type: quizTypes.RESET_QUIZ_DATA };
 };
 
+export const clearQuizError = () => {
+  return { type: quizTypes.CLEAR_QUIZ_ERROR };
+};
+
 export default {
   resetLoadings,
   createQuiz,
@@ -88,4 +94,5 @@ export default {
   editQuiz,
   getQuiz,
   resetQuizData,
+  clearQuizError,
 };

@@ -5,7 +5,6 @@ import parse from "html-react-parser";
 import { answerFormat } from "./answer-format";
 
 const QuestionModal = ({ show, setShow, question }) => {
-  console.log("question", question);
   return (
     <Modal
       show={show}

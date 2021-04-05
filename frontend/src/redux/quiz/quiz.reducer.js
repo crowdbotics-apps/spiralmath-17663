@@ -46,7 +46,7 @@ export default (state = initialState, action) => {
     case quizTypes.CREATE_QUIZ_SUCCESS:
       return { ...state, createLoading: "success" };
     case quizTypes.CREATE_QUIZ_FAILURE:
-      return { ...state, createLoading: "fail" };
+      return { ...state, createLoading: "fail", error: action.error };
     case quizTypes.RESET_LOADINGS:
       return {
         ...state,
@@ -55,6 +55,8 @@ export default (state = initialState, action) => {
         deleteLoading: false,
         getLoading: false,
       };
+    case quizTypes.CLEAR_QUIZ_ERROR:
+      return { ...state, error: "" };
     default:
       return state;
   }

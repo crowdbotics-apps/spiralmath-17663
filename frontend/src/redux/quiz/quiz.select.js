@@ -6,3 +6,4 @@ export const selectSingleQuiz = (state) =>
   state.singleQuiz && state.singleQuiz.data;
 export const selectSingleQuizQuestions = (state) =>
   state.singleQuiz && state.singleQuiz.data && state.singleQuiz.data.questions;
+export const selectQuizError = (state) => state.quiz && state.quiz.error;

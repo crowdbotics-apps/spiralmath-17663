@@ -16,9 +16,12 @@ import { selectSingleQuiz } from "../../../redux/quiz/quiz.select";
 import { buildQueryStr } from "../../../helpers/utils";
 import questionActions from "../../../redux/question/question.action";
 import { selectStandardCode } from "../../../redux/question/question.select";
+import { selectQuizError } from "../../../redux/quiz/quiz.select";
+import { clearQuizError } from "../../../redux/quiz/quiz.actions";
 
 const CreateQuiz = () => {
   const dispatch = useDispatch();
+  const error = useSelector(selectQuizError);
   const editQuizData = useSelector(selectSingleQuiz);
   const standardCode = useSelector(selectStandardCode);
   const creatingQuiz = useSelector(selectCreatingQuiz);
@@ -98,6 +101,9 @@ const CreateQuiz = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (error.key === name) {
+      dispatch(clearQuizError());
+    }
     setQuizData((quizData) => ({ ...quizData, [name]: value }));
     setFormErrors({ ...formErrors, [name]: "" });
   };
