@@ -3,6 +3,7 @@ import { Modal } from "react-bootstrap";
 import parse from "html-react-parser";
 
 import { answerFormat } from "./answer-format";
+import { ImgWrapper } from "./ImgWrapper";
 
 const QuestionModal = ({ show, setShow, question }) => {
   return (
@@ -14,7 +15,13 @@ const QuestionModal = ({ show, setShow, question }) => {
     >
       <Modal.Body>
         <p>{parse((question && question.value) || "")}</p>
-
+        <ImgWrapper>
+          <img
+            src={question && question.image}
+            style={{ width: "100%", maxWidth: "100%" }}
+            alt="question info pic"
+          />
+        </ImgWrapper>
         {answerFormat(question)}
       </Modal.Body>
     </Modal>

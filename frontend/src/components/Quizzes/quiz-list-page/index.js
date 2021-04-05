@@ -44,7 +44,7 @@ const QuizListPage = () => {
   const deletingQuiz = useSelector(selectDeletingQuiz);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [quizPerPage] = useState(10);
+  const [quizPerPage] = useState(5);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 

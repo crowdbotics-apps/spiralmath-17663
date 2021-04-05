@@ -30,7 +30,7 @@ const QuizFramework = ({ handleChange, quizData, errors }) => {
               onChange={handleChange}
             >
               {grades.map((grade) => (
-                <option>{grade}</option>
+                <option key={grade}>{grade}</option>
               ))}
             </Form.Control>
             {errors.grade && (
