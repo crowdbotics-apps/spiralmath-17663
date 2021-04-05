@@ -20,7 +20,7 @@ const QuizOverview = ({ quizData, dragEndCall, handleRemoveQuestion }) => {
       <HeadLevel2>
         <p>Grade {quizData.grade}</p>
         <p>{quizData.title}</p>
-        <p>Reviews Previous Year</p>
+        <p>{quizData.description}</p>
         <p>Quiz Sequence {quizData.sequence}</p>
       </HeadLevel2>
       <QuizFinalList

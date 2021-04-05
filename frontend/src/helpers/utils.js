@@ -98,3 +98,15 @@ export const buildQueryStr = (obj) => {
   }
   return str.slice(0, str.length - 1);
 };
+
+export const numToSSColumn = (num) => {
+  var s = "",
+    t;
+
+  while (num > 0) {
+    t = (num - 1) % 26;
+    s = String.fromCharCode(65 + t) + s;
+    num = ((num - t) / 26) | 0;
+  }
+  return s || undefined;
+};

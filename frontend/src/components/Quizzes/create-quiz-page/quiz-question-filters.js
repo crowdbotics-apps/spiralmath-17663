@@ -76,8 +76,9 @@ const QuizQuestionFilters = ({
             onChange={handleChange}
             name="question_style"
           >
-            <option>word</option>
-            <option>numeric</option>
+            <option>Word</option>
+            <option>Numeric</option>
+            <option>Graphic</option>
           </Form.Control>
         </Form.Group>
         <Form.Group className="d-flex flex-column align-items-center">

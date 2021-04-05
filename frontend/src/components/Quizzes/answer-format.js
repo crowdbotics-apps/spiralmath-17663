@@ -1,5 +1,8 @@
 import parse from "html-react-parser";
 import React from "react";
+
+import { numToSSColumn } from "../../helpers/utils";
+
 export const answerFormat = (question) => {
   if (
     // (question && question.question_type) === "sa" ||
@@ -15,8 +18,8 @@ export const answerFormat = (question) => {
   ) {
     return (
       <>
-        <p>1. {`${question.answers[0].content.true}`} </p>
-        <p>2. {`${question.answers[0].content.false}`} </p>
+        <p> {`${numToSSColumn(1)}. ${question.answers[0].content.true}`} </p>
+        <p>{`${numToSSColumn(2)}. ${question.answers[0].content.false}`} </p>
       </>
     );
   } else {
@@ -25,7 +28,9 @@ export const answerFormat = (question) => {
       <>
         {options &&
           options.map((el) => {
-            return <p>{`${parseInt(el[0]) + 1}. ${el[1].value}`} </p>;
+            return (
+              <p>{`${numToSSColumn(parseInt(el[0]) + 1)}. ${el[1].value}`} </p>
+            );
           })}
       </>
     );

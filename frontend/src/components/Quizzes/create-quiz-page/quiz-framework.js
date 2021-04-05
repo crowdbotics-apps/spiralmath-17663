@@ -1,14 +1,17 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Form, Col } from "react-bootstrap";
 import { SectionHead } from "../styles";
 import { grades } from "../../../content";
+import { selectQuizError } from "../../../redux/quiz/quiz.select";
 
 const FrameworkBox = styled.div``;
 
 const FieldBox = styled.div``;
 
 const QuizFramework = ({ handleChange, quizData, errors }) => {
+  const error = useSelector(selectQuizError);
   return (
     <FrameworkBox>
       <SectionHead>Quiz Framework</SectionHead>
@@ -33,10 +36,13 @@ const QuizFramework = ({ handleChange, quizData, errors }) => {
             {errors.grade && (
               <p className="text-danger form-text-danger">{errors.grade}</p>
             )}
+            {error && error.key === "grade" && (
+              <p className="text-danger form-text-danger">{error.message}</p>
+            )}
           </Form.Group>
           <Form.Group
             as={Col}
-            md="1"
+            md="2"
             className="d-flex flex-column align-items-center"
           >
             <Form.Label className="question-label">Title</Form.Label>
@@ -51,11 +57,14 @@ const QuizFramework = ({ handleChange, quizData, errors }) => {
                 {"Required"}
               </p>
             )}
+            {error && error.key === "title" && (
+              <p className="text-danger form-text-danger">{error.message}</p>
+            )}
           </Form.Group>
 
           <Form.Group
             as={Col}
-            md="4"
+            md="3"
             className="d-flex flex-column align-items-center"
           >
             <Form.Label className="question-label">Footer</Form.Label>
@@ -67,6 +76,9 @@ const QuizFramework = ({ handleChange, quizData, errors }) => {
             ></Form.Control>
             {errors.footer && (
               <p className="text-danger form-text-danger">{errors.footer}</p>
+            )}
+            {error && error.key === "footer" && (
+              <p className="text-danger form-text-danger">{error.message}</p>
             )}
           </Form.Group>
           <Form.Group
@@ -86,6 +98,9 @@ const QuizFramework = ({ handleChange, quizData, errors }) => {
                 {errors.description}
               </p>
             )}
+            {error && error.key === "description" && (
+              <p className="text-danger form-text-danger">{error.message}</p>
+            )}
           </Form.Group>
           <Form.Group
             as={Col}
@@ -102,6 +117,9 @@ const QuizFramework = ({ handleChange, quizData, errors }) => {
             ></Form.Control>
             {errors.sequence && (
               <p className="text-danger form-text-danger">{errors.sequence}</p>
+            )}
+            {error && error.key === "sequence" && (
+              <p className="text-danger form-text-danger">{error.message}</p>
             )}
           </Form.Group>
         </Form.Row>
