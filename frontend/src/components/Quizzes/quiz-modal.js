@@ -4,6 +4,7 @@ import { Modal } from "react-bootstrap";
 import parse from "html-react-parser";
 
 import { answerFormat } from "./answer-format";
+import { ImgWrapper } from "./ImgWrapper";
 
 const StyledList = styled.ol`
   list-style: none;
@@ -30,6 +31,13 @@ const QuizShowModal = ({ show, setShow, quiz, questions, studentView }) => {
         return (
           <li>
             <p>{parse(plainQuestionObj && plainQuestionObj.value)}</p>
+            <ImgWrapper>
+              <img
+                src={plainQuestionObj.image}
+                style={{ width: "100%", maxWidth: "100%" }}
+                alt="question info pic"
+              />
+            </ImgWrapper>
             {answerFormat(plainQuestionObj)}
           </li>
         );
