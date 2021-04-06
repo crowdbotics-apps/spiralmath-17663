@@ -7,7 +7,7 @@ import { Col, Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
 import { setQuestionType } from "../../../redux/local/local.actions";
-import questionActions from "../../../redux//question/question.action";
+import questionActions, { clearQuestionError } from "../../../redux//question/question.action";
 import { selectStandardSet } from "../../../redux/question/question.select";
 import MathquillInput from "../mathquill-input/mathquill-input.component";
 import ReviewInput from "../../Reviewer/review-input/review-input.component";
@@ -207,6 +207,7 @@ const Question = ({ questionType }) => {
     }
     // setCreatorError('');
     setErrors({ ...errors, [name]: "" });
+    dispatch(clearQuestionError())
   };
 
   const handleQuestionChange = (e) => {
