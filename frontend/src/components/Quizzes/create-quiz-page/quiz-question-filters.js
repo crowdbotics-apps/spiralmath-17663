@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Form, Col, Button } from "react-bootstrap";
 import styled from "styled-components";
 import { grades } from "../../../content";
@@ -11,6 +12,10 @@ const QuizQuestionFilters = ({
   handleSearch,
   standardCode,
 }) => {
+  const loadingUserQuestions = useSelector(
+    (state) => state.question.loadingUserQuestions
+  );
+
   useEffect(() => {
     console.log("filters", filters);
   }, [filters]);
@@ -182,6 +187,9 @@ const QuizQuestionFilters = ({
           md={2}
         >
           <Button className="transparent-btn" onClick={handleSearch}>
+            {loadingUserQuestions === true && (
+              <span className="spinner-border spinner-border-sm mr-1"></span>
+            )}
             Search
           </Button>
         </Form.Group>

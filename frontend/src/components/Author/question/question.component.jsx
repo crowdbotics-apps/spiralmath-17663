@@ -27,6 +27,7 @@ import { selectUpdatingQuestion } from "./../../../redux/question/question.selec
 import { selectCreatingQuestion } from "./../../../redux/question/question.select";
 import { selectReviewers } from "./../../../redux/question/question.select";
 import { selectCreators } from "./../../../redux/question/question.select";
+import { selectQuestionError } from "./../../../redux/question/question.select";
 
 import AuthorDetails from "../../Reviewer/author-details/author-details.component";
 import Layout from "../../ui/layout/layout.component";
@@ -53,6 +54,7 @@ const DOK = [
 const questionStyles = [
   { value: "Numeric", label: "Numeric" },
   { value: "Word", label: "Word" },
+  { value: "Graphic", label: "Graphic" },
 ];
 
 const Question = ({ questionType }) => {
@@ -67,6 +69,7 @@ const Question = ({ questionType }) => {
   const initialFormState = useSelector(selectQuestionFormState);
   const initialAnswer = useSelector(selectAnswerFormState);
   const creatingCreator = useSelector(selectCreatingCreator);
+  const error = useSelector(selectQuestionError);
 
   const updatingQuestion = useSelector(selectUpdatingQuestion);
   const creatingQuestion = useSelector(selectCreatingQuestion);
@@ -465,6 +468,12 @@ const Question = ({ questionType }) => {
               message={"Update Fail. Try again."}
               handleClearMessage={handleClearMessage}
             />
+          </React.Fragment>
+        )}
+        {error && (
+          <React.Fragment>
+            <div ref={apiErrorRef}></div>
+            <MessageBar messageType="ERROR" message={error.message} />
           </React.Fragment>
         )}
 

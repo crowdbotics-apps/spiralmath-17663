@@ -9,6 +9,7 @@ const initialState = {
   creatingAnswer: false,
   loadingUserQuestions: false,
   loadingAllUserQuestions: false,
+  error: "",
 };
 
 export default (state = initialState, action) => {
@@ -30,15 +31,20 @@ export default (state = initialState, action) => {
     case questionTypes.CREATE_ANSWER_SUCCESS:
       return { ...state, creatingAnswer: "success" };
     case questionTypes.CREATE_ANSWER_FAILURE:
-      return { ...state, creatingAnswer: "fail" };
+      return { ...state, creatingAnswer: "fail", error: action.error };
+    case questionTypes.GET_USERQUESTION_REQUEST:
+      return { ...state, loadingUserQuestions: true };
     case questionTypes.GET_USERQUESTION_SUCCESS:
       return {
         ...state,
+        loadingUserQuestions: false,
         userQuestions: {
           questionCount: action.data.count,
           questions: action.data.results,
         },
       };
+    case questionTypes.GET_USERQUESTION_FAILURE:
+      return { ...state, loadingUserQuestions: false };
     case questionTypes.GET_QUESTION_SUCCESS:
       return {
         ...state,
@@ -61,6 +67,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         updatingQuestion: "fail",
+        error: action.error,
       };
     case questionTypes.DELETE_QUESTION_REQUEST:
       return {
