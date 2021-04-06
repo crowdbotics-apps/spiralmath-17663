@@ -473,7 +473,7 @@ const Question = ({ questionType }) => {
         {error && (
           <React.Fragment>
             <div ref={apiErrorRef}></div>
-            <MessageBar messageType="ERROR" message={error.message} />
+            <MessageBar messageType="ERROR" message={error} />
           </React.Fragment>
         )}
 
