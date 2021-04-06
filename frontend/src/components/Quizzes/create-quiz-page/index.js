@@ -53,6 +53,7 @@ const CreateQuiz = () => {
 
   useEffect(() => {
     dispatch(questionActions.getStandardCode());
+    return () => handleClearMessage();
   }, []);
 
   const handleSearch = () => {

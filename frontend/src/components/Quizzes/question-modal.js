@@ -15,13 +15,15 @@ const QuestionModal = ({ show, setShow, question }) => {
     >
       <Modal.Body>
         <p>{parse((question && question.value) || "")}</p>
-        <ImgWrapper>
-          <img
-            src={question && question.image}
-            style={{ width: "100%", maxWidth: "100%" }}
-            alt="question info pic"
-          />
-        </ImgWrapper>
+        {question && question.image && (
+          <ImgWrapper>
+            <img
+              src={question.image}
+              style={{ width: "100%", maxWidth: "100%" }}
+              alt="question info pic"
+            />
+          </ImgWrapper>
+        )}
         {answerFormat(question)}
       </Modal.Body>
     </Modal>

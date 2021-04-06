@@ -69,3 +69,5 @@ export const selectDeletingQuestion = createSelector(
   [selectQuestion],
   (question) => question.deletingQuestion
 );
+
+export const selectQuestionError = (state) => state.question.error;

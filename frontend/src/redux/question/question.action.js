@@ -46,7 +46,9 @@ const createQuestion = (formData, answer) => {
         dispatch(createAnswer({ ...answer, question: data.id }));
       },
       (error) => {
-        dispatch({ type: questionTypes.CREATE_QUESTION_FAILURE });
+        const key = Object.keys(error)[0];
+        error = { key, message: error[key][0] };
+        dispatch({ type: questionTypes.CREATE_QUESTION_FAILURE, error });
       }
     );
   };
@@ -80,7 +82,7 @@ const getUserQuestions = (queryString, paginationQuery = "") => {
   };
 };
 
-const getAllQuestions = (paginationQuery="") => {
+const getAllQuestions = (paginationQuery = "") => {
   return (dispatch) => {
     dispatch({ type: questionTypes.GET_QUESTION_REQUEST });
     questionService.getAllQuestions(paginationQuery).then(
@@ -115,7 +117,9 @@ const updateQuestion = (id, data, isReview = false) => {
         dispatch({ type: questionTypes.UPDATE_QUESTION_SUCCESS });
       },
       (error) => {
-        dispatch({ type: questionTypes.UPDATE_QUESTION_FAILURE });
+        const key = Object.keys(error)[0];
+        error = { key, message: error[key][0] };
+        dispatch({ type: questionTypes.UPDATE_QUESTION_FAILURE, error });
       }
     );
   };
@@ -171,6 +175,10 @@ const getSingleQuestion = (id) => {
   };
 };
 
+export const clearQuestionError = () => {
+  return { type: questionTypes.CLEAR_QUESTION_ERROR };
+};
+
 export default {
   getStandardCode,
   getReviewers,
@@ -185,4 +193,5 @@ export default {
   updateAnswer,
   questionStateChanger,
   getSingleQuestion,
+  clearQuestionError,
 };

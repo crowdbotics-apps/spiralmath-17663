@@ -45,8 +45,10 @@ const QuizQuestionSelectionList = ({
     setCurrentQuestion(question);
     setShowQuestionModal(true);
   };
-
-  return (
+  console.log("Hello", userQuestions?.length === 0);
+  return userQuestions?.length === 0 || !userQuestions?.length ? (
+    <p>No Questions found with given search criteria</p>
+  ) : (
     <Row>
       <Col className="mt-3">
         <div>
