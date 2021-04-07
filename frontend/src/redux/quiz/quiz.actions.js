@@ -1,10 +1,10 @@
 import quizTypes from "./quiz.types";
 import quizServices from "./quiz.services";
 
-const getAllQuizzes = (pageNumber) => {
+const getAllQuizzes = (pageNumber, queryStr) => {
   return (dispatch) => {
     dispatch({ type: quizTypes.GETALL_QUIZ_REQUEST });
-    quizServices.getAllQuizzes(pageNumber).then(
+    quizServices.getAllQuizzes(pageNumber, queryStr).then(
       (res) =>
         dispatch({
           type: quizTypes.GETALL_QUIZ_SUCCESS,
