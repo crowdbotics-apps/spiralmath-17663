@@ -43,7 +43,7 @@ const CreateQuiz = () => {
     grade_level: "PK",
     mills_difficulty_level: 1,
     dok: 1,
-    question_style: "word",
+    question_style: "Word",
     summative_status: false,
     state_model: false,
     standard_code: "",

@@ -48,6 +48,14 @@ const QuizListPage = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const handleChange = (e) => {
+    console.log(e);
+    const queryStr = `grade=${e.value}`;
+    dispatch(
+      quizActions.getAllQuizzes((currentPage - 1) * quizPerPage, queryStr)
+    );
+  };
+
   useEffect(() => {
     dispatch(quizActions.getAllQuizzes((currentPage - 1) * quizPerPage));
   }, [currentPage, deletingQuiz]);
@@ -72,7 +80,8 @@ const QuizListPage = () => {
           <Select
             styles={selectStyles}
             options={gradeOptions}
-            defaultValue={gradeOptions[1]}
+            defaultValue={gradeOptions[0]}
+            onChange={handleChange}
           />
         </SelectBox>
       </GradeFilter>

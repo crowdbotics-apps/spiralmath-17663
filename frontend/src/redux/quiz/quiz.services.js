@@ -1,13 +1,13 @@
 import authHeader from "../../helpers/authHeader";
 import handleResponse from "../../helpers/handleResponse";
 
-const getAllQuizzes = (pageNumber) => {
+const getAllQuizzes = (pageNumber, queryStr = "") => {
   const requestOptions = {
     method: "GET",
     headers: authHeader(),
   };
   return fetch(
-    `api/v1/quiz/?limit=5&offset=${pageNumber}`,
+    `api/v1/quiz/?${queryStr}&limit=5&offset=${pageNumber}`,
     requestOptions
   ).then(handleResponse);
 };
