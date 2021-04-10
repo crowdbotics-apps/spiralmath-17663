@@ -92,7 +92,7 @@ export const approvedText = (status) => {
 export const buildQueryStr = (obj) => {
   let str = "&";
   for (const [key, value] of Object.entries(obj)) {
-    if (value) {
+    if (value && !value.startsWith("_")) {
       str += `${key}=${value}&`;
     }
   }

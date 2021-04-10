@@ -22,6 +22,7 @@ const QuizQuestionFilters = ({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log(name, value);
     setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
   };
 
@@ -44,12 +45,16 @@ const QuizQuestionFilters = ({
       <Form.Row className="justify-content-around mb-4">
         <Form.Group className="d-flex flex-column align-items-center">
           <Form.Label className="question-label">Grade</Form.Label>
+
           <Form.Control
             as="select"
             value={filters.grade_level}
             onChange={handleChange}
             name="grade_level"
           >
+            {filters.grade_level.startsWith("_") && (
+              <option>{filters.grade_level.slice(1)}</option>
+            )}
             {grades.map((grade) => (
               <option key={grade}>{grade}</option>
             ))}
@@ -69,6 +74,9 @@ const QuizQuestionFilters = ({
             onChange={handleChange}
             name="standard_code"
           >
+            {filters.standard_code.startsWith("_") && (
+              <option>{filters.standard_code.slice(1)}</option>
+            )}
             {standardCode &&
               standardCode.map((code) => <option>{code}</option>)}
           </Form.Control>
@@ -81,6 +89,9 @@ const QuizQuestionFilters = ({
             onChange={handleChange}
             name="question_style"
           >
+            {filters.question_style.startsWith("_") && (
+              <option>{filters.question_style.slice(1)}</option>
+            )}
             <option>Word</option>
             <option>Numeric</option>
             <option>Graphic</option>
@@ -95,6 +106,9 @@ const QuizQuestionFilters = ({
             onChange={handleChange}
             name="mills_difficulty_level"
           >
+            {filters.mills_difficulty_level.startsWith("_") && (
+              <option>{filters.mills_difficulty_level.slice(1)}</option>
+            )}
             <option>1</option>
             <option>2</option>
             <option>3</option>
@@ -109,6 +123,9 @@ const QuizQuestionFilters = ({
             onChange={handleChange}
             name="dok"
           >
+            {filters.dok.startsWith("_") && (
+              <option>{filters.dok.slice(1)}</option>
+            )}
             <option>1</option>
             <option>2</option>
             <option>3</option>
@@ -150,6 +167,9 @@ const QuizQuestionFilters = ({
             onChange={handleChange}
             name="summative_status"
           >
+            {filters.summative_status.startsWith("_") && (
+              <option>{filters.summative_status.slice(1)}</option>
+            )}
             <option>No</option>
             <option>Yes</option>
           </Form.Control>
@@ -167,6 +187,9 @@ const QuizQuestionFilters = ({
             onChange={handleChange}
             name="state_model"
           >
+            {filters.state_model.startsWith("_") && (
+              <option>{filters.state_model.slice(1)}</option>
+            )}
             <option>No</option>
             <option>Yes</option>
           </Form.Control>
