@@ -249,7 +249,8 @@ const Dashboard = () => {
             )}
             {localUserObj &&
               localUserObj.createQuestions &&
-              !localUserObj.reviewQuestions && (
+              !localUserObj.reviewQuestions &&
+              !(localUser.userObj.role === "Admin") && (
                 <>
                   <LinkContainer
                     to="/my-questions"
