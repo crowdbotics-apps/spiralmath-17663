@@ -18,7 +18,7 @@ const SearchQuizQuestions = ({
   queryStr,
   setSearch,
   handleSearch,
-  standardCode
+  standardCode,
 }) => {
   const handleChange = (question) => (e) => {
     const { checked } = e.target;
@@ -47,6 +47,7 @@ const SearchQuizQuestions = ({
         search={search}
         queryStr={queryStr}
         setSearch={setSearch}
+        selectedQuestions={selectedQuestions}
       />
       <RightButtonContainer>
         <Button onClick={handleQuestionAddition(selectedQuestions)}>

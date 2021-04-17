@@ -91,12 +91,13 @@ const CreateQuiz = () => {
         footer: editQuizData.footer,
         sequence: editQuizData.sequence,
       });
+    editQuizData &&
+      setSelectedQuestions([...selectedQuestions, ...editQuizData.questions]);
   }, [editQuizData]);
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && submitted) {
       submit();
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formErrors]);
 
@@ -150,7 +151,7 @@ const CreateQuiz = () => {
     if (editQuizData === null) {
       dispatch(quizActions.createQuiz(data));
     } else {
-      dispatch(quizActions.editQuiz(data));
+      dispatch(quizActions.editQuiz(editQuizData.id, data));
     }
   };
 
