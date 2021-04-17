@@ -147,7 +147,7 @@ const CreateQuiz = () => {
       order: question.order,
     }));
     const data = { ...quizData, order: 111, questions: tempQuestions };
-    if (editQuizData !== null) {
+    if (editQuizData === null) {
       dispatch(quizActions.createQuiz(data));
     } else {
       dispatch(quizActions.editQuiz(data));
