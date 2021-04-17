@@ -6,6 +6,7 @@ import { FormattedMessage } from "react-intl";
 import questionActions from "../../../redux/question/question.action";
 import parse from "html-react-parser";
 import { selectUserQuestions } from "../../../redux/question/question.select";
+import { selectSingleQuiz } from "../../../redux/quiz/quiz.select";
 import QuestionModal from "../question-modal";
 
 const QuizQuestionSelectionList = ({
@@ -15,6 +16,7 @@ const QuizQuestionSelectionList = ({
   queryStr,
 }) => {
   const dispatch = useDispatch();
+  const editQuizData = useSelector(selectSingleQuiz);
   const localUser =
     localStorage.getItem("user") !== "undefined"
       ? JSON.parse(localStorage.getItem("user"))
@@ -54,52 +56,6 @@ const QuizQuestionSelectionList = ({
         <div>
           <Table bordered className="border-top-0 border-left-0 border-right-0">
             <thead>
-              {
-                //   <tr>
-                //   <th scope="col" className="border-0 font-style thead">
-                //     <FormattedMessage
-                //       defaultMessage="Grade"
-                //       id="QuestionSearchListGrade"
-                //     />
-                //   </th>
-                //   <th scope="col" className="border-0 font-style thead">
-                //     <FormattedMessage
-                //       defaultMessage="Standard"
-                //       id="QuestionSearchListCode"
-                //     />
-                //   </th>
-                //   <th scope="col" className="border-0 font-style thead">
-                //     <FormattedMessage
-                //       defaultMessage="Mills Diff"
-                //       id="QuestionSearchListMillsDiff"
-                //     />
-                //   </th>
-                //   <th scope="col" className="border-0 font-style thead">
-                //     <FormattedMessage
-                //       defaultMessage="DOK"
-                //       id="QuestionSearchListDOK"
-                //     />
-                //   </th>
-                //   <th scope="col" className="border-0 font-style thead">
-                //     <FormattedMessage
-                //       defaultMessage="Question"
-                //       id="QuestionSearchListQuestion"
-                //     />
-                //   </th>
-                //   <th scope="col" className="border-0 font-style thead">
-                //     <FormattedMessage
-                //       defaultMessage="Source"
-                //       id="QuestionSearchListSource"
-                //     />
-                //   </th>
-                //   <th scope="col" className="border-0 font-style thead">
-                //     <FormattedMessage
-                //       defaultMessage="Select"
-                //       id="QuestionSearchListSelect"
-                //     />
-                //   </th>
-                // </tr>
-              }
               <tr>
                 <th scope="col" className="border-0 font-style thead">
                   Grade
@@ -135,27 +91,6 @@ const QuizQuestionSelectionList = ({
                 userQuestions.map((question) => {
                   return (
                     <tr key={question.id}>
-                      {
-                        // <td className="border-right-0">{question.grade}</td>
-                        //     <td className="border-right-0 border-left-0">
-                        //       {question.standardCode}
-                        //     </td>
-                        //     <td className="border-right-0 border-left-0">
-                        //       {question.style}
-                        //     </td>
-                        //     <td className="border-right-0 border-left-0">
-                        //       {question.millsDiff}
-                        //     </td>
-                        //     <td className="border-left-0 border-right-0">
-                        //       {question.dok}
-                        //     </td>
-                        //     <td className="border-left-0 border-right-0">
-                        //       {question.question}
-                        //     </td>
-                        //     <td className="border-left-0 border-right-0">
-                        //       {question.source}
-                        //     </td>
-                      }
                       <td className="border-right-0">
                         {question && question.grade_level}
                       </td>
@@ -182,7 +117,15 @@ const QuizQuestionSelectionList = ({
                         {question && question.content_source}
                       </td>
                       <td className="border-left-0 ">
-                        <Form.Check onChange={handleChange(question)} />
+                        <Form.Check
+                          checked={
+                            editQuizData &&
+                            editQuizData.questions.find(
+                              (q) => q.id === question.id
+                            )
+                          }
+                          onChange={handleChange(question)}
+                        />
                       </td>
                     </tr>
                   );

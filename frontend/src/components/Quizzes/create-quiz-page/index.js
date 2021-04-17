@@ -60,7 +60,6 @@ const CreateQuiz = () => {
     setSearch(true);
     setQueryStr(buildQueryStr(filters));
   };
-  console.log("QueryStr", queryStr);
 
   const handleRemoveQuestion = (id) => () => {
     setSelectedQuestions((prevQuestion) =>
@@ -148,7 +147,11 @@ const CreateQuiz = () => {
       order: question.order,
     }));
     const data = { ...quizData, order: 111, questions: tempQuestions };
-    dispatch(quizActions.createQuiz(data));
+    if (editQuizData === null) {
+      dispatch(quizActions.createQuiz(data));
+    } else {
+      dispatch(quizActions.editQuiz(data));
+    }
   };
 
   const handleSave = () => {
