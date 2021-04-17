@@ -96,6 +96,7 @@ export const buildQueryStr = (obj) => {
       str += `${key}=${value}&`;
     }
   }
+  console.log("str", str);
   return str.slice(0, str.length - 1);
 };
 
