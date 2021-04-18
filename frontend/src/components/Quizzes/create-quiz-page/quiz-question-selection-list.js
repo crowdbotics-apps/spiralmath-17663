@@ -6,7 +6,6 @@ import { FormattedMessage } from "react-intl";
 import questionActions from "../../../redux/question/question.action";
 import parse from "html-react-parser";
 import { selectUserQuestions } from "../../../redux/question/question.select";
-import { selectSingleQuiz } from "../../../redux/quiz/quiz.select";
 import QuestionModal from "../question-modal";
 
 const QuizQuestionSelectionList = ({
@@ -14,9 +13,10 @@ const QuizQuestionSelectionList = ({
   search,
   setSearch,
   queryStr,
+  selectedQuestions,
 }) => {
   const dispatch = useDispatch();
-  const editQuizData = useSelector(selectSingleQuiz);
+
   const localUser =
     localStorage.getItem("user") !== "undefined"
       ? JSON.parse(localStorage.getItem("user"))
@@ -118,12 +118,9 @@ const QuizQuestionSelectionList = ({
                       </td>
                       <td className="border-left-0 ">
                         <Form.Check
-                          checked={
-                            editQuizData &&
-                            editQuizData.questions.find(
-                              (q) => q.id === question.id
-                            )
-                          }
+                          checked={selectedQuestions.find(
+                            (q) => q.id === question.id
+                          )}
                           onChange={handleChange(question)}
                         />
                       </td>
