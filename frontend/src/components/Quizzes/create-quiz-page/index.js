@@ -162,7 +162,7 @@ const CreateQuiz = () => {
     if (!editId) {
       dispatch(quizActions.createQuiz(data));
     } else {
-      dispatch(quizActions.editQuiz(editQuizData.id, data));
+      dispatch(quizActions.editQuiz(editId, data));
     }
   };
 
