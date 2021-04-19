@@ -9,7 +9,10 @@ import QuizOverview from "./quiz-overview";
 import { grades } from "../../../content";
 import RightButtonContainer from "../../styled/RightButtonContainer";
 import quizActions from "../../../redux/quiz/quiz.actions";
-import { selectCreatingQuiz } from "../../../redux/quiz/quiz.select";
+import {
+  selectCreatingQuiz,
+  selectEditingQuiz,
+} from "../../../redux/quiz/quiz.select";
 import MessageBar from "../../ui/message-bar/message-bar.component";
 import { validateCreateQuiz } from "../../../helpers/validation/validationQuiz";
 import { selectSingleQuiz } from "../../../redux/quiz/quiz.select";
@@ -25,6 +28,7 @@ const CreateQuiz = () => {
   const editQuizData = useSelector(selectSingleQuiz);
   const standardCode = useSelector(selectStandardCode);
   const creatingQuiz = useSelector(selectCreatingQuiz);
+  const editingQuiz = useSelector(selectEditingQuiz);
   const [quizData, setQuizData] = useState({
     grade: grades[0],
     title: "",
@@ -50,8 +54,12 @@ const CreateQuiz = () => {
     content_source: "",
     author_memo: "",
   });
+  const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
+    if (editQuizData) {
+      setIsEdit(true);
+    }
     dispatch(questionActions.getStandardCode());
     return () => handleClearMessage();
   }, []);
@@ -96,6 +104,7 @@ const CreateQuiz = () => {
     editQuizData &&
       setSelectedQuestions([...selectedQuestions, ...questionsInEditData]);
   }, [editQuizData]);
+
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && submitted) {
       submit();
@@ -176,6 +185,13 @@ const CreateQuiz = () => {
     return () => clearTimeout(timeout);
   }, [creatingQuiz]);
 
+  useEffect(() => {
+    if (editQuizData) {
+      handleQuestions(selectedQuestions);
+      dispatch(quizActions.resetQuizData());
+    }
+  }, [selectedQuestions]);
+
   return (
     <Layout>
       {creatingQuiz === "success" && (
@@ -226,10 +242,10 @@ const CreateQuiz = () => {
       />
       <RightButtonContainer>
         <Button onClick={handleSave}>
-          {creatingQuiz === true && (
+          {(editingQuiz === true || creatingQuiz === true) && (
             <span className="spinner-border spinner-border-sm mr-1"></span>
           )}
-          Save Quiz
+          {isEdit ? "Update quiz" : "Save quiz"}
         </Button>
       </RightButtonContainer>
     </Layout>
