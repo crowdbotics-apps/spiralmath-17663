@@ -54,7 +54,7 @@ const CreateQuiz = () => {
     content_source: "",
     author_memo: "",
   });
-  const [isEdit, setIsEdit] = useState(false);
+  const [editId, setEditId] = useState(false);
 
   useEffect(() => {
     dispatch(questionActions.getStandardCode());
@@ -87,7 +87,7 @@ const CreateQuiz = () => {
 
   useEffect(() => {
     if (editQuizData) {
-      setIsEdit(true);
+      setEditId(editQuizData.id);
     }
     editQuizData &&
       setQuizData({
@@ -159,7 +159,7 @@ const CreateQuiz = () => {
       order: question.order,
     }));
     const data = { ...quizData, order: 111, questions: tempQuestions };
-    if (!isEdit) {
+    if (!editId) {
       dispatch(quizActions.createQuiz(data));
     } else {
       dispatch(quizActions.editQuiz(editQuizData.id, data));
@@ -245,7 +245,7 @@ const CreateQuiz = () => {
           {(editingQuiz === true || creatingQuiz === true) && (
             <span className="spinner-border spinner-border-sm mr-1"></span>
           )}
-          {isEdit ? "Update quiz" : "Save quiz"}
+          {editId ? "Update quiz" : "Save quiz"}
         </Button>
       </RightButtonContainer>
     </Layout>
