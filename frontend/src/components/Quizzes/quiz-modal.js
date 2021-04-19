@@ -31,13 +31,15 @@ const QuizShowModal = ({ show, setShow, quiz, questions, studentView }) => {
         return (
           <li>
             <p>{parse(plainQuestionObj && plainQuestionObj.value)}</p>
-            <ImgWrapper>
-              <img
-                src={plainQuestionObj.image}
-                style={{ width: "100%", maxWidth: "100%" }}
-                alt="question info pic"
-              />
-            </ImgWrapper>
+            {plainQuestionObj && plainQuestionObj.image && (
+              <ImgWrapper>
+                <img
+                  src={plainQuestionObj.image}
+                  style={{ width: "100%", maxWidth: "100%" }}
+                  alt="question info pic"
+                />
+              </ImgWrapper>
+            )}
             {answerFormat(plainQuestionObj)}
           </li>
         );

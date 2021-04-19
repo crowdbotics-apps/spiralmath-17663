@@ -16,13 +16,8 @@ const QuizQuestionFilters = ({
     (state) => state.question.loadingUserQuestions
   );
 
-  useEffect(() => {
-    console.log("filters", filters);
-  }, [filters]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
   };
 
