@@ -91,8 +91,10 @@ const CreateQuiz = () => {
         footer: editQuizData.footer,
         sequence: editQuizData.sequence,
       });
+    const questionsInEditData =
+      editQuizData && editQuizData.questions.map((q) => q.question);
     editQuizData &&
-      setSelectedQuestions([...selectedQuestions, ...editQuizData.questions]);
+      setSelectedQuestions([...selectedQuestions, ...questionsInEditData]);
   }, [editQuizData]);
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && submitted) {
