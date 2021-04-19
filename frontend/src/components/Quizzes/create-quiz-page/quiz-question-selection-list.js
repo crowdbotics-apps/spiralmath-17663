@@ -16,6 +16,7 @@ const QuizQuestionSelectionList = ({
   selectedQuestions,
 }) => {
   const dispatch = useDispatch();
+  console.log("Selected questions", selectedQuestions);
 
   const localUser =
     localStorage.getItem("user") !== "undefined"
@@ -27,7 +28,6 @@ const QuizQuestionSelectionList = ({
   const [currentQuestion, setCurrentQuestion] = useState(null);
   useEffect(() => {
     if (search) {
-      console.log("queryStr", queryStr);
       dispatch(
         questionActions.getUserQuestions(
           `user=${userId}&approved_status=20${queryStr}`
@@ -47,7 +47,6 @@ const QuizQuestionSelectionList = ({
     setCurrentQuestion(question);
     setShowQuestionModal(true);
   };
-  console.log("Hello", userQuestions?.length === 0);
   return userQuestions?.length === 0 || !userQuestions?.length ? (
     <p>No Questions found with given search criteria</p>
   ) : (
