@@ -57,9 +57,6 @@ const CreateQuiz = () => {
   const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
-    if (editQuizData) {
-      setIsEdit(true);
-    }
     dispatch(questionActions.getStandardCode());
     return () => handleClearMessage();
   }, []);
@@ -89,6 +86,9 @@ const CreateQuiz = () => {
   };
 
   useEffect(() => {
+    if (editQuizData) {
+      setIsEdit(true);
+    }
     editQuizData &&
       setQuizData({
         ...quizData,
@@ -159,7 +159,7 @@ const CreateQuiz = () => {
       order: question.order,
     }));
     const data = { ...quizData, order: 111, questions: tempQuestions };
-    if (editQuizData === null) {
+    if (!isEdit) {
       dispatch(quizActions.createQuiz(data));
     } else {
       dispatch(quizActions.editQuiz(editQuizData.id, data));
