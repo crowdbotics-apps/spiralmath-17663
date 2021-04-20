@@ -66,11 +66,18 @@ class QuizFrameworksSerializer(serializers.ModelSerializer):
         return quiz
 
     def update(self, instance, validated_data):
-        quiz_questions = validated_data.pop('questions')
-        quiz_questions_pks = [_.id for _ in quiz_questions]
+        quiz_questions = validated_data.pop('questions', None)
+        if quiz_questions is not None:
+            instance.questions.all().delete()
 
-        for question in QuizQuestions.objects.filter(pk__in=quiz_questions_pks):
-            pass
+            quiz_question_objs = []
+            for quiz_question in quiz_questions:
+                quiz_question_objs.append(QuizQuestions(
+                    quiz=instance,
+                    question=quiz_question['question'],
+                    order=quiz_question['order']
+                ))
+            QuizQuestions.objects.bulk_create(quiz_question_objs)
 
         return super().update(instance, validated_data)
 
