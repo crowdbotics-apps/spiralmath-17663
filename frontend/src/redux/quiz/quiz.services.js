@@ -2,6 +2,8 @@ import authHeader from "../../helpers/authHeader";
 import handleResponse from "../../helpers/handleResponse";
 
 const getAllQuizzes = (pageNumber, queryStr = "") => {
+  console.log("querystr", queryStr);
+  if (queryStr.split("=")[1] === "Any") queryStr = "";
   const requestOptions = {
     method: "GET",
     headers: authHeader(),

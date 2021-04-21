@@ -16,7 +16,7 @@ import {
 import quizActions from "../../../redux/quiz/quiz.actions";
 
 const gradeOptions = [
-  { value: "_Select grade", label: "Select grade" },
+  { value: "Any", label: "Any" },
   ...grades.map((value) => ({ value, label: value })),
 ];
 
@@ -52,10 +52,6 @@ const QuizListPage = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleChange = (e) => {
-    if (e.value.startsWith("_")) {
-      return;
-    }
-
     const queryStr = `grade=${e.value}`;
     dispatch(
       quizActions.getAllQuizzes((currentPage - 1) * quizPerPage, queryStr)

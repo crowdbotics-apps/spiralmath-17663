@@ -44,13 +44,13 @@ const CreateQuiz = () => {
   const [search, setSearch] = useState(false);
   const [queryStr, setQueryStr] = useState("");
   const [filters, setFilters] = useState({
-    grade_level: "_Select Grade",
-    mills_difficulty_level: "_Select Mills.",
-    dok: "_Select_dok",
-    question_style: "_Select style",
-    summative_status: "_Select summative status",
-    state_model: "_Select state model",
-    standard_code: "_Select Standard",
+    grade_level: "_Any",
+    mills_difficulty_level: "_Any",
+    dok: "_Any",
+    question_style: "_Any",
+    summative_status: "_Any",
+    state_model: "_Any",
+    standard_code: "_Any",
     content_source: "",
     author_memo: "",
   });
