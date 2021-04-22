@@ -47,7 +47,7 @@ const QuizQuestionFilters = ({
             onChange={handleChange}
             name="grade_level"
           >
-            <option value="_Select Grade">{"_Select Grade".slice(1)}</option>
+            <option value="_Any">{"_Any".slice(1)}</option>
 
             {grades.map((grade) => (
               <option key={grade}>{grade}</option>
@@ -68,9 +68,7 @@ const QuizQuestionFilters = ({
             onChange={handleChange}
             name="standard_code"
           >
-            <option value="_Select standard">
-              {"_Select Standard".slice(1)}
-            </option>
+            <option value="_Any">{"_Any".slice(1)}</option>
 
             {standardCode &&
               standardCode.map((code) => <option>{code}</option>)}
@@ -84,7 +82,7 @@ const QuizQuestionFilters = ({
             onChange={handleChange}
             name="question_style"
           >
-            <option value="_Select style">{"_Select style".slice(1)}</option>
+            <option value="_Any">{"_Any".slice(1)}</option>
 
             <option>Word</option>
             <option>Numeric</option>
@@ -99,7 +97,7 @@ const QuizQuestionFilters = ({
             onChange={handleChange}
             name="mills_difficulty_level"
           >
-            <option value="_Select Mills.">{"_Select Mills.".slice(1)}</option>
+            <option value="_Any">{"_Any".slice(1)}</option>
             <option>1</option>
             <option>2</option>
             <option>3</option>
@@ -114,7 +112,7 @@ const QuizQuestionFilters = ({
             onChange={handleChange}
             name="dok"
           >
-            <option value="_Select_dok">{"_Select_dok".slice(1)}</option>
+            <option value="_Any">{"_Any".slice(1)}</option>
             <option>1</option>
             <option>2</option>
             <option>3</option>
@@ -156,9 +154,7 @@ const QuizQuestionFilters = ({
             onChange={handleChange}
             name="summative_status"
           >
-            <option value="_Select summative status">
-              {"_Select summative status".slice(1)}
-            </option>
+            <option value="_Any">{"_Any".slice(1)}</option>
 
             <option>No</option>
             <option>Yes</option>
@@ -177,9 +173,7 @@ const QuizQuestionFilters = ({
             onChange={handleChange}
             name="state_model"
           >
-            <option value="_Select state model">
-              {"_Select state model".slice(1)}
-            </option>
+            <option value="_Any">{"_Any".slice(1)}</option>
 
             <option>No</option>
             <option>Yes</option>
