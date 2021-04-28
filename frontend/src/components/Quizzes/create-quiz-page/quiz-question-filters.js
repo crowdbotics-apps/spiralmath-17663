@@ -92,7 +92,7 @@ const QuizQuestionFilters = ({
           <Form.Label className="question-label">Mills Diff.</Form.Label>
           <Form.Control
             as="select"
-            style={{ width: "55px" }}
+            style={{ width: "80px" }}
             value={filters.mills_difficulty_level}
             onChange={handleChange}
             name="mills_difficulty_level"
@@ -149,7 +149,7 @@ const QuizQuestionFilters = ({
           <Form.Label className="question-label">Summ. Status</Form.Label>
           <Form.Control
             as="select"
-            style={{ width: "70px" }}
+            style={{ width: "80px" }}
             value={filters.summative_status}
             onChange={handleChange}
             name="summative_status"
@@ -168,7 +168,7 @@ const QuizQuestionFilters = ({
           <Form.Label className="question-label">State Model</Form.Label>
           <Form.Control
             as="select"
-            style={{ width: "70px" }}
+            style={{ width: "80px" }}
             value={filters.state_model}
             onChange={handleChange}
             name="state_model"
