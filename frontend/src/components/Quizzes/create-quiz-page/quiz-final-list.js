@@ -87,12 +87,13 @@ const QuizFinalList = ({ questions, dragEndCall, handleRemoveQuestion }) => {
                                     <td className="border-left-0 border-right-0">
                                       {question.value && parse(question.value)}
                                     </td>
-                                    <td className="border-left-0 border-right-0">
-                                      <Cross
-                                        onClick={handleRemoveQuestion(
-                                          question.id
-                                        )}
-                                      />
+                                    <td
+                                      className="border-left-0 border-right-0"
+                                      onClick={handleRemoveQuestion(
+                                        question.id
+                                      )}
+                                    >
+                                      <Cross />
                                     </td>
                                     <td className="border-left-0 ">
                                       <UpAndDown />
