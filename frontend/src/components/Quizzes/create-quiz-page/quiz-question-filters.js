@@ -185,8 +185,11 @@ const QuizQuestionFilters = ({
           className="d-flex flex-column align-items-center justify-content-center"
           md={2}
         >
-          <Button className="transparent-btn" onClick={handleClearList}>
-            Clear List
+          <Button
+            className="btn btn-custom btn-secondary-custom"
+            onClick={handleClearList}
+          >
+            Reset Filters
           </Button>
         </Form.Group>
         <Form.Group
@@ -194,7 +197,10 @@ const QuizQuestionFilters = ({
           className="d-flex flex-column align-items-center justify-content-center"
           md={2}
         >
-          <Button className="transparent-btn" onClick={handleSearch}>
+          <Button
+            className="btn btn-custom btn-secondary-custom"
+            onClick={handleSearch}
+          >
             {loadingUserQuestions === true && (
               <span className="spinner-border spinner-border-sm mr-1"></span>
             )}
