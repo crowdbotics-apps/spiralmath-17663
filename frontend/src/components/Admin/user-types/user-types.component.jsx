@@ -16,397 +16,395 @@ import { validateCreateUserTypes } from "../../../helpers/validation/validateCre
 import { ReactComponent as CreateUserIcon } from "../../../assets/img/create-user-icon.svg";
 
 const UserTypes = () => {
-   const editFormRef = useRef(null);
-   const userTypesState = useSelector((state) => state.userTypes.allUserTypes);
-   let message = useSelector((state) => state.alert.message);
-   let messageType = useSelector((state) => state.alert.type);
-   const deletingUserType = useSelector(
-      (state) => state.userTypes.deletingUserType
-   );
-   const userTypeCreating = useSelector(
-      (state) => state.userTypes.userTypeCreating
-   );
-   const updatingUserType = useSelector(
-      (state) => state.userTypes.updatingUserType
-   );
+  const editFormRef = useRef(null);
+  const userTypesState = useSelector((state) => state.userTypes.allUserTypes);
+  let message = useSelector((state) => state.alert.message);
+  let messageType = useSelector((state) => state.alert.type);
+  const deletingUserType = useSelector(
+    (state) => state.userTypes.deletingUserType
+  );
+  const userTypeCreating = useSelector(
+    (state) => state.userTypes.userTypeCreating
+  );
+  const updatingUserType = useSelector(
+    (state) => state.userTypes.updatingUserType
+  );
 
-   const dispatch = useDispatch();
-   const intl = useIntl();
-   const [errors, setErrors] = useState({});
+  const dispatch = useDispatch();
+  const intl = useIntl();
+  const [errors, setErrors] = useState({});
 
-   const userTypeArray = userTypesState.map(
-      ({ id, create_questions, review_questions, name }) => {
-         const description = generateUserTypeDescription(
-            create_questions,
-            review_questions
-         );
-         return {
-            id,
-            create_questions,
-            review_questions,
-            description,
-            userType: name,
-         };
-      }
-   );
-
-   const [userForm, setUserForm] = useState({
-      id: "",
-      userType: "",
-      createQuestions: false,
-      reviewQuestions: false,
-      edit: false,
-   });
-   const [submitted, setSubmitted] = useState(false);
-
-   const handleChange = (e) => {
-      const { name } = e.target;
-
-      if (name === "userType") {
-         const { value } = e.target;
-         setUserForm((userForm) => ({
-            ...userForm,
-            [name]: value,
-         }));
-         setErrors({ ...errors, userType: "" });
-      } else if (name === "createQuestions") {
-         const { checked } = e.target;
-         setUserForm({
-            ...userForm,
-            createQuestions: checked,
-            reviewQuestions: !checked,
-         });
-      } else {
-         const { checked } = e.target;
-         setUserForm({
-            ...userForm,
-            createQuestions: !checked,
-            reviewQuestions: checked,
-         });
-      }
-   };
-
-   function handleSubmit(e) {
-      e.preventDefault();
-      setErrors(validateCreateUserTypes(userForm));
-      setSubmitted(true);
-   }
-
-   useEffect(() => {
-      if (userForm.edit && editFormRef.current) {
-         editFormRef.current.scrollIntoView({ behavior: "smooth" });
-      }
-   }, [userForm.edit]);
-
-   useEffect(() => {
-      const submit = () => {
-         if (userForm.userType) {
-            if (!userForm.edit) {
-               dispatch(
-                  userActions.createUserType({
-                     name: userForm.userType,
-                     create_questions: userForm.createQuestions,
-                     review_questions: userForm.reviewQuestions,
-                  })
-               );
-               setUserForm({
-                  userType: "",
-                  createQuestions: false,
-                  reviewQuestions: false,
-               });
-            } else {
-               dispatch(
-                  userActions.updateUserType({
-                     id: userForm.id,
-                     name: userForm.userType,
-                     create_questions: userForm.createQuestions,
-                     review_questions: userForm.reviewQuestions,
-                  })
-               );
-               setUserForm({
-                  userType: "",
-                  createQuestions: false,
-                  reviewQuestions: false,
-                  id: "",
-                  edit: "",
-               });
-            }
-         }
+  const userTypeArray = userTypesState.map(
+    ({ id, create_questions, review_questions, name }) => {
+      const description = generateUserTypeDescription(
+        create_questions,
+        review_questions
+      );
+      return {
+        id,
+        create_questions,
+        review_questions,
+        description,
+        userType: name,
       };
+    }
+  );
 
-      if (Object.keys(errors).length === 0 && submitted) {
-         submit();
-      }
-   // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [errors]);
+  const [userForm, setUserForm] = useState({
+    id: "",
+    userType: "",
+    createQuestions: false,
+    reviewQuestions: false,
+    edit: false,
+  });
+  const [submitted, setSubmitted] = useState(false);
 
-   const [closeForm, setCloseForm] = useState(true);
+  const handleChange = (e) => {
+    const { name } = e.target;
 
-   const handleCloseForm = () => {
-      if (closeForm === true) {
-         setUserForm({
+    if (name === "userType") {
+      const { value } = e.target;
+      setUserForm((userForm) => ({
+        ...userForm,
+        [name]: value,
+      }));
+      setErrors({ ...errors, userType: "" });
+    } else if (name === "createQuestions") {
+      const { checked } = e.target;
+      setUserForm({
+        ...userForm,
+        createQuestions: checked,
+        reviewQuestions: !checked,
+      });
+    } else {
+      const { checked } = e.target;
+      setUserForm({
+        ...userForm,
+        createQuestions: !checked,
+        reviewQuestions: checked,
+      });
+    }
+  };
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setErrors(validateCreateUserTypes(userForm));
+    setSubmitted(true);
+  }
+
+  useEffect(() => {
+    if (userForm.edit && editFormRef.current) {
+      editFormRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [userForm.edit]);
+
+  useEffect(() => {
+    const submit = () => {
+      if (userForm.userType) {
+        if (!userForm.edit) {
+          dispatch(
+            userActions.createUserType({
+              name: userForm.userType,
+              create_questions: userForm.createQuestions,
+              review_questions: userForm.reviewQuestions,
+            })
+          );
+          setUserForm({
             userType: "",
-            createQuestions: true,
+            createQuestions: false,
+            reviewQuestions: false,
+          });
+        } else {
+          dispatch(
+            userActions.updateUserType({
+              id: userForm.id,
+              name: userForm.userType,
+              create_questions: userForm.createQuestions,
+              review_questions: userForm.reviewQuestions,
+            })
+          );
+          setUserForm({
+            userType: "",
+            createQuestions: false,
             reviewQuestions: false,
             id: "",
             edit: "",
-         });
+          });
+        }
       }
-      setCloseForm(!closeForm);
-   };
+    };
 
-   useEffect(() => {
-      if (!updatingUserType) handleCloseForm();
-   // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [updatingUserType]);
+    if (Object.keys(errors).length === 0 && submitted) {
+      submit();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [errors]);
 
-   useEffect(() => {
-      if (!userTypeCreating) handleCloseForm();
-   // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [userTypeCreating]);
+  const [closeForm, setCloseForm] = useState(true);
 
-   const createUserTypeForm = () => {
-      return (
-         <React.Fragment>
-            <Form noValidate onSubmit={handleSubmit} ref={editFormRef}>
-               <div className="px-4 py-4 border form-border">
-                  <Form.Row>
-                     <Form.Group as={Col} md="3" controlId="validationCustom01">
-                        <Form.Control
-                           required
-                           type="text"
-                           placeholder={intl.formatMessage({
-                              defaultMessage: "User Type",
-                              id: "componentUserTypesUserTypeLabel",
-                           })}
-                           name="userType"
-                           value={userForm.userType}
-                           onChange={handleChange}
-                           className="border-top-0 border-left-0 border-right-0 rounded-0"
-                        />
-                        {submitted && errors.userType && (
-                           <p className="text-danger form-text-danger">
-                              {errors.userType}
-                           </p>
-                        )}
-                     </Form.Group>
+  const handleCloseForm = () => {
+    if (closeForm === true) {
+      setUserForm({
+        userType: "",
+        createQuestions: true,
+        reviewQuestions: false,
+        id: "",
+        edit: "",
+      });
+    }
+    setCloseForm(!closeForm);
+  };
 
-                     <Form.Group
-                        as={Col}
-                        md="4"
-                        className=" mt-2 text-right"
-                        controlId="create-questions"
-                     >
-                        <Form.Check
-                           type="switch"
-                           id="create-questions"
-                           label={intl.formatMessage({
-                              defaultMessage: "Can Create Questions",
-                              id: "componentUserTypesCreateQuestionsLabel",
-                           })}
-                           name="createQuestions"
-                           checked={userForm.createQuestions}
-                           value={userForm.createQuestions}
-                           onChange={handleChange}
-                        />
-                     </Form.Group>
+  useEffect(() => {
+    if (!updatingUserType) handleCloseForm();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [updatingUserType]);
 
-                     <Form.Group
-                        as={Col}
-                        md="4"
-                        className=" mt-2 text-right"
-                        controlId="review-questions"
-                     >
-                        <Form.Check
-                           type="switch"
-                           id="review-questions"
-                           label={intl.formatMessage({
-                              defaultMessage: "Can Review Questions",
-                              id: "componentUserTypesReviewQuestionsLabel",
-                           })}
-                           name="reviewQuestions"
-                           checked={userForm.reviewQuestions}
-                           value={userForm.reviewQuestions}
-                           onChange={handleChange}
-                        />
-                     </Form.Group>
-                  </Form.Row>
-               </div>
-               <div className="my-4 d-flex justify-content-end bottom-btn-grp">
-                  <Button onClick={handleCloseForm} className="mr-4 cancel-btn">
-                     <FormattedMessage
-                        id="componentUserTypesCancelButton"
-                        defaultMessage="Cancel"
-                     />
-                  </Button>
-                  <Button type="submit" className="transparent-btn">
-                     {(userTypeCreating || updatingUserType) && (
-                        <span className="spinner-border spinner-border-sm mr-1"></span>
-                     )}
-                     <FormattedMessage
-                        defaultMessage="Save"
-                        id="componentUserTypesSaveButton"
-                     />
-                  </Button>
-               </div>
-            </Form>
-         </React.Fragment>
-      );
-   };
+  useEffect(() => {
+    if (!userTypeCreating) handleCloseForm();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userTypeCreating]);
 
-   const handleClearMessage = () => {
-      dispatch(alertActions.clear());
-   };
+  const createUserTypeForm = () => {
+    return (
+      <React.Fragment>
+        <Form noValidate onSubmit={handleSubmit} ref={editFormRef}>
+          <div className="px-4 py-4 border form-border">
+            <Form.Row>
+              <Form.Group as={Col} md="3" controlId="validationCustom01">
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder={intl.formatMessage({
+                    defaultMessage: "User Type",
+                    id: "componentUserTypesUserTypeLabel",
+                  })}
+                  name="userType"
+                  value={userForm.userType}
+                  onChange={handleChange}
+                  className="border-top-0 border-left-0 border-right-0 rounded-0"
+                />
+                {submitted && errors.userType && (
+                  <p className="text-danger form-text-danger">
+                    {errors.userType}
+                  </p>
+                )}
+              </Form.Group>
 
-   const [currentPage, setCurrentPage] = useState(1);
-   const [userTypePerPage] = useState(10);
-   const indexOfLastUserType = currentPage * userTypePerPage;
-   const indexOfFirstUserType = indexOfLastUserType - userTypePerPage;
-   const currentUserTypes =
-      userTypeArray &&
-      userTypeArray.slice(indexOfFirstUserType, indexOfLastUserType);
+              <Form.Group
+                as={Col}
+                md="4"
+                className=" mt-2 text-right"
+                controlId="create-questions"
+              >
+                <Form.Check
+                  type="switch"
+                  id="create-questions"
+                  label={intl.formatMessage({
+                    defaultMessage: "Can Create Questions",
+                    id: "componentUserTypesCreateQuestionsLabel",
+                  })}
+                  name="createQuestions"
+                  checked={userForm.createQuestions}
+                  value={userForm.createQuestions}
+                  onChange={handleChange}
+                />
+              </Form.Group>
 
-   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+              <Form.Group
+                as={Col}
+                md="4"
+                className=" mt-2 text-right"
+                controlId="review-questions"
+              >
+                <Form.Check
+                  type="switch"
+                  id="review-questions"
+                  label={intl.formatMessage({
+                    defaultMessage: "Can Review Questions",
+                    id: "componentUserTypesReviewQuestionsLabel",
+                  })}
+                  name="reviewQuestions"
+                  checked={userForm.reviewQuestions}
+                  value={userForm.reviewQuestions}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+            </Form.Row>
+          </div>
+          <div className="my-4 d-flex justify-content-end bottom-btn-grp">
+            <Button onClick={handleCloseForm} className="mr-4 cancel-btn">
+              <FormattedMessage
+                id="componentUserTypesCancelButton"
+                defaultMessage="Cancel"
+              />
+            </Button>
+            <Button type="submit" className="transparent-btn btn-custom">
+              {(userTypeCreating || updatingUserType) && (
+                <span className="spinner-border spinner-border-sm mr-1"></span>
+              )}
+              <FormattedMessage
+                defaultMessage="Save"
+                id="componentUserTypesSaveButton"
+              />
+            </Button>
+          </div>
+        </Form>
+      </React.Fragment>
+    );
+  };
 
-   const userTypesTable = () => {
-      return (
-         <Row>
-            <Col className="mt-3">
-               <Table striped bordered hover className="border-0">
-                  <thead>
-                     <tr>
-                        <th scope="col" className="border-0 font-style thead">
-                           <FormattedMessage
-                              defaultMessage="User Type"
-                              id="componentUserTypesTableHeadUserTypes"
-                           />
-                        </th>
-                        <th scope="col" className="border-0 font-style thead">
-                           <FormattedMessage
-                              defaultMessage="Description"
-                              id="componentUserTypesTableHeadDescription"
-                           />
-                        </th>
+  const handleClearMessage = () => {
+    dispatch(alertActions.clear());
+  };
 
-                        <th
-                           scope="col"
-                           className="d-flex align-items-center justify-content-end border-0 font-style create-user pointerType"
-                           onClick={handleCloseForm}
-                        >
-                           <span className="create-user-icon">
-                              <CreateUserIcon />
-                           </span>
-                           <b>
-                              <FormattedMessage
-                                 defaultMessage="Create User Type"
-                                 id="componentUserTypesTableHeadCreateUserType"
-                              />
-                           </b>
-                        </th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     {currentUserTypes
-                        ? currentUserTypes.map(
-                             ({
+  const [currentPage, setCurrentPage] = useState(1);
+  const [userTypePerPage] = useState(10);
+  const indexOfLastUserType = currentPage * userTypePerPage;
+  const indexOfFirstUserType = indexOfLastUserType - userTypePerPage;
+  const currentUserTypes =
+    userTypeArray &&
+    userTypeArray.slice(indexOfFirstUserType, indexOfLastUserType);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const userTypesTable = () => {
+    return (
+      <Row>
+        <Col className="mt-3">
+          <Table striped bordered hover className="border-0">
+            <thead>
+              <tr>
+                <th scope="col" className="border-0 font-style thead">
+                  <FormattedMessage
+                    defaultMessage="User Type"
+                    id="componentUserTypesTableHeadUserTypes"
+                  />
+                </th>
+                <th scope="col" className="border-0 font-style thead">
+                  <FormattedMessage
+                    defaultMessage="Description"
+                    id="componentUserTypesTableHeadDescription"
+                  />
+                </th>
+
+                <th
+                  scope="col"
+                  className="d-flex align-items-center justify-content-end border-0 font-style create-user pointerType"
+                  onClick={handleCloseForm}
+                >
+                  <span className="create-user-icon">
+                    <CreateUserIcon />
+                  </span>
+                  <b>
+                    <FormattedMessage
+                      defaultMessage="Create User Type"
+                      id="componentUserTypesTableHeadCreateUserType"
+                    />
+                  </b>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentUserTypes
+                ? currentUserTypes.map(
+                    ({
+                      userType,
+                      description,
+                      buttons,
+                      id,
+                      create_questions,
+                      review_questions,
+                    }) => {
+                      return (
+                        <tr key={id}>
+                          <td className="border-right-0">{userType}</td>
+                          <td className="border-left-0 border-right-0">
+                            {description}
+                          </td>
+                          <td className="border-left-0">
+                            <DeleteEditGroup
+                              handleShow={handleShow}
+                              handleEditForm={handleEditForm}
+                              handleShowParam={{ userType, id }}
+                              handleEditFormParam={{
                                 userType,
-                                description,
-                                buttons,
-                                id,
                                 create_questions,
                                 review_questions,
-                             }) => {
-                                return (
-                                   <tr key={id}>
-                                      <td className="border-right-0">
-                                         {userType}
-                                      </td>
-                                      <td className="border-left-0 border-right-0">
-                                         {description}
-                                      </td>
-                                      <td className="border-left-0">
-                                         <DeleteEditGroup
-                                            handleShow={handleShow}
-                                            handleEditForm={handleEditForm}
-                                            handleShowParam={{ userType, id }}
-                                            handleEditFormParam={{
-                                               userType,
-                                               create_questions,
-                                               review_questions,
-                                               id,
-                                            }}
-                                         />
-                                      </td>
-                                   </tr>
-                                );
-                             }
-                          )
-                        : ""}
-                  </tbody>
-               </Table>
-               <Pagination
-                  perPage={userTypePerPage}
-                  total={userTypeArray ? userTypeArray.length : 0}
-                  paginate={paginate}
-               />
-            </Col>
-         </Row>
-      );
-   };
+                                id,
+                              }}
+                            />
+                          </td>
+                        </tr>
+                      );
+                    }
+                  )
+                : ""}
+            </tbody>
+          </Table>
+          <Pagination
+            perPage={userTypePerPage}
+            total={userTypeArray ? userTypeArray.length : 0}
+            paginate={paginate}
+          />
+        </Col>
+      </Row>
+    );
+  };
 
-   const [show, setShow] = useState({ userType: "" });
+  const [show, setShow] = useState({ userType: "" });
 
-   const handleClose = () => setShow({ ...show, showModal: false });
-   const handleShow = ({ userType, id }) =>
-      setShow({ ...show, showModal: true, userType, id });
+  const handleClose = () => setShow({ ...show, showModal: false });
+  const handleShow = ({ userType, id }) =>
+    setShow({ ...show, showModal: true, userType, id });
 
-   const handleDeleteUserType = (id) => {
-      dispatch(userActions.deleteUserType(id));
+  const handleDeleteUserType = (id) => {
+    dispatch(userActions.deleteUserType(id));
 
-      if (!deletingUserType) {
-         handleClose();
-      }
-   };
+    if (!deletingUserType) {
+      handleClose();
+    }
+  };
 
-   const handleEditForm = (userType) => {
-      setUserForm({
-         ...userForm,
-         id: userType.id,
-         userType: userType.userType,
-         createQuestions: userType.create_questions,
-         reviewQuestions: userType.review_questions,
-         edit: true,
-      });
-      handleCloseForm();
-   };
+  const handleEditForm = (userType) => {
+    setUserForm({
+      ...userForm,
+      id: userType.id,
+      userType: userType.userType,
+      createQuestions: userType.create_questions,
+      reviewQuestions: userType.review_questions,
+      edit: true,
+    });
+    handleCloseForm();
+  };
 
-   return (
-      <React.Fragment>
-         <Layout>
-            {closeForm ? createUserTypeForm() : ""}
-            {message && (
-               <MessageBar
-                  messageType={messageType}
-                  message={message}
-                  handleClearMessage={handleClearMessage}
-               />
-            )}
-            {show ? (
-               <DeleteModal
-                  id={show.id}
-                  showModal={show.showModal}
-                  deleting={deletingUserType}
-                  handleClose={handleClose}
-                  handleDelete={handleDeleteUserType}
-                  message="UserType will be deleted"
-                  messageId="componentUserTypesDeleteModalWarning"
-               />
-            ) : null}
+  return (
+    <React.Fragment>
+      <Layout>
+        {closeForm ? createUserTypeForm() : ""}
+        {message && (
+          <MessageBar
+            messageType={messageType}
+            message={message}
+            handleClearMessage={handleClearMessage}
+          />
+        )}
+        {show ? (
+          <DeleteModal
+            id={show.id}
+            showModal={show.showModal}
+            deleting={deletingUserType}
+            handleClose={handleClose}
+            handleDelete={handleDeleteUserType}
+            message="UserType will be deleted"
+            messageId="componentUserTypesDeleteModalWarning"
+          />
+        ) : null}
 
-            {userTypesTable()}
-         </Layout>
-      </React.Fragment>
-   );
+        {userTypesTable()}
+      </Layout>
+    </React.Fragment>
+  );
 };
 
 export default UserTypes;

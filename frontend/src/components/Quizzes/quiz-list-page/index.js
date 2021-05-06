@@ -14,6 +14,7 @@ import {
   selectDeletingQuiz,
 } from "../../../redux/quiz/quiz.select";
 import quizActions from "../../../redux/quiz/quiz.actions";
+import { setLocalStorage } from "../../../helpers/utils";
 
 const gradeOptions = [
   { value: "Any", label: "Any" },
@@ -48,6 +49,7 @@ const QuizListPage = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [quizPerPage] = useState(5);
+  const [orderBySequence, setOrderBySequence] = useState();
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -56,6 +58,7 @@ const QuizListPage = () => {
     dispatch(
       quizActions.getAllQuizzes((currentPage - 1) * quizPerPage, queryStr)
     );
+    setLocalStorage("quizGradeFilter", e);
   };
 
   useEffect(() => {
@@ -71,7 +74,7 @@ const QuizListPage = () => {
       <SectionHead>Quizzes</SectionHead>
       <Header>
         <Link to="/create-quiz">
-          <Button className="transparent-btn" onClick={handleResetQuizData}>
+          <Button className="btn" onClick={handleResetQuizData}>
             Create Quiz
           </Button>
         </Link>
@@ -82,7 +85,10 @@ const QuizListPage = () => {
           <Select
             styles={selectStyles}
             options={gradeOptions}
-            defaultValue={gradeOptions[0]}
+            defaultValue={
+              JSON.parse(localStorage.getItem("quizGradeFilter")) ||
+              gradeOptions[0]
+            }
             onChange={handleChange}
           />
         </SelectBox>

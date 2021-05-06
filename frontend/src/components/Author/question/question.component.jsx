@@ -918,7 +918,7 @@ const Question = ({ questionType }) => {
               id="componentUsersTabCancelButton"
             />
           </Button>
-          <Button className="transparent-btn" onClick={handleSubmit}>
+          <Button className="transparent-btn btn-custom" onClick={handleSubmit}>
             {(creatingAnswer === true ||
               updatingQuestion === true ||
               creatingQuestion === true) && (

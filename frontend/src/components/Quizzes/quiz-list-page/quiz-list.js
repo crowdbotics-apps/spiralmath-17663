@@ -15,6 +15,7 @@ import {
 import QuizShowModal from "../quiz-modal";
 import { selectSingleQuizQuestions } from "../../../redux/quiz/quiz.select";
 import quizActions from "../../../redux/quiz/quiz.actions";
+import { ReactComponent as UpArrowIcon } from "../../../assets/img/up-arrow-icon.svg";
 
 const QuizList = ({ quizzes, quizPerPage, paginate, currentPage }) => {
   const dispatch = useDispatch();
@@ -73,7 +74,13 @@ const QuizList = ({ quizzes, quizPerPage, paginate, currentPage }) => {
                     id="QuizListHeadDesc"
                   />
                 </th>
-                <th scope="col" className="border-0 font-style thead">
+                <th
+                  scope="col"
+                  className="border-0 font-style thead pointerType"
+                >
+                  <span>
+                    <UpArrowIcon />
+                  </span>
                   <FormattedMessage
                     defaultMessage="Sequence"
                     id="QuizListHeadSeq"

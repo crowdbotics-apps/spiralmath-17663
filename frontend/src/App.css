@@ -58,6 +58,27 @@ img {
   max-width: 100%;
 }
 
+.btn-custom {
+}
+
+.transparent-btn {
+  background-color: transparent !important;
+  color: rgba(141, 141, 141, 0.6) !important;
+}
+
+.btn-custom {
+  border: none;
+  border-radius: 1.6px;
+  border: 0.8px solid #e5e2e2 !important;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14.4px;
+  line-height: 20px;
+  text-align: center;
+  width: 168px;
+  padding: 10px 0px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
