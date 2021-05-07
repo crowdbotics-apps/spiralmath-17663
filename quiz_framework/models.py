@@ -44,7 +44,6 @@ class QuizFrameworks(TimeStampedModel):
     )
 
     class Meta:
-        ordering = ['order', 'title']
         verbose_name = _('quiz')
         verbose_name_plural = _('quiz frameworks')
 
