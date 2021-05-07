@@ -69,7 +69,7 @@ const QuizListPage = () => {
     let queryStr = `grade=${
       JSON.parse(localStorage.getItem("quizGradeFilter"))?.value
     }`;
-    queryStr += orderBySequence ? "ordering=-sequence" : "";
+    queryStr += orderBySequence ? "&ordering=-sequence" : "";
     dispatch(
       quizActions.getAllQuizzes((currentPage - 1) * quizPerPage, queryStr)
     );
