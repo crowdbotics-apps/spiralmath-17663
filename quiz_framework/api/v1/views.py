@@ -17,7 +17,7 @@ class QuizViewSet(viewsets.ModelViewSet):
     filterset_fields = ['grade']
     ordering_fields = ['sequence', 'title', 'order']
     queryset = QuizFrameworks.objects.all()
-    ordering = ['sequence', 'title']
+    ordering = ['order', 'sequence', 'title']
 
 
 class QuizQuestionViewSet(mixins.CreateModelMixin,
