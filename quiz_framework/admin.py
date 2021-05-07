@@ -11,7 +11,7 @@ class QuizQuestionsInline(SortableInlineAdminMixin, admin.StackedInline):
 
 
 @admin.register(QuizFrameworks)
-class QuizFrameworksAdmin(SortableAdminMixin, admin.ModelAdmin):
+class QuizFrameworksAdmin(admin.ModelAdmin):
     search_fields = ['title', 'description', 'footer']
     list_filter = ['grade', 'created']
     inlines = [QuizQuestionsInline]
