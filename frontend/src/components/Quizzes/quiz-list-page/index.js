@@ -49,7 +49,7 @@ const QuizListPage = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [quizPerPage] = useState(5);
-  const [orderBySequence, setOrderBySequence] = useState();
+  const [orderBySequence, setOrderBySequence] = useState(false);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -64,6 +64,13 @@ const QuizListPage = () => {
   useEffect(() => {
     dispatch(quizActions.getAllQuizzes((currentPage - 1) * quizPerPage));
   }, [currentPage, deletingQuiz]);
+
+  useEffect(() => {
+    const queryStr = orderBySequence ? "ordering=-sequence" : "";
+    dispatch(
+      quizActions.getAllQuizzes((currentPage - 1) * quizPerPage, queryStr)
+    );
+  }, [orderBySequence]);
 
   const handleResetQuizData = () => {
     dispatch(quizActions.resetQuizData());
@@ -98,6 +105,8 @@ const QuizListPage = () => {
         paginate={paginate}
         quizPerPage={quizPerPage}
         currentPage={currentPage}
+        orderBySequence={orderBySequence}
+        setOrderBySequence={setOrderBySequence}
       />
     </Layout>
   );

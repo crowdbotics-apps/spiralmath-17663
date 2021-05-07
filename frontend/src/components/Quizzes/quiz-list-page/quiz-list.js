@@ -16,8 +16,16 @@ import QuizShowModal from "../quiz-modal";
 import { selectSingleQuizQuestions } from "../../../redux/quiz/quiz.select";
 import quizActions from "../../../redux/quiz/quiz.actions";
 import { ReactComponent as UpArrowIcon } from "../../../assets/img/up-arrow-icon.svg";
+import { ReactComponent as DownArrowIcon } from "../../../assets/img/down-arrow-icon.svg";
 
-const QuizList = ({ quizzes, quizPerPage, paginate, currentPage }) => {
+const QuizList = ({
+  quizzes,
+  quizPerPage,
+  paginate,
+  currentPage,
+  setOrderBySequence,
+  orderBySequence,
+}) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const quizCount = useSelector(selectQuizCount);
@@ -49,6 +57,10 @@ const QuizList = ({ quizzes, quizPerPage, paginate, currentPage }) => {
   const handleDeleteQuiz = (id) => {
     dispatch(quizActions.deleteQuiz(id));
   };
+  const changeSequence = () => {
+    setOrderBySequence(!orderBySequence);
+  };
+
   return (
     <Row>
       <Col className="mt-3">
@@ -77,9 +89,10 @@ const QuizList = ({ quizzes, quizPerPage, paginate, currentPage }) => {
                 <th
                   scope="col"
                   className="border-0 font-style thead pointerType"
+                  onClick={changeSequence}
                 >
                   <span>
-                    <UpArrowIcon />
+                    {orderBySequence ? <UpArrowIcon /> : <DownArrowIcon />}
                   </span>
                   <FormattedMessage
                     defaultMessage="Sequence"
