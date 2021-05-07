@@ -73,10 +73,14 @@ const QuizListPage = () => {
   }, [currentPage, deletingQuiz]);
 
   useEffect(() => {
-    let queryStr = `grade=${
-      JSON.parse(localStorage.getItem("quizGradeFilter"))?.value
-    }`;
-    queryStr += orderBySequence ? "&ordering=-sequence" : "";
+    const localStorageGrade = JSON.parse(
+      localStorage.getItem("quizGradeFilter")
+    )?.value;
+    let queryStr =
+      localStorageGrade && localStorageGrade !== "Any"
+        ? `grade=${localStorageGrade}&`
+        : "";
+    queryStr += orderBySequence ? "ordering=-sequence" : "";
     dispatch(
       quizActions.getAllQuizzes((currentPage - 1) * quizPerPage, queryStr)
     );
