@@ -54,7 +54,8 @@ const QuizListPage = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleChange = (e) => {
-    const queryStr = `grade=${e.value}`;
+    let queryStr = `grade=${e.value}`;
+    queryStr += orderBySequence ? "&ordering=-sequence" : "";
     dispatch(
       quizActions.getAllQuizzes((currentPage - 1) * quizPerPage, queryStr)
     );
@@ -62,7 +63,13 @@ const QuizListPage = () => {
   };
 
   useEffect(() => {
-    dispatch(quizActions.getAllQuizzes((currentPage - 1) * quizPerPage));
+    let queryStr = `grade=${
+      JSON.parse(localStorage.getItem("quizGradeFilter"))?.value
+    }`;
+    queryStr += orderBySequence ? "&ordering=-sequence" : "";
+    dispatch(
+      quizActions.getAllQuizzes((currentPage - 1) * quizPerPage, queryStr)
+    );
   }, [currentPage, deletingQuiz]);
 
   useEffect(() => {
