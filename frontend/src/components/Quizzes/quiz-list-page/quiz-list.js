@@ -25,6 +25,8 @@ const QuizList = ({
   currentPage,
   setOrderBySequence,
   orderBySequence,
+  orderByTitle,
+  setOrderByTitle,
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -61,6 +63,10 @@ const QuizList = ({
     setOrderBySequence(!orderBySequence);
   };
 
+  const changeTitle = () => {
+    setOrderByTitle(!orderByTitle);
+  };
+
   return (
     <Row>
       <Col className="mt-3">
@@ -74,7 +80,14 @@ const QuizList = ({
                     id="QuizListHeadId"
                   />
                 </th>
-                <th scope="col" className="border-0 font-style thead">
+                <th
+                  scope="col"
+                  className="border-0 font-style thead pointerType"
+                  onClick={changeTitle}
+                >
+                  <span>
+                    {orderByTitle ? <UpArrowIcon /> : <DownArrowIcon />}
+                  </span>
                   <FormattedMessage
                     defaultMessage="Title"
                     id="QuizListHeadTitle"

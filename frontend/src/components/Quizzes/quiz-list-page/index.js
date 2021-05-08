@@ -50,12 +50,30 @@ const QuizListPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [quizPerPage] = useState(5);
   const [orderBySequence, setOrderBySequence] = useState(false);
+  const [orderByTitle, setOrderByTitle] = useState(false);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const handleChange = (e) => {
-    let queryStr = `grade=${e.value}`;
+  const constructQuery = (e = false) => {
+    let queryStr;
+    if (e) {
+      queryStr = e.value !== "Any" ? `grade=${e.value}` : "";
+    } else {
+      const localStorageGrade = JSON.parse(
+        localStorage.getItem("quizGradeFilter")
+      )?.value;
+      queryStr =
+        localStorageGrade && localStorageGrade !== "Any"
+          ? `grade=${localStorageGrade}&`
+          : "";
+    }
     queryStr += orderBySequence ? "&ordering=-sequence" : "";
+    queryStr += orderByTitle ? "&ordering=-title" : "";
+    return queryStr;
+  };
+
+  const handleChange = (e) => {
+    let queryStr = constructQuery(e);
     dispatch(
       quizActions.getAllQuizzes((currentPage - 1) * quizPerPage, queryStr)
     );
@@ -63,28 +81,24 @@ const QuizListPage = () => {
   };
 
   useEffect(() => {
-    let queryStr = `grade=${
-      JSON.parse(localStorage.getItem("quizGradeFilter"))?.value
-    }`;
-    queryStr += orderBySequence ? "&ordering=-sequence" : "";
+    let queryStr = constructQuery();
     dispatch(
       quizActions.getAllQuizzes((currentPage - 1) * quizPerPage, queryStr)
     );
   }, [currentPage, deletingQuiz]);
 
   useEffect(() => {
-    const localStorageGrade = JSON.parse(
-      localStorage.getItem("quizGradeFilter")
-    )?.value;
-    let queryStr =
-      localStorageGrade && localStorageGrade !== "Any"
-        ? `grade=${localStorageGrade}&`
-        : "";
-    queryStr += orderBySequence ? "ordering=-sequence" : "";
+    let queryStr = constructQuery();
     dispatch(
       quizActions.getAllQuizzes((currentPage - 1) * quizPerPage, queryStr)
     );
   }, [orderBySequence]);
+  useEffect(() => {
+    let queryStr = constructQuery();
+    dispatch(
+      quizActions.getAllQuizzes((currentPage - 1) * quizPerPage, queryStr)
+    );
+  }, [orderByTitle]);
 
   const handleResetQuizData = () => {
     dispatch(quizActions.resetQuizData());
@@ -121,6 +135,8 @@ const QuizListPage = () => {
         currentPage={currentPage}
         orderBySequence={orderBySequence}
         setOrderBySequence={setOrderBySequence}
+        orderByTitle={orderByTitle}
+        setOrderByTitle={setOrderByTitle}
       />
     </Layout>
   );
