@@ -21,6 +21,7 @@ import questionActions from "../../../redux/question/question.action";
 import { selectStandardCode } from "../../../redux/question/question.select";
 import { selectQuizError } from "../../../redux/quiz/quiz.select";
 import { clearQuizError } from "../../../redux/quiz/quiz.actions";
+import { filterInitialState } from "../quizInitialStates";
 
 const CreateQuiz = () => {
   const dispatch = useDispatch();
@@ -43,17 +44,10 @@ const CreateQuiz = () => {
   const [selectedQuestions, setSelectedQuestions] = useState([]);
   const [search, setSearch] = useState(false);
   const [queryStr, setQueryStr] = useState("");
-  const [filters, setFilters] = useState({
-    grade_level: "_Any",
-    mills_difficulty_level: "_Any",
-    dok: "_Any",
-    question_style: "_Any",
-    summative_status: "_Any",
-    state_model: "_Any",
-    standard_code: "_Any",
-    content_source: "",
-    author_memo: "",
-  });
+  const [filters, setFilters] = useState(
+    JSON.parse(localStorage.getItem("createQuizQuestionFilters")) ||
+      filterInitialState
+  );
   const [editId, setEditId] = useState(false);
 
   useEffect(() => {

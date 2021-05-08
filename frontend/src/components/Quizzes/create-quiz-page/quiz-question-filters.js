@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { Form, Col, Button } from "react-bootstrap";
 import styled from "styled-components";
 import { grades } from "../../../content";
+import { setLocalStorage } from "../../../helpers/utils";
+import { filterInitialState } from "../quizInitialStates";
 
 const FilterInputsContainer = styled.div``;
 
@@ -19,20 +21,15 @@ const QuizQuestionFilters = ({
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
+    setLocalStorage("createQuizQuestionFilters", {
+      ...filters,
+      [name]: value,
+    });
   };
 
   const handleClearList = () => {
-    setFilters({
-      grade_level: "",
-      mills_difficulty_level: "",
-      dok: "",
-      question_style: "",
-      summative_status: "",
-      state_model: "",
-      standard_code: "",
-      content_source: "",
-      author_memo: "",
-    });
+    setFilters(filterInitialState);
+    setLocalStorage("createQuizQuestionFilters", filterInitialState);
   };
 
   return (
