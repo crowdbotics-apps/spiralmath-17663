@@ -69,7 +69,8 @@ THIRD_PARTY_APPS = [
     'quiz_framework',
     'adminsortable2',
     'django_countries',
-    'educational_establishment.apps.EducationalEstablishmentConfig'
+    'educational_establishment.apps.EducationalEstablishmentConfig',
+    'localflavor'
 ]
 INSTALLED_APPS += LOCAL_APPS + THIRD_PARTY_APPS
 
