@@ -67,7 +67,9 @@ THIRD_PARTY_APPS = [
     'drf_yasg',
     'corsheaders',
     'quiz_framework',
-    'adminsortable2'
+    'adminsortable2',
+    'django_countries',
+    'educational_establishment.apps.EducationalEstablishmentConfig'
 ]
 INSTALLED_APPS += LOCAL_APPS + THIRD_PARTY_APPS
 
