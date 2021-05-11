@@ -2,6 +2,7 @@ from django.db import models
 
 from django_countries.fields import CountryField
 from model_utils.models import TimeStampedModel
+from localflavor.us.models import USStateField
 
 
 class MetaInfoMixin(models.Model):
@@ -41,8 +42,8 @@ class SchoolDistrict(MetaInfoMixin, TimeStampedModel):
     district_type = models.CharField(choices=DistrictTypes.choices, max_length=100, default=DistrictTypes.PUBLIC)
     name = models.CharField(max_length=200)
     address = models.TextField()
-    state_province = models.CharField(max_length=200)
-    nation = CountryField()
+    state_province = USStateField(blank=True, default='')
+    nation = CountryField(default='US')
     phone = models.CharField(max_length=200)
 
     def __str__(self):
@@ -60,8 +61,8 @@ class SchoolPrincipal(PersonFieldsMixin, MetaInfoMixin, TimeStampedModel):
     personal_phone = models.CharField(max_length=200)
 
     class Meta:
-        verbose_name = 'school principal'
-        verbose_name_plural = 'school principals'
+        verbose_name = 'school boss'
+        verbose_name_plural = 'school boss'
 
 
 class DistrictPrincipal(PersonFieldsMixin, MetaInfoMixin, TimeStampedModel):
@@ -71,11 +72,11 @@ class DistrictPrincipal(PersonFieldsMixin, MetaInfoMixin, TimeStampedModel):
     personal_phone = models.CharField(max_length=200)
 
     class Meta:
-        verbose_name = 'district principal'
-        verbose_name_plural = 'district principals'
+        verbose_name = 'district boss'
+        verbose_name_plural = 'district boss'
 
 
-class School(TimeStampedModel):
+class School(MetaInfoMixin, TimeStampedModel):
     class SchoolTypes:
         PUBLIC, PUBLIC_CHARTER, RELIGIOUS, INDEPENDENT = ['PUBLIC', 'PUBLIC_CHARTER', 'RELIGIOUS', 'INDEPENDENT']
         choices = (
@@ -89,7 +90,8 @@ class School(TimeStampedModel):
     name = models.CharField(max_length=200)
     grades = models.CharField(max_length=200)
     address = models.TextField()
-    state_province = CountryField()
+    nation = CountryField(default='US')
+    state_province = USStateField(blank=True, default='')
     phone = models.CharField(max_length=200)
 
     def __str__(self):
