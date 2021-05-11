@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import School, SchoolDistrict, SchoolPrincipal, Teacher, Student, Class, ClassRoll
+from .models import School, SchoolDistrict, DistrictPrincipal, SchoolPrincipal, Teacher, Student, Class, ClassRoll
 
 
 @admin.register(School)
@@ -17,6 +17,12 @@ class SchoolDistrictAdmin(admin.ModelAdmin):
 
 @admin.register(SchoolPrincipal)
 class SchoolPrincipalAdmin(admin.ModelAdmin):
+    search_fields = ['first_name', 'middle_name', 'last_name']
+    list_filter = ['is_active']
+
+
+@admin.register(DistrictPrincipal)
+class DistrictPrincipalAdmin(admin.ModelAdmin):
     search_fields = ['first_name', 'middle_name', 'last_name']
     list_filter = ['is_active']
 
