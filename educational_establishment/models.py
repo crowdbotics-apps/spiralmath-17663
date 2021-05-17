@@ -171,7 +171,7 @@ class ClassRoll(MetaInfoMixin, TimeStampedModel):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.class_ref.__str__() - self.student.__str__()}'
+        return f'{self.class_ref.__str__()} - {self.student.__str__()}'
 
     class Meta:
         verbose_name = 'class roll'
