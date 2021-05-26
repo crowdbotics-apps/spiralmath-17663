@@ -16,6 +16,7 @@ class UserAdmin(auth_admin.UserAdmin):
     fieldsets = (("User", {"fields": ("status", "role", "user_type")}),) + auth_admin.UserAdmin.fieldsets
     list_display = ["username", "email", "first_name", "last_name", "role", "is_superuser"]
     search_fields = ["username"]
+    list_filter = auth_admin.UserAdmin.list_filter + ('role',)
 
 
 @admin.register(UserType)

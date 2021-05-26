@@ -30,9 +30,19 @@ class User(AbstractUser):
     class ROLE:
         ADMIN = 'Admin'
         EDITOR = 'Editor'
+        LEAD_TEACHER = 'LeadTeacher'
+        ASSIST_TEACHER = 'AssistTeacher'
+        SCHOOL_BOSS = 'SchoolBoss'
+        DISTRICT_BOSS = 'DistrictBoss'
+        STUDENT = 'Student'
         choices = (
             (ADMIN, ADMIN),
             (EDITOR, EDITOR),
+            (LEAD_TEACHER, 'Lead Teacher'),
+            (ASSIST_TEACHER, 'Assist Teacher'),
+            (STUDENT, 'Student'),
+            (SCHOOL_BOSS, 'School boss'),
+            (DISTRICT_BOSS, 'District boss')
         )
     first_name = models.CharField(_("First Name"), max_length=50)
     last_name = models.CharField(_("Last Name"),  max_length=50)

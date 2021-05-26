@@ -39,12 +39,19 @@ class SchoolDistrict(MetaInfoMixin, TimeStampedModel):
             (INDEPENDENT, 'Independent')
         )
 
+    user = models.ForeignKey(
+        'users.User',
+        on_delete=models.CASCADE,
+        null=True,
+        editable=False
+    )
     district_type = models.CharField(choices=DistrictTypes.choices, max_length=100, default=DistrictTypes.PUBLIC)
     name = models.CharField(max_length=200)
     address = models.TextField()
     state_province = USStateField(blank=True, default='')
     nation = CountryField(default='US')
     phone = models.CharField(max_length=200)
+    website = models.URLField(blank=True, default='')
 
     def __str__(self):
         return self.name
@@ -55,10 +62,21 @@ class SchoolDistrict(MetaInfoMixin, TimeStampedModel):
 
 
 class SchoolPrincipal(PersonFieldsMixin, MetaInfoMixin, TimeStampedModel):
+    user = models.ForeignKey(
+        'users.User',
+        on_delete=models.CASCADE,
+        null=True,
+        editable=False
+    )
     work_email = models.EmailField()
     personal_email = models.EmailField()
     work_phone = models.CharField(max_length=200)
     personal_phone = models.CharField(max_length=200)
+    school = models.ForeignKey(
+        'educational_establishment.School',
+        on_delete=models.SET_NULL,
+        null=True
+    )
 
     class Meta:
         verbose_name = 'school boss'
@@ -66,10 +84,17 @@ class SchoolPrincipal(PersonFieldsMixin, MetaInfoMixin, TimeStampedModel):
 
 
 class DistrictPrincipal(PersonFieldsMixin, MetaInfoMixin, TimeStampedModel):
+    user = models.ForeignKey(
+        'users.User',
+        on_delete=models.CASCADE,
+        null=True,
+        editable=False
+    )
+    district = models.ForeignKey(SchoolDistrict, on_delete=models.SET_NULL, null=True)
     work_email = models.EmailField()
-    personal_email = models.EmailField()
+    personal_email = models.EmailField(blank=True, default='')
     work_phone = models.CharField(max_length=200)
-    personal_phone = models.CharField(max_length=200)
+    personal_phone = models.CharField(max_length=200, blank=True, default='')
 
     class Meta:
         verbose_name = 'district boss'
@@ -93,6 +118,7 @@ class School(MetaInfoMixin, TimeStampedModel):
     nation = CountryField(default='US')
     state_province = USStateField(blank=True, default='')
     phone = models.CharField(max_length=200)
+    website = models.URLField(blank=True, default='')
 
     def __str__(self):
         return self.name
@@ -102,27 +128,70 @@ class School(MetaInfoMixin, TimeStampedModel):
         verbose_name_plural = 'schools'
 
 
-class Teacher(PersonFieldsMixin, MetaInfoMixin, TimeStampedModel):
+class LeadTeacher(PersonFieldsMixin, MetaInfoMixin, TimeStampedModel):
+    user = models.ForeignKey(
+        'users.User',
+        on_delete=models.CASCADE,
+        null=True,
+        editable=False
+    )
     work_email = models.EmailField(max_length=200)
-    personal_email = models.EmailField(max_length=200)
-    work_phone = models.CharField(max_length=200)
+    personal_email = models.EmailField(max_length=200, blank=True, default='')
+    work_phone = models.CharField(max_length=200, blank=True, default='')
     personal_phone = models.CharField(max_length=200)
 
     class Meta:
-        verbose_name = 'teacher'
-        verbose_name_plural = 'teachers'
+        verbose_name = 'lead teacher'
+        verbose_name_plural = 'lead teachers'
+
+
+class AssistTeacher(PersonFieldsMixin, MetaInfoMixin, TimeStampedModel):
+    user = models.ForeignKey(
+        'users.User',
+        on_delete=models.CASCADE,
+        null=True,
+        editable=False
+    )
+    work_email = models.EmailField(max_length=200)
+    personal_email = models.EmailField(max_length=200, blank=True, default='')
+    work_phone = models.CharField(max_length=200, blank=True, default='')
+    personal_phone = models.CharField(max_length=200)
+
+    class Meta:
+        verbose_name = 'assist teacher'
+        verbose_name_plural = 'assist teachers'
 
 
 class Student(PersonFieldsMixin, MetaInfoMixin, TimeStampedModel):
-    district = models.ForeignKey(SchoolDistrict, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(
+        'users.User',
+        on_delete=models.CASCADE,
+        null=True,
+        editable=False
+    )
+    district = models.ForeignKey(
+        SchoolDistrict,
+        verbose_name='Student district',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True)
     nickname = models.CharField(max_length=200, blank=True, default='')
-    email = models.EmailField()
-    phone = models.CharField(max_length=200)
-    parent1_name = models.CharField(max_length=200)
-    parent1_phone = models.CharField(max_length=200)
-    parent1_email = models.EmailField()
-    parent2_name = models.CharField(max_length=200)
-    parent2_phone = models.CharField(max_length=200)
+    email = models.EmailField(
+        verbose_name='Student Email',
+        blank=True,
+        default=''
+    )
+    phone = models.CharField(
+        verbose_name='Student Phone',
+        max_length=200,
+        blank=True,
+        default=''
+    )
+    parent1_name = models.CharField(max_length=200, blank=True, default='')
+    parent1_phone = models.CharField(max_length=200, blank=True, default='')
+    parent1_email = models.EmailField(blank=True, default='')
+    parent2_name = models.CharField(max_length=200, blank=True, default='')
+    parent2_phone = models.CharField(max_length=200, blank=True, default='')
     parent2_email = models.EmailField()
 
     class Meta:
@@ -137,15 +206,16 @@ class Class(MetaInfoMixin, TimeStampedModel):
         null=True
     )
     lead_teacher = models.ForeignKey(
-        Teacher,
+        LeadTeacher,
         on_delete=models.SET_NULL,
         null=True,
         related_name='leading_classes'
     )
-    teacher = models.ForeignKey(
-        Teacher,
+    assist_teacher = models.ForeignKey(
+        AssistTeacher,
         on_delete=models.SET_NULL,
-        null=True
+        null=True,
+        related_name='classes'
     )
     name = models.CharField(max_length=200)
     grade = models.CharField(max_length=200)
@@ -175,3 +245,26 @@ class ClassRoll(MetaInfoMixin, TimeStampedModel):
 
     class Meta:
         verbose_name = 'class roll'
+
+
+class ClassQuiz(MetaInfoMixin, TimeStampedModel):
+    classroom = models.ForeignKey(
+        Class,
+        verbose_name='class',
+        on_delete=models.CASCADE
+    )
+    quiz = models.ForeignKey(
+        'quiz_framework.QuizFrameworks',
+        on_delete=models.CASCADE
+    )
+    date_given = models.DateField(blank=True, null=True)
+    students_completed = models.IntegerField(blank=True, null=True)
+    quiz_now = models.BooleanField(default=False)
+    can_retake = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.classroom.__str__()} - {self.quiz.__str__()}'
+
+    class Meta:
+        verbose_name = 'class quiz'
+        verbose_name_plural = 'class quizzes'
