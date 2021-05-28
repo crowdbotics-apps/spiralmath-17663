@@ -52,6 +52,8 @@ INSTALLED_APPS = [
 LOCAL_APPS = [
     'home',
     'users.apps.UsersConfig',
+    'quiz_framework',
+    'educational_establishment.apps.EducationalEstablishmentConfig'
 ]
 THIRD_PARTY_APPS = [
     'rest_framework',
@@ -66,10 +68,8 @@ THIRD_PARTY_APPS = [
     'django_extensions',
     'drf_yasg',
     'corsheaders',
-    'quiz_framework',
     'adminsortable2',
     'django_countries',
-    'educational_establishment.apps.EducationalEstablishmentConfig',
     'localflavor'
 ]
 INSTALLED_APPS += LOCAL_APPS + THIRD_PARTY_APPS
