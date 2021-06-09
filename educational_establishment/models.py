@@ -1,35 +1,10 @@
 from django.db import models
 
 from django_countries.fields import CountryField
-from model_utils.models import TimeStampedModel
 from localflavor.us.models import USStateField
 
 
-class MetaInfoMixin(models.Model):
-    memo = models.TextField(blank=True, default='')
-    is_active = models.BooleanField(default=True)
-
-    class Meta:
-        abstract = True
-
-
-class PersonFieldsMixin(models.Model):
-    first_name = models.CharField(max_length=200)
-    middle_name = models.CharField(max_length=200, blank=True, default='')
-    last_name = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.get_full_name
-
-    @property
-    def get_full_name(self):
-        return ' '.join([self.first_name, self.middle_name, self.last_name])
-
-    class Meta:
-        abstract = True
-
-
-class SchoolDistrict(MetaInfoMixin, TimeStampedModel):
+class SchoolDistrict(models.Model):
     class DistrictTypes:
         PUBLIC, PUBLIC_CHARTER, RELIGIOUS, INDEPENDENT = ['PUBLIC', 'PUBLIC_CHARTER', 'RELIGIOUS', 'INDEPENDENT']
         choices = (
@@ -52,6 +27,10 @@ class SchoolDistrict(MetaInfoMixin, TimeStampedModel):
     nation = CountryField(default='US')
     phone = models.CharField(max_length=200)
     website = models.URLField(blank=True, default='')
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    memo = models.TextField(blank=True, default='')
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
@@ -61,7 +40,7 @@ class SchoolDistrict(MetaInfoMixin, TimeStampedModel):
         verbose_name_plural = 'school districts'
 
 
-class SchoolPrincipal(PersonFieldsMixin, MetaInfoMixin, TimeStampedModel):
+class SchoolPrincipal(models.Model):
     user = models.ForeignKey(
         'users.User',
         on_delete=models.CASCADE,
@@ -77,13 +56,27 @@ class SchoolPrincipal(PersonFieldsMixin, MetaInfoMixin, TimeStampedModel):
         on_delete=models.SET_NULL,
         null=True
     )
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    memo = models.TextField(blank=True, default='')
+    is_active = models.BooleanField(default=True)
+    first_name = models.CharField(max_length=200)
+    middle_name = models.CharField(max_length=200, blank=True, default='')
+    last_name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.get_full_name
+
+    @property
+    def get_full_name(self):
+        return ' '.join([self.first_name, self.middle_name, self.last_name])
 
     class Meta:
         verbose_name = 'school boss'
         verbose_name_plural = 'school boss'
 
 
-class DistrictPrincipal(PersonFieldsMixin, MetaInfoMixin, TimeStampedModel):
+class DistrictPrincipal(models.Model):
     user = models.ForeignKey(
         'users.User',
         on_delete=models.CASCADE,
@@ -95,13 +88,27 @@ class DistrictPrincipal(PersonFieldsMixin, MetaInfoMixin, TimeStampedModel):
     personal_email = models.EmailField(blank=True, default='')
     work_phone = models.CharField(max_length=200)
     personal_phone = models.CharField(max_length=200, blank=True, default='')
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    memo = models.TextField(blank=True, default='')
+    is_active = models.BooleanField(default=True)
+    first_name = models.CharField(max_length=200)
+    middle_name = models.CharField(max_length=200, blank=True, default='')
+    last_name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.get_full_name
+
+    @property
+    def get_full_name(self):
+        return ' '.join([self.first_name, self.middle_name, self.last_name])
 
     class Meta:
         verbose_name = 'district boss'
         verbose_name_plural = 'district boss'
 
 
-class School(MetaInfoMixin, TimeStampedModel):
+class School(models.Model):
     class SchoolTypes:
         PUBLIC, PUBLIC_CHARTER, RELIGIOUS, INDEPENDENT = ['PUBLIC', 'PUBLIC_CHARTER', 'RELIGIOUS', 'INDEPENDENT']
         choices = (
@@ -119,6 +126,10 @@ class School(MetaInfoMixin, TimeStampedModel):
     state_province = USStateField(blank=True, default='')
     phone = models.CharField(max_length=200)
     website = models.URLField(blank=True, default='')
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    memo = models.TextField(blank=True, default='')
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
@@ -128,7 +139,7 @@ class School(MetaInfoMixin, TimeStampedModel):
         verbose_name_plural = 'schools'
 
 
-class LeadTeacher(PersonFieldsMixin, MetaInfoMixin, TimeStampedModel):
+class LeadTeacher(models.Model):
     user = models.ForeignKey(
         'users.User',
         on_delete=models.CASCADE,
@@ -139,13 +150,27 @@ class LeadTeacher(PersonFieldsMixin, MetaInfoMixin, TimeStampedModel):
     personal_email = models.EmailField(max_length=200, blank=True, default='')
     work_phone = models.CharField(max_length=200, blank=True, default='')
     personal_phone = models.CharField(max_length=200)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    memo = models.TextField(blank=True, default='')
+    is_active = models.BooleanField(default=True)
+    first_name = models.CharField(max_length=200)
+    middle_name = models.CharField(max_length=200, blank=True, default='')
+    last_name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.get_full_name
+
+    @property
+    def get_full_name(self):
+        return ' '.join([self.first_name, self.middle_name, self.last_name])
 
     class Meta:
         verbose_name = 'lead teacher'
         verbose_name_plural = 'lead teachers'
 
 
-class AssistTeacher(PersonFieldsMixin, MetaInfoMixin, TimeStampedModel):
+class AssistTeacher(models.Model):
     user = models.ForeignKey(
         'users.User',
         on_delete=models.CASCADE,
@@ -156,13 +181,27 @@ class AssistTeacher(PersonFieldsMixin, MetaInfoMixin, TimeStampedModel):
     personal_email = models.EmailField(max_length=200, blank=True, default='')
     work_phone = models.CharField(max_length=200, blank=True, default='')
     personal_phone = models.CharField(max_length=200)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    memo = models.TextField(blank=True, default='')
+    is_active = models.BooleanField(default=True)
+    first_name = models.CharField(max_length=200)
+    middle_name = models.CharField(max_length=200, blank=True, default='')
+    last_name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.get_full_name
+
+    @property
+    def get_full_name(self):
+        return ' '.join([self.first_name, self.middle_name, self.last_name])
 
     class Meta:
         verbose_name = 'assist teacher'
         verbose_name_plural = 'assist teachers'
 
 
-class Student(PersonFieldsMixin, MetaInfoMixin, TimeStampedModel):
+class Student(models.Model):
     user = models.ForeignKey(
         'users.User',
         on_delete=models.CASCADE,
@@ -193,13 +232,27 @@ class Student(PersonFieldsMixin, MetaInfoMixin, TimeStampedModel):
     parent2_name = models.CharField(max_length=200, blank=True, default='')
     parent2_phone = models.CharField(max_length=200, blank=True, default='')
     parent2_email = models.EmailField()
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    memo = models.TextField(blank=True, default='')
+    is_active = models.BooleanField(default=True)
+    first_name = models.CharField(max_length=200)
+    middle_name = models.CharField(max_length=200, blank=True, default='')
+    last_name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.get_full_name
+
+    @property
+    def get_full_name(self):
+        return ' '.join([self.first_name, self.middle_name, self.last_name])
 
     class Meta:
         verbose_name = 'student'
         verbose_name_plural = 'students'
 
 
-class Class(MetaInfoMixin, TimeStampedModel):
+class Class(models.Model):
     school = models.ForeignKey(
         School,
         on_delete=models.SET_NULL,
@@ -227,6 +280,10 @@ class Class(MetaInfoMixin, TimeStampedModel):
     quiz_repeat_mode = models.BooleanField(default=False)
     homework_mode = models.BooleanField(default=False)
     parents_notify_mode = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    memo = models.TextField(blank=True, default='')
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
@@ -236,9 +293,13 @@ class Class(MetaInfoMixin, TimeStampedModel):
         verbose_name_plural = 'classes'
 
 
-class ClassRoll(MetaInfoMixin, TimeStampedModel):
+class ClassRoll(models.Model):
     class_ref = models.ForeignKey(Class, verbose_name='class', on_delete=models.SET_NULL, null=True)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    memo = models.TextField(blank=True, default='')
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return f'{self.class_ref.__str__()} - {self.student.__str__()}'
@@ -247,7 +308,7 @@ class ClassRoll(MetaInfoMixin, TimeStampedModel):
         verbose_name = 'class roll'
 
 
-class ClassQuiz(MetaInfoMixin, TimeStampedModel):
+class ClassQuiz(models.Model):
     classroom = models.ForeignKey(
         Class,
         verbose_name='class',
@@ -261,6 +322,10 @@ class ClassQuiz(MetaInfoMixin, TimeStampedModel):
     students_completed = models.IntegerField(blank=True, null=True)
     quiz_now = models.BooleanField(default=False)
     can_retake = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    memo = models.TextField(blank=True, default='')
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return f'{self.classroom.__str__()} - {self.quiz.__str__()}'
