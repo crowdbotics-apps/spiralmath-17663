@@ -167,7 +167,7 @@ class ClassAdmin(admin.ModelAdmin):
     list_filter = ['is_active']
     readonly_fields = ['created', 'modified']
     fieldsets = (
-        (None, {'fields': ('school', 'lead_teacher', 'teacher', 'name', 'grade', 'subject', 'period', 'location',
+        (None, {'fields': ('school', 'lead_teacher', 'assist_teacher', 'name', 'grade', 'subject', 'period', 'location',
                            'year', 'classroom_mode', 'quiz_repeat_mode', 'homework_mode', 'parents_notify_mode')}),
         ('Additional', {'fields': ('memo', 'is_active')}),
         ('Timestamp', {'fields': ('created', 'modified')})

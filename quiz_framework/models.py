@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
-from model_utils.models import TimeStampedModel
-
 User = get_user_model()
 
 PK, K, G1, G2, G3, G4, G5, G6, \
@@ -16,7 +14,7 @@ GRADE_CHOICES = (
 )
 
 
-class QuizFrameworks(TimeStampedModel):
+class QuizFrameworks(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
@@ -42,6 +40,8 @@ class QuizFrameworks(TimeStampedModel):
         blank=True,
         null=False
     )
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = _('quiz')
@@ -51,7 +51,7 @@ class QuizFrameworks(TimeStampedModel):
         return self.title
 
 
-class QuizQuestions(TimeStampedModel):
+class QuizQuestions(models.Model):
     quiz = models.ForeignKey(
         QuizFrameworks,
         on_delete=models.CASCADE,
@@ -66,6 +66,8 @@ class QuizQuestions(TimeStampedModel):
         blank=True,
         null=False
     )
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
 
     class Meta:
         unique_together = ['quiz', 'question']
