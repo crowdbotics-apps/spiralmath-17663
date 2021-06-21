@@ -33,7 +33,7 @@ class SchoolAdmin(admin.ModelAdmin):
     readonly_fields = ['created', 'modified']
     fieldsets = (
         (None, {'fields': ('district', 'school_type', 'name', 'grades', 'address', 'nation', 'state_province',
-                           'phone')}),
+                           'phone', 'website')}),
         ('Additional', {'fields': ('memo', 'is_active')}),
         ('Timestamp', {'fields': ('created', 'modified')})
     )
@@ -81,8 +81,8 @@ class DistrictPrincipalAdmin(UserAdmin):
     readonly_fields = ['created', 'modified']
     add_form = forms.AddDistrictBossForm
     add_fieldsets = (
-        (None, {'fields': ('first_name', 'middle_name', 'last_name', 'work_email', 'personal_email',
-                           'work_phone', 'personal_phone')}),
+        (None, {'fields': ('district', 'first_name', 'middle_name', 'last_name', 'work_email',
+                           'personal_email', 'work_phone', 'personal_phone')}),
         ('Password', {'fields': ('password1', 'password2')}),
         ('Additional', {'fields': ('memo', 'is_active')}),
         ('Timestamp', {'fields': ('created', 'modified')})
@@ -191,5 +191,6 @@ class ClassQuizAdmin(admin.ModelAdmin):
     readonly_fields = ['created', 'modified']
     fieldsets = (
         (None, {'fields': ('classroom', 'quiz', 'date_given', 'students_completed', 'quiz_now', 'can_retake')}),
+        ('Additional', {'fields': ('memo', 'is_active')}),
         ('Timestamp', {'fields': ('created', 'modified')})
     )
