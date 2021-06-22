@@ -231,7 +231,7 @@ class Student(models.Model):
     parent1_email = models.EmailField(blank=True, default='')
     parent2_name = models.CharField(max_length=200, blank=True, default='')
     parent2_phone = models.CharField(max_length=200, blank=True, default='')
-    parent2_email = models.EmailField()
+    parent2_email = models.EmailField(blank=True, default='')
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     memo = models.TextField(blank=True, default='')
@@ -318,7 +318,7 @@ class ClassQuiz(models.Model):
         'quiz_framework.QuizFrameworks',
         on_delete=models.CASCADE
     )
-    date_given = models.DateField(blank=True, null=True)
+    date_given = models.DateTimeField(blank=True, null=True)
     students_completed = models.IntegerField(blank=True, null=True)
     quiz_now = models.BooleanField(default=False)
     can_retake = models.BooleanField(default=False)
