@@ -45,7 +45,7 @@ class SchoolDistrictAdmin(admin.ModelAdmin):
     list_filter = ['district_type', 'is_active']
     readonly_fields = ['created', 'modified']
     fieldsets = (
-        (None, {'fields': ('district_type', 'name', 'address', 'state_province', 'nation', 'phone')}),
+        (None, {'fields': ('district_type', 'name', 'address', 'state_province', 'nation', 'phone', 'website')}),
         ('Additional', {'fields': ('memo', 'is_active')}),
         ('Timestamp', {'fields': ('created', 'modified')})
     )
