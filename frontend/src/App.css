@@ -98,6 +98,18 @@ img {
   cursor: pointer;
 }
 
+.link {
+  color: #007bff;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.link:hover,
+.link:focus {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
 .align-top {
   margin-top: -10px;
 }

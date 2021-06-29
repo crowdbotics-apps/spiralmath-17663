@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 import questionActions from "../../../redux/question/question.action";
 import parse from "html-react-parser";
 import { selectUserQuestions } from "../../../redux/question/question.select";
-import QuestionModal from "../question-modal";
+import QuestionModal from "../../Common/question-modal";
 
 const QuizQuestionSelectionList = ({
   handleChange,

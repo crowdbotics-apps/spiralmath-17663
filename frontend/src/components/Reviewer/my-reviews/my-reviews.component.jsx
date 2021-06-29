@@ -17,55 +17,62 @@ import questionActions from "../../../redux/question/question.action";
 // import { questionFormStateEdit } from "./../../../redux/questionFormState/questionFormState.action";
 
 const MyReviews = () => {
-   const dispatch = useDispatch();
-   //localUser
-   const localUser =
-      localStorage.getItem("user") !== "undefined"
-         ? JSON.parse(localStorage.getItem("user"))
-         : undefined;
-   const userId = localUser && localUser.userObj && localUser.userObj.id;
-   //pagination
-   const [currentPage, setCurrentPage] = useState(1);
-   const [questionsPerPage] = useState(10);
-   // delete modal
+  const dispatch = useDispatch();
+  //localUser
+  const localUser =
+    localStorage.getItem("user") !== "undefined"
+      ? JSON.parse(localStorage.getItem("user"))
+      : undefined;
+  const userId = localUser && localUser.userObj && localUser.userObj.id;
+  //pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [questionsPerPage] = useState(10);
+  // delete modal
 
-   const userQuestions = useSelector(selectUserQuestions);
-   const userQuestionsCount = useSelector(selectUserQuestionsCount);
+  const userQuestions = useSelector(selectUserQuestions);
+  const userQuestionsCount = useSelector(selectUserQuestionsCount);
 
-   useEffect(() => {
-      dispatch(questionActions.getUserQuestions(`reviewer_name=${userId}`,`limit=${questionsPerPage}&offset=${(currentPage - 1) * questionsPerPage}`));
-   // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [currentPage]);
+  useEffect(() => {
+    dispatch(
+      questionActions.getUserQuestions(
+        `reviewer_name=${userId}`,
+        `limit=${questionsPerPage}&offset=${
+          (currentPage - 1) * questionsPerPage
+        }`
+      )
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage]);
 
-   // const indexOfLastQuestion = currentPage * questionsPerPage;
-   // const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
-   // const currentQuestions =
-   //    userQuestions &&
-   //    userQuestions.slice(indexOfFirstQuestion, indexOfLastQuestion);
+  // const indexOfLastQuestion = currentPage * questionsPerPage;
+  // const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
+  // const currentQuestions =
+  //    userQuestions &&
+  //    userQuestions.slice(indexOfFirstQuestion, indexOfLastQuestion);
 
-   const handleReviewForm = (data) => {
-      dispatch(questionActions.getSingleQuestion(data.id));
-      dispatch(questionActions.getAnswer(data.id));
-   };
+  const handleReviewForm = (data) => {
+    dispatch(questionActions.getSingleQuestion(data.id));
+    dispatch(questionActions.getAnswer(data.id));
+  };
 
-   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-   return (
-      <>
-         <Layout>
-            <ReviewerQuestionsTable
-               questions={userQuestions}
-               handleReviewForm={handleReviewForm}
-            />
-            <Pagination
-               perPage={questionsPerPage}
-               total={userQuestionsCount}
-               paginate={paginate}
-               currentPage={currentPage}
-            />
-         </Layout>
-      </>
-   );
+  return (
+    <>
+      <Layout>
+        <ReviewerQuestionsTable
+          questions={userQuestions}
+          handleReviewForm={handleReviewForm}
+        />
+        <Pagination
+          perPage={questionsPerPage}
+          total={userQuestionsCount}
+          paginate={paginate}
+          currentPage={currentPage}
+        />
+      </Layout>
+    </>
+  );
 };
 
 export default MyReviews;
