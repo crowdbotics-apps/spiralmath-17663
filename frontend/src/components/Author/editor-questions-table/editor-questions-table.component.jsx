@@ -9,11 +9,19 @@ import QuestionsPopover from "../questions-popover/questions-popover.component";
 import { approvedText, approvedStyle } from "../../../helpers/utils";
 import { ReactComponent as CreateUserIcon } from "../../../assets/img/create-user-icon.svg";
 import { ReactComponent as UpArrowIcon } from "../../../assets/img/up-arrow-icon.svg";
+import QuestionModal from "../../Common/question-modal";
 import "./editor-questions-table.styles.css";
 
 const EditorQuestionsTable = ({ questions, renderDeleteEdit, all }) => {
    //popoverlogic
    const [showQuestionsPopover, setShowQuestionsPopover] = useState(false);
+   const [showQuestionModal, setShowQuestionModal] = useState(false);
+   const [currentQuestion, setCurrentQuestion] = useState(null);
+ 
+   const handleQuestionModal = (question) => () => {
+     setCurrentQuestion(question);
+     setShowQuestionModal(true);
+   };
 
    return (
       <Row>
@@ -99,9 +107,14 @@ const EditorQuestionsTable = ({ questions, renderDeleteEdit, all }) => {
                         questions.map((question) => {
                            return (
                               <tr key={question.id}>
-                                 <td className="border-right-0">
-                                    {question.id && question.id}
-                                 </td>
+                                <td
+                        className="border-right-0 cursor-pointer "
+                        onClick={handleQuestionModal(question)}
+                      >
+                        <span className="link">
+                          {question.id && question.id}
+                        </span>
+                      </td>
                                  <td className="border-right-0 border-left-0">
                                     {question.value && parse(question.value)}
                                  </td>
@@ -143,6 +156,12 @@ const EditorQuestionsTable = ({ questions, renderDeleteEdit, all }) => {
                </Table>
             </div>
          </Col>
+         <QuestionModal
+        show={showQuestionModal}
+        setShow={setShowQuestionModal}
+        question={currentQuestion}
+        isReview={true}
+      />
       </Row>
    );
 };
